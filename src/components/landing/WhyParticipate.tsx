@@ -6,32 +6,35 @@ const reasons = [
     icon: Lightbulb,
     title: "Innover ensemble",
     description: "Transformez vos idées en solutions concrètes pour améliorer la vie étudiante et le campus.",
-    gradient: "from-[#00873E] to-[#006B31]"
+    color: "orange"
   },
   {
     icon: Trophy,
     title: "Gagner des prix",
     description: "Jusqu'à 250 000 FCFA + 6 mois d'incubation pour les meilleurs projets.",
-    gradient: "from-[#FBBF24] to-[#F59E0B]"
+    color: "bleu"
   },
   {
     icon: Users,
     title: "Réseau & Mentoring",
     description: "Accédez à des mentors experts et développez votre réseau professionnel.",
-    gradient: "from-[#00873E] to-[#006B31]"
+    color: "orange"
   },
   {
     icon: Rocket,
     title: "Lancer votre projet",
     description: "Passez du concept au prototype en 48h avec un accompagnement dédié.",
-    gradient: "from-[#FBBF24] to-[#F59E0B]"
+    color: "bleu"
   },
 ];
 
 const WhyParticipate = () => (
-  <section className="py-24 bg-[#111827] relative overflow-hidden">
-    {/* Background decoration */}
-    <div className="absolute inset-0 bg-hero-gradient opacity-3"></div>
+  <section className="py-24 bg-gradient-to-br from-[#F8F9FA] to-white relative overflow-hidden">
+    {/* Background decorative elements */}
+    <div className="absolute inset-0 overflow-hidden">
+      <div className="absolute top-20 left-1/4 w-64 h-64 bg-[#FF6B35]/3 rounded-full blur-3xl animate-float-elegant"></div>
+      <div className="absolute bottom-20 right-1/4 w-64 h-64 bg-[#1E3A5F]/3 rounded-full blur-3xl animate-float-elegant" style={{ animationDelay: '2s' }}></div>
+    </div>
     
     <div className="container relative z-10">
       <motion.div
@@ -41,17 +44,17 @@ const WhyParticipate = () => (
         className="text-center mb-16"
       >
         <h2 
-          className="font-display text-4xl sm:text-5xl font-bold text-[#F9FAFB] mb-4"
+          className="font-display text-4xl sm:text-5xl font-bold text-[#212529] mb-4"
           style={{ fontFamily: 'Sora, sans-serif', fontWeight: 800 }}
         >
           Pourquoi <span className="text-gradient">participer</span> ?
         </h2>
-        <div className="w-24 h-1 bg-gradient-to-r from-[#00873E] to-[#FBBF24] mx-auto rounded-full"></div>
+        <div className="w-24 h-1 bg-gradient-to-r from-[#FF6B35] to-[#1E3A5F] mx-auto rounded-full mb-6"></div>
         <p 
-          className="mt-6 text-[#9CA3AF] max-w-2xl mx-auto text-lg"
+          className="text-[#6C757D] max-w-2xl mx-auto text-lg leading-relaxed"
           style={{ fontFamily: 'DM Sans, sans-serif' }}
         >
-          Une expérience unique pour développer vos compétences et porter vos idées.
+          Une expérience unique pour développer vos compétences et porter vos idées avec l'accompagnement des meilleurs experts.
         </p>
       </motion.div>
 
@@ -64,38 +67,60 @@ const WhyParticipate = () => (
             viewport={{ once: true }}
             transition={{ delay: i * 0.15 }}
             whileHover={{ y: -8, scale: 1.02 }}
-            className="card-premium group relative overflow-hidden rounded-2xl p-8"
+            className="group relative overflow-hidden rounded-2xl p-8 bg-white border border-[#E9ECEF] shadow-lg hover:shadow-xl transition-all duration-300"
           >
             {/* Gradient background on hover */}
-            <div className={`absolute inset-0 bg-gradient-to-br ${r.gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-300`}></div>
+            <div className={`absolute inset-0 bg-gradient-to-br ${
+              r.color === 'orange' 
+                ? 'from-[#FF6B35]/5 to-[#FF8C42]/5' 
+                : 'from-[#1E3A5F]/5 to-[#2C5282]/5'
+            } opacity-0 group-hover:opacity-100 transition-opacity duration-300`}></div>
             
             {/* Icon container */}
-            <div className="relative z-10 mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-[#00873E]/10 to-[#FBBF24]/10 border border-[#2D3748] group-hover:border-[#00873E]/50 transition-all duration-300">
-              <r.icon className="h-8 w-8 text-[#FBBF24]" />
+            <div className={`relative z-10 mb-6 flex h-16 w-16 items-center justify-center rounded-2xl transition-all duration-300 ${
+              r.color === 'orange'
+                ? 'bg-[#FF6B35]/10 border-2 border-[#FF6B35]/20 group-hover:bg-[#FF6B35]/20 group-hover:border-[#FF6B35]/40'
+                : 'bg-[#1E3A5F]/10 border-2 border-[#1E3A5F]/20 group-hover:bg-[#1E3A5F]/20 group-hover:border-[#1E3A5F]/40'
+            }`}>
+              <r.icon className={`h-8 w-8 transition-colors duration-300 ${
+                r.color === 'orange' ? 'text-[#FF6B35]' : 'text-[#1E3A5F]'
+              }`} />
             </div>
             
             {/* Content */}
             <div className="relative z-10">
               <h3 
-                className="font-display font-bold text-xl mb-3 text-[#F9FAFB] group-hover:text-[#00873E] transition-colors duration-300"
+                className="font-display font-bold text-xl mb-3 text-[#212529] transition-colors duration-300"
                 style={{ fontFamily: 'Sora, sans-serif' }}
               >
                 {r.title}
               </h3>
               <p 
-                className="text-sm text-[#9CA3AF] leading-relaxed"
+                className="text-[#6C757D] leading-relaxed text-sm font-medium"
                 style={{ fontFamily: 'DM Sans, sans-serif' }}
               >
                 {r.description}
               </p>
             </div>
             
-            {/* Decorative dot */}
-            <div className="absolute top-4 right-4 w-2 h-2 bg-[#FBBF24] rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            {/* Decorative elements */}
+            <div className={`absolute top-4 right-4 w-2 h-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 ${
+              r.color === 'orange' ? 'bg-[#FF6B35]' : 'bg-[#1E3A5F]'
+            }`}></div>
+            
+            {/* Bottom accent line */}
+            <div className={`absolute bottom-0 left-0 right-0 h-1 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ${
+              r.color === 'orange' 
+                ? 'bg-gradient-to-r from-[#FF6B35] to-[#FF8C42]' 
+                : 'bg-gradient-to-r from-[#1E3A5F] to-[#2C5282]'
+            }`}></div>
           </motion.div>
         ))}
       </div>
     </div>
+
+    {/* Decorative bottom gradient */}
+    <div className="absolute bottom-0 left-0 right-0 h-2 bg-gradient-to-r from-[#FF6B35] via-[#1E3A5F] to-[#FF6B35]"></div>
   </section>
 );
 

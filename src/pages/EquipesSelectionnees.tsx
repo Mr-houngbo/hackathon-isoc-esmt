@@ -19,10 +19,10 @@ const EquipesSelectionnees = () => {
   });
 
   const getBadgeColor = (position?: number) => {
-    if (position === 1) return 'bg-gradient-to-r from-[#FBBF24] to-[#F59E0B]';
-    if (position === 2) return 'bg-gradient-to-r from-[#9CA3AF] to-[#6B7280]';
-    if (position === 3) return 'bg-gradient-to-r from-[#D97706] to-[#92400E]';
-    return 'bg-gradient-to-r from-[#00873E] to-[#059669]';
+    if (position === 1) return 'bg-gradient-to-r from-[#FF6B35] to-[#FF8C42]';
+    if (position === 2) return 'bg-gradient-to-r from-[#1E3A5F] to-[#2C5282]';
+    if (position === 3) return 'bg-gradient-to-r from-[#FFA947] to-[#FF6B35]';
+    return 'bg-gradient-to-r from-[#FF6B35] to-[#1E3A5F]';
   };
 
   const getBadgeIcon = (position?: number) => {
@@ -34,10 +34,10 @@ const EquipesSelectionnees = () => {
 
   return (
     <Layout>
-      <div className="min-h-screen bg-[#0A0A0A]">
+      <div className="min-h-screen bg-gradient-to-br from-[#F8F9FA] to-white">
         {/* Hero Section */}
         <div className="relative overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-br from-[#00873E]/20 via-[#FBBF24]/10 to-[#0A0A0A]"></div>
+          <div className="absolute inset-0 bg-gradient-to-br from-[#FF6B35]/5 via-[#1E3A5F]/5 to-transparent"></div>
           <div className="container relative z-10 py-16">
             <motion.div 
               className="text-center"
@@ -46,23 +46,23 @@ const EquipesSelectionnees = () => {
               transition={{ duration: 0.8 }}
             >
               <div className="flex items-center justify-center gap-4 mb-6">
-                <div className="w-16 h-16 rounded-full bg-gradient-to-r from-[#FBBF24] to-[#00873E] flex items-center justify-center">
-                  <Trophy size={32} className="text-[#F9FAFB]" />
+                <div className="w-16 h-16 rounded-full bg-gradient-to-r from-[#FF6B35] to-[#1E3A5F] flex items-center justify-center">
+                  <Trophy size={32} className="text-white" />
                 </div>
                 <h1 
-                  className="font-display text-4xl sm:text-5xl font-bold text-[#F9FAFB]"
+                  className="font-display text-4xl sm:text-5xl font-bold text-[#212529]"
                   style={{ fontFamily: 'Sora, sans-serif', fontWeight: 800 }}
                 >
                   Équipes
                 </h1>
               </div>
               <p 
-                className="text-xl text-[#9CA3AF] mb-8"
+                className="text-xl text-[#6C757D] mb-8"
                 style={{ fontFamily: 'DM Sans, sans-serif' }}
               >
                 Sélectionnées — Les talents retenus pour le hackathon
               </p>
-              <div className="w-24 h-1 bg-gradient-to-r from-[#FBBF24] to-[#00873E] mx-auto rounded-full"></div>
+              <div className="w-24 h-1 bg-gradient-to-r from-[#FF6B35] to-[#1E3A5F] mx-auto rounded-full"></div>
             </motion.div>
           </div>
         </div>
@@ -73,9 +73,9 @@ const EquipesSelectionnees = () => {
           {isLoading ? (
             <div className="flex justify-center py-20">
               <div className="flex flex-col items-center gap-4">
-                <div className="w-12 h-12 rounded-full border-4 border-[#FBBF24] border-t-transparent animate-spin"></div>
+                <div className="w-12 h-12 rounded-full border-4 border-[#FF6B35] border-t-transparent animate-spin"></div>
                 <p 
-                  className="text-[#9CA3AF]"
+                  className="text-[#6C757D]"
                   style={{ fontFamily: 'DM Sans, sans-serif' }}
                 >
                   Chargement des équipes sélectionnées...
@@ -89,17 +89,17 @@ const EquipesSelectionnees = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.3 }}
             >
-              <div className="w-24 h-24 rounded-full bg-[#1F2937] flex items-center justify-center mx-auto mb-6">
-                <Users size={40} className="text-[#9CA3AF]" />
+              <div className="w-24 h-24 rounded-full bg-[#F8F9FA] border border-[#E9ECEF] flex items-center justify-center mx-auto mb-6">
+                <Users size={40} className="text-[#6C757D]" />
               </div>
               <h3 
-                className="font-display text-xl font-bold text-[#F9FAFB] mb-2"
+                className="font-display text-xl font-bold text-[#212529] mb-2"
                 style={{ fontFamily: 'Sora, sans-serif' }}
               >
                 Sélection en cours
               </h3>
               <p 
-                className="text-[#9CA3AF] max-w-md mx-auto"
+                className="text-[#6C757D] max-w-md mx-auto"
                 style={{ fontFamily: 'DM Sans, sans-serif' }}
               >
                 Les équipes sélectionnées seront publiées prochainement. Revenez consulter la liste !
@@ -120,7 +120,7 @@ const EquipesSelectionnees = () => {
                   transition={{ duration: 0.6, delay: 0.1 * index }}
                   className="group"
                 >
-                  <div className="relative overflow-hidden rounded-2xl border border-[#2D3748] bg-[#111827] transition-all duration-300 hover:border-[#FBBF24]/50 hover:shadow-xl hover:shadow-[#FBBF24]/10">
+                  <div className="relative overflow-hidden rounded-2xl border border-[#E9ECEF] bg-white transition-all duration-300 hover:border-[#FF6B35]/50 hover:shadow-xl hover:shadow-[#FF6B35]/10">
                     {/* Badge Position */}
                     {eq.position && (
                       <motion.div
@@ -131,7 +131,7 @@ const EquipesSelectionnees = () => {
                       >
                         {(() => {
                           const Icon = getBadgeIcon(eq.position);
-                          return <Icon size={20} className="text-[#F9FAFB]" />;
+                          return <Icon size={20} className="text-white" />;
                         })()}
                       </motion.div>
                     )}
@@ -139,19 +139,19 @@ const EquipesSelectionnees = () => {
                     {/* Header */}
                     <div className="p-6 pb-4">
                       <div className="flex items-center gap-3 mb-4">
-                        <div className="w-10 h-10 rounded-full bg-[#FBBF24]/20 flex items-center justify-center">
-                          <Users size={20} className="text-[#FBBF24]" />
+                        <div className="w-10 h-10 rounded-full bg-[#FF6B35]/10 flex items-center justify-center">
+                          <Users size={20} className="text-[#FF6B35]" />
                         </div>
                         <div className="flex-1">
                           <h3 
-                            className="font-display text-lg font-bold text-[#F9FAFB] group-hover:text-[#FBBF24] transition-colors"
+                            className="font-display text-lg font-bold text-[#212529] group-hover:text-[#FF6B35] transition-colors"
                             style={{ fontFamily: 'Sora, sans-serif' }}
                           >
                             {eq.nom_equipe || "Participant individuel"}
                           </h3>
                           {eq.position && (
                             <span 
-                              className="text-xs text-[#FBBF24] font-medium"
+                              className="text-xs text-[#FF6B35] font-medium"
                               style={{ fontFamily: 'DM Sans, sans-serif' }}
                             >
                               {eq.position === 1 ? '🥇 1er' : eq.position === 2 ? '🥈 2ème' : eq.position === 3 ? '🥉 3ème' : `Top ${eq.position}`}
@@ -164,7 +164,7 @@ const EquipesSelectionnees = () => {
                       {eq.nom_projet && (
                         <div className="mb-4">
                           <p 
-                            className="text-sm font-semibold text-[#FBBF24]"
+                            className="text-sm font-semibold text-[#1E3A5F]"
                             style={{ fontFamily: 'DM Sans, sans-serif' }}
                           >
                             {eq.nom_projet}
@@ -175,9 +175,9 @@ const EquipesSelectionnees = () => {
                       {/* Team Stats */}
                       <div className="flex gap-4 mb-4">
                         <div className="flex items-center gap-1">
-                          <Users size={14} className="text-[#9CA3AF]" />
+                          <Users size={14} className="text-[#6C757D]" />
                           <span 
-                            className="text-xs text-[#9CA3AF]"
+                            className="text-xs text-[#6C757D]"
                             style={{ fontFamily: 'DM Sans, sans-serif' }}
                           >
                             {eq.membres?.length || 0} membres
@@ -185,9 +185,9 @@ const EquipesSelectionnees = () => {
                         </div>
                         {eq.domaine_projet && (
                           <div className="flex items-center gap-1">
-                            <Target size={14} className="text-[#9CA3AF]" />
+                            <Target size={14} className="text-[#6C757D]" />
                             <span 
-                              className="text-xs text-[#9CA3AF]"
+                              className="text-xs text-[#6C757D]"
                               style={{ fontFamily: 'DM Sans, sans-serif' }}
                             >
                               {eq.domaine_projet}
@@ -202,27 +202,27 @@ const EquipesSelectionnees = () => {
                       <div className="space-y-3">
                         {(eq.membres as any[])?.slice(0, 3).map((m: any) => (
                           <div key={m.id} className="flex items-center gap-3">
-                            <div className="w-8 h-8 rounded-full bg-[#1F2937] flex items-center justify-center">
-                              <User size={14} className="text-[#9CA3AF]" />
+                            <div className="w-8 h-8 rounded-full bg-[#F8F9FA] border border-[#E9ECEF] flex items-center justify-center">
+                              <User size={14} className="text-[#6C757D]" />
                             </div>
                             <div className="flex-1">
                               <div className="flex items-center gap-2">
                                 <span 
-                                  className="text-sm font-medium text-[#F9FAFB]"
+                                  className="text-sm font-medium text-[#212529]"
                                   style={{ fontFamily: 'DM Sans, sans-serif' }}
                                 >
                                   {m.nom_prenom}
                                 </span>
                                 {m.est_chef && (
-                                  <span className="px-2 py-0.5 rounded-full bg-[#00873E]/20 text-[#00873E] text-xs font-bold">
+                                  <span className="px-2 py-0.5 rounded-full bg-[#1E3A5F]/10 text-[#1E3A5F] text-xs font-bold">
                                     Chef
                                   </span>
                                 )}
                               </div>
                               <div className="flex items-center gap-2">
-                                <BookOpen size={12} className="text-[#9CA3AF]" />
+                                <BookOpen size={12} className="text-[#6C757D]" />
                                 <span 
-                                  className="text-xs text-[#9CA3AF]"
+                                  className="text-xs text-[#6C757D]"
                                   style={{ fontFamily: 'DM Sans, sans-serif' }}
                                 >
                                   {m.filiere}
@@ -234,7 +234,7 @@ const EquipesSelectionnees = () => {
                         {eq.membres && eq.membres.length > 3 && (
                           <div className="text-center pt-2">
                             <span 
-                              className="text-xs text-[#9CA3AF] font-medium"
+                              className="text-xs text-[#6C757D] font-medium"
                               style={{ fontFamily: 'DM Sans, sans-serif' }}
                             >
                               +{eq.membres.length - 3} autre{eq.membres.length - 3 > 1 ? 's' : ''}
@@ -251,7 +251,7 @@ const EquipesSelectionnees = () => {
                           {eq.competences_equipe.slice(0, 4).map((skill: string, idx: number) => (
                             <span 
                               key={idx}
-                              className="px-2 py-1 rounded-lg bg-[#00873E]/10 text-[#00873E] text-xs font-medium"
+                              className="px-2 py-1 rounded-lg bg-[#FF6B35]/10 text-[#FF6B35] text-xs font-medium"
                               style={{ fontFamily: 'DM Sans, sans-serif' }}
                             >
                               {skill}
@@ -259,7 +259,7 @@ const EquipesSelectionnees = () => {
                           ))}
                           {eq.competences_equipe.length > 4 && (
                             <span 
-                              className="px-2 py-1 rounded-lg bg-[#1F2937] text-[#9CA3AF] text-xs font-medium"
+                              className="px-2 py-1 rounded-lg bg-[#F8F9FA] border border-[#E9ECEF] text-[#6C757D] text-xs font-medium"
                               style={{ fontFamily: 'DM Sans, sans-serif' }}
                             >
                               +{eq.competences_equipe.length - 4}
@@ -270,7 +270,7 @@ const EquipesSelectionnees = () => {
                     )}
                     
                     {/* Hover Overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A]/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    <div className="absolute inset-0 bg-gradient-to-t from-white/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                   </div>
                 </motion.div>
               ))}

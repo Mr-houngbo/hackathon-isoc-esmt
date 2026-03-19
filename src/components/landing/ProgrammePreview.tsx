@@ -14,20 +14,23 @@ const programmeItems = [
 
 const getTypeColor = (type: string) => {
   switch (type) {
-    case "social": return "bg-[#FBBF24]/10 text-[#FBBF24] border-[#FBBF24]/30";
-    case "keynote": return "bg-[#00873E]/10 text-[#00873E] border-[#00873E]/30";
-    case "workshop": return "bg-[#111827] text-[#9CA3AF] border-[#2D3748]";
-    case "coding": return "bg-[#00873E]/10 text-[#00873E] border-[#00873E]/30";
-    case "presentation": return "bg-[#FBBF24]/10 text-[#FBBF24] border-[#FBBF24]/30";
-    case "ceremony": return "bg-gradient-to-r from-[#00873E]/10 to-[#FBBF24]/10 text-[#F9FAFB] border-[#2D3748]";
-    default: return "bg-[#111827] text-[#9CA3AF] border-[#2D3748]";
+    case "social": return "bg-[#FF6B35]/10 text-[#FF6B35] border-[#FF6B35]/30";
+    case "keynote": return "bg-[#1E3A5F]/10 text-[#1E3A5F] border-[#1E3A5F]/30";
+    case "workshop": return "bg-[#F8F9FA] text-[#6C757D] border-[#E9ECEF]";
+    case "coding": return "bg-[#FF6B35]/10 text-[#FF6B35] border-[#FF6B35]/30";
+    case "presentation": return "bg-[#1E3A5F]/10 text-[#1E3A5F] border-[#1E3A5F]/30";
+    case "ceremony": return "bg-gradient-to-r from-[#FF6B35]/10 to-[#1E3A5F]/10 text-[#212529] border-[#E9ECEF]";
+    default: return "bg-[#F8F9FA] text-[#6C757D] border-[#E9ECEF]";
   }
 };
 
 const ProgrammePreview = () => (
-  <section id="programme" className="py-24 bg-[#111827] relative overflow-hidden">
-    {/* Background decoration */}
-    <div className="absolute inset-0 bg-gradient-to-br from-[#00873E]/3 to-transparent"></div>
+  <section id="programme" className="py-24 bg-gradient-to-br from-[#F8F9FA] to-white relative overflow-hidden">
+    {/* Background decorative elements */}
+    <div className="absolute inset-0 overflow-hidden">
+      <div className="absolute top-20 left-1/4 w-64 h-64 bg-[#FF6B35]/3 rounded-full blur-3xl animate-float-elegant"></div>
+      <div className="absolute bottom-20 right-1/4 w-64 h-64 bg-[#1E3A5F]/3 rounded-full blur-3xl animate-float-elegant" style={{ animationDelay: '2s' }}></div>
+    </div>
     
     <div className="container relative z-10">
       <motion.div
@@ -37,17 +40,17 @@ const ProgrammePreview = () => (
         className="text-center mb-16"
       >
         <h2 
-          className="font-display text-4xl sm:text-5xl font-bold text-[#F9FAFB] mb-4"
+          className="font-display text-4xl sm:text-5xl font-bold text-[#212529] mb-4"
           style={{ fontFamily: 'Sora, sans-serif', fontWeight: 800 }}
         >
           Programme en <span className="text-gradient">un coup d'œil</span>
         </h2>
-        <div className="w-24 h-1 bg-gradient-to-r from-[#00873E] to-[#FBBF24] mx-auto rounded-full"></div>
+        <div className="w-24 h-1 bg-gradient-to-r from-[#FF6B35] to-[#1E3A5F] mx-auto rounded-full mb-6"></div>
         <p 
-          className="mt-6 text-[#9CA3AF] max-w-2xl mx-auto text-lg"
+          className="text-[#6C757D] max-w-2xl mx-auto text-lg leading-relaxed"
           style={{ fontFamily: 'DM Sans, sans-serif' }}
         >
-          48h d'intense créativité pour transformer vos idées en prototypes.
+          48h d'intense créativité pour transformer vos idées en prototypes fonctionnels.
         </p>
       </motion.div>
 
@@ -59,23 +62,27 @@ const ProgrammePreview = () => (
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ delay: (day - 1) * 0.2 }}
-            className="card-premium group relative overflow-hidden rounded-2xl p-8"
+            className="bg-white border border-[#E9ECEF] rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 group relative overflow-hidden p-8"
           >
             {/* Day header */}
             <div className="mb-6">
               <div className="flex items-center gap-4 mb-4">
-                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-[#00873E] to-[#006B31] text-[#F9FAFB] font-bold text-lg shadow-lg">
+                <div className={`flex h-12 w-12 items-center justify-center rounded-xl text-white font-bold text-lg shadow-lg ${
+                  day === 1 
+                    ? 'bg-gradient-to-br from-[#FF6B35] to-[#FF8C42]' 
+                    : 'bg-gradient-to-br from-[#1E3A5F] to-[#2C5282]'
+                }`}>
                   J{day}
                 </div>
                 <div>
                   <h3 
-                    className="font-display font-bold text-xl text-[#F9FAFB]"
+                    className="font-display font-bold text-xl text-[#212529]"
                     style={{ fontFamily: 'Sora, sans-serif' }}
                   >
-                    {day === 1 ? "3 Avril" : "4 Avril"}
+                    {day === 1 ? "17 Avril" : "18 Avril"}
                   </h3>
                   <p 
-                    className="text-sm text-[#9CA3AF]"
+                    className="text-sm text-[#6C757D]"
                     style={{ fontFamily: 'DM Sans, sans-serif' }}
                   >
                     {day === 1 ? "Idéation & Création" : "Pitch & Récompenses"}
@@ -95,13 +102,13 @@ const ProgrammePreview = () => (
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true }}
                     transition={{ delay: (day - 1) * 0.2 + i * 0.1 }}
-                    className="flex items-start gap-4 group/item"
+                    className="flex items-start gap-4 group/item relative"
                   >
                     {/* Time */}
                     <div className="flex items-center gap-2 min-w-[80px]">
-                      <Clock size={14} className="text-[#FBBF24]" />
+                      <Clock size={14} className="text-[#FF6B35]" />
                       <span 
-                        className="text-sm font-semibold text-[#FBBF24]"
+                        className="text-sm font-semibold text-[#FF6B35]"
                         style={{ fontFamily: 'Space Mono, monospace' }}
                       >
                         {item.time}
@@ -114,7 +121,7 @@ const ProgrammePreview = () => (
                         {item.type}
                       </div>
                       <h4 
-                        className="font-display font-semibold text-[#F9FAFB] mb-1"
+                        className="font-display font-semibold text-[#212529] mb-1"
                         style={{ fontFamily: 'Sora, sans-serif' }}
                       >
                         {item.title}
@@ -122,13 +129,15 @@ const ProgrammePreview = () => (
                     </div>
                     
                     {/* Decorative line */}
-                    <div className="absolute left-0 top-0 bottom-0 w-px bg-gradient-to-b from-[#00873E] to-transparent opacity-20"></div>
+                    <div className="absolute left-0 top-0 bottom-0 w-px bg-gradient-to-b from-[#FF6B35] to-transparent opacity-20"></div>
                   </motion.div>
                 ))}
             </div>
             
             {/* Decorative elements */}
-            <div className="absolute top-4 right-4 w-2 h-2 bg-[#FBBF24] rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            <div className={`absolute top-4 right-4 w-2 h-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 ${
+              day === 1 ? 'bg-[#FF6B35]' : 'bg-[#1E3A5F]'
+            }`}></div>
           </motion.div>
         ))}
       </div>
@@ -141,27 +150,32 @@ const ProgrammePreview = () => (
         transition={{ delay: 0.6 }}
         className="text-center mt-16"
       >
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-6 mb-8">
-          <div className="flex items-center gap-2 text-[#9CA3AF]">
-            <Calendar size={16} className="text-[#FBBF24]" />
-            <span style={{ fontFamily: 'DM Sans, sans-serif' }}>3-4 Avril 2026</span>
+        <div className="bg-white rounded-2xl border border-[#E9ECEF] shadow-lg p-8 max-w-2xl mx-auto">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-6 mb-8">
+            <div className="flex items-center gap-2 text-[#6C757D]">
+              <Calendar size={16} className="text-[#FF6B35]" />
+              <span style={{ fontFamily: 'DM Sans, sans-serif' }}>17-18 Avril 2026</span>
+            </div>
+            <div className="flex items-center gap-2 text-[#6C757D]">
+              <Users size={16} className="text-[#FF6B35]" />
+              <span style={{ fontFamily: 'DM Sans, sans-serif' }}>40 participants maximum</span>
+            </div>
           </div>
-          <div className="flex items-center gap-2 text-[#9CA3AF]">
-            <Users size={16} className="text-[#FBBF24]" />
-            <span style={{ fontFamily: 'DM Sans, sans-serif' }}>40 participants maximum</span>
-          </div>
+          
+          <Link
+            to="/agenda"
+            className="btn-premium inline-flex items-center gap-3 rounded-xl px-8 py-4 text-sm font-semibold group"
+            style={{ fontFamily: 'Sora, sans-serif' }}
+          >
+            Voir le programme complet 
+            <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform duration-300" />
+          </Link>
         </div>
-        
-        <Link
-          to="/agenda"
-          className="btn-premium inline-flex items-center gap-3 rounded-xl px-8 py-4 text-sm font-semibold text-[#F9FAFB] group"
-          style={{ fontFamily: 'Sora, sans-serif' }}
-        >
-          Voir le programme complet 
-          <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform duration-300" />
-        </Link>
       </motion.div>
     </div>
+
+    {/* Decorative bottom gradient */}
+    <div className="absolute bottom-0 left-0 right-0 h-2 bg-gradient-to-r from-[#FF6B35] via-[#1E3A5F] to-[#FF6B35]"></div>
   </section>
 );
 

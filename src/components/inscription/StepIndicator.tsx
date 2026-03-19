@@ -13,23 +13,23 @@ const StepIndicator = ({ currentStep, totalSteps, labels }: StepIndicatorProps) 
     <div className="md:hidden mb-6">
       <div className="flex items-center justify-between mb-3">
         <span 
-          className="text-sm font-semibold text-[#F9FAFB]"
+          className="text-sm font-semibold text-[#212529]"
           style={{ fontFamily: 'Sora, sans-serif' }}
         >
           Étape {currentStep + 1}/{totalSteps}
         </span>
-        <span className="text-xs text-[#9CA3AF]">{Math.round(((currentStep + 1) / totalSteps) * 100)}%</span>
+        <span className="text-xs text-[#6C757D]">{Math.round(((currentStep + 1) / totalSteps) * 100)}%</span>
       </div>
-      <div className="w-full h-2 bg-[#1F2937] rounded-full overflow-hidden">
+      <div className="w-full h-3 bg-[#E9ECEF] rounded-full overflow-hidden">
         <motion.div
-          className="h-full bg-gradient-to-r from-[#00873E] to-[#FBBF24]"
+          className="h-full bg-gradient-to-r from-[#FF6B35] to-[#1E3A5F]"
           initial={{ width: 0 }}
           animate={{ width: `${((currentStep + 1) / totalSteps) * 100}%` }}
           transition={{ duration: 0.5, ease: "easeInOut" }}
         />
       </div>
       <p 
-        className="text-sm text-[#FBBF24] mt-2 text-center"
+        className="text-sm text-[#1E3A5F] mt-2 text-center"
         style={{ fontFamily: 'DM Sans, sans-serif' }}
       >
         {labels[currentStep]}
@@ -40,11 +40,11 @@ const StepIndicator = ({ currentStep, totalSteps, labels }: StepIndicatorProps) 
     <div className="hidden md:block">
       <div className="flex items-center justify-between relative">
         {/* Background line */}
-        <div className="absolute left-0 right-0 top-5 h-0.5 bg-[#1F2937] z-0"></div>
+        <div className="absolute left-0 right-0 top-5 h-1 bg-[#E9ECEF] z-0"></div>
         
         {/* Progress line */}
         <motion.div
-          className="absolute left-0 top-5 h-0.5 bg-gradient-to-r from-[#00873E] to-[#FBBF24] z-0"
+          className="absolute left-0 top-5 h-1 bg-gradient-to-r from-[#FF6B35] to-[#1E3A5F] z-0"
           initial={{ width: 0 }}
           animate={{ width: `${(currentStep / (totalSteps - 1)) * 100}%` }}
           transition={{ duration: 0.5, ease: "easeInOut" }}
@@ -62,17 +62,17 @@ const StepIndicator = ({ currentStep, totalSteps, labels }: StepIndicatorProps) 
             >
               {/* Step circle */}
               <div
-                className={`flex h-10 w-10 items-center justify-center rounded-full border-2 text-sm font-bold transition-all duration-300 ${
+                className={`flex h-12 w-12 items-center justify-center rounded-full border-2 text-sm font-bold transition-all duration-300 ${
                   i < currentStep 
-                    ? 'bg-[#00873E] border-[#00873E] text-[#F9FAFB]' 
+                    ? 'bg-[#FF6B35] border-[#FF6B35] text-white' 
                     : i === currentStep 
-                      ? 'bg-[#0A0A0A] border-[#FBBF24] text-[#FBBF24] shadow-lg shadow-[#FBBF24]/25' 
-                      : 'bg-[#111827] border-[#2D3748] text-[#9CA3AF]'
+                      ? 'bg-white border-[#1E3A5F] text-[#1E3A5F] shadow-lg shadow-[#1E3A5F]/25' 
+                      : 'bg-white border-[#E9ECEF] text-[#6C757D]'
                 }`}
                 style={{ fontFamily: 'Sora, sans-serif' }}
               >
                 {i < currentStep ? (
-                  <CheckCircle size={18} className="text-[#F9FAFB]" />
+                  <CheckCircle size={20} className="text-white" />
                 ) : (
                   i + 1
                 )}
@@ -81,7 +81,7 @@ const StepIndicator = ({ currentStep, totalSteps, labels }: StepIndicatorProps) 
               {/* Glow effect for current step */}
               {i === currentStep && (
                 <motion.div
-                  className="absolute inset-0 rounded-full bg-[#FBBF24] opacity-20 blur-md"
+                  className="absolute inset-0 rounded-full bg-[#1E3A5F] opacity-20 blur-md"
                   animate={{ scale: [1, 1.2, 1] }}
                   transition={{ duration: 2, repeat: Infinity }}
                 />
@@ -89,10 +89,10 @@ const StepIndicator = ({ currentStep, totalSteps, labels }: StepIndicatorProps) 
             </motion.div>
             
             {/* Step label */}
-            <div className="mt-4 text-center max-w-[100px]">
+            <div className="mt-4 text-center max-w-[120px]">
               <p 
                 className={`text-xs font-medium transition-colors duration-300 ${
-                  i <= currentStep ? 'text-[#F9FAFB]' : 'text-[#9CA3AF]'
+                  i <= currentStep ? 'text-[#212529]' : 'text-[#6C757D]'
                 }`}
                 style={{ fontFamily: 'DM Sans, sans-serif' }}
               >
@@ -112,13 +112,13 @@ const StepIndicator = ({ currentStep, totalSteps, labels }: StepIndicatorProps) 
         className="mt-8 text-center"
       >
         <p 
-          className="text-lg text-[#F9FAFB] font-semibold"
+          className="text-lg text-[#212529] font-semibold"
           style={{ fontFamily: 'Sora, sans-serif' }}
         >
           {labels[currentStep]}
         </p>
         <p 
-          className="text-sm text-[#9CA3AF] mt-1"
+          className="text-sm text-[#6C757D] mt-1"
           style={{ fontFamily: 'DM Sans, sans-serif' }}
         >
           {currentStep + 1} sur {totalSteps} étapes

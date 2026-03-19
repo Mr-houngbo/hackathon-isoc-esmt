@@ -26,12 +26,12 @@ const AdminLogin = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#0A0A0A] flex items-center justify-center">
+    <div className="min-h-screen bg-gradient-to-br from-[#F8F9FA] to-white flex items-center justify-center">
       {/* Background Pattern */}
-      <div className="absolute inset-0 bg-gradient-to-br from-[#00873E]/10 via-[#FBBF24]/5 to-[#0A0A0A]"></div>
+      <div className="absolute inset-0 bg-gradient-to-br from-[#1E3A5F]/10 via-[#FF6B35]/5 to-white"></div>
       <div className="absolute inset-0 opacity-20">
         <div className="absolute inset-0" style={{
-          backgroundImage: `radial-gradient(circle at 20% 50%, rgba(0, 135, 62, 0.1) 0%, transparent 50%)`,
+          backgroundImage: `radial-gradient(circle at 20% 50%, rgba(30, 58, 95, 0.1) 0%, transparent 50%)`,
         }}></div>
       </div>
       
@@ -41,27 +41,27 @@ const AdminLogin = () => {
         transition={{ duration: 0.6 }}
         className="relative z-10 w-full max-w-md mx-auto p-6"
       >
-        <div className="relative overflow-hidden rounded-2xl border border-[#2D3748] bg-[#111827] shadow-2xl shadow-[#00873E]/10">
+        <div className="relative overflow-hidden rounded-2xl border border-[#E9ECEF] bg-white shadow-2xl shadow-[#1E3A5F]/10">
           {/* Header */}
-          <div className="text-center mb-8 p-8 bg-gradient-to-r from-[#00873E]/10 to-[#FBBF24]/10">
+          <div className="text-center mb-8 p-8 bg-gradient-to-r from-[#1E3A5F]/10 to-[#FF6B35]/10">
             <div className="flex items-center justify-center gap-4 mb-4">
-              <div className="w-16 h-16 rounded-full bg-gradient-to-r from-[#00873E] to-[#FBBF24] flex items-center justify-center">
-                <Shield size={32} className="text-[#F9FAFB]" />
+              <div className="w-16 h-16 rounded-full bg-gradient-to-r from-[#1E3A5F] to-[#FF6B35] flex items-center justify-center">
+                <Shield size={32} className="text-white" />
               </div>
               <h1 
-                className="font-display text-2xl font-bold text-[#F9FAFB]"
+                className="font-display text-2xl font-bold text-[#212529]"
                 style={{ fontFamily: 'Sora, sans-serif', fontWeight: 800 }}
               >
                 Admin Dashboard
               </h1>
             </div>
             <p 
-              className="text-[#9CA3AF]"
+              className="text-[#6C757D]"
               style={{ fontFamily: 'DM Sans, sans-serif' }}
             >
               Hackathon ISOC-ESMT 2026
             </p>
-            <div className="w-16 h-1 bg-gradient-to-r from-[#00873E] to-[#FBBF24] mx-auto rounded-full"></div>
+            <div className="w-16 h-1 bg-gradient-to-r from-[#1E3A5F] to-[#FF6B35] mx-auto rounded-full"></div>
           </div>
 
           {/* Form */}
@@ -70,20 +70,20 @@ const AdminLogin = () => {
               {/* Email */}
               <div>
                 <label 
-                  className="block text-sm font-bold text-[#F9FAFB] mb-3"
+                  className="block text-sm font-bold text-[#212529] mb-3"
                   style={{ fontFamily: 'Sora, sans-serif' }}
                 >
                   Email Administrateur
                 </label>
                 <div className="relative">
-                  <Lock size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-[#9CA3AF]" />
+                  <Lock size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-[#6C757D]" />
                   <input 
                     type="email" 
                     value={email} 
                     onChange={(e) => setEmail(e.target.value)} 
                     required
                     placeholder="admin@hackathon.sn"
-                    className="w-full pl-12 pr-4 py-3 rounded-xl border-[#2D3748] bg-[#1F2937] px-4 py-3 text-[#F9FAFB] placeholder-[#9CA3AF] focus:outline-none focus:ring-2 focus:ring-[#FBBF24] focus:border-transparent transition-all duration-300"
+                    className="w-full pl-12 pr-4 py-3 rounded-xl border-[#E9ECEF] bg-white px-4 py-3 text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FF6B35] focus:border-transparent transition-all duration-300"
                     style={{ fontFamily: 'DM Sans, sans-serif' }}
                   />
                 </div>
@@ -92,26 +92,26 @@ const AdminLogin = () => {
               {/* Password */}
               <div>
                 <label 
-                  className="block text-sm font-bold text-[#F9FAFB] mb-3"
+                  className="block text-sm font-bold text-[#212529] mb-3"
                   style={{ fontFamily: 'Sora, sans-serif' }}
                 >
                   Mot de passe
                 </label>
                 <div className="relative">
-                  <Lock size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-[#9CA3AF]" />
+                  <Lock size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-[#6C757D]" />
                   <input 
                     type={showPassword ? "text" : "password"} 
                     value={password} 
                     onChange={(e) => setPassword(e.target.value)} 
                     required
                     placeholder="••••••••••"
-                    className="w-full pl-12 pr-12 py-3 rounded-xl border-[#2D3748] bg-[#1F2937] px-4 py-3 text-[#F9FAFB] placeholder-[#9CA3AF] focus:outline-none focus:ring-2 focus:ring-[#FBBF24] focus:border-transparent transition-all duration-300"
+                    className="w-full pl-12 pr-12 py-3 rounded-xl border-[#E9ECEF] bg-white text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FF6B35] focus:border-transparent transition-all duration-300"
                     style={{ fontFamily: 'DM Sans, sans-serif' }}
                   />
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-[#9CA3AF] hover:text-[#FBBF24] transition-colors"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-[#6C757D] hover:text-[#FF6B35] transition-colors"
                   >
                     {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
                   </button>
@@ -124,7 +124,7 @@ const AdminLogin = () => {
                 disabled={loading}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                className="w-full py-4 rounded-xl bg-gradient-to-r from-[#00873E] to-[#FBBF24] text-[#F9FAFB] font-bold shadow-lg shadow-[#00873E]/25 transition-all duration-300 hover:shadow-xl hover:shadow-[#00873E]/40 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full py-4 rounded-xl bg-gradient-to-r from-[#1E3A5F] to-[#FF6B35] text-white font-bold shadow-lg shadow-[#1E3A5F]/25 transition-all duration-300 hover:shadow-xl hover:shadow-[#1E3A5F]/40 disabled:opacity-50 disabled:cursor-not-allowed"
                 style={{ fontFamily: 'Sora, sans-serif' }}
               >
                 {loading ? (
@@ -142,18 +142,18 @@ const AdminLogin = () => {
             </form>
 
             {/* Security Note */}
-            <div className="mt-8 p-4 rounded-xl bg-[#1F2937]/50 border border-[#2D3748]/50">
+            <div className="mt-8 p-4 rounded-xl bg-[#F8F9FA]/50 border border-[#E9ECEF]/50">
               <div className="flex items-start gap-3">
-                <Shield size={16} className="text-[#FBBF24] mt-0.5" />
+                <Shield size={16} className="text-[#FF6B35] mt-0.5" />
                 <div>
                   <p 
-                    className="text-xs text-[#9CA3AF] font-medium"
+                    className="text-xs text-[#6C757D] font-medium"
                     style={{ fontFamily: 'DM Sans, sans-serif' }}
                   >
                     🔒 Connexion sécurisée via Supabase Auth
                   </p>
                   <p 
-                    className="text-xs text-[#9CA3AF] mt-1"
+                    className="text-xs text-[#6C757D] mt-1"
                     style={{ fontFamily: 'DM Sans, sans-serif' }}
                   >
                     Accès réservé aux administrateurs du hackathon

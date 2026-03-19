@@ -88,8 +88,8 @@ const GestionPartenaires = () => {
       <AdminLayout>
         <div className="flex items-center justify-center min-h-screen">
           <div className="flex flex-col items-center gap-4">
-            <div className="w-12 h-12 rounded-full border-4 border-[#00873E] border-t-transparent animate-spin"></div>
-            <p className="text-[#9CA3AF]">Chargement des partenaires...</p>
+            <div className="w-12 h-12 rounded-full border-4 border-[#1E3A5F] border-t-transparent animate-spin"></div>
+            <p className="text-[#6C757D]">Chargement des partenaires...</p>
           </div>
         </div>
       </AdminLayout>
@@ -102,7 +102,7 @@ const GestionPartenaires = () => {
         <div className="flex items-center justify-center min-h-screen">
           <div className="text-center">
             <p className="text-[#DC2626] text-lg font-bold mb-4">Erreur de chargement</p>
-            <p className="text-[#9CA3AF]">{error.message}</p>
+            <p className="text-[#6C757D]">{error.message}</p>
           </div>
         </div>
       </AdminLayout>
@@ -111,9 +111,9 @@ const GestionPartenaires = () => {
 
   return (
     <AdminLayout>
-      <div className="min-h-screen bg-[#0A0A0A]">
+      <div className="min-h-screen bg-gradient-to-br from-[#F8F9FA] to-white">
         {/* Header */}
-        <div className="bg-gradient-to-r from-[#00873E]/10 to-[#FBBF24]/10 backdrop-blur-sm border-b border-[#2D3748]/20">
+        <div className="bg-gradient-to-r from-[#1E3A5F]/10 to-[#FF6B35]/10 backdrop-blur-sm border-b border-[#E9ECEF]/20">
           <div className="container py-6">
             <div className="flex items-center justify-between">
               <motion.div
@@ -122,13 +122,13 @@ const GestionPartenaires = () => {
                 transition={{ duration: 0.6 }}
               >
                 <h1 
-                  className="font-display text-3xl font-bold text-[#F9FAFB]"
+                  className="font-display text-3xl font-bold text-[#212529]"
                   style={{ fontFamily: 'Sora, sans-serif', fontWeight: 800 }}
                 >
                   Gestion des Partenaires
                 </h1>
                 <p 
-                  className="text-[#9CA3AF] mt-2"
+                  className="text-[#6C757D] mt-2"
                   style={{ fontFamily: 'DM Sans, sans-serif' }}
                 >
                   Administration des partenaires du Hackathon ISOC-ESMT 2026
@@ -138,7 +138,7 @@ const GestionPartenaires = () => {
               <div className="flex gap-2">
                 <button
                   onClick={() => setShowAdd(!showAdd)}
-                  className="px-4 py-2 rounded-lg bg-[#00873E] text-[#F9FAFB] hover:bg-[#006450] transition-colors"
+                  className="px-4 py-2 rounded-lg bg-[#1E3A5F] text-white hover:bg-[#006450] transition-colors"
                   style={{ fontFamily: 'DM Sans, sans-serif' }}
                 >
                   <Plus size={16} className="mr-2" />
@@ -146,7 +146,7 @@ const GestionPartenaires = () => {
                 </button>
                 <button
                   onClick={() => window.print()}
-                  className="px-4 py-2 rounded-lg bg-[#1F2937] text-[#9CA3AF] hover:bg-[#2D3748] transition-colors"
+                  className="px-4 py-2 rounded-lg bg-[bg-white] text-[#6C757D] hover:bg-[#E9ECEF] transition-colors"
                   style={{ fontFamily: 'DM Sans, sans-serif' }}
                 >
                   <Download size={16} className="mr-2" />
@@ -169,25 +169,25 @@ const GestionPartenaires = () => {
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.5, delay: 0.1 }}
-                className="relative overflow-hidden rounded-2xl border border-[#2D3748] bg-[#111827] p-6 hover:border-[#FBBF24]/50 hover:shadow-xl hover:shadow-[#FBBF24]/10 transition-all duration-300"
+                className="relative overflow-hidden rounded-2xl border border-[#E9ECEF] bg-[white] p-6 hover:border-[#FF6B35]/50 hover:shadow-xl hover:shadow-[#FF6B35]/10 transition-all duration-300"
               >
-                <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-[#FBBF24]/5 opacity-0"></div>
+                <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-[#FF6B35]/5 opacity-0"></div>
                 
                 <div className="relative z-10">
                   <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center gap-3">
-                      <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-[#00873E]/20 to-[#FBBF24]/20 flex items-center justify-center">
-                        <Building2 size={24} className="text-[#F9FAFB]" />
+                      <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-[#1E3A5F]/20 to-[#FF6B35]/20 flex items-center justify-center">
+                        <Building2 size={24} className="text-[#212529]" />
                       </div>
                       <div>
                         <p 
-                          className="text-2xl font-bold text-[#F9FAFB]"
+                          className="text-2xl font-bold text-[#212529]"
                           style={{ fontFamily: 'Sora, sans-serif', fontWeight: 700 }}
                         >
                           {stats.total}
                         </p>
                         <p 
-                          className="text-xs text-[#9CA3AF] mt-1"
+                          className="text-xs text-[#6C757D] mt-1"
                           style={{ fontFamily: 'DM Sans, sans-serif' }}
                         >
                           Total partenaires
@@ -202,25 +202,25 @@ const GestionPartenaires = () => {
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.5, delay: 0.2 }}
-                className="relative overflow-hidden rounded-2xl border border-[#2D3748] bg-[#111827] p-6 hover:border-[#9CA3AF]/50 hover:shadow-xl hover:shadow-[#9CA3AF]/10 transition-all duration-300"
+                className="relative overflow-hidden rounded-2xl border border-[#E9ECEF] bg-[white] p-6 hover:border-[#6C757D]/50 hover:shadow-xl hover:shadow-[#6C757D]/10 transition-all duration-300"
               >
-                <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-[#9CA3AF]/5 opacity-0"></div>
+                <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-[#6C757D]/5 opacity-0"></div>
                 
                 <div className="relative z-10">
                   <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center gap-3">
-                      <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-[#9CA3AF]/20 to-[#9CA3AF]/20 flex items-center justify-center">
-                        <Award size={24} className="text-[#F9FAFB]" />
+                      <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-[#6C757D]/20 to-[#6C757D]/20 flex items-center justify-center">
+                        <Award size={24} className="text-[#212529]" />
                       </div>
                       <div>
                         <p 
-                          className="text-2xl font-bold text-[#F9FAFB]"
+                          className="text-2xl font-bold text-[#212529]"
                           style={{ fontFamily: 'Sora, sans-serif', fontWeight: 700 }}
                         >
                           {stats.platine}
                         </p>
                         <p 
-                          className="text-xs text-[#9CA3AF] mt-1"
+                          className="text-xs text-[#6C757D] mt-1"
                           style={{ fontFamily: 'DM Sans, sans-serif' }}
                         >
                           Partenaires Platine
@@ -235,25 +235,25 @@ const GestionPartenaires = () => {
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.5, delay: 0.3 }}
-                className="relative overflow-hidden rounded-2xl border border-[#2D3748] bg-[#111827] p-6 hover:border-[#FBBF24]/50 hover:shadow-xl hover:shadow-[#FBBF24]/10 transition-all duration-300"
+                className="relative overflow-hidden rounded-2xl border border-[#E9ECEF] bg-[white] p-6 hover:border-[#FF6B35]/50 hover:shadow-xl hover:shadow-[#FF6B35]/10 transition-all duration-300"
               >
-                <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-[#FBBF24]/5 opacity-0"></div>
+                <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-[#FF6B35]/5 opacity-0"></div>
                 
                 <div className="relative z-10">
                   <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center gap-3">
-                      <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-[#FBBF24]/20 to-[#FBBF24]/20 flex items-center justify-center">
-                        <Award size={24} className="text-[#F9FAFB]" />
+                      <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-[#FF6B35]/20 to-[#FF6B35]/20 flex items-center justify-center">
+                        <Award size={24} className="text-[#212529]" />
                       </div>
                       <div>
                         <p 
-                          className="text-2xl font-bold text-[#F9FAFB]"
+                          className="text-2xl font-bold text-[#212529]"
                           style={{ fontFamily: 'Sora, sans-serif', fontWeight: 700 }}
                         >
                           {stats.or}
                         </p>
                         <p 
-                          className="text-xs text-[#9CA3AF] mt-1"
+                          className="text-xs text-[#6C757D] mt-1"
                           style={{ fontFamily: 'DM Sans, sans-serif' }}
                         >
                           Partenaires Or
@@ -268,7 +268,7 @@ const GestionPartenaires = () => {
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.5, delay: 0.4 }}
-                className="relative overflow-hidden rounded-2xl border border-[#2D3748] bg-[#111827] p-6 hover:border-[#D4AF37]/50 hover:shadow-xl hover:shadow-[#D4AF37]/10 transition-all duration-300"
+                className="relative overflow-hidden rounded-2xl border border-[#E9ECEF] bg-[white] p-6 hover:border-[#D4AF37]/50 hover:shadow-xl hover:shadow-[#D4AF37]/10 transition-all duration-300"
               >
                 <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-[#D4AF37]/5 opacity-0"></div>
                 
@@ -276,17 +276,17 @@ const GestionPartenaires = () => {
                   <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center gap-3">
                       <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-[#D4AF37]/20 to-[#D4AF37]/20 flex items-center justify-center">
-                        <Award size={24} className="text-[#F9FAFB]" />
+                        <Award size={24} className="text-[#212529]" />
                       </div>
                       <div>
                         <p 
-                          className="text-2xl font-bold text-[#F9FAFB]"
+                          className="text-2xl font-bold text-[#212529]"
                           style={{ fontFamily: 'Sora, sans-serif', fontWeight: 700 }}
                         >
                           {stats.argent}
                         </p>
                         <p 
-                          className="text-xs text-[#9CA3AF] mt-1"
+                          className="text-xs text-[#6C757D] mt-1"
                           style={{ fontFamily: 'DM Sans, sans-serif' }}
                         >
                           Partenaires Argent
@@ -308,9 +308,9 @@ const GestionPartenaires = () => {
             transition={{ duration: 0.5 }}
             className="container py-6"
           >
-            <div className="rounded-2xl border border-[#2D3748] bg-[#111827] p-6">
+            <div className="rounded-2xl border border-[#E9ECEF] bg-[white] p-6">
               <h2 
-                className="font-display text-xl font-bold text-[#F9FAFB] mb-6"
+                className="font-display text-xl font-bold text-[#212529] mb-6"
                 style={{ fontFamily: 'Sora, sans-serif' }}
               >
                 Ajouter un Partenaire
@@ -319,22 +319,22 @@ const GestionPartenaires = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-4">
                   <div>
-                    <label className="block text-sm font-medium text-[#9CA3AF] mb-2" style={{ fontFamily: 'DM Sans, sans-serif' }}>Nom du partenaire</label>
+                    <label className="block text-sm font-medium text-[#6C757D] mb-2" style={{ fontFamily: 'DM Sans, sans-serif' }}>Nom du partenaire</label>
                     <input 
                       placeholder="Nom du partenaire" 
                       value={form.nom} 
                       onChange={(e) => setForm({ ...form, nom: e.target.value })}
-                      className="w-full px-4 py-2 rounded-xl border border-[#2D3748] bg-[#1F2937] text-[#F9FAFB] placeholder-[#9CA3AF] focus:outline-none focus:ring-2 focus:ring-[#FBBF24] focus:border-transparent transition-all duration-300"
+                      className="w-full px-4 py-2 rounded-xl border border-[#E9ECEF] bg-[bg-white] text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FF6B35] focus:border-transparent transition-all duration-300"
                       style={{ fontFamily: 'DM Sans, sans-serif' }}
                     />
                   </div>
                   
                   <div>
-                    <label className="block text-sm font-medium text-[#9CA3AF] mb-2" style={{ fontFamily: 'DM Sans, sans-serif' }}>Niveau de partenariat</label>
+                    <label className="block text-sm font-medium text-[#6C757D] mb-2" style={{ fontFamily: 'DM Sans, sans-serif' }}>Niveau de partenariat</label>
                     <select 
                       value={form.type} 
                       onChange={(e) => setForm({ ...form, type: e.target.value })}
-                      className="w-full px-4 py-2 rounded-xl border border-[#2D3748] bg-[#1F2937] text-[#F9FAFB] focus:outline-none focus:ring-2 focus:ring-[#FBBF24] focus:border-transparent transition-all duration-300"
+                      className="w-full px-4 py-2 rounded-xl border border-[#E9ECEF] bg-[bg-white] text-[#212529] focus:outline-none focus:ring-2 focus:ring-[#FF6B35] focus:border-transparent transition-all duration-300"
                       style={{ fontFamily: 'DM Sans, sans-serif' }}
                     >
                       <option value="platine">Partenaire Platine</option>
@@ -344,13 +344,13 @@ const GestionPartenaires = () => {
                   </div>
                   
                   <div>
-                    <label className="block text-sm font-medium text-[#9CA3AF] mb-2" style={{ fontFamily: 'DM Sans, sans-serif' }}>Email de contact</label>
+                    <label className="block text-sm font-medium text-[#6C757D] mb-2" style={{ fontFamily: 'DM Sans, sans-serif' }}>Email de contact</label>
                     <input 
                       type="email"
                       placeholder="Email de contact" 
                       value={form.contact_email} 
                       onChange={(e) => setForm({ ...form, contact_email: e.target.value })}
-                      className="w-full px-4 py-2 rounded-xl border border-[#2D3748] bg-[#1F2937] text-[#F9FAFB] placeholder-[#9CA3AF] focus:outline-none focus:ring-2 focus:ring-[#FBBF24] focus:border-transparent transition-all duration-300"
+                      className="w-full px-4 py-2 rounded-xl border border-[#E9ECEF] bg-[bg-white] text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FF6B35] focus:border-transparent transition-all duration-300"
                       style={{ fontFamily: 'DM Sans, sans-serif' }}
                     />
                   </div>
@@ -358,23 +358,23 @@ const GestionPartenaires = () => {
                 
                 <div className="space-y-4">
                   <div>
-                    <label className="block text-sm font-medium text-[#9CA3AF] mb-2" style={{ fontFamily: 'DM Sans, sans-serif' }}>Site web</label>
+                    <label className="block text-sm font-medium text-[#6C757D] mb-2" style={{ fontFamily: 'DM Sans, sans-serif' }}>Site web</label>
                     <input 
                       placeholder="Site web" 
                       value={form.site_web} 
                       onChange={(e) => setForm({ ...form, site_web: e.target.value })}
-                      className="w-full px-4 py-2 rounded-xl border border-[#2D3748] bg-[#1F2937] text-[#F9FAFB] placeholder-[#9CA3AF] focus:outline-none focus:ring-2 focus:ring-[#FBBF24] focus:border-transparent transition-all duration-300"
+                      className="w-full px-4 py-2 rounded-xl border border-[#E9ECEF] bg-[bg-white] text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FF6B35] focus:border-transparent transition-all duration-300"
                       style={{ fontFamily: 'DM Sans, sans-serif' }}
                     />
                   </div>
                   
                   <div>
-                    <label className="block text-sm font-medium text-[#9CA3AF] mb-2" style={{ fontFamily: 'DM Sans, sans-serif' }}>URL Logo</label>
+                    <label className="block text-sm font-medium text-[#6C757D] mb-2" style={{ fontFamily: 'DM Sans, sans-serif' }}>URL Logo</label>
                     <input 
                       placeholder="URL du logo" 
                       value={form.logo_url} 
                       onChange={(e) => setForm({ ...form, logo_url: e.target.value })}
-                      className="w-full px-4 py-2 rounded-xl border border-[#2D3748] bg-[#1F2937] text-[#F9FAFB] placeholder-[#9CA3AF] focus:outline-none focus:ring-2 focus:ring-[#FBBF24] focus:border-transparent transition-all duration-300"
+                      className="w-full px-4 py-2 rounded-xl border border-[#E9ECEF] bg-[bg-white] text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FF6B35] focus:border-transparent transition-all duration-300"
                       style={{ fontFamily: 'DM Sans, sans-serif' }}
                     />
                   </div>
@@ -382,13 +382,13 @@ const GestionPartenaires = () => {
               </div>
               
               <div className="mt-6">
-                <label className="block text-sm font-medium text-[#9CA3AF] mb-2" style={{ fontFamily: 'DM Sans, sans-serif' }}>Description</label>
+                <label className="block text-sm font-medium text-[#6C757D] mb-2" style={{ fontFamily: 'DM Sans, sans-serif' }}>Description</label>
                 <textarea 
                   placeholder="Description du partenariat..." 
                   value={form.description} 
                   onChange={(e) => setForm({ ...form, description: e.target.value })}
                   rows={3}
-                  className="w-full px-4 py-2 rounded-xl border border-[#2D3748] bg-[#1F2937] text-[#F9FAFB] placeholder-[#9CA3AF] focus:outline-none focus:ring-2 focus:ring-[#FBBF24] focus:border-transparent transition-all duration-300"
+                  className="w-full px-4 py-2 rounded-xl border border-[#E9ECEF] bg-[bg-white] text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FF6B35] focus:border-transparent transition-all duration-300"
                   style={{ fontFamily: 'DM Sans, sans-serif' }}
                 />
               </div>
@@ -396,14 +396,14 @@ const GestionPartenaires = () => {
               <div className="flex justify-end gap-3 mt-6">
                 <button
                   onClick={() => setShowAdd(false)}
-                  className="px-6 py-2 rounded-xl border border-[#2D3748] text-[#9CA3AF] hover:bg-[#2D3748] transition-colors"
+                  className="px-6 py-2 rounded-xl border border-[#E9ECEF] text-[#6C757D] hover:bg-[#E9ECEF] transition-colors"
                   style={{ fontFamily: 'DM Sans, sans-serif' }}
                 >
                   Annuler
                 </button>
                 <button
                   onClick={() => addPartenaire.mutate()}
-                  className="px-6 py-2 rounded-xl bg-[#00873E] text-[#F9FAFB] hover:bg-[#006450] transition-colors flex items-center gap-2"
+                  className="px-6 py-2 rounded-xl bg-[#1E3A5F] text-white hover:bg-[#006450] transition-colors flex items-center gap-2"
                   style={{ fontFamily: 'DM Sans, sans-serif' }}
                 >
                   <Save size={16} />
@@ -424,13 +424,13 @@ const GestionPartenaires = () => {
             <div className="flex flex-col lg:flex-row gap-4 items-start lg:items-center justify-between">
               <div className="flex-1">
                 <div className="flex items-center gap-3">
-                  <Search size={20} className="text-[#9CA3AF]" />
+                  <Search size={20} className="text-[#6C757D]" />
                   <input
                     type="text"
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                     placeholder="Rechercher un partenaire..."
-                    className="flex-1 px-4 py-2 rounded-xl border border-[#2D3748] bg-[#111827] text-[#F9FAFB] placeholder-[#9CA3AF] focus:outline-none focus:ring-2 focus:ring-[#FBBF24] focus:border-transparent transition-all duration-300"
+                    className="flex-1 px-4 py-2 rounded-xl border border-[#E9ECEF] bg-[white] text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FF6B35] focus:border-transparent transition-all duration-300"
                     style={{ fontFamily: 'DM Sans, sans-serif' }}
                   />
                 </div>
@@ -440,7 +440,7 @@ const GestionPartenaires = () => {
                 <button
                   onClick={() => setFilterType('tous')}
                   className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
-                    filterType === 'tous' ? 'bg-[#00873E] text-[#F9FAFB]' : 'bg-[#1F2937] text-[#9CA3AF] hover:bg-[#2D3748]'
+                    filterType === 'tous' ? 'bg-[#1E3A5F] text-white' : 'bg-[bg-white] text-[#6C757D] hover:bg-[#E9ECEF]'
                   }`}
                   style={{ fontFamily: 'DM Sans, sans-serif' }}
                 >
@@ -449,7 +449,7 @@ const GestionPartenaires = () => {
                 <button
                   onClick={() => setFilterType('platine')}
                   className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
-                    filterType === 'platine' ? 'bg-[#9CA3AF] text-[#F9FAFB]' : 'bg-[#1F2937] text-[#9CA3AF] hover:bg-[#2D3748]'
+                    filterType === 'platine' ? 'bg-[#6C757D] text-[#212529]' : 'bg-[bg-white] text-[#6C757D] hover:bg-[#E9ECEF]'
                   }`}
                   style={{ fontFamily: 'DM Sans, sans-serif' }}
                 >
@@ -458,7 +458,7 @@ const GestionPartenaires = () => {
                 <button
                   onClick={() => setFilterType('or')}
                   className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
-                    filterType === 'or' ? 'bg-[#FBBF24] text-[#0A0A0A]' : 'bg-[#1F2937] text-[#9CA3AF] hover:bg-[#2D3748]'
+                    filterType === 'or' ? 'bg-[#FF6B35] text-[bg-gradient-to-br from-[#F8F9FA] to-white]' : 'bg-[bg-white] text-[#6C757D] hover:bg-[#E9ECEF]'
                   }`}
                   style={{ fontFamily: 'DM Sans, sans-serif' }}
                 >
@@ -467,7 +467,7 @@ const GestionPartenaires = () => {
                 <button
                   onClick={() => setFilterType('argent')}
                   className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
-                    filterType === 'argent' ? 'bg-[#D4AF37] text-[#0A0A0A]' : 'bg-[#1F2937] text-[#9CA3AF] hover:bg-[#2D3748]'
+                    filterType === 'argent' ? 'bg-[#D4AF37] text-[bg-gradient-to-br from-[#F8F9FA] to-white]' : 'bg-[bg-white] text-[#6C757D] hover:bg-[#E9ECEF]'
                   }`}
                   style={{ fontFamily: 'DM Sans, sans-serif' }}
                 >
@@ -476,8 +476,8 @@ const GestionPartenaires = () => {
               </div>
               
               <div className="flex items-center gap-2">
-                <Filter size={20} className="text-[#9CA3AF]" />
-                <span className="text-sm text-[#9CA3AF]" style={{ fontFamily: 'DM Sans, sans-serif' }}>
+                <Filter size={20} className="text-[#6C757D]" />
+                <span className="text-sm text-[#6C757D]" style={{ fontFamily: 'DM Sans, sans-serif' }}>
                   {filteredPartenaires.length} résultat{filteredPartenaires.length > 1 ? 's' : ''}
                 </span>
               </div>
@@ -494,9 +494,9 @@ const GestionPartenaires = () => {
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.5 }}
-                className="relative overflow-hidden rounded-2xl border border-[#2D3748] bg-[#111827] hover:border-[#FBBF24]/50 hover:shadow-xl hover:shadow-[#FBBF24]/10 transition-all duration-300"
+                className="relative overflow-hidden rounded-2xl border border-[#E9ECEF] bg-[white] hover:border-[#FF6B35]/50 hover:shadow-xl hover:shadow-[#FF6B35]/10 transition-all duration-300"
               >
-                <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-[#FBBF24]/5 opacity-0"></div>
+                <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-[#FF6B35]/5 opacity-0"></div>
                 
                 <div className="relative z-10 p-6">
                   <div className="flex items-start justify-between mb-4">
@@ -505,23 +505,23 @@ const GestionPartenaires = () => {
                         <img 
                           src={partenaire.logo_url} 
                           alt={partenaire.nom}
-                          className="w-12 h-12 rounded-lg object-cover border-2 border-[#2D3748]"
+                          className="w-12 h-12 rounded-lg object-cover border-2 border-[#E9ECEF]"
                         />
                       ) : (
-                        <div className="w-12 h-12 rounded-lg bg-gradient-to-r from-[#00873E] to-[#FBBF24] flex items-center justify-center">
+                        <div className="w-12 h-12 rounded-lg bg-gradient-to-r from-[#1E3A5F] to-[#FF6B35] flex items-center justify-center">
                           <Building2 size={20} className="text-white" />
                         </div>
                       )}
                       <div className="flex-1">
                         <h3 
-                          className="font-bold text-[#F9FAFB]"
+                          className="font-bold text-[#212529]"
                           style={{ fontFamily: 'Sora, sans-serif' }}
                         >
                           {partenaire.nom}
                         </h3>
                         <span className={`inline-block px-2 py-1 rounded-full text-xs font-bold ${
-                          partenaire.niveau === 'platine' ? 'bg-[#9CA3AF]/20 text-[#9CA3AF]' : 
-                          partenaire.niveau === 'or' ? 'bg-[#FBBF24]/20 text-[#FBBF24]' : 
+                          partenaire.niveau === 'platine' ? 'bg-[#6C757D]/20 text-[#6C757D]' : 
+                          partenaire.niveau === 'or' ? 'bg-[#FF6B35]/20 text-[#FF6B35]' : 
                           'bg-[#D4AF37]/20 text-[#D4AF37]'
                         }`}>
                           {partenaire.niveau === 'platine' ? '🥉 Platine' : 
@@ -533,7 +533,7 @@ const GestionPartenaires = () => {
                     
                     <button
                       onClick={() => deletePartenaire.mutate(partenaire.id)}
-                      className="p-2 rounded-lg bg-[#DC2626] text-[#F9FAFB] hover:bg-[#B91C1C] transition-colors"
+                      className="p-2 rounded-lg bg-[#DC2626] text-[#212529] hover:bg-[#B91C1C] transition-colors"
                       style={{ fontFamily: 'DM Sans, sans-serif' }}
                     >
                       <Trash2 size={16} />
@@ -542,7 +542,7 @@ const GestionPartenaires = () => {
                   
                   <div className="space-y-2">
                     {partenaire.description && (
-                      <p className="text-xs text-[#9CA3AF] line-clamp-2" style={{ fontFamily: 'DM Sans, sans-serif' }}>
+                      <p className="text-xs text-[#6C757D] line-clamp-2" style={{ fontFamily: 'DM Sans, sans-serif' }}>
                         📝 {partenaire.description}
                       </p>
                     )}
@@ -553,7 +553,7 @@ const GestionPartenaires = () => {
                           href={partenaire.site_web}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-xs text-[#00873E] hover:text-[#FBBF24] transition-colors flex items-center gap-1"
+                          className="text-xs text-[#1E3A5F] hover:text-[#FF6B35] transition-colors flex items-center gap-1"
                           style={{ fontFamily: 'DM Sans, sans-serif' }}
                         >
                           <Globe size={12} />
@@ -564,7 +564,7 @@ const GestionPartenaires = () => {
                       {partenaire.contact_email && (
                         <a 
                           href={`mailto:${partenaire.contact_email}`}
-                          className="text-xs text-[#00873E] hover:text-[#FBBF24] transition-colors"
+                          className="text-xs text-[#1E3A5F] hover:text-[#FF6B35] transition-colors"
                           style={{ fontFamily: 'DM Sans, sans-serif' }}
                         >
                           ✉️ Email

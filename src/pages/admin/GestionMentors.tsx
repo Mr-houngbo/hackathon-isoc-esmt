@@ -88,8 +88,8 @@ const GestionMentors = () => {
       <AdminLayout>
         <div className="flex items-center justify-center min-h-screen">
           <div className="flex flex-col items-center gap-4">
-            <div className="w-12 h-12 rounded-full border-4 border-[#00873E] border-t-transparent animate-spin"></div>
-            <p className="text-[#9CA3AF]">Chargement des mentors...</p>
+            <div className="w-12 h-12 rounded-full border-4 border-[#1E3A5F] border-t-transparent animate-spin"></div>
+            <p className="text-[#6C757D]">Chargement des mentors...</p>
           </div>
         </div>
       </AdminLayout>
@@ -102,7 +102,7 @@ const GestionMentors = () => {
         <div className="flex items-center justify-center min-h-screen">
           <div className="text-center">
             <p className="text-[#DC2626] text-lg font-bold mb-4">Erreur de chargement</p>
-            <p className="text-[#9CA3AF]">{error.message}</p>
+            <p className="text-[#6C757D]">{error.message}</p>
           </div>
         </div>
       </AdminLayout>
@@ -111,9 +111,9 @@ const GestionMentors = () => {
 
   return (
     <AdminLayout>
-      <div className="min-h-screen bg-[#0A0A0A]">
+      <div className="min-h-screen bg-gradient-to-br from-[#F8F9FA] to-white">
         {/* Header */}
-        <div className="bg-gradient-to-r from-[#00873E]/10 to-[#FBBF24]/10 backdrop-blur-sm border-b border-[#2D3748]/20">
+        <div className="bg-gradient-to-r from-[#1E3A5F]/10 to-[#FF6B35]/10 backdrop-blur-sm border-b border-[#E9ECEF]/20">
           <div className="container py-6">
             <div className="flex items-center justify-between">
               <motion.div
@@ -122,13 +122,13 @@ const GestionMentors = () => {
                 transition={{ duration: 0.6 }}
               >
                 <h1 
-                  className="font-display text-3xl font-bold text-[#F9FAFB]"
+                  className="font-display text-3xl font-bold text-[#212529]"
                   style={{ fontFamily: 'Sora, sans-serif', fontWeight: 800 }}
                 >
                   Gestion des Mentors & Jury
                 </h1>
                 <p 
-                  className="text-[#9CA3AF] mt-2"
+                  className="text-[#6C757D] mt-2"
                   style={{ fontFamily: 'DM Sans, sans-serif' }}
                 >
                   Administration des experts et membres du jury pour le Hackathon ISOC-ESMT 2026
@@ -138,7 +138,7 @@ const GestionMentors = () => {
               <div className="flex gap-2">
                 <button
                   onClick={() => setShowAdd(!showAdd)}
-                  className="px-4 py-2 rounded-lg bg-[#00873E] text-[#F9FAFB] hover:bg-[#006450] transition-colors"
+                  className="px-4 py-2 rounded-lg bg-[#1E3A5F] text-white hover:bg-[#006450] transition-colors"
                   style={{ fontFamily: 'DM Sans, sans-serif' }}
                 >
                   <Plus size={16} className="mr-2" />
@@ -146,7 +146,7 @@ const GestionMentors = () => {
                 </button>
                 <button
                   onClick={() => window.print()}
-                  className="px-4 py-2 rounded-lg bg-[#1F2937] text-[#9CA3AF] hover:bg-[#2D3748] transition-colors"
+                  className="px-4 py-2 rounded-lg bg-[bg-white] text-[#6C757D] hover:bg-[#E9ECEF] transition-colors"
                   style={{ fontFamily: 'DM Sans, sans-serif' }}
                 >
                   <Download size={16} className="mr-2" />
@@ -169,25 +169,25 @@ const GestionMentors = () => {
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.5, delay: 0.1 }}
-                className="relative overflow-hidden rounded-2xl border border-[#2D3748] bg-[#111827] p-6 hover:border-[#FBBF24]/50 hover:shadow-xl hover:shadow-[#FBBF24]/10 transition-all duration-300"
+                className="relative overflow-hidden rounded-2xl border border-[#E9ECEF] bg-[white] p-6 hover:border-[#FF6B35]/50 hover:shadow-xl hover:shadow-[#FF6B35]/10 transition-all duration-300"
               >
-                <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-[#FBBF24]/5 opacity-0"></div>
+                <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-[#FF6B35]/5 opacity-0"></div>
                 
                 <div className="relative z-10">
                   <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center gap-3">
-                      <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-[#00873E]/20 to-[#FBBF24]/20 flex items-center justify-center">
-                        <Users size={24} className="text-[#F9FAFB]" />
+                      <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-[#1E3A5F]/20 to-[#FF6B35]/20 flex items-center justify-center">
+                        <Users size={24} className="text-[#212529]" />
                       </div>
                       <div>
                         <p 
-                          className="text-2xl font-bold text-[#F9FAFB]"
+                          className="text-2xl font-bold text-[#212529]"
                           style={{ fontFamily: 'Sora, sans-serif', fontWeight: 700 }}
                         >
                           {stats.total}
                         </p>
                         <p 
-                          className="text-xs text-[#9CA3AF] mt-1"
+                          className="text-xs text-[#6C757D] mt-1"
                           style={{ fontFamily: 'DM Sans, sans-serif' }}
                         >
                           Total des mentors
@@ -202,7 +202,7 @@ const GestionMentors = () => {
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.5, delay: 0.2 }}
-                className="relative overflow-hidden rounded-2xl border border-[#2D3748] bg-[#111827] p-6 hover:border-[#10B981]/50 hover:shadow-xl hover:shadow-[#10B981]/10 transition-all duration-300"
+                className="relative overflow-hidden rounded-2xl border border-[#E9ECEF] bg-[white] p-6 hover:border-[#10B981]/50 hover:shadow-xl hover:shadow-[#10B981]/10 transition-all duration-300"
               >
                 <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-[#10B981]/5 opacity-0"></div>
                 
@@ -210,17 +210,17 @@ const GestionMentors = () => {
                   <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center gap-3">
                       <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-[#10B981]/20 to-[#10B981]/20 flex items-center justify-center">
-                        <UserCheck size={24} className="text-[#F9FAFB]" />
+                        <UserCheck size={24} className="text-[#212529]" />
                       </div>
                       <div>
                         <p 
-                          className="text-2xl font-bold text-[#F9FAFB]"
+                          className="text-2xl font-bold text-[#212529]"
                           style={{ fontFamily: 'Sora, sans-serif', fontWeight: 700 }}
                         >
                           {stats.mentors}
                         </p>
                         <p 
-                          className="text-xs text-[#9CA3AF] mt-1"
+                          className="text-xs text-[#6C757D] mt-1"
                           style={{ fontFamily: 'DM Sans, sans-serif' }}
                         >
                           Mentors actifs
@@ -235,7 +235,7 @@ const GestionMentors = () => {
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.5, delay: 0.3 }}
-                className="relative overflow-hidden rounded-2xl border border-[#2D3748] bg-[#111827] p-6 hover:border-[#F59E0B]/50 hover:shadow-xl hover:shadow-[#F59E0B]/10 transition-all duration-300"
+                className="relative overflow-hidden rounded-2xl border border-[#E9ECEF] bg-[white] p-6 hover:border-[#F59E0B]/50 hover:shadow-xl hover:shadow-[#F59E0B]/10 transition-all duration-300"
               >
                 <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-[#F59E0B]/5 opacity-0"></div>
                 
@@ -243,17 +243,17 @@ const GestionMentors = () => {
                   <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center gap-3">
                       <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-[#F59E0B]/20 to-[#F59E0B]/20 flex items-center justify-center">
-                        <Award size={24} className="text-[#F9FAFB]" />
+                        <Award size={24} className="text-[#212529]" />
                       </div>
                       <div>
                         <p 
-                          className="text-2xl font-bold text-[#F9FAFB]"
+                          className="text-2xl font-bold text-[#212529]"
                           style={{ fontFamily: 'Sora, sans-serif', fontWeight: 700 }}
                         >
                           {stats.jury}
                         </p>
                         <p 
-                          className="text-xs text-[#9CA3AF] mt-1"
+                          className="text-xs text-[#6C757D] mt-1"
                           style={{ fontFamily: 'DM Sans, sans-serif' }}
                         >
                           Membres du jury
@@ -275,9 +275,9 @@ const GestionMentors = () => {
             transition={{ duration: 0.5 }}
             className="container py-6"
           >
-            <div className="rounded-2xl border border-[#2D3748] bg-[#111827] p-6">
+            <div className="rounded-2xl border border-[#E9ECEF] bg-[white] p-6">
               <h2 
-                className="font-display text-xl font-bold text-[#F9FAFB] mb-6"
+                className="font-display text-xl font-bold text-[#212529] mb-6"
                 style={{ fontFamily: 'Sora, sans-serif' }}
               >
                 Ajouter un Mentor/Membre du Jury
@@ -286,34 +286,34 @@ const GestionMentors = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-4">
                   <div>
-                    <label className="block text-sm font-medium text-[#9CA3AF] mb-2" style={{ fontFamily: 'DM Sans, sans-serif' }}>Nom complet</label>
+                    <label className="block text-sm font-medium text-[#6C757D] mb-2" style={{ fontFamily: 'DM Sans, sans-serif' }}>Nom complet</label>
                     <input 
                       placeholder="Nom complet" 
                       value={form.nom} 
                       onChange={(e) => setForm({ ...form, nom: e.target.value })}
-                      className="w-full px-4 py-2 rounded-xl border border-[#2D3748] bg-[#1F2937] text-[#F9FAFB] placeholder-[#9CA3AF] focus:outline-none focus:ring-2 focus:ring-[#FBBF24] focus:border-transparent transition-all duration-300"
+                      className="w-full px-4 py-2 rounded-xl border border-[#E9ECEF] bg-[bg-white] text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FF6B35] focus:border-transparent transition-all duration-300"
                       style={{ fontFamily: 'DM Sans, sans-serif' }}
                     />
                   </div>
                   
                   <div>
-                    <label className="block text-sm font-medium text-[#9CA3AF] mb-2" style={{ fontFamily: 'DM Sans, sans-serif' }}>Email</label>
+                    <label className="block text-sm font-medium text-[#6C757D] mb-2" style={{ fontFamily: 'DM Sans, sans-serif' }}>Email</label>
                     <input 
                       type="email"
                       placeholder="Email professionnel" 
                       value={form.email} 
                       onChange={(e) => setForm({ ...form, email: e.target.value })}
-                      className="w-full px-4 py-2 rounded-xl border border-[#2D3748] bg-[#1F2937] text-[#F9FAFB] placeholder-[#9CA3AF] focus:outline-none focus:ring-2 focus:ring-[#FBBF24] focus:border-transparent transition-all duration-300"
+                      className="w-full px-4 py-2 rounded-xl border border-[#E9ECEF] bg-[bg-white] text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FF6B35] focus:border-transparent transition-all duration-300"
                       style={{ fontFamily: 'DM Sans, sans-serif' }}
                     />
                   </div>
                   
                   <div>
-                    <label className="block text-sm font-medium text-[#9CA3AF] mb-2" style={{ fontFamily: 'DM Sans, sans-serif' }}>Type</label>
+                    <label className="block text-sm font-medium text-[#6C757D] mb-2" style={{ fontFamily: 'DM Sans, sans-serif' }}>Type</label>
                     <select 
                       value={form.type} 
                       onChange={(e) => setForm({ ...form, type: e.target.value })}
-                      className="w-full px-4 py-2 rounded-xl border border-[#2D3748] bg-[#1F2937] text-[#F9FAFB] focus:outline-none focus:ring-2 focus:ring-[#FBBF24] focus:border-transparent transition-all duration-300"
+                      className="w-full px-4 py-2 rounded-xl border border-[#E9ECEF] bg-[bg-white] text-[#212529] focus:outline-none focus:ring-2 focus:ring-[#FF6B35] focus:border-transparent transition-all duration-300"
                       style={{ fontFamily: 'DM Sans, sans-serif' }}
                     >
                       <option value="mentor">Mentor</option>
@@ -324,34 +324,34 @@ const GestionMentors = () => {
                 
                 <div className="space-y-4">
                   <div>
-                    <label className="block text-sm font-medium text-[#9CA3AF] mb-2" style={{ fontFamily: 'DM Sans, sans-serif' }}>Titre/Poste</label>
+                    <label className="block text-sm font-medium text-[#6C757D] mb-2" style={{ fontFamily: 'DM Sans, sans-serif' }}>Titre/Poste</label>
                     <input 
                       placeholder="Titre/Poste" 
                       value={form.titre} 
                       onChange={(e) => setForm({ ...form, titre: e.target.value })}
-                      className="w-full px-4 py-2 rounded-xl border border-[#2D3748] bg-[#1F2937] text-[#F9FAFB] placeholder-[#9CA3AF] focus:outline-none focus:ring-2 focus:ring-[#FBBF24] focus:border-transparent transition-all duration-300"
+                      className="w-full px-4 py-2 rounded-xl border border-[#E9ECEF] bg-[bg-white] text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FF6B35] focus:border-transparent transition-all duration-300"
                       style={{ fontFamily: 'DM Sans, sans-serif' }}
                     />
                   </div>
                   
                   <div>
-                    <label className="block text-sm font-medium text-[#9CA3AF] mb-2" style={{ fontFamily: 'DM Sans, sans-serif' }}>Entreprise/Organisation</label>
+                    <label className="block text-sm font-medium text-[#6C757D] mb-2" style={{ fontFamily: 'DM Sans, sans-serif' }}>Entreprise/Organisation</label>
                     <input 
                       placeholder="Entreprise ou organisation" 
                       value={form.entreprise} 
                       onChange={(e) => setForm({ ...form, entreprise: e.target.value })}
-                      className="w-full px-4 py-2 rounded-xl border border-[#2D3748] bg-[#1F2937] text-[#F9FAFB] placeholder-[#9CA3AF] focus:outline-none focus:ring-2 focus:ring-[#FBBF24] focus:border-transparent transition-all duration-300"
+                      className="w-full px-4 py-2 rounded-xl border border-[#E9ECEF] bg-[bg-white] text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FF6B35] focus:border-transparent transition-all duration-300"
                       style={{ fontFamily: 'DM Sans, sans-serif' }}
                     />
                   </div>
                   
                   <div>
-                    <label className="block text-sm font-medium text-[#9CA3AF] mb-2" style={{ fontFamily: 'DM Sans, sans-serif' }}>Expertise</label>
+                    <label className="block text-sm font-medium text-[#6C757D] mb-2" style={{ fontFamily: 'DM Sans, sans-serif' }}>Expertise</label>
                     <input 
                       placeholder="Domaine d'expertise" 
                       value={form.expertise} 
                       onChange={(e) => setForm({ ...form, expertise: e.target.value })}
-                      className="w-full px-4 py-2 rounded-xl border border-[#2D3748] bg-[#1F2937] text-[#F9FAFB] placeholder-[#9CA3AF] focus:outline-none focus:ring-2 focus:ring-[#FBBF24] focus:border-transparent transition-all duration-300"
+                      className="w-full px-4 py-2 rounded-xl border border-[#E9ECEF] bg-[bg-white] text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FF6B35] focus:border-transparent transition-all duration-300"
                       style={{ fontFamily: 'DM Sans, sans-serif' }}
                     />
                   </div>
@@ -360,35 +360,35 @@ const GestionMentors = () => {
               
               <div className="mt-6 space-y-4">
                 <div>
-                  <label className="block text-sm font-medium text-[#9CA3AF] mb-2" style={{ fontFamily: 'DM Sans, sans-serif' }}>Biographie</label>
+                  <label className="block text-sm font-medium text-[#6C757D] mb-2" style={{ fontFamily: 'DM Sans, sans-serif' }}>Biographie</label>
                   <textarea 
                     placeholder="Courte biographie..." 
                     value={form.bio} 
                     onChange={(e) => setForm({ ...form, bio: e.target.value })}
                     rows={3}
-                    className="w-full px-4 py-2 rounded-xl border border-[#2D3748] bg-[#1F2937] text-[#F9FAFB] placeholder-[#9CA3AF] focus:outline-none focus:ring-2 focus:ring-[#FBBF24] focus:border-transparent transition-all duration-300"
+                    className="w-full px-4 py-2 rounded-xl border border-[#E9ECEF] bg-[bg-white] text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FF6B35] focus:border-transparent transition-all duration-300"
                     style={{ fontFamily: 'DM Sans, sans-serif' }}
                   />
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-[#9CA3AF] mb-2" style={{ fontFamily: 'DM Sans, sans-serif' }}>URL Photo</label>
+                  <label className="block text-sm font-medium text-[#6C757D] mb-2" style={{ fontFamily: 'DM Sans, sans-serif' }}>URL Photo</label>
                   <input 
                     placeholder="URL de la photo" 
                     value={form.photo_url} 
                     onChange={(e) => setForm({ ...form, photo_url: e.target.value })}
-                    className="w-full px-4 py-2 rounded-xl border border-[#2D3748] bg-[#1F2937] text-[#F9FAFB] placeholder-[#9CA3AF] focus:outline-none focus:ring-2 focus:ring-[#FBBF24] focus:border-transparent transition-all duration-300"
+                    className="w-full px-4 py-2 rounded-xl border border-[#E9ECEF] bg-[bg-white] text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FF6B35] focus:border-transparent transition-all duration-300"
                     style={{ fontFamily: 'DM Sans, sans-serif' }}
                   />
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-[#9CA3AF] mb-2" style={{ fontFamily: 'DM Sans, sans-serif' }}>URL LinkedIn</label>
+                  <label className="block text-sm font-medium text-[#6C757D] mb-2" style={{ fontFamily: 'DM Sans, sans-serif' }}>URL LinkedIn</label>
                   <input 
                     placeholder="URL du profil LinkedIn" 
                     value={form.linkedin_url} 
                     onChange={(e) => setForm({ ...form, linkedin_url: e.target.value })}
-                    className="w-full px-4 py-2 rounded-xl border border-[#2D3748] bg-[#1F2937] text-[#F9FAFB] placeholder-[#9CA3AF] focus:outline-none focus:ring-2 focus:ring-[#FBBF24] focus:border-transparent transition-all duration-300"
+                    className="w-full px-4 py-2 rounded-xl border border-[#E9ECEF] bg-[bg-white] text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FF6B35] focus:border-transparent transition-all duration-300"
                     style={{ fontFamily: 'DM Sans, sans-serif' }}
                   />
                 </div>
@@ -397,14 +397,14 @@ const GestionMentors = () => {
               <div className="flex justify-end gap-3 mt-6">
                 <button
                   onClick={() => setShowAdd(false)}
-                  className="px-6 py-2 rounded-xl border border-[#2D3748] text-[#9CA3AF] hover:bg-[#2D3748] transition-colors"
+                  className="px-6 py-2 rounded-xl border border-[#E9ECEF] text-[#6C757D] hover:bg-[#E9ECEF] transition-colors"
                   style={{ fontFamily: 'DM Sans, sans-serif' }}
                 >
                   Annuler
                 </button>
                 <button
                   onClick={() => addMentor.mutate()}
-                  className="px-6 py-2 rounded-xl bg-[#00873E] text-[#F9FAFB] hover:bg-[#006450] transition-colors flex items-center gap-2"
+                  className="px-6 py-2 rounded-xl bg-[#1E3A5F] text-white hover:bg-[#006450] transition-colors flex items-center gap-2"
                   style={{ fontFamily: 'DM Sans, sans-serif' }}
                 >
                   <Save size={16} />
@@ -425,13 +425,13 @@ const GestionMentors = () => {
             <div className="flex flex-col lg:flex-row gap-4 items-start lg:items-center justify-between">
               <div className="flex-1">
                 <div className="flex items-center gap-3">
-                  <Search size={20} className="text-[#9CA3AF]" />
+                  <Search size={20} className="text-[#6C757D]" />
                   <input
                     type="text"
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                     placeholder="Rechercher un mentor..."
-                    className="flex-1 px-4 py-2 rounded-xl border border-[#2D3748] bg-[#111827] text-[#F9FAFB] placeholder-[#9CA3AF] focus:outline-none focus:ring-2 focus:ring-[#FBBF24] focus:border-transparent transition-all duration-300"
+                    className="flex-1 px-4 py-2 rounded-xl border border-[#E9ECEF] bg-[white] text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FF6B35] focus:border-transparent transition-all duration-300"
                     style={{ fontFamily: 'DM Sans, sans-serif' }}
                   />
                 </div>
@@ -441,7 +441,7 @@ const GestionMentors = () => {
                 <button
                   onClick={() => setFilterType('tous')}
                   className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
-                    filterType === 'tous' ? 'bg-[#00873E] text-[#F9FAFB]' : 'bg-[#1F2937] text-[#9CA3AF] hover:bg-[#2D3748]'
+                    filterType === 'tous' ? 'bg-[#1E3A5F] text-white' : 'bg-[bg-white] text-[#6C757D] hover:bg-[#E9ECEF]'
                   }`}
                   style={{ fontFamily: 'DM Sans, sans-serif' }}
                 >
@@ -450,7 +450,7 @@ const GestionMentors = () => {
                 <button
                   onClick={() => setFilterType('mentors')}
                   className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
-                    filterType === 'mentors' ? 'bg-[#10B981] text-[#F9FAFB]' : 'bg-[#1F2937] text-[#9CA3AF] hover:bg-[#2D3748]'
+                    filterType === 'mentors' ? 'bg-[#10B981] text-[#212529]' : 'bg-[bg-white] text-[#6C757D] hover:bg-[#E9ECEF]'
                   }`}
                   style={{ fontFamily: 'DM Sans, sans-serif' }}
                 >
@@ -459,7 +459,7 @@ const GestionMentors = () => {
                 <button
                   onClick={() => setFilterType('jury')}
                   className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
-                    filterType === 'jury' ? 'bg-[#F59E0B] text-[#F9FAFB]' : 'bg-[#1F2937] text-[#9CA3AF] hover:bg-[#2D3748]'
+                    filterType === 'jury' ? 'bg-[#F59E0B] text-[#212529]' : 'bg-[bg-white] text-[#6C757D] hover:bg-[#E9ECEF]'
                   }`}
                   style={{ fontFamily: 'DM Sans, sans-serif' }}
                 >
@@ -468,8 +468,8 @@ const GestionMentors = () => {
               </div>
               
               <div className="flex items-center gap-2">
-                <Filter size={20} className="text-[#9CA3AF]" />
-                <span className="text-sm text-[#9CA3AF]" style={{ fontFamily: 'DM Sans, sans-serif' }}>
+                <Filter size={20} className="text-[#6C757D]" />
+                <span className="text-sm text-[#6C757D]" style={{ fontFamily: 'DM Sans, sans-serif' }}>
                   {filteredMentors.length} résultat{filteredMentors.length > 1 ? 's' : ''}
                 </span>
               </div>
@@ -486,9 +486,9 @@ const GestionMentors = () => {
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.5 }}
-                className="relative overflow-hidden rounded-2xl border border-[#2D3748] bg-[#111827] hover:border-[#FBBF24]/50 hover:shadow-xl hover:shadow-[#FBBF24]/10 transition-all duration-300"
+                className="relative overflow-hidden rounded-2xl border border-[#E9ECEF] bg-[white] hover:border-[#FF6B35]/50 hover:shadow-xl hover:shadow-[#FF6B35]/10 transition-all duration-300"
               >
-                <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-[#FBBF24]/5 opacity-0"></div>
+                <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-[#FF6B35]/5 opacity-0"></div>
                 
                 <div className="relative z-10 p-6">
                   <div className="flex items-start justify-between mb-4">
@@ -497,10 +497,10 @@ const GestionMentors = () => {
                         <img 
                           src={mentor.photo_url} 
                           alt={mentor.nom}
-                          className="w-12 h-12 rounded-full object-cover border-2 border-[#2D3748]"
+                          className="w-12 h-12 rounded-full object-cover border-2 border-[#E9ECEF]"
                         />
                       ) : (
-                        <div className="w-12 h-12 rounded-full bg-gradient-to-r from-[#00873E] to-[#FBBF24] flex items-center justify-center">
+                        <div className="w-12 h-12 rounded-full bg-gradient-to-r from-[#1E3A5F] to-[#FF6B35] flex items-center justify-center">
                           <span className="text-white font-bold text-lg">
                             {mentor.nom?.charAt(0)?.toUpperCase() || 'M'}
                           </span>
@@ -508,13 +508,13 @@ const GestionMentors = () => {
                       )}
                       <div className="flex-1">
                         <h3 
-                          className="font-bold text-[#F9FAFB]"
+                          className="font-bold text-[#212529]"
                           style={{ fontFamily: 'Sora, sans-serif' }}
                         >
                           {mentor.nom}
                         </h3>
                         <p 
-                          className="text-sm text-[#9CA3AF]"
+                          className="text-sm text-[#6C757D]"
                           style={{ fontFamily: 'DM Sans, sans-serif' }}
                         >
                           {mentor.titre} • {mentor.entreprise}
@@ -524,7 +524,7 @@ const GestionMentors = () => {
                     
                     <button
                       onClick={() => deleteMentor.mutate(mentor.id)}
-                      className="p-2 rounded-lg bg-[#DC2626] text-[#F9FAFB] hover:bg-[#B91C1C] transition-colors"
+                      className="p-2 rounded-lg bg-[#DC2626] text-[#212529] hover:bg-[#B91C1C] transition-colors"
                       style={{ fontFamily: 'DM Sans, sans-serif' }}
                     >
                       <Trash2 size={16} />
@@ -539,13 +539,13 @@ const GestionMentors = () => {
                     </span>
                     
                     {mentor.expertise && (
-                      <p className="text-xs text-[#9CA3AF]" style={{ fontFamily: 'DM Sans, sans-serif' }}>
+                      <p className="text-xs text-[#6C757D]" style={{ fontFamily: 'DM Sans, sans-serif' }}>
                         🎯 {mentor.expertise}
                       </p>
                     )}
                     
                     {mentor.bio && (
-                      <p className="text-xs text-[#9CA3AF] line-clamp-2" style={{ fontFamily: 'DM Sans, sans-serif' }}>
+                      <p className="text-xs text-[#6C757D] line-clamp-2" style={{ fontFamily: 'DM Sans, sans-serif' }}>
                         📝 {mentor.bio}
                       </p>
                     )}
@@ -554,7 +554,7 @@ const GestionMentors = () => {
                       {mentor.email && (
                         <a 
                           href={`mailto:${mentor.email}`}
-                          className="text-xs text-[#00873E] hover:text-[#FBBF24] transition-colors"
+                          className="text-xs text-[#1E3A5F] hover:text-[#FF6B35] transition-colors"
                           style={{ fontFamily: 'DM Sans, sans-serif' }}
                         >
                           ✉️ Email

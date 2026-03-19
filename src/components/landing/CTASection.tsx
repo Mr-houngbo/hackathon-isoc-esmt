@@ -3,12 +3,11 @@ import { motion } from "framer-motion";
 import { ArrowRight, Rocket, Sparkles, Timer } from "lucide-react";
 
 const CTASection = () => (
-  <section className="py-24 bg-[#0A0A0A] relative overflow-hidden">
+  <section className="py-24 bg-gradient-to-br from-white to-[#F8F9FA] relative overflow-hidden">
     {/* Animated background */}
-    <div className="absolute inset-0">
-      <div className="absolute inset-0 bg-gradient-to-r from-[#00873E]/5 via-[#FBBF24]/5 to-[#00873E]/5 animate-pulse"></div>
-      <div className="absolute top-0 left-1/4 w-96 h-96 bg-[#00873E]/10 rounded-full blur-3xl animate-float"></div>
-      <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-[#FBBF24]/10 rounded-full blur-3xl animate-float" style={{ animationDelay: '2s' }}></div>
+    <div className="absolute inset-0 overflow-hidden">
+      <div className="absolute top-0 left-1/4 w-96 h-96 bg-[#FF6B35]/5 rounded-full blur-3xl animate-float-elegant"></div>
+      <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-[#1E3A5F]/5 rounded-full blur-3xl animate-float-elegant" style={{ animationDelay: '2s' }}></div>
     </div>
     
     <div className="container relative z-10">
@@ -17,30 +16,27 @@ const CTASection = () => (
         whileInView={{ opacity: 1, scale: 1 }}
         viewport={{ once: true }}
         transition={{ duration: 0.6 }}
-        className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-[#111827] via-[#1F2937] to-[#111827] p-12 sm:p-20 text-center border border-[#2D3748]"
+        className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-[#FF6B35] via-[#1E3A5F] to-[#FF8C42] p-12 sm:p-20 text-center shadow-2xl"
       >
-        {/* Glass overlay */}
-        <div className="absolute inset-0 glassmorphism rounded-3xl"></div>
-        
         {/* Floating icons */}
         <motion.div
           animate={{ y: [-10, 10, -10] }}
           transition={{ duration: 4, repeat: Infinity }}
-          className="absolute top-8 left-8 text-[#FBBF24]/20"
+          className="absolute top-8 left-8 text-white/20"
         >
           <Rocket size={32} />
         </motion.div>
         <motion.div
           animate={{ y: [10, -10, 10] }}
           transition={{ duration: 3, repeat: Infinity }}
-          className="absolute top-12 right-12 text-[#00873E]/20"
+          className="absolute top-12 right-12 text-white/20"
         >
           <Sparkles size={24} />
         </motion.div>
         <motion.div
           animate={{ y: [-5, 5, -5] }}
           transition={{ duration: 5, repeat: Infinity }}
-          className="absolute bottom-8 left-16 text-[#FBBF24]/20"
+          className="absolute bottom-8 left-16 text-white/20"
         >
           <Timer size={28} />
         </motion.div>
@@ -52,11 +48,11 @@ const CTASection = () => (
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
-            className="inline-flex items-center gap-2 badge-premium px-4 py-2 rounded-full mb-8 mx-auto"
+            className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm border border-white/30 px-4 py-2 rounded-full mb-8 mx-auto"
           >
-            <div className="w-2 h-2 bg-[#FBBF24] rounded-full animate-pulse"></div>
-            <span className="text-sm font-semibold" style={{ fontFamily: 'Sora, sans-serif' }}>
-              Limited spots available
+            <div className="w-2 h-2 bg-white rounded-full animate-pulse"></div>
+            <span className="text-sm font-semibold text-white" style={{ fontFamily: 'Sora, sans-serif' }}>
+              Places limitées
             </span>
           </motion.div>
           
@@ -66,11 +62,11 @@ const CTASection = () => (
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.3 }}
-            className="font-display text-4xl sm:text-6xl font-bold text-[#F9FAFB] mb-6"
+            className="font-display text-4xl sm:text-6xl font-bold text-white mb-6"
             style={{ fontFamily: 'Sora, sans-serif', fontWeight: 800 }}
           >
             Prêt à 
-            <span className="text-gradient"> relever le défi</span> ?
+            <span className="text-white"> relever le défi</span> ?
           </motion.h2>
           
           {/* Description */}
@@ -79,7 +75,7 @@ const CTASection = () => (
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.4 }}
-            className="text-[#9CA3AF] text-xl max-w-2xl mx-auto mb-10 leading-relaxed"
+            className="text-white/90 text-xl max-w-2xl mx-auto mb-10 leading-relaxed"
             style={{ fontFamily: 'DM Sans, sans-serif' }}
           >
             Rejoignez 40 innovateurs pour 48h de création intensive. 
@@ -95,16 +91,16 @@ const CTASection = () => (
             className="flex flex-wrap justify-center gap-8 mb-12"
           >
             <div className="text-center">
-              <div className="text-3xl font-bold text-[#FBBF24] mb-1" style={{ fontFamily: 'Sora, sans-serif' }}>40</div>
-              <div className="text-sm text-[#9CA3AF]" style={{ fontFamily: 'DM Sans, sans-serif' }}>Participants</div>
+              <div className="text-3xl font-bold text-white mb-1" style={{ fontFamily: 'Sora, sans-serif' }}>40</div>
+              <div className="text-sm text-white/80" style={{ fontFamily: 'DM Sans, sans-serif' }}>Participants</div>
             </div>
             <div className="text-center">
-              <div className="text-3xl font-bold text-[#00873E] mb-1" style={{ fontFamily: 'Sora, sans-serif' }}>48h</div>
-              <div className="text-sm text-[#9CA3AF]" style={{ fontFamily: 'DM Sans, sans-serif' }}>Création</div>
+              <div className="text-3xl font-bold text-white mb-1" style={{ fontFamily: 'Sora, sans-serif' }}>48h</div>
+              <div className="text-sm text-white/80" style={{ fontFamily: 'DM Sans, sans-serif' }}>Création</div>
             </div>
             <div className="text-center">
-              <div className="text-3xl font-bold text-[#FBBF24] mb-1" style={{ fontFamily: 'Sora, sans-serif' }}>450K</div>
-              <div className="text-sm text-[#9CA3AF]" style={{ fontFamily: 'DM Sans, sans-serif' }}>FCFA en prix</div>
+              <div className="text-3xl font-bold text-white mb-1" style={{ fontFamily: 'Sora, sans-serif' }}>450K</div>
+              <div className="text-sm text-white/80" style={{ fontFamily: 'DM Sans, sans-serif' }}>FCFA en prix</div>
             </div>
           </motion.div>
           
@@ -118,11 +114,11 @@ const CTASection = () => (
           >
             <Link
               to="/inscription"
-              className="btn-premium group relative inline-flex items-center gap-3 rounded-xl px-10 py-5 text-lg font-semibold text-[#F9FAFB] overflow-hidden"
+              className="btn-orange group relative inline-flex items-center gap-3 rounded-xl px-10 py-5 text-lg font-semibold text-white overflow-hidden shadow-xl hover:shadow-white/20"
               style={{ fontFamily: 'Sora, sans-serif' }}
             >
               {/* Button glow effect */}
-              <div className="absolute inset-0 bg-gradient-to-r from-[#00873E] to-[#FBBF24] opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
+              <div className="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               
               <span className="relative z-10 flex items-center gap-3">
                 S'inscrire maintenant 
@@ -132,7 +128,7 @@ const CTASection = () => (
             
             <Link
               to="/galerie"
-              className="inline-flex items-center gap-3 rounded-xl border border-[#2D3748] px-8 py-5 text-lg font-medium text-[#9CA3AF] hover:border-[#00873E]/50 hover:text-[#F9FAFB] transition-all duration-300"
+              className="inline-flex items-center gap-3 rounded-xl border-2 border-white/30 px-8 py-5 text-lg font-medium text-white hover:border-white/60 hover:bg-white/10 transition-all duration-300"
               style={{ fontFamily: 'Sora, sans-serif' }}
             >
               Voir l'édition précédente
@@ -145,17 +141,17 @@ const CTASection = () => (
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
             transition={{ delay: 0.8 }}
-            className="mt-8 text-sm text-[#9CA3AF] flex items-center justify-center gap-2"
+            className="mt-8 text-sm text-white/80 flex items-center justify-center gap-2"
             style={{ fontFamily: 'DM Sans, sans-serif' }}
           >
-            <Timer size={14} className="text-[#FBBF24]" />
+            <Timer size={14} className="text-white" />
             Les inscriptions ferment le 28 Mars 2026
           </motion.p>
         </div>
         
         {/* Decorative corners */}
-        <div className="absolute top-0 left-0 w-32 h-32 bg-gradient-to-br from-[#00873E]/20 to-transparent rounded-tl-3xl"></div>
-        <div className="absolute bottom-0 right-0 w-32 h-32 bg-gradient-to-tl from-[#FBBF24]/20 to-transparent rounded-br-3xl"></div>
+        <div className="absolute top-0 left-0 w-32 h-32 bg-gradient-to-br from-white/20 to-transparent rounded-tl-3xl"></div>
+        <div className="absolute bottom-0 right-0 w-32 h-32 bg-gradient-to-tl from-white/20 to-transparent rounded-br-3xl"></div>
       </motion.div>
     </div>
   </section>

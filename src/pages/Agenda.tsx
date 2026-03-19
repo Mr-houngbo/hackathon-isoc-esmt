@@ -25,19 +25,19 @@ const Agenda = () => {
 
   const getEventTypeColor = (type?: string) => {
     switch (type) {
-      case 'keynote': return 'text-[#FBBF24]';
-      case 'workshop': return 'text-[#00873E]';
-      case 'networking': return 'text-[#F59E0B]';
-      default: return 'text-[#9CA3AF]';
+      case 'keynote': return 'text-[#FF6B35]';
+      case 'workshop': return 'text-[#1E3A5F]';
+      case 'networking': return 'text-[#FF8C42]';
+      default: return 'text-[#6C757D]';
     }
   };
 
   return (
     <Layout>
-      <div className="min-h-screen bg-[#0A0A0A]">
+      <div className="min-h-screen bg-gradient-to-br from-[#F8F9FA] to-white">
         {/* Hero Section */}
         <div className="relative overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-br from-[#00873E]/20 via-[#FBBF24]/10 to-[#0A0A0A]"></div>
+          <div className="absolute inset-0 bg-gradient-to-br from-[#FF6B35]/5 via-[#1E3A5F]/5 to-transparent"></div>
           <div className="container relative z-10 py-16">
             <motion.div 
               className="text-center"
@@ -46,198 +46,157 @@ const Agenda = () => {
               transition={{ duration: 0.8 }}
             >
               <div className="flex items-center justify-center gap-4 mb-6">
-                <div className="w-16 h-16 rounded-full bg-gradient-to-r from-[#FBBF24] to-[#00873E] flex items-center justify-center">
-                  <Calendar size={32} className="text-[#F9FAFB]" />
+                <div className="w-16 h-16 rounded-full bg-gradient-to-r from-[#FF6B35] to-[#1E3A5F] flex items-center justify-center">
+                  <Calendar size={32} className="text-white" />
                 </div>
                 <h1 
-                  className="font-display text-4xl sm:text-5xl font-bold text-[#F9FAFB]"
+                  className="font-display text-4xl sm:text-5xl font-bold text-[#212529]"
                   style={{ fontFamily: 'Sora, sans-serif', fontWeight: 800 }}
                 >
-                  Programme
+                  Agenda
                 </h1>
               </div>
               <p 
-                className="text-xl text-[#9CA3AF] mb-8"
+                className="text-xl text-[#6C757D] mb-8"
                 style={{ fontFamily: 'DM Sans, sans-serif' }}
               >
-                Hackathon ISOC-ESMT 2026 — 3 & 4 Avril
+                Programme complet du hackathon — 17 & 18 Avril 2026
               </p>
-              <div className="w-24 h-1 bg-gradient-to-r from-[#FBBF24] to-[#00873E] mx-auto rounded-full"></div>
+              <div className="w-24 h-1 bg-gradient-to-r from-[#FF6B35] to-[#1E3A5F] mx-auto rounded-full"></div>
             </motion.div>
           </div>
         </div>
 
         {/* Content */}
         <div className="container py-8">
-          {/* Loading State */}
           {isLoading ? (
             <div className="flex justify-center py-20">
               <div className="flex flex-col items-center gap-4">
-                <div className="w-12 h-12 rounded-full border-4 border-[#FBBF24] border-t-transparent animate-spin"></div>
+                <div className="w-12 h-12 rounded-full border-4 border-[#FF6B35] border-t-transparent animate-spin"></div>
                 <p 
-                  className="text-[#9CA3AF]"
+                  className="text-[#6C757D]"
                   style={{ fontFamily: 'DM Sans, sans-serif' }}
                 >
-                  Chargement du programme...
+                  Chargement de l'agenda...
                 </p>
               </div>
             </div>
+          ) : !items || items.length === 0 ? (
+            <motion.div 
+              className="text-center py-20"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+            >
+              <div className="w-24 h-24 rounded-full bg-[#F8F9FA] border border-[#E9ECEF] flex items-center justify-center mx-auto mb-6">
+                <Calendar size={40} className="text-[#6C757D]" />
+              </div>
+              <h3 
+                className="font-display text-xl font-bold text-[#212529] mb-2"
+                style={{ fontFamily: 'Sora, sans-serif' }}
+              >
+                Agenda en préparation
+              </h3>
+              <p 
+                className="text-[#6C757D] max-w-md mx-auto"
+                style={{ fontFamily: 'DM Sans, sans-serif' }}
+              >
+                Le programme détaillé sera publié prochainement.
+              </p>
+            </motion.div>
           ) : (
             <motion.div 
-              className="space-y-12"
+              className="max-w-4xl mx-auto"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.4 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
             >
-              {[1, 2].map((jour, jourIndex) => {
-                const dayItems = items?.filter((i) => i.jour === jour) || [];
-                const jourTitle = jour === 1 ? "3 Avril — Idéation" : "4 Avril — Pitch";
-                const jourDate = jour === 1 ? "Premier jour" : "Second jour";
-                
-                return (
+              {/* Timeline */}
+              <div className="space-y-8">
+                {items.map((item, index) => (
                   <motion.div
-                    key={jour}
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: 0.5 + jourIndex * 0.2 }}
+                    key={item.id}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.6, delay: index * 0.1 }}
+                    className="relative group"
                   >
-                    {/* Day Header */}
-                    <div className="mb-8">
-                      <div className="flex items-center gap-4 mb-6">
-                        <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-[#FBBF24] to-[#00873E] flex items-center justify-center">
-                          <span 
-                            className="font-bold text-[#F9FAFB] text-lg"
-                            style={{ fontFamily: 'Sora, sans-serif' }}
-                          >
-                            J{jour}
-                          </span>
+                    {/* Timeline line */}
+                    <div className="absolute left-8 top-8 bottom-0 w-0.5 bg-gradient-to-b from-[#FF6B35] to-transparent"></div>
+                    
+                    <div className="flex gap-6">
+                      {/* Time indicator */}
+                      <div className="flex-shrink-0">
+                        <div className="w-16 h-16 rounded-full bg-gradient-to-r from-[#FF6B35]/10 to-[#1E3A5F]/10 border-2 border-[#FF6B35]/20 flex items-center justify-center group-hover:border-[#FF6B35]/40 transition-colors">
+                          <Clock size={20} className={getEventTypeColor(item.type)} />
                         </div>
-                        <div>
-                          <h2 
-                            className="font-display text-2xl font-bold text-[#F9FAFB]"
-                            style={{ fontFamily: 'Sora, sans-serif', fontWeight: 700 }}
-                          >
-                            {jourTitle}
-                          </h2>
+                      </div>
+                      
+                      {/* Content */}
+                      <div className="flex-1 bg-white rounded-2xl border border-[#E9ECEF] p-6 shadow-lg hover:shadow-xl transition-all duration-300 group-hover:border-[#FF6B35]/30">
+                        <div className="flex items-start justify-between mb-4">
+                          <div>
+                            <div className="flex items-center gap-3 mb-2">
+                              <div className="w-10 h-10 rounded-full bg-[#FF6B35]/10 flex items-center justify-center">
+                                {(() => {
+                                  const Icon = getEventTypeIcon(item.type);
+                                  return <Icon size={20} className={getEventTypeColor(item.type)} />;
+                                })()}
+                              </div>
+                              <h3 
+                                className="font-display text-xl font-bold text-[#212529]"
+                                style={{ fontFamily: 'Sora, sans-serif' }}
+                              >
+                                {item.titre}
+                              </h3>
+                            </div>
+                            
+                            <div className="flex items-center gap-4 text-sm text-[#6C757D]">
+                              <div className="flex items-center gap-1">
+                                <Clock size={14} className="text-[#FF6B35]" />
+                                <span style={{ fontFamily: 'Space Mono, monospace' }}>
+                                  {item.heure_debut} - {item.heure_fin}
+                                </span>
+                              </div>
+                              
+                              {item.lieu && (
+                                <div className="flex items-center gap-1">
+                                  <MapPin size={14} className="text-[#FF6B35]" />
+                                  <span>{item.lieu}</span>
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                          
+                          <div className="px-3 py-1 rounded-full bg-[#1E3A5F]/10 text-[#1E3A5F] text-xs font-medium">
+                            {item.type || 'session'}
+                          </div>
+                        </div>
+                        
+                        {item.description && (
                           <p 
-                            className="text-sm text-[#9CA3AF]"
+                            className="text-[#6C757D] leading-relaxed"
                             style={{ fontFamily: 'DM Sans, sans-serif' }}
                           >
-                            {jourDate}
+                            {item.description}
                           </p>
-                        </div>
+                        )}
+                        
+                        {item.intervenant && (
+                          <div className="mt-4 pt-4 border-t border-[#E9ECEF]">
+                            <div className="flex items-center gap-2">
+                              <Users size={16} className="text-[#FF6B35]" />
+                              <span className="text-sm font-medium text-[#212529]">
+                                {item.intervenant}
+                              </span>
+                            </div>
+                          </div>
+                        )}
                       </div>
-                      <div className="w-full h-px bg-gradient-to-r from-transparent via-[#2D3748] to-transparent"></div>
                     </div>
-
-                    {/* Day Events */}
-                    {dayItems.length === 0 ? (
-                      <motion.div 
-                        className="text-center py-12"
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ delay: 0.3 }}
-                      >
-                        <div className="w-16 h-16 rounded-full bg-[#1F2937] flex items-center justify-center mx-auto mb-4">
-                          <Calendar size={32} className="text-[#9CA3AF]" />
-                        </div>
-                        <p 
-                          className="text-[#9CA3AF]"
-                          style={{ fontFamily: 'DM Sans, sans-serif' }}
-                        >
-                          Programme du jour {jour} à venir
-                        </p>
-                      </motion.div>
-                    ) : (
-                      <div className="space-y-4">
-                        {dayItems.map((item, index) => {
-                          const Icon = getEventTypeIcon(item.type);
-                          const iconColor = getEventTypeColor(item.type);
-                          
-                          return (
-                            <motion.div
-                              key={item.id}
-                              initial={{ opacity: 0, x: -20 }}
-                              animate={{ opacity: 1, x: 0 }}
-                              transition={{ duration: 0.5, delay: 0.1 * index }}
-                              className="group"
-                            >
-                              <div className="relative overflow-hidden rounded-2xl border border-[#2D3748] bg-[#111827] transition-all duration-300 hover:border-[#FBBF24]/50 hover:shadow-xl hover:shadow-[#FBBF24]/10">
-                                {/* Timeline */}
-                                <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#2D3748]">
-                                  <div className="absolute top-8 left-1/2 -translate-x-1/2 w-3 h-3 rounded-full bg-[#00873E] border-2 border-[#0A0A0A]"></div>
-                                </div>
-                                
-                                {/* Content */}
-                                <div className="pl-8">
-                                  <div className="flex gap-6 p-6">
-                                    {/* Time */}
-                                    <div className="min-w-[100px]">
-                                      <div className="flex items-center gap-2 text-sm font-medium text-[#FBBF24]">
-                                        <Clock size={16} />
-                                        <span 
-                                          style={{ fontFamily: 'DM Sans, sans-serif' }}
-                                        >
-                                          {item.heure_debut}
-                                        </span>
-                                      </div>
-                                      {item.heure_fin && (
-                                        <div className="text-xs text-[#9CA3AF] ml-6">
-                                          → {item.heure_fin}
-                                        </div>
-                                      )}
-                                    </div>
-                                    
-                                    {/* Event Details */}
-                                    <div className="flex-1">
-                                      <div className="flex items-center gap-3 mb-2">
-                                        <div className="w-8 h-8 rounded-lg bg-[#1F2937] flex items-center justify-center">
-                                          <Icon size={16} className={iconColor} />
-                                        </div>
-                                        <h3 
-                                          className="font-display text-lg font-bold text-[#F9FAFB] group-hover:text-[#FBBF24] transition-colors"
-                                          style={{ fontFamily: 'Sora, sans-serif' }}
-                                        >
-                                          {item.titre}
-                                        </h3>
-                                      </div>
-                                      
-                                      {item.description && (
-                                        <p 
-                                          className="text-sm text-[#9CA3AF] leading-relaxed mb-3"
-                                          style={{ fontFamily: 'DM Sans, sans-serif' }}
-                                        >
-                                          {item.description}
-                                        </p>
-                                      )}
-                                      
-                                      {/* Location */}
-                                      {item.lieu && (
-                                        <div className="flex items-center gap-2">
-                                          <MapPin size={14} className="text-[#9CA3AF]" />
-                                          <span 
-                                            className="text-sm text-[#9CA3AF]"
-                                            style={{ fontFamily: 'DM Sans, sans-serif' }}
-                                          >
-                                            {item.lieu}
-                                          </span>
-                                        </div>
-                                      )}
-                                    </div>
-                                  </div>
-                                </div>
-                                
-                                {/* Hover Effect */}
-                                <div className="absolute inset-0 bg-gradient-to-r from-[#00873E]/5 via-transparent to-[#FBBF24]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                              </div>
-                            </motion.div>
-                          );
-                        })}
-                      </div>
-                    )}
                   </motion.div>
-                );
-              })}
+                ))}
+              </div>
             </motion.div>
           )}
         </div>

@@ -2,50 +2,60 @@ export interface InscriptionData {
   // Step 1
   accepte_conditions: boolean;
   autorise_photos: boolean;
+
   // Step 2
   type_candidature: 'individuel' | 'equipe';
   nom_equipe: string;
-  nombre_membres: number;
-  // Step 3 - Chef
-  chef_nom_prenom: string;
-  chef_genre: string;
-  chef_filiere: string;
-  chef_niveau_etudes: string;
-  chef_telephone: string;
-  chef_email: string;
-  chef_etablissement: string;
-  chef_competences: string[];
-  chef_disponible: boolean | null;
-  // Step 4 - Membres
-  membres: {
+  nombre_membres: number; // automatique : 1 si individuel, 4 si equipe
+
+  // Step 3 — Chef
+  chef: {
     nom_prenom: string;
-    genre: string;
+    genre: 'homme' | 'femme' | 'non_precise' | ''; // obligatoire
     filiere: string;
-    niveau_etudes: string;
-    role_equipe: string;
+    niveau_etudes: 'L1' | 'L2' | 'L3' | 'M1' | 'M2' | '';
     telephone: string;
     email: string;
     etablissement: string;
-    disponible: boolean | null;
+    competences: string[]; // tableau de strings
+    competence_autre: string; // si 'Autre' coché
+    disponible_2_jours: boolean | null; // true | false
+  };
+
+  // Step 4 — Membres (toujours 3 blocs si equipe)
+  membres: {
+    nom_prenom: string;
+    genre: 'homme' | 'femme' | 'non_precise' | '';
+    filiere: string;
+    niveau_etudes: 'L1' | 'L2' | 'L3' | 'M1' | 'M2' | '';
+    role_equipe: 'Dev' | 'Design' | 'Business' | 'Communication' | 'Autre' | '';
+    telephone: string;
+    email: string;
+    etablissement: string;
+    competences: string[];
+    competence_autre: string;
+    disponible_2_jours: boolean | null;
   }[];
-  // Step 5 - Projet
-  a_projet: string;
+
+  // Step 5 — Projet
+  a_projet: 'oui' | 'non' | '';
   nom_projet: string;
   domaine_projet: string;
+  domaine_projet_autre: string; // si 'Autre' sélectionné
   problematique: string;
   solution: string;
   technologies: string;
-  niveau_avancement: string;
+  niveau_avancement: 'concept' | 'esquisse' | 'prototype' | '';
   contraintes_techniques: string;
-  // Step 6 - Profil
-  niveau_technique: string;
-  competences_equipe: string[];
-  handle_instagram: string;
-  handle_linkedin: string;
-  // Step 7 - Motivation
+
+  // Step 6 — Profil
+  niveau_technique: 'debutant' | 'intermediaire' | 'avance' | '';
+
+  // Step 7 — Motivation
   motivation: string;
   esperances: string;
-  source_info: string;
+  source_info: string; // obligatoire
+
   // Additional fields for selected teams
   position?: number;
   selectionnee?: boolean;
@@ -56,29 +66,30 @@ export const defaultInscriptionData: InscriptionData = {
   autorise_photos: false,
   type_candidature: 'individuel',
   nom_equipe: '',
-  nombre_membres: 2,
-  chef_nom_prenom: '',
-  chef_genre: '',
-  chef_filiere: '',
-  chef_niveau_etudes: '',
-  chef_telephone: '',
-  chef_email: '',
-  chef_etablissement: 'ESMT',
-  chef_competences: [],
-  chef_disponible: null,
+  nombre_membres: 1,
+  chef: {
+    nom_prenom: '',
+    genre: '',
+    filiere: '',
+    niveau_etudes: '',
+    telephone: '',
+    email: '',
+    etablissement: 'ESMT',
+    competences: [],
+    competence_autre: '',
+    disponible_2_jours: null,
+  },
   membres: [],
   a_projet: '',
   nom_projet: '',
   domaine_projet: '',
+  domaine_projet_autre: '',
   problematique: '',
   solution: '',
   technologies: '',
   niveau_avancement: '',
   contraintes_techniques: '',
   niveau_technique: '',
-  competences_equipe: [],
-  handle_instagram: '',
-  handle_linkedin: '',
   motivation: '',
   esperances: '',
   source_info: '',

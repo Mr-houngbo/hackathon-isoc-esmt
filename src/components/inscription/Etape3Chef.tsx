@@ -1,37 +1,37 @@
 import { motion } from "framer-motion";
 import { InscriptionData } from "@/types/inscription";
-import { User, AlertTriangle, Mail, Phone, GraduationCap, Briefcase, Code, CheckCircle } from "lucide-react";
+import { Code, CheckCircle, AlertCircle } from "lucide-react";
 
 interface Props {
   data: InscriptionData;
   onChange: (d: Partial<InscriptionData>) => void;
+  errors?: Record<string, string>;
 }
 
-const competencesList = [
-  { value: 'Dev Web', icon: Code, color: 'text-[#FBBF24]' },
-  { value: 'Dev Mobile', icon: Phone, color: 'text-[#00873E]' },
-  { value: 'Design UI-UX', icon: User, color: 'text-[#FBBF24]' },
-  { value: 'Data', icon: Code, color: 'text-[#00873E]' },
-  { value: 'IA', icon: Code, color: 'text-[#FBBF24]' },
-  { value: 'Business', icon: Briefcase, color: 'text-[#00873E]' },
-  { value: 'Communication', icon: User, color: 'text-[#FBBF24]' },
-  { value: 'Autre', icon: Code, color: 'text-[#9CA3AF]' }
-];
+const COMPETENCES = ['Dev Web', 'Dev Mobile', 'Design UI-UX', 'Data', 'IA', 'Business', 'Communication', 'Autre'];
+const NIVEAUX_ETUDES = ['L1', 'L2', 'L3', 'M1', 'M2'];
 
-const niveauxEtudes = [
-  { value: 'L1', label: 'Licence 1' },
-  { value: 'L2', label: 'Licence 2' },
-  { value: 'L3', label: 'Licence 3' },
-  { value: 'M1', label: 'Master 1' },
-  { value: 'M2', label: 'Master 2' }
-];
+const Etape3Chef = ({ data, onChange, errors = {} }: Props) => {
+  const updateChef = (field: string, value: any) => {
+    onChange({
+      chef: {
+        ...data.chef,
+        [field]: value
+      }
+    });
+  };
 
-const Etape3Chef = ({ data, onChange }: Props) => {
-  const toggleCompetence = (c: string) => {
-    const list = data.chef_competences.includes(c)
-      ? data.chef_competences.filter((x) => x !== c)
-      : [...data.chef_competences, c];
-    onChange({ chef_competences: list });
+  const toggleCompetence = (competence: string) => {
+    const competences = data.chef.competences.includes(competence)
+      ? data.chef.competences.filter(c => c !== competence)
+      : [...data.chef.competences, competence];
+    
+    updateChef('competences', competences);
+    
+    // Si on décoche "Autre", vider le champ competence_autre
+    if (competence === 'Autre' && !competences.includes('Autre')) {
+      updateChef('competence_autre', '');
+    }
   };
 
   return (
@@ -44,289 +44,372 @@ const Etape3Chef = ({ data, onChange }: Props) => {
         transition={{ duration: 0.5 }}
       >
         <div className="flex items-center justify-center gap-3 mb-4">
-          <div className="w-12 h-12 rounded-full bg-[#00873E] flex items-center justify-center">
-            <User size={24} className="text-[#F9FAFB]" />
+          <div className="w-12 h-12 rounded-full bg-gradient-to-r from-[#FF6B35] to-[#1E3A5F] flex items-center justify-center">
+            <Code size={24} className="text-white" />
           </div>
           <h3 
-            className="font-display text-2xl font-bold text-[#F9FAFB]"
+            className="font-display text-2xl font-bold text-[#212529]"
             style={{ fontFamily: 'Sora, sans-serif', fontWeight: 700 }}
           >
             Chef de projet
           </h3>
         </div>
         <p 
-          className="text-[#9CA3AF] text-lg"
+          className="text-[#6C757D] text-lg"
           style={{ fontFamily: 'DM Sans, sans-serif' }}
         >
           Informations du responsable de l'équipe
         </p>
-        <div className="w-16 h-1 bg-gradient-to-r from-[#00873E] to-[#FBBF24] mx-auto rounded-full mt-4"></div>
+        <div className="w-16 h-1 bg-gradient-to-r from-[#FF6B35] to-[#1E3A5F] mx-auto rounded-full mt-4"></div>
       </motion.div>
 
       {/* Form Grid */}
       <div className="grid sm:grid-cols-2 gap-6">
         {/* Nom & Prénom */}
-        <motion.div 
-          className="sm:col-span-2"
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.1 }}
+          className="bg-white rounded-2xl border border-[#E9ECEF] p-6 shadow-lg"
         >
-          <label 
-            className="block text-sm font-semibold text-[#F9FAFB] mb-3"
-            style={{ fontFamily: 'Sora, sans-serif' }}
-          >
-            Nom & Prénom <span className="text-[#DC2626]">*</span>
+          <label className="block">
+            <span 
+              className="font-display text-sm font-semibold text-[#212529] mb-2 block"
+              style={{ fontFamily: 'Sora, sans-serif' }}
+            >
+              Nom & Prénom <span className="text-[#DC2626]">*</span>
+            </span>
+            <input
+              type="text"
+              value={data.chef.nom_prenom || ''}
+              onChange={(e) => updateChef('nom_prenom', e.target.value)}
+              placeholder="Ex: Aminata Diallo"
+              className="w-full px-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FF6B35]/20 focus:border-[#FF6B35]/50 transition-all"
+              style={{ fontFamily: 'DM Sans, sans-serif' }}
+            />
+            {errors.nom_prenom && (
+              <p className="text-[#DC2626] text-xs mt-1" style={{ fontFamily: 'DM Sans, sans-serif' }}>
+                {errors.nom_prenom}
+              </p>
+            )}
           </label>
-          <input 
-            type="text" 
-            value={data.chef_nom_prenom} 
-            onChange={(e) => onChange({ chef_nom_prenom: e.target.value })}
-            placeholder="Ex: Marie Diouf"
-            className="w-full rounded-xl border-[#2D3748] bg-[#1F2937] px-4 py-3 text-[#F9FAFB] placeholder-[#9CA3AF] focus:outline-none focus:ring-2 focus:ring-[#00873E] focus:border-transparent transition-all duration-300"
-            style={{ fontFamily: 'DM Sans, sans-serif' }}
-          />
         </motion.div>
 
         {/* Genre */}
-        <motion.div 
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.2 }}
+          className="bg-white rounded-2xl border border-[#E9ECEF] p-6 shadow-lg"
         >
-          <label 
-            className="block text-sm font-semibold text-[#F9FAFB] mb-3"
-            style={{ fontFamily: 'Sora, sans-serif' }}
-          >
-            Genre
+          <label className="block">
+            <span 
+              className="font-display text-sm font-semibold text-[#212529] mb-2 block"
+              style={{ fontFamily: 'Sora, sans-serif' }}
+            >
+              Genre <span className="text-[#DC2626]">*</span>
+            </span>
+            <div className="flex gap-1 flex-wrap">
+              {['homme', 'femme', 'non_precise'].map((genre) => (
+                <button
+                  key={genre}
+                  type="button"
+                  onClick={() => updateChef('genre', genre)}
+                  className={`px-2 py-1 rounded-lg text-xs font-semibold transition-all ${
+                    data.chef.genre === genre
+                      ? 'bg-[#FF6B35] text-white'
+                      : 'bg-[#E9ECEF] border border-[#E9ECEF] text-[#6C757D] hover:border-[#FF6B35]/30'
+                  }`}
+                  style={{ fontFamily: 'DM Sans, sans-serif' }}
+                >
+                  {genre === 'homme' ? 'Homme' : genre === 'femme' ? 'Femme' : 'Préfère'}
+                </button>
+              ))}
+            </div>
+            {errors.genre && (
+              <p className="text-[#DC2626] text-xs mt-1" style={{ fontFamily: 'DM Sans, sans-serif' }}>
+                {errors.genre}
+              </p>
+            )}
           </label>
-          <select 
-            value={data.chef_genre} 
-            onChange={(e) => onChange({ chef_genre: e.target.value })}
-            className="w-full rounded-xl border-[#2D3748] bg-[#1F2937] px-4 py-3 text-[#F9FAFB] focus:outline-none focus:ring-2 focus:ring-[#00873E] focus:border-transparent transition-all duration-300"
-            style={{ fontFamily: 'DM Sans, sans-serif' }}
-          >
-            <option value="">Sélectionner</option>
-            <option value="homme">Homme</option>
-            <option value="femme">Femme</option>
-            <option value="non_precise">Préfère ne pas préciser</option>
-          </select>
         </motion.div>
 
         {/* Filière */}
-        <motion.div 
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.3 }}
+          className="bg-white rounded-2xl border border-[#E9ECEF] p-6 shadow-lg"
         >
-          <label 
-            className="block text-sm font-semibold text-[#F9FAFB] mb-3"
-            style={{ fontFamily: 'Sora, sans-serif' }}
-          >
-            Filière / Classe <span className="text-[#DC2626]">*</span>
+          <label className="block">
+            <span 
+              className="font-display text-sm font-semibold text-[#212529] mb-2 block"
+              style={{ fontFamily: 'Sora, sans-serif' }}
+            >
+              Filière / Classe <span className="text-[#DC2626]">*</span>
+            </span>
+            <input
+              type="text"
+              value={data.chef.filiere || ''}
+              onChange={(e) => updateChef('filiere', e.target.value)}
+              placeholder="Votre filière"
+              className="w-full px-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FF6B35]/20 focus:border-[#FF6B35]/50 transition-all"
+              style={{ fontFamily: 'DM Sans, sans-serif' }}
+            />
+            {errors.filiere && (
+              <p className="text-[#DC2626] text-xs mt-1" style={{ fontFamily: 'DM Sans, sans-serif' }}>
+                {errors.filiere}
+              </p>
+            )}
           </label>
-          <input 
-            type="text" 
-            value={data.chef_filiere} 
-            onChange={(e) => onChange({ chef_filiere: e.target.value })}
-            placeholder="Ex: Génie Logiciel"
-            className="w-full rounded-xl border-[#2D3748] bg-[#1F2937] px-4 py-3 text-[#F9FAFB] placeholder-[#9CA3AF] focus:outline-none focus:ring-2 focus:ring-[#00873E] focus:border-transparent transition-all duration-300"
-            style={{ fontFamily: 'DM Sans, sans-serif' }}
-          />
         </motion.div>
 
         {/* Niveau d'études */}
-        <motion.div 
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.4 }}
+          className="bg-white rounded-2xl border border-[#E9ECEF] p-6 shadow-lg"
         >
-          <label 
-            className="block text-sm font-semibold text-[#F9FAFB] mb-3"
-            style={{ fontFamily: 'Sora, sans-serif' }}
-          >
-            Niveau d'études
+          <label className="block">
+            <span 
+              className="font-display text-sm font-semibold text-[#212529] mb-2 block"
+              style={{ fontFamily: 'Sora, sans-serif' }}
+            >
+              Niveau d'études <span className="text-[#DC2626]">*</span>
+            </span>
+            <select
+              value={data.chef.niveau_etudes || ''}
+              onChange={(e) => updateChef('niveau_etudes', e.target.value)}
+              className="w-full px-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] focus:outline-none focus:ring-2 focus:ring-[#FF6B35]/20 focus:border-[#FF6B35]/50 transition-all"
+              style={{ fontFamily: 'DM Sans, sans-serif' }}
+            >
+              <option value="">Sélectionnez votre niveau</option>
+              {NIVEAUX_ETUDES.map((niveau) => (
+                <option key={niveau} value={niveau}>{niveau}</option>
+              ))}
+            </select>
+            {errors.niveau_etudes && (
+              <p className="text-[#DC2626] text-xs mt-1" style={{ fontFamily: 'DM Sans, sans-serif' }}>
+                {errors.niveau_etudes}
+              </p>
+            )}
           </label>
-          <select 
-            value={data.chef_niveau_etudes} 
-            onChange={(e) => onChange({ chef_niveau_etudes: e.target.value })}
-            className="w-full rounded-xl border-[#2D3748] bg-[#1F2937] px-4 py-3 text-[#F9FAFB] focus:outline-none focus:ring-2 focus:ring-[#00873E] focus:border-transparent transition-all duration-300"
-            style={{ fontFamily: 'DM Sans, sans-serif' }}
-          >
-            <option value="">Sélectionner</option>
-            {niveauxEtudes.map((n) => (
-              <option key={n.value} value={n.value}>{n.label}</option>
-            ))}
-          </select>
         </motion.div>
 
         {/* Téléphone */}
-        <motion.div 
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.5 }}
+          className="bg-white rounded-2xl border border-[#E9ECEF] p-6 shadow-lg"
         >
-          <label 
-            className="block text-sm font-semibold text-[#F9FAFB] mb-3"
-            style={{ fontFamily: 'Sora, sans-serif' }}
-          >
-            Téléphone <span className="text-[#DC2626]">*</span>
+          <label className="block">
+            <span 
+              className="font-display text-sm font-semibold text-[#212529] mb-2 block"
+              style={{ fontFamily: 'Sora, sans-serif' }}
+            >
+              Téléphone <span className="text-[#DC2626]">*</span>
+            </span>
+            <input
+              type="tel"
+              value={data.chef.telephone || ''}
+              onChange={(e) => updateChef('telephone', e.target.value)}
+              placeholder="77 000 00 00"
+              className="w-full px-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FF6B35]/20 focus:border-[#FF6B35]/50 transition-all"
+              style={{ fontFamily: 'DM Sans, sans-serif' }}
+            />
+            {errors.telephone && (
+              <p className="text-[#DC2626] text-xs mt-1" style={{ fontFamily: 'DM Sans, sans-serif' }}>
+                {errors.telephone}
+              </p>
+            )}
           </label>
-          <input 
-            type="tel" 
-            value={data.chef_telephone} 
-            onChange={(e) => onChange({ chef_telephone: e.target.value })}
-            placeholder="Ex: +221 77 123 45 67"
-            className="w-full rounded-xl border-[#2D3748] bg-[#1F2937] px-4 py-3 text-[#F9FAFB] placeholder-[#9CA3AF] focus:outline-none focus:ring-2 focus:ring-[#00873E] focus:border-transparent transition-all duration-300"
-            style={{ fontFamily: 'DM Sans, sans-serif' }}
-          />
         </motion.div>
 
         {/* Email */}
-        <motion.div 
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.6 }}
+          className="bg-white rounded-2xl border border-[#E9ECEF] p-6 shadow-lg"
         >
-          <label 
-            className="block text-sm font-semibold text-[#F9FAFB] mb-3"
-            style={{ fontFamily: 'Sora, sans-serif' }}
-          >
-            Email <span className="text-[#DC2626]">*</span>
+          <label className="block">
+            <span 
+              className="font-display text-sm font-semibold text-[#212529] mb-2 block"
+              style={{ fontFamily: 'Sora, sans-serif' }}
+            >
+              Email <span className="text-[#DC2626]">*</span>
+            </span>
+            <input
+              type="email"
+              value={data.chef.email || ''}
+              onChange={(e) => updateChef('email', e.target.value)}
+              placeholder="votre.email@exemple.com"
+              className="w-full px-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FF6B35]/20 focus:border-[#FF6B35]/50 transition-all"
+              style={{ fontFamily: 'DM Sans, sans-serif' }}
+            />
+            {errors.email && (
+              <p className="text-[#DC2626] text-xs mt-1" style={{ fontFamily: 'DM Sans, sans-serif' }}>
+                {errors.email}
+              </p>
+            )}
           </label>
-          <input 
-            type="email" 
-            value={data.chef_email} 
-            onChange={(e) => onChange({ chef_email: e.target.value })}
-            placeholder="Ex: marie.diouf@esmt.sn"
-            className="w-full rounded-xl border-[#2D3748] bg-[#1F2937] px-4 py-3 text-[#F9FAFB] placeholder-[#9CA3AF] focus:outline-none focus:ring-2 focus:ring-[#00873E] focus:border-transparent transition-all duration-300"
-            style={{ fontFamily: 'DM Sans, sans-serif' }}
-          />
         </motion.div>
 
         {/* Établissement */}
-        <motion.div 
-          className="sm:col-span-2"
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.7 }}
+          className="bg-white rounded-2xl border border-[#E9ECEF] p-6 shadow-lg sm:col-span-2"
         >
-          <label 
-            className="block text-sm font-semibold text-[#F9FAFB] mb-3"
-            style={{ fontFamily: 'Sora, sans-serif' }}
-          >
-            Établissement <span className="text-[#DC2626]">*</span>
+          <label className="block">
+            <span 
+              className="font-display text-sm font-semibold text-[#212529] mb-2 block"
+              style={{ fontFamily: 'Sora, sans-serif' }}
+            >
+              Établissement <span className="text-[#DC2626]">*</span>
+            </span>
+            <input
+              type="text"
+              value={data.chef.etablissement || ''}
+              onChange={(e) => updateChef('etablissement', e.target.value)}
+              placeholder="Nom de votre établissement"
+              className="w-full px-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FF6B35]/20 focus:border-[#FF6B35]/50 transition-all"
+              style={{ fontFamily: 'DM Sans, sans-serif' }}
+            />
+            {errors.etablissement && (
+              <p className="text-[#DC2626] text-xs mt-1" style={{ fontFamily: 'DM Sans, sans-serif' }}>
+                {errors.etablissement}
+              </p>
+            )}
           </label>
-          <input 
-            type="text" 
-            value={data.chef_etablissement} 
-            onChange={(e) => onChange({ chef_etablissement: e.target.value })}
-            placeholder="Ex: ESMT"
-            className="w-full rounded-xl border-[#2D3748] bg-[#1F2937] px-4 py-3 text-[#F9FAFB] placeholder-[#9CA3AF] focus:outline-none focus:ring-2 focus:ring-[#00873E] focus:border-transparent transition-all duration-300"
-            style={{ fontFamily: 'DM Sans, sans-serif' }}
-          />
         </motion.div>
       </div>
 
       {/* Compétences */}
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.8 }}
+        transition={{ duration: 0.5, delay: 0.8 }}
+        className="bg-white rounded-2xl border border-[#E9ECEF] p-6 shadow-lg"
       >
-        <label 
-          className="block text-sm font-semibold text-[#F9FAFB] mb-4"
+        <h4 
+          className="font-display text-lg font-semibold text-[#212529] mb-4"
           style={{ fontFamily: 'Sora, sans-serif' }}
         >
-          Compétences techniques
-        </label>
-        <div className="flex flex-wrap gap-3">
-          {competencesList.map((comp) => (
-            <button 
-              key={comp.value} 
-              type="button" 
-              onClick={() => toggleCompetence(comp.value)}
-              className={`relative overflow-hidden rounded-xl border-2 px-4 py-2 text-sm font-medium transition-all duration-300 group ${
-                data.chef_competences.includes(comp.value)
-                  ? 'border-[#00873E] bg-[#00873E]/10 text-[#00873E] shadow-lg shadow-[#00873E]/25' 
-                  : 'border-[#2D3748] bg-[#111827] text-[#9CA3AF] hover:border-[#00873E]/50 hover:text-[#F9FAFB]'
-              }`}
-              style={{ fontFamily: 'DM Sans, sans-serif' }}
-            >
-              <div className="flex items-center gap-2">
-                <comp.icon size={16} className={data.chef_competences.includes(comp.value) ? 'text-[#00873E]' : comp.color} />
-                <span>{comp.value}</span>
-              </div>
-              {data.chef_competences.includes(comp.value) && (
-                <div className="absolute top-1 right-1">
-                  <CheckCircle size={12} className="text-[#00873E]" />
-                </div>
-              )}
-            </button>
-          ))}
-        </div>
-      </motion.div>
-
-      {/* Disponibilité */}
-      <motion.div 
-        className="card-premium p-6"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.9 }}
-      >
-        <label 
-          className="block text-sm font-semibold text-[#F9FAFB] mb-4"
-          style={{ fontFamily: 'Sora, sans-serif' }}
-        >
-          Disponible les 2 jours (3 & 4 Avril) ? <span className="text-[#DC2626]">*</span>
-        </label>
-        <div className="flex gap-4">
-          {[
-            { v: true, l: 'Oui, je serai présent', icon: CheckCircle, color: 'text-[#00873E]' },
-            { v: false, l: 'Non, je ne peux pas', icon: AlertTriangle, color: 'text-[#DC2626]' }
-          ].map((opt) => (
+          Compétences principales
+        </h4>
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          {COMPETENCES.map((competence) => (
             <button
-              key={String(opt.v)} 
-              type="button" 
-              onClick={() => onChange({ chef_disponible: opt.v })}
-              className={`flex-1 rounded-xl border-2 px-6 py-4 text-sm font-semibold transition-all duration-300 group ${
-                data.chef_disponible === opt.v 
-                  ? 'border-[#00873E] bg-[#00873E]/10 text-[#00873E] shadow-lg shadow-[#00873E]/25' 
-                  : 'border-[#2D3748] bg-[#111827] text-[#9CA3AF] hover:border-[#00873E]/50 hover:text-[#F9FAFB]'
+              key={competence}
+              type="button"
+              onClick={() => toggleCompetence(competence)}
+              className={`p-3 rounded-xl border-2 transition-all duration-300 hover:scale-105 ${
+                data.chef.competences.includes(competence)
+                  ? 'border-[#FF6B35] bg-[#FF6B35]/10'
+                  : 'border-[#E9ECEF] bg-white hover:border-[#FF6B35]/30'
               }`}
-              style={{ fontFamily: 'Sora, sans-serif' }}
             >
-              <div className="flex items-center justify-center gap-2">
-                <opt.icon size={20} className={data.chef_disponible === opt.v ? opt.color : 'text-[#9CA3AF]'} />
-                <span>{opt.l}</span>
-              </div>
+              <span 
+                className="text-sm font-medium"
+                style={{ fontFamily: 'DM Sans, sans-serif' }}
+              >
+                <span className={data.chef.competences.includes(competence) ? 'text-[#FF6B35]' : 'text-[#6C757D]'}>
+                  {competence}
+                </span>
+              </span>
             </button>
           ))}
         </div>
         
-        {data.chef_disponible === false && (
-          <motion.div 
-            className="mt-4 flex items-start gap-3 rounded-xl bg-[#DC2626]/10 border border-[#DC2626]/30 p-4"
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
+        {/* Champ "Autre" si sélectionné */}
+        {data.chef.competences.includes('Autre') && (
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3 }}
+            className="mt-4"
           >
-            <AlertTriangle size={20} className="text-[#DC2626] mt-0.5 shrink-0" />
-            <div>
-              <p 
-                className="text-sm text-[#DC2626] font-semibold mb-1"
-                style={{ fontFamily: 'Sora, sans-serif' }}
-              >
-                Disponibilité obligatoire
+            <input
+              type="text"
+              value={data.chef.competence_autre || ''}
+              onChange={(e) => updateChef('competence_autre', e.target.value)}
+              placeholder="Précisez votre compétence"
+              className="w-full px-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FF6B35]/20 focus:border-[#FF6B35]/50 transition-all"
+              style={{ fontFamily: 'DM Sans, sans-serif' }}
+              required
+            />
+            {errors.competence_autre && (
+              <p className="text-[#DC2626] text-xs mt-1" style={{ fontFamily: 'DM Sans, sans-serif' }}>
+                {errors.competence_autre}
               </p>
-              <p 
-                className="text-xs text-[#DC2626]"
-                style={{ fontFamily: 'DM Sans, sans-serif' }}
-              >
-                La présence les 2 jours complets est obligatoire pour participer au hackathon.
-              </p>
-            </div>
+            )}
           </motion.div>
+        )}
+      </motion.div>
+
+      {/* Disponibilité */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.9 }}
+        className="bg-white rounded-2xl border border-[#E9ECEF] p-6 shadow-lg"
+      >
+        <h4 
+          className="font-display text-lg font-semibold text-[#212529] mb-4"
+          style={{ fontFamily: 'Sora, sans-serif' }}
+        >
+          Disponibilité confirmée les 2 jours <span className="text-[#DC2626]">*</span>
+        </h4>
+        <div className="flex gap-4">
+          <button
+            type="button"
+            onClick={() => updateChef('disponible_2_jours', true)}
+            className={`px-6 py-3 rounded-lg font-semibold transition-all ${
+              data.chef.disponible_2_jours === true
+                ? 'bg-[#FF6B35] text-white'
+                : 'bg-[#E9ECEF] border border-[#E9ECEF] text-[#6C757D] hover:border-[#FF6B35]/30'
+            }`}
+            style={{ fontFamily: 'DM Sans, sans-serif' }}
+          >
+            Oui
+          </button>
+          <button
+            type="button"
+            onClick={() => updateChef('disponible_2_jours', false)}
+            className={`px-6 py-3 rounded-lg font-semibold transition-all ${
+              data.chef.disponible_2_jours === false
+                ? 'bg-[#DC2626] text-white'
+                : 'bg-[#E9ECEF] border border-[#E9ECEF] text-[#6C757D] hover:border-[#DC2626]/30'
+            }`}
+            style={{ fontFamily: 'DM Sans, sans-serif' }}
+          >
+            Non
+          </button>
+        </div>
+
+        {/* Message bloquant si "Non" */}
+        {data.chef.disponible_2_jours === false && (
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3 }}
+            className="mt-4 p-4 rounded-xl bg-[#DC2626]/10 border border-[#DC2626]/50"
+          >
+            <p className="text-[#DC2626] font-semibold text-sm flex items-center gap-2" style={{ fontFamily: 'DM Sans, sans-serif' }}>
+              <AlertCircle size={16} />
+              ⛔ La présence obligatoire les 2 jours (17 & 18 Avril 2026) est une condition sine qua non de participation. Votre candidature ne peut pas être soumise.
+            </p>
+          </motion.div>
+        )}
+
+        {errors.disponible_2_jours && (
+          <p className="text-[#DC2626] text-xs mt-2" style={{ fontFamily: 'DM Sans, sans-serif' }}>
+            {errors.disponible_2_jours}
+          </p>
         )}
       </motion.div>
     </div>

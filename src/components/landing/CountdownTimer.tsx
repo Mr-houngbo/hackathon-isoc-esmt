@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 
-const TARGET_DATE = new Date("2026-04-03T08:00:00+00:00").getTime();
+const TARGET_DATE = new Date("2026-04-17T08:00:00+00:00").getTime();
 
 interface TimeBlock {
   value: number;
@@ -32,7 +32,7 @@ const CountdownTimer = () => {
   }, []);
 
   return (
-    <div className="flex gap-4 sm:gap-6">
+    <div className="flex gap-6 sm:gap-8">
       {timeLeft.map((block, i) => (
         <motion.div
           key={block.label}
@@ -43,14 +43,14 @@ const CountdownTimer = () => {
         >
           <div className="relative group">
             {/* Card container */}
-            <div className="card-premium flex h-20 w-20 sm:h-24 sm:w-24 items-center justify-center rounded-xl p-1">
+            <div className="card-premium flex h-20 w-20 sm:h-24 sm:w-24 items-center justify-center rounded-2xl p-1 shadow-lg">
               {/* Inner gradient background */}
-              <div className="absolute inset-0 bg-gradient-to-br from-[#00873E]/10 to-[#FBBF24]/10 rounded-xl"></div>
+              <div className="absolute inset-0 bg-gradient-to-br from-[#FF6B35]/5 to-[#1E3A5F]/5 rounded-2xl"></div>
               
               {/* Number display */}
               <div className="relative z-10">
                 <span 
-                  className="font-display text-3xl sm:text-4xl font-bold text-[#F9FAFB] block text-center"
+                  className="font-display text-3xl sm:text-4xl font-bold text-[#212529] block text-center"
                   style={{ fontFamily: 'Sora, sans-serif', fontWeight: 800 }}
                 >
                   {String(block.value).padStart(2, "0")}
@@ -58,27 +58,22 @@ const CountdownTimer = () => {
               </div>
               
               {/* Glow effect on hover */}
-              <div className="absolute inset-0 rounded-xl glow-vert opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              <div className="absolute inset-0 rounded-2xl glow-orange opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
             </div>
             
             {/* Decorative dots */}
-            <div className="absolute -top-1 -right-1 w-2 h-2 bg-[#FBBF24] rounded-full animate-pulse"></div>
+            <div className="absolute -top-1 -right-1 w-2 h-2 bg-[#FF6B35] rounded-full animate-pulse"></div>
           </div>
           
           {/* Label */}
           <span 
-            className="mt-3 text-xs sm:text-sm text-[#9CA3AF] font-medium uppercase tracking-wide"
+            className="mt-3 text-xs sm:text-sm text-[#6C757D] font-medium uppercase tracking-wide"
             style={{ fontFamily: 'DM Sans, sans-serif' }}
           >
             {block.label}
           </span>
         </motion.div>
       ))}
-      
-      {/* Separator lines */}
-      <div className="hidden sm:flex items-center">
-        <div className="h-px w-8 bg-gradient-to-r from-transparent via-[#2D3748] to-transparent"></div>
-      </div>
     </div>
   );
 };

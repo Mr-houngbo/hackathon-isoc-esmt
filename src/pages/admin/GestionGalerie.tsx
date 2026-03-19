@@ -86,8 +86,8 @@ const GestionGalerie = () => {
       <AdminLayout>
         <div className="flex items-center justify-center min-h-screen">
           <div className="flex flex-col items-center gap-4">
-            <div className="w-12 h-12 rounded-full border-4 border-[#00873E] border-t-transparent animate-spin"></div>
-            <p className="text-[#9CA3AF]">Chargement de la galerie...</p>
+            <div className="w-12 h-12 rounded-full border-4 border-[#1E3A5F] border-t-transparent animate-spin"></div>
+            <p className="text-[#6C757D]">Chargement de la galerie...</p>
           </div>
         </div>
       </AdminLayout>
@@ -100,7 +100,7 @@ const GestionGalerie = () => {
         <div className="flex items-center justify-center min-h-screen">
           <div className="text-center">
             <p className="text-[#DC2626] text-lg font-bold mb-4">Erreur de chargement</p>
-            <p className="text-[#9CA3AF]">{error.message}</p>
+            <p className="text-[#6C757D]">{error.message}</p>
           </div>
         </div>
       </AdminLayout>
@@ -109,9 +109,9 @@ const GestionGalerie = () => {
 
   return (
     <AdminLayout>
-      <div className="min-h-screen bg-[#0A0A0A]">
+      <div className="min-h-screen bg-gradient-to-br from-[#F8F9FA] to-white">
         {/* Header */}
-        <div className="bg-gradient-to-r from-[#00873E]/10 to-[#FBBF24]/10 backdrop-blur-sm border-b border-[#2D3748]/20">
+        <div className="bg-gradient-to-r from-[#1E3A5F]/10 to-[#FF6B35]/10 backdrop-blur-sm border-b border-[#E9ECEF]/20">
           <div className="container py-6">
             <div className="flex items-center justify-between">
               <motion.div
@@ -120,13 +120,13 @@ const GestionGalerie = () => {
                 transition={{ duration: 0.6 }}
               >
                 <h1 
-                  className="font-display text-3xl font-bold text-[#F9FAFB]"
+                  className="font-display text-3xl font-bold text-[#212529]"
                   style={{ fontFamily: 'Sora, sans-serif', fontWeight: 800 }}
                 >
                   Gestion de la Galerie
                 </h1>
                 <p 
-                  className="text-[#9CA3AF] mt-2"
+                  className="text-[#6C757D] mt-2"
                   style={{ fontFamily: 'DM Sans, sans-serif' }}
                 >
                   Administration du Wall of Fame du Hackathon ISOC-ESMT 2026
@@ -136,7 +136,7 @@ const GestionGalerie = () => {
               <div className="flex gap-2">
                 <button
                   onClick={() => setShowAdd(!showAdd)}
-                  className="px-4 py-2 rounded-lg bg-[#00873E] text-[#F9FAFB] hover:bg-[#006450] transition-colors"
+                  className="px-4 py-2 rounded-lg bg-[#1E3A5F] text-white hover:bg-[#006450] transition-colors"
                   style={{ fontFamily: 'DM Sans, sans-serif' }}
                 >
                   <Plus size={16} className="mr-2" />
@@ -144,7 +144,7 @@ const GestionGalerie = () => {
                 </button>
                 <button
                   onClick={() => window.print()}
-                  className="px-4 py-2 rounded-lg bg-[#1F2937] text-[#9CA3AF] hover:bg-[#2D3748] transition-colors"
+                  className="px-4 py-2 rounded-lg bg-[bg-white] text-[#6C757D] hover:bg-[#E9ECEF] transition-colors"
                   style={{ fontFamily: 'DM Sans, sans-serif' }}
                 >
                   <Download size={16} className="mr-2" />
@@ -167,25 +167,25 @@ const GestionGalerie = () => {
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.5, delay: 0.1 }}
-                className="relative overflow-hidden rounded-2xl border border-[#2D3748] bg-[#111827] p-6 hover:border-[#FBBF24]/50 hover:shadow-xl hover:shadow-[#FBBF24]/10 transition-all duration-300"
+                className="relative overflow-hidden rounded-2xl border border-[#E9ECEF] bg-[white] p-6 hover:border-[#FF6B35]/50 hover:shadow-xl hover:shadow-[#FF6B35]/10 transition-all duration-300"
               >
-                <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-[#FBBF24]/5 opacity-0"></div>
+                <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-[#FF6B35]/5 opacity-0"></div>
                 
                 <div className="relative z-10">
                   <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center gap-3">
-                      <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-[#00873E]/20 to-[#FBBF24]/20 flex items-center justify-center">
-                        <Image size={24} className="text-[#F9FAFB]" />
+                      <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-[#1E3A5F]/20 to-[#FF6B35]/20 flex items-center justify-center">
+                        <Image size={24} className="text-[#212529]" />
                       </div>
                       <div>
                         <p 
-                          className="text-2xl font-bold text-[#F9FAFB]"
+                          className="text-2xl font-bold text-[#212529]"
                           style={{ fontFamily: 'Sora, sans-serif', fontWeight: 700 }}
                         >
                           {stats.total}
                         </p>
                         <p 
-                          className="text-xs text-[#9CA3AF] mt-1"
+                          className="text-xs text-[#6C757D] mt-1"
                           style={{ fontFamily: 'DM Sans, sans-serif' }}
                         >
                           Total médias
@@ -200,7 +200,7 @@ const GestionGalerie = () => {
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.5, delay: 0.2 }}
-                className="relative overflow-hidden rounded-2xl border border-[#2D3748] bg-[#111827] p-6 hover:border-[#10B981]/50 hover:shadow-xl hover:shadow-[#10B981]/10 transition-all duration-300"
+                className="relative overflow-hidden rounded-2xl border border-[#E9ECEF] bg-[white] p-6 hover:border-[#10B981]/50 hover:shadow-xl hover:shadow-[#10B981]/10 transition-all duration-300"
               >
                 <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-[#10B981]/5 opacity-0"></div>
                 
@@ -208,17 +208,17 @@ const GestionGalerie = () => {
                   <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center gap-3">
                       <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-[#10B981]/20 to-[#10B981]/20 flex items-center justify-center">
-                        <Image size={24} className="text-[#F9FAFB]" />
+                        <Image size={24} className="text-[#212529]" />
                       </div>
                       <div>
                         <p 
-                          className="text-2xl font-bold text-[#F9FAFB]"
+                          className="text-2xl font-bold text-[#212529]"
                           style={{ fontFamily: 'Sora, sans-serif', fontWeight: 700 }}
                         >
                           {stats.photos}
                         </p>
                         <p 
-                          className="text-xs text-[#9CA3AF] mt-1"
+                          className="text-xs text-[#6C757D] mt-1"
                           style={{ fontFamily: 'DM Sans, sans-serif' }}
                         >
                           Photos
@@ -233,7 +233,7 @@ const GestionGalerie = () => {
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.5, delay: 0.3 }}
-                className="relative overflow-hidden rounded-2xl border border-[#2D3748] bg-[#111827] p-6 hover:border-[#F59E0B]/50 hover:shadow-xl hover:shadow-[#F59E0B]/10 transition-all duration-300"
+                className="relative overflow-hidden rounded-2xl border border-[#E9ECEF] bg-[white] p-6 hover:border-[#F59E0B]/50 hover:shadow-xl hover:shadow-[#F59E0B]/10 transition-all duration-300"
               >
                 <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-[#F59E0B]/5 opacity-0"></div>
                 
@@ -241,17 +241,17 @@ const GestionGalerie = () => {
                   <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center gap-3">
                       <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-[#F59E0B]/20 to-[#F59E0B]/20 flex items-center justify-center">
-                        <Image size={24} className="text-[#F9FAFB]" />
+                        <Image size={24} className="text-[#212529]" />
                       </div>
                       <div>
                         <p 
-                          className="text-2xl font-bold text-[#F9FAFB]"
+                          className="text-2xl font-bold text-[#212529]"
                           style={{ fontFamily: 'Sora, sans-serif', fontWeight: 700 }}
                         >
                           {stats.videos}
                         </p>
                         <p 
-                          className="text-xs text-[#9CA3AF] mt-1"
+                          className="text-xs text-[#6C757D] mt-1"
                           style={{ fontFamily: 'DM Sans, sans-serif' }}
                         >
                           Vidéos
@@ -266,7 +266,7 @@ const GestionGalerie = () => {
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.5, delay: 0.4 }}
-                className="relative overflow-hidden rounded-2xl border border-[#2D3748] bg-[#111827] p-6 hover:border-[#D4AF37]/50 hover:shadow-xl hover:shadow-[#D4AF37]/10 transition-all duration-300"
+                className="relative overflow-hidden rounded-2xl border border-[#E9ECEF] bg-[white] p-6 hover:border-[#D4AF37]/50 hover:shadow-xl hover:shadow-[#D4AF37]/10 transition-all duration-300"
               >
                 <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-[#D4AF37]/5 opacity-0"></div>
                 
@@ -274,17 +274,17 @@ const GestionGalerie = () => {
                   <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center gap-3">
                       <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-[#D4AF37]/20 to-[#D4AF37]/20 flex items-center justify-center">
-                        <Image size={24} className="text-[#F9FAFB]" />
+                        <Image size={24} className="text-[#212529]" />
                       </div>
                       <div>
                         <p 
-                          className="text-2xl font-bold text-[#F9FAFB]"
+                          className="text-2xl font-bold text-[#212529]"
                           style={{ fontFamily: 'Sora, sans-serif', fontWeight: 700 }}
                         >
                           {stats.equipes}
                         </p>
                         <p 
-                          className="text-xs text-[#9CA3AF] mt-1"
+                          className="text-xs text-[#6C757D] mt-1"
                           style={{ fontFamily: 'DM Sans, sans-serif' }}
                         >
                           Équipes
@@ -306,9 +306,9 @@ const GestionGalerie = () => {
             transition={{ duration: 0.5 }}
             className="container py-6"
           >
-            <div className="rounded-2xl border border-[#2D3748] bg-[#111827] p-6">
+            <div className="rounded-2xl border border-[#E9ECEF] bg-[white] p-6">
               <h2 
-                className="font-display text-xl font-bold text-[#F9FAFB] mb-6"
+                className="font-display text-xl font-bold text-[#212529] mb-6"
                 style={{ fontFamily: 'Sora, sans-serif' }}
               >
                 Ajouter un Média
@@ -317,22 +317,22 @@ const GestionGalerie = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-4">
                   <div>
-                    <label className="block text-sm font-medium text-[#9CA3AF] mb-2" style={{ fontFamily: 'DM Sans, sans-serif' }}>Titre</label>
+                    <label className="block text-sm font-medium text-[#6C757D] mb-2" style={{ fontFamily: 'DM Sans, sans-serif' }}>Titre</label>
                     <input 
                       placeholder="Titre du média" 
                       value={form.titre} 
                       onChange={(e) => setForm({ ...form, titre: e.target.value })}
-                      className="w-full px-4 py-2 rounded-xl border border-[#2D3748] bg-[#1F2937] text-[#F9FAFB] placeholder-[#9CA3AF] focus:outline-none focus:ring-2 focus:ring-[#FBBF24] focus:border-transparent transition-all duration-300"
+                      className="w-full px-4 py-2 rounded-xl border border-[#E9ECEF] bg-[bg-white] text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FF6B35] focus:border-transparent transition-all duration-300"
                       style={{ fontFamily: 'DM Sans, sans-serif' }}
                     />
                   </div>
                   
                   <div>
-                    <label className="block text-sm font-medium text-[#9CA3AF] mb-2" style={{ fontFamily: 'DM Sans, sans-serif' }}>Type de média</label>
+                    <label className="block text-sm font-medium text-[#6C757D] mb-2" style={{ fontFamily: 'DM Sans, sans-serif' }}>Type de média</label>
                     <select 
                       value={form.type} 
                       onChange={(e) => setForm({ ...form, type: e.target.value })}
-                      className="w-full px-4 py-2 rounded-xl border border-[#2D3748] bg-[#1F2937] text-[#F9FAFB] focus:outline-none focus:ring-2 focus:ring-[#FBBF24] focus:border-transparent transition-all duration-300"
+                      className="w-full px-4 py-2 rounded-xl border border-[#E9ECEF] bg-[bg-white] text-[#212529] focus:outline-none focus:ring-2 focus:ring-[#FF6B35] focus:border-transparent transition-all duration-300"
                       style={{ fontFamily: 'DM Sans, sans-serif' }}
                     >
                       <option value="photo">Photo</option>
@@ -344,23 +344,23 @@ const GestionGalerie = () => {
                 
                 <div className="space-y-4">
                   <div>
-                    <label className="block text-sm font-medium text-[#9CA3AF] mb-2" style={{ fontFamily: 'DM Sans, sans-serif' }}>URL du média</label>
+                    <label className="block text-sm font-medium text-[#6C757D] mb-2" style={{ fontFamily: 'DM Sans, sans-serif' }}>URL du média</label>
                     <input 
                       placeholder="URL de l'image ou vidéo" 
                       value={form.url} 
                       onChange={(e) => setForm({ ...form, url: e.target.value })}
-                      className="w-full px-4 py-2 rounded-xl border border-[#2D3748] bg-[#1F2937] text-[#F9FAFB] placeholder-[#9CA3AF] focus:outline-none focus:ring-2 focus:ring-[#FBBF24] focus:border-transparent transition-all duration-300"
+                      className="w-full px-4 py-2 rounded-xl border border-[#E9ECEF] bg-[bg-white] text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FF6B35] focus:border-transparent transition-all duration-300"
                       style={{ fontFamily: 'DM Sans, sans-serif' }}
                     />
                   </div>
                   
                   <div>
-                    <label className="block text-sm font-medium text-[#9CA3AF] mb-2" style={{ fontFamily: 'DM Sans, sans-serif' }}>ID Équipe (optionnel)</label>
+                    <label className="block text-sm font-medium text-[#6C757D] mb-2" style={{ fontFamily: 'DM Sans, sans-serif' }}>ID Équipe (optionnel)</label>
                     <input 
                       placeholder="ID de l'équipe associée" 
                       value={form.equipe_id} 
                       onChange={(e) => setForm({ ...form, equipe_id: e.target.value })}
-                      className="w-full px-4 py-2 rounded-xl border border-[#2D3748] bg-[#1F2937] text-[#F9FAFB] placeholder-[#9CA3AF] focus:outline-none focus:ring-2 focus:ring-[#FBBF24] focus:border-transparent transition-all duration-300"
+                      className="w-full px-4 py-2 rounded-xl border border-[#E9ECEF] bg-[bg-white] text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FF6B35] focus:border-transparent transition-all duration-300"
                       style={{ fontFamily: 'DM Sans, sans-serif' }}
                     />
                   </div>
@@ -368,13 +368,13 @@ const GestionGalerie = () => {
               </div>
               
               <div className="mt-6">
-                <label className="block text-sm font-medium text-[#9CA3AF] mb-2" style={{ fontFamily: 'DM Sans, sans-serif' }}>Description</label>
+                <label className="block text-sm font-medium text-[#6C757D] mb-2" style={{ fontFamily: 'DM Sans, sans-serif' }}>Description</label>
                 <textarea 
                   placeholder="Description du média..." 
                   value={form.description} 
                   onChange={(e) => setForm({ ...form, description: e.target.value })}
                   rows={3}
-                  className="w-full px-4 py-2 rounded-xl border border-[#2D3748] bg-[#1F2937] text-[#F9FAFB] placeholder-[#9CA3AF] focus:outline-none focus:ring-2 focus:ring-[#FBBF24] focus:border-transparent transition-all duration-300"
+                  className="w-full px-4 py-2 rounded-xl border border-[#E9ECEF] bg-[bg-white] text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FF6B35] focus:border-transparent transition-all duration-300"
                   style={{ fontFamily: 'DM Sans, sans-serif' }}
                 />
               </div>
@@ -382,14 +382,14 @@ const GestionGalerie = () => {
               <div className="flex justify-end gap-3 mt-6">
                 <button
                   onClick={() => setShowAdd(false)}
-                  className="px-6 py-2 rounded-xl border border-[#2D3748] text-[#9CA3AF] hover:bg-[#2D3748] transition-colors"
+                  className="px-6 py-2 rounded-xl border border-[#E9ECEF] text-[#6C757D] hover:bg-[#E9ECEF] transition-colors"
                   style={{ fontFamily: 'DM Sans, sans-serif' }}
                 >
                   Annuler
                 </button>
                 <button
                   onClick={() => addGalerie.mutate()}
-                  className="px-6 py-2 rounded-xl bg-[#00873E] text-[#F9FAFB] hover:bg-[#006450] transition-colors flex items-center gap-2"
+                  className="px-6 py-2 rounded-xl bg-[#1E3A5F] text-white hover:bg-[#006450] transition-colors flex items-center gap-2"
                   style={{ fontFamily: 'DM Sans, sans-serif' }}
                 >
                   <Save size={16} />
@@ -410,13 +410,13 @@ const GestionGalerie = () => {
             <div className="flex flex-col lg:flex-row gap-4 items-start lg:items-center justify-between">
               <div className="flex-1">
                 <div className="flex items-center gap-3">
-                  <Search size={20} className="text-[#9CA3AF]" />
+                  <Search size={20} className="text-[#6C757D]" />
                   <input
                     type="text"
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                     placeholder="Rechercher un média..."
-                    className="flex-1 px-4 py-2 rounded-xl border border-[#2D3748] bg-[#111827] text-[#F9FAFB] placeholder-[#9CA3AF] focus:outline-none focus:ring-2 focus:ring-[#FBBF24] focus:border-transparent transition-all duration-300"
+                    className="flex-1 px-4 py-2 rounded-xl border border-[#E9ECEF] bg-[white] text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FF6B35] focus:border-transparent transition-all duration-300"
                     style={{ fontFamily: 'DM Sans, sans-serif' }}
                   />
                 </div>
@@ -426,7 +426,7 @@ const GestionGalerie = () => {
                 <button
                   onClick={() => setFilterType('toutes')}
                   className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
-                    filterType === 'toutes' ? 'bg-[#00873E] text-[#F9FAFB]' : 'bg-[#1F2937] text-[#9CA3AF] hover:bg-[#2D3748]'
+                    filterType === 'toutes' ? 'bg-[#1E3A5F] text-white' : 'bg-[bg-white] text-[#6C757D] hover:bg-[#E9ECEF]'
                   }`}
                   style={{ fontFamily: 'DM Sans, sans-serif' }}
                 >
@@ -435,7 +435,7 @@ const GestionGalerie = () => {
                 <button
                   onClick={() => setFilterType('photos')}
                   className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
-                    filterType === 'photos' ? 'bg-[#10B981] text-[#F9FAFB]' : 'bg-[#1F2937] text-[#9CA3AF] hover:bg-[#2D3748]'
+                    filterType === 'photos' ? 'bg-[#10B981] text-[#212529]' : 'bg-[bg-white] text-[#6C757D] hover:bg-[#E9ECEF]'
                   }`}
                   style={{ fontFamily: 'DM Sans, sans-serif' }}
                 >
@@ -444,7 +444,7 @@ const GestionGalerie = () => {
                 <button
                   onClick={() => setFilterType('videos')}
                   className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
-                    filterType === 'videos' ? 'bg-[#F59E0B] text-[#F9FAFB]' : 'bg-[#1F2937] text-[#9CA3AF] hover:bg-[#2D3748]'
+                    filterType === 'videos' ? 'bg-[#F59E0B] text-[#212529]' : 'bg-[bg-white] text-[#6C757D] hover:bg-[#E9ECEF]'
                   }`}
                   style={{ fontFamily: 'DM Sans, sans-serif' }}
                 >
@@ -453,7 +453,7 @@ const GestionGalerie = () => {
                 <button
                   onClick={() => setFilterType('equipes')}
                   className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
-                    filterType === 'equipes' ? 'bg-[#D4AF37] text-[#F9FAFB]' : 'bg-[#1F2937] text-[#9CA3AF] hover:bg-[#2D3748]'
+                    filterType === 'equipes' ? 'bg-[#D4AF37] text-[#212529]' : 'bg-[bg-white] text-[#6C757D] hover:bg-[#E9ECEF]'
                   }`}
                   style={{ fontFamily: 'DM Sans, sans-serif' }}
                 >
@@ -462,8 +462,8 @@ const GestionGalerie = () => {
               </div>
               
               <div className="flex items-center gap-2">
-                <Filter size={20} className="text-[#9CA3AF]" />
-                <span className="text-sm text-[#9CA3AF]" style={{ fontFamily: 'DM Sans, sans-serif' }}>
+                <Filter size={20} className="text-[#6C757D]" />
+                <span className="text-sm text-[#6C757D]" style={{ fontFamily: 'DM Sans, sans-serif' }}>
                   {filteredGalerie.length} résultat{filteredGalerie.length > 1 ? 's' : ''}
                 </span>
               </div>
@@ -480,12 +480,12 @@ const GestionGalerie = () => {
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.5 }}
-                className="relative overflow-hidden rounded-2xl border border-[#2D3748] bg-[#111827] hover:border-[#FBBF24]/50 hover:shadow-xl hover:shadow-[#FBBF24]/10 transition-all duration-300"
+                className="relative overflow-hidden rounded-2xl border border-[#E9ECEF] bg-[white] hover:border-[#FF6B35]/50 hover:shadow-xl hover:shadow-[#FF6B35]/10 transition-all duration-300"
               >
-                <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-[#FBBF24]/5 opacity-0"></div>
+                <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-[#FF6B35]/5 opacity-0"></div>
                 
                 <div className="relative z-10">
-                  <div className="aspect-video mb-4 rounded-lg overflow-hidden bg-[#1F2937]">
+                  <div className="aspect-video mb-4 rounded-lg overflow-hidden bg-[bg-white]">
                     {item.type === 'photo' ? (
                       <img 
                         src={item.url} 
@@ -500,7 +500,7 @@ const GestionGalerie = () => {
                       />
                     ) : (
                       <div className="w-full h-full flex items-center justify-center">
-                        <Image size={48} className="text-[#9CA3AF]" />
+                        <Image size={48} className="text-[#6C757D]" />
                       </div>
                     )}
                   </div>
@@ -508,7 +508,7 @@ const GestionGalerie = () => {
                   <div className="flex items-start justify-between mb-2">
                     <div className="flex-1">
                       <h3 
-                        className="font-bold text-[#F9FAFB] text-sm"
+                        className="font-bold text-[#212529] text-sm"
                         style={{ fontFamily: 'Sora, sans-serif' }}
                       >
                         {item.titre}
@@ -527,7 +527,7 @@ const GestionGalerie = () => {
                     <div className="flex gap-2">
                       <button
                         onClick={() => window.open(item.url, '_blank')}
-                        className="p-2 rounded-lg bg-[#00873E] text-[#F9FAFB] hover:bg-[#006450] transition-colors"
+                        className="p-2 rounded-lg bg-[#1E3A5F] text-white hover:bg-[#006450] transition-colors"
                         style={{ fontFamily: 'DM Sans, sans-serif' }}
                         title="Voir en grand"
                       >
@@ -536,7 +536,7 @@ const GestionGalerie = () => {
                       
                       <button
                         onClick={() => deleteGalerie.mutate(item.id)}
-                        className="p-2 rounded-lg bg-[#DC2626] text-[#F9FAFB] hover:bg-[#B91C1C] transition-colors"
+                        className="p-2 rounded-lg bg-[#DC2626] text-[#212529] hover:bg-[#B91C1C] transition-colors"
                         style={{ fontFamily: 'DM Sans, sans-serif' }}
                       >
                         <Trash2 size={16} />
@@ -545,12 +545,12 @@ const GestionGalerie = () => {
                   </div>
                   
                   {item.description && (
-                    <p className="text-xs text-[#9CA3AF] line-clamp-2" style={{ fontFamily: 'DM Sans, sans-serif' }}>
+                    <p className="text-xs text-[#6C757D] line-clamp-2" style={{ fontFamily: 'DM Sans, sans-serif' }}>
                       📝 {item.description}
                     </p>
                   )}
                   
-                  <p className="text-xs text-[#9CA3AF] mt-2" style={{ fontFamily: 'DM Sans, sans-serif' }}>
+                  <p className="text-xs text-[#6C757D] mt-2" style={{ fontFamily: 'DM Sans, sans-serif' }}>
                     📅 {new Date(item.created_at).toLocaleDateString('fr-FR')}
                   </p>
                 </div>

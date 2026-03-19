@@ -16,6 +16,7 @@ import Mentors from "./pages/Mentors";
 import Partenaires from "./pages/Partenaires";
 import Galerie from "./pages/Galerie";
 import RetourPostHack from "./pages/RetourPostHack";
+import TermesConditions from "./pages/TermesConditions";
 
 // Admin pages
 import AdminLogin from "./pages/admin/AdminLogin";
@@ -27,6 +28,8 @@ import GestionPartenaires from "./pages/admin/GestionPartenaires";
 import GestionGalerie from "./pages/admin/GestionGalerie";
 import GestionAnnonces from "./pages/admin/GestionAnnonces";
 import GestionBadges from "./pages/admin/GestionBadges";
+import Classement from "./pages/admin/Classement";
+import Statistiques from "./pages/admin/Statistiques";
 
 import NotFound from "./pages/NotFound";
 
@@ -50,6 +53,7 @@ const App = () => (
             <Route path="/partenaires" element={<Partenaires />} />
             <Route path="/galerie" element={<Galerie />} />
             <Route path="/retour" element={<RetourPostHack />} />
+            <Route path="/termes-conditions" element={<TermesConditions />} />
 
             {/* Admin */}
             <Route path="/admin/login" element={<AdminLogin />} />
@@ -61,6 +65,8 @@ const App = () => (
             <Route path="/admin/galerie" element={<ProtectedRoute><GestionGalerie /></ProtectedRoute>} />
             <Route path="/admin/annonces" element={<ProtectedRoute><GestionAnnonces /></ProtectedRoute>} />
             <Route path="/admin/badges" element={<ProtectedRoute><GestionBadges /></ProtectedRoute>} />
+            <Route path="/admin/classement" element={<ProtectedRoute><Classement /></ProtectedRoute>} />
+            <Route path="/admin/statistiques" element={<ProtectedRoute><Statistiques /></ProtectedRoute>} />
 
             <Route path="*" element={<NotFound />} />
           </Routes>
