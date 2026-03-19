@@ -1,45 +1,61 @@
-import { useQuery } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
 import Layout from "@/components/layout/Layout";
-import { Clock, MapPin, Calendar, Coffee, Code, Trophy, Users } from "lucide-react";
+import { Clock, MapPin, Calendar, Coffee, Code, Trophy, Users, Award, Target, Rocket } from "lucide-react";
 import { motion } from "framer-motion";
 
 const Agenda = () => {
-  const { data: items, isLoading, error } = useQuery({
-    queryKey: ["agenda"],
-    queryFn: async () => {
-      console.log("🔍 Récupération de l'agenda...");
-      
-      const { data, error } = await supabase.from("agenda").select("*").order("heure_debut");
-      
-      console.log("📊 Résultat query agenda:", { data, error });
-      console.log("🔍 Champs agenda:", data?.[0] ? Object.keys(data[0]) : "Aucun événement");
-      
-      if (error) {
-        console.error("❌ Erreur query agenda:", error);
-        throw error;
-      }
-      
-      console.log(`✅ ${data?.length || 0} événements trouvés`);
-      return data;
+  // Programme statique complet du hackathon
+  const agendaData = {
+    jour1: {
+      titre: "Jour 1 – Vendredi",
+      date: "08h–18h",
+      evenements: [
+        { heure: "08h–09h", titre: "Petit-déjeuner", icone: Coffee, type: "meal" },
+        { heure: "09h–09h10", titre: "Présentation du Club ISOC ESMT", icone: Users, type: "presentation" },
+        { heure: "09h10–09h20", titre: "Mot du Président du Club ISOC & du Président de l'AEESMT", icone: Award, type: "keynote" },
+        { heure: "09h20–09h40", titre: "Présentation du hackathon (objectifs, règles) & attribution des mentors", icone: Target, type: "presentation" },
+        { heure: "09h40–10h00", titre: "Présentation des outils du hackathon", icone: Code, type: "workshop" },
+        { heure: "10h–12h", titre: "Début du développement", icone: Rocket, type: "development" },
+        { heure: "12h–13h", titre: "Déjeuner", icone: Coffee, type: "meal" },
+        { heure: "13h–15h", titre: "Phase de développement", icone: Rocket, type: "development" },
+        { heure: "15h–16h", titre: "Goûter", icone: Coffee, type: "meal" },
+        { heure: "16h–18h", titre: "Phase de développement", icone: Rocket, type: "development" }
+      ]
     },
-  });
-
-  const getEventTypeIcon = (type?: string) => {
-    switch (type) {
-      case 'keynote': return Trophy;
-      case 'workshop': return Code;
-      case 'networking': return Users;
-      default: return Coffee;
+    jour2: {
+      titre: "Jour 2 – Samedi",
+      date: "08h–18h",
+      evenements: [
+        { heure: "08h–09h", titre: "Petit-déjeuner", icone: Coffee, type: "meal" },
+        { heure: "09h–12h", titre: "Phase de développement", icone: Rocket, type: "development" },
+        { heure: "12h–13h", titre: "Déjeuner", icone: Coffee, type: "meal" },
+        { heure: "13h–15h", titre: "Préparation des pitch", icone: Target, type: "workshop" },
+        { heure: "15h–17h", titre: "Pitch final (5 minutes par équipe)", icone: Trophy, type: "presentation" },
+        { heure: "17h–17h30", titre: "Délibération du jury", icone: Users, type: "jury" },
+        { heure: "17h30–18h", titre: "Remise des prix & cérémonie de clôture", icone: Award, type: "keynote" }
+      ]
+    },
+    apresHackathon: {
+      titre: "Après le hackathon",
+      sousTitre: "Phase post-événement",
+      evenements: [
+        { titre: "Publication des résultats officiels", icone: Trophy },
+        { titre: "Diffusion de la vidéo récapitulative", icone: Code },
+        { titre: "Mise en place de l'équipe de suivi et d'accompagnement", icone: Users },
+        { titre: "Démarrage du programme d'incubation", icone: Rocket },
+        { titre: "Rédaction et partage du rapport final aux partenaires", icone: Target }
+      ]
     }
   };
 
   const getEventTypeColor = (type?: string) => {
     switch (type) {
-      case 'keynote': return 'text-[#FF6B35]';
-      case 'workshop': return 'text-[#1E3A5F]';
-      case 'networking': return 'text-[#FF8C42]';
-      default: return 'text-[#6C757D]';
+      case 'keynote': return 'from-[#FF6B35] to-[#FF8C42]';
+      case 'workshop': return 'from-[#1E3A5F] to-[#2C5282]';
+      case 'development': return 'from-[#FF8C42] to-[#FFA947]';
+      case 'presentation': return 'from-[#FF6B35] to-[#1E3A5F]';
+      case 'jury': return 'from-[#1E3A5F] to-[#FF6B35]';
+      case 'meal': return 'from-[#6C757D] to-[#8B4513]';
+      default: return 'from-[#FF6B35] to-[#1E3A5F]';
     }
   };
 
@@ -64,14 +80,14 @@ const Agenda = () => {
                   className="font-display text-4xl sm:text-5xl font-bold text-[#212529]"
                   style={{ fontFamily: 'Sora, sans-serif', fontWeight: 800 }}
                 >
-                  Agenda
+                  Agenda Complet
                 </h1>
               </div>
               <p 
                 className="text-xl text-[#6C757D] mb-8"
                 style={{ fontFamily: 'DM Sans, sans-serif' }}
               >
-                Programme complet du hackathon — 17 & 18 Avril 2026
+                Programme détaillé du Hackathon ISOC-ESMT 2026 — 17 & 18 Avril
               </p>
               <div className="w-24 h-1 bg-gradient-to-r from-[#FF6B35] to-[#1E3A5F] mx-auto rounded-full"></div>
             </motion.div>
@@ -79,137 +95,181 @@ const Agenda = () => {
         </div>
 
         {/* Content */}
-        <div className="container py-8">
-          {isLoading ? (
-            <div className="flex justify-center py-20">
-              <div className="flex flex-col items-center gap-4">
-                <div className="w-12 h-12 rounded-full border-4 border-[#FF6B35] border-t-transparent animate-spin"></div>
-                <p 
-                  className="text-[#6C757D]"
-                  style={{ fontFamily: 'DM Sans, sans-serif' }}
-                >
-                  Chargement de l'agenda...
-                </p>
-              </div>
-            </div>
-          ) : !items || items.length === 0 ? (
-            <motion.div 
-              className="text-center py-20"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-            >
-              <div className="w-24 h-24 rounded-full bg-[#F8F9FA] border border-[#E9ECEF] flex items-center justify-center mx-auto mb-6">
-                <Calendar size={40} className="text-[#6C757D]" />
-              </div>
-              <h3 
-                className="font-display text-xl font-bold text-[#212529] mb-2"
-                style={{ fontFamily: 'Sora, sans-serif' }}
-              >
-                Agenda en préparation
-              </h3>
-              <p 
-                className="text-[#6C757D] max-w-md mx-auto"
-                style={{ fontFamily: 'DM Sans, sans-serif' }}
-              >
-                Le programme détaillé sera publié prochainement.
-              </p>
-            </motion.div>
-          ) : (
-            <motion.div 
-              className="max-w-4xl mx-auto"
+        <div className="container py-12">
+          <div className="max-w-6xl mx-auto space-y-16">
+            
+            {/* Jour 1 */}
+            <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
             >
-              {/* Timeline */}
-              <div className="space-y-8">
-                {items.map((item, index) => (
-                  <motion.div
-                    key={item.id}
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.6, delay: index * 0.1 }}
-                    className="relative group"
-                  >
-                    {/* Timeline line */}
-                    <div className="absolute left-8 top-8 bottom-0 w-0.5 bg-gradient-to-b from-[#FF6B35] to-transparent"></div>
-                    
-                    <div className="flex gap-6">
-                      {/* Time indicator */}
-                      <div className="flex-shrink-0">
-                        <div className="w-16 h-16 rounded-full bg-gradient-to-r from-[#FF6B35]/10 to-[#1E3A5F]/10 border-2 border-[#FF6B35]/20 flex items-center justify-center group-hover:border-[#FF6B35]/40 transition-colors">
-                          <Clock size={20} className={getEventTypeColor(item.type)} />
-                        </div>
+              <div className="bg-white rounded-3xl border border-[#E9ECEF] shadow-xl overflow-hidden">
+                {/* Header */}
+                <div className="bg-gradient-to-r from-[#FF6B35] to-[#FF8C42] p-6 text-white">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <h2 
+                        className="font-display text-2xl font-bold mb-2"
+                        style={{ fontFamily: 'Sora, sans-serif', fontWeight: 700 }}
+                      >
+                        {agendaData.jour1.titre}
+                      </h2>
+                      <p className="text-white/90 font-medium">{agendaData.jour1.date}</p>
+                    </div>
+                    <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center">
+                      <Calendar size={32} className="text-white" />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Events */}
+                <div className="p-6 space-y-4">
+                  {agendaData.jour1.evenements.map((event, index) => (
+                    <motion.div
+                      key={index}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ duration: 0.6, delay: 0.1 * index }}
+                      className="flex gap-4 group"
+                    >
+                      {/* Time */}
+                      <div className="flex-shrink-0 w-24 text-sm font-semibold text-[#6C757D] pt-2">
+                        {event.heure}
+                      </div>
+                      
+                      {/* Icon */}
+                      <div className={`w-12 h-12 rounded-full bg-gradient-to-r ${getEventTypeColor(event.type)} flex items-center justify-center flex-shrink-0`}>
+                        <event.icone size={20} className="text-white" />
                       </div>
                       
                       {/* Content */}
-                      <div className="flex-1 bg-white rounded-2xl border border-[#E9ECEF] p-6 shadow-lg hover:shadow-xl transition-all duration-300 group-hover:border-[#FF6B35]/30">
-                        <div className="flex items-start justify-between mb-4">
-                          <div>
-                            <div className="flex items-center gap-3 mb-2">
-                              <div className="w-10 h-10 rounded-full bg-[#FF6B35]/10 flex items-center justify-center">
-                                {(() => {
-                                  const Icon = getEventTypeIcon(item.type);
-                                  return <Icon size={20} className={getEventTypeColor(item.type)} />;
-                                })()}
-                              </div>
-                              <h3 
-                                className="font-display text-xl font-bold text-[#212529]"
-                                style={{ fontFamily: 'Sora, sans-serif' }}
-                              >
-                                {item.titre}
-                              </h3>
-                            </div>
-                            
-                            <div className="flex items-center gap-4 text-sm text-[#6C757D]">
-                              <div className="flex items-center gap-1">
-                                <Clock size={14} className="text-[#FF6B35]" />
-                                <span style={{ fontFamily: 'Space Mono, monospace' }}>
-                                  {item.heure_debut} - {item.heure_fin}
-                                </span>
-                              </div>
-                              
-                              {item.lieu && (
-                                <div className="flex items-center gap-1">
-                                  <MapPin size={14} className="text-[#FF6B35]" />
-                                  <span>{item.lieu}</span>
-                                </div>
-                              )}
-                            </div>
-                          </div>
-                          
-                          <div className="px-3 py-1 rounded-full bg-[#1E3A5F]/10 text-[#1E3A5F] text-xs font-medium">
-                            {item.type || 'session'}
-                          </div>
-                        </div>
-                        
-                        {item.description && (
-                          <p 
-                            className="text-[#6C757D] leading-relaxed"
-                            style={{ fontFamily: 'DM Sans, sans-serif' }}
-                          >
-                            {item.description}
-                          </p>
-                        )}
-                        
-                        {item.intervenant && (
-                          <div className="mt-4 pt-4 border-t border-[#E9ECEF]">
-                            <div className="flex items-center gap-2">
-                              <Users size={16} className="text-[#FF6B35]" />
-                              <span className="text-sm font-medium text-[#212529]">
-                                {item.intervenant}
-                              </span>
-                            </div>
-                          </div>
-                        )}
+                      <div className="flex-1 bg-[#F8F9FA] rounded-xl p-4 border border-[#E9ECEF] group-hover:border-[#FF6B35]/30 transition-colors">
+                        <h3 
+                          className="font-semibold text-[#212529]"
+                          style={{ fontFamily: 'DM Sans, sans-serif' }}
+                        >
+                          {event.titre}
+                        </h3>
                       </div>
-                    </div>
-                  </motion.div>
-                ))}
+                    </motion.div>
+                  ))}
+                </div>
               </div>
             </motion.div>
-          )}
+
+            {/* Jour 2 */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+            >
+              <div className="bg-white rounded-3xl border border-[#E9ECEF] shadow-xl overflow-hidden">
+                {/* Header */}
+                <div className="bg-gradient-to-r from-[#1E3A5F] to-[#2C5282] p-6 text-white">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <h2 
+                        className="font-display text-2xl font-bold mb-2"
+                        style={{ fontFamily: 'Sora, sans-serif', fontWeight: 700 }}
+                      >
+                        {agendaData.jour2.titre}
+                      </h2>
+                      <p className="text-white/90 font-medium">{agendaData.jour2.date}</p>
+                    </div>
+                    <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center">
+                      <Trophy size={32} className="text-white" />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Events */}
+                <div className="p-6 space-y-4">
+                  {agendaData.jour2.evenements.map((event, index) => (
+                    <motion.div
+                      key={index}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ duration: 0.6, delay: 0.1 * index }}
+                      className="flex gap-4 group"
+                    >
+                      {/* Time */}
+                      <div className="flex-shrink-0 w-24 text-sm font-semibold text-[#6C757D] pt-2">
+                        {event.heure}
+                      </div>
+                      
+                      {/* Icon */}
+                      <div className={`w-12 h-12 rounded-full bg-gradient-to-r ${getEventTypeColor(event.type)} flex items-center justify-center flex-shrink-0`}>
+                        <event.icone size={20} className="text-white" />
+                      </div>
+                      
+                      {/* Content */}
+                      <div className="flex-1 bg-[#F8F9FA] rounded-xl p-4 border border-[#E9ECEF] group-hover:border-[#1E3A5F]/30 transition-colors">
+                        <h3 
+                          className="font-semibold text-[#212529]"
+                          style={{ fontFamily: 'DM Sans, sans-serif' }}
+                        >
+                          {event.titre}
+                        </h3>
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Après le hackathon */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.6 }}
+            >
+              <div className="bg-white rounded-3xl border border-[#E9ECEF] shadow-xl overflow-hidden">
+                {/* Header */}
+                <div className="bg-gradient-to-r from-[#FF8C42] to-[#FFA947] p-6 text-white">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <h2 
+                        className="font-display text-2xl font-bold mb-2"
+                        style={{ fontFamily: 'Sora, sans-serif', fontWeight: 700 }}
+                      >
+                        {agendaData.apresHackathon.titre}
+                      </h2>
+                      <p className="text-white/90 font-medium">{agendaData.apresHackathon.sousTitre}</p>
+                    </div>
+                    <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center">
+                      <Rocket size={32} className="text-white" />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Events */}
+                <div className="p-6">
+                  <div className="grid md:grid-cols-2 gap-4">
+                    {agendaData.apresHackathon.evenements.map((event, index) => (
+                      <motion.div
+                        key={index}
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ duration: 0.6, delay: 0.1 * index }}
+                        className="flex gap-4 bg-[#F8F9FA] rounded-xl p-4 border border-[#E9ECEF] hover:border-[#FF8C42]/30 transition-colors"
+                      >
+                        <div className="w-12 h-12 rounded-full bg-gradient-to-r from-[#FF8C42] to-[#FFA947] flex items-center justify-center flex-shrink-0">
+                          <event.icone size={20} className="text-white" />
+                        </div>
+                        <h3 
+                          className="font-semibold text-[#212529]"
+                          style={{ fontFamily: 'DM Sans, sans-serif' }}
+                        >
+                          {event.titre}
+                        </h3>
+                      </motion.div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </div>
         </div>
       </div>
     </Layout>
