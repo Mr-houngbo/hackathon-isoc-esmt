@@ -1,0 +1,78 @@
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=DM+Sans:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Techno-African Premium Palette */
+    --vert-principal: 0 135 62;
+    --or-accent: 38 191 36;
+    --rouge: 220 38 38;
+    --fond-primaire: 0 0 0;
+    --surface-1: 17 24 39;
+    --surface-2: 31 41 55;
+    --bordure-subtile: 45 55 72;
+    --texte-principal: 249 250 251;
+    --texte-secondaire: 156 163 175;
+
+    /* Custom tokens */
+    --hero-gradient: linear-gradient(135deg, #00873E 0%, #FBBF24 50%, #0A0A0A 100%);
+    --vert-glow: 0 0 20px rgba(0, 135, 62, 0.3);
+    --or-glow: 0 0 20px rgba(251, 191, 36, 0.3);
+    --card-shadow: 0 4px 24px -4px rgba(0, 135, 62, 0.08);
+    --card-hover-shadow: 0 12px 32px -8px rgba(0, 135, 62, 0.15);
+    --radius: 0.75rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-[#2D3748];
+  }
+  body {
+    @apply bg-[#0A0A0A] text-[#F9FAFB] font-body antialiased;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display;
+  }
+}
+
+@layer utilities {
+  .text-gradient {
+    background: linear-gradient(135deg, #ffffff 0%, #00873E 50%, #FBBF24 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .bg-hero-gradient {
+    background: radial-gradient(circle at center, rgba(0, 135, 62, 0.08) 0%, transparent 70%), #0A0A0A;
+  }
+  .glassmorphism {
+    backdrop-filter: blur(12px);
+    background: rgba(10, 10, 10, 0.8);
+    border: 1px solid rgba(45, 55, 72, 0.3);
+  }
+  .card-premium {
+    @apply bg-[#111827] border border-[#2D3748] hover:border-[#00873E]/50 hover:-translate-y-1 transition-all duration-300;
+  }
+  .btn-premium {
+    @apply bg-[#00873E] hover:bg-[#006B31] hover:shadow-lg hover:shadow-[#00873E]/25 hover:scale-105 transition-all duration-300;
+  }
+  .badge-premium {
+    @apply bg-[#00873E]/10 text-[#00873E] border border-[#00873E]/30;
+  }
+  .shadow-card {
+    box-shadow: var(--card-shadow);
+  }
+  .shadow-card-hover {
+    box-shadow: var(--card-hover-shadow);
+  }
+  .glow-vert {
+    box-shadow: var(--vert-glow);
+  }
+  .glow-or {
+    box-shadow: var(--or-glow);
+  }
+}
