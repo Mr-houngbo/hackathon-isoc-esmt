@@ -4,22 +4,18 @@ import { ArrowRight, Calendar, MapPin, Users, Code2 } from "lucide-react";
 import CountdownTimer from "./CountdownTimer";
 
 const HeroSection = () => (
-  <section className="relative overflow-hidden bg-gradient-to-br from-white via-[#F8F9FA] to-white">
-    {/* Background decorative elements */}
+  <section className="relative overflow-hidden bg-gradient-to-br from-white via-[#F8F9FA] to-white min-h-screen">
+    {/* Background décoratif subtil */}
     <div className="absolute inset-0 overflow-hidden">
-      <div className="absolute top-0 left-1/4 w-96 h-96 bg-[#FF6B35]/5 rounded-full blur-3xl animate-float-elegant"></div>
-      <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-[#1E3A5F]/5 rounded-full blur-3xl animate-float-elegant" style={{ animationDelay: '2s' }}></div>
-    </div>
-
-    {/* Video Background */}
-    <div className="absolute inset-0 flex items-center justify-center opacity-8">
-      <div className="w-full h-full bg-gradient-to-r from-[#FF6B35]/10 via-transparent to-[#1E3A5F]/10"></div>
+      <div className="absolute top-0 left-1/4 w-96 h-96 bg-[#FF6B35]/3 rounded-full blur-3xl animate-float-elegant"></div>
+      <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-[#1E3A5F]/3 rounded-full blur-3xl animate-float-elegant" style={{ animationDelay: '2s' }}></div>
     </div>
 
     <div className="container relative z-10 py-20 sm:py-24 lg:py-32">
-      <div className="mx-auto max-w-5xl">
+      <div className="mx-auto max-w-6xl">
         
-        <motion.div className="text-center mb-12">
+        {/* CONTENU PRINCIPAL */}
+        <motion.div className="text-center mb-16">
           <motion.h1
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -29,7 +25,9 @@ const HeroSection = () => (
           >
             <span className="text-[#212529]">Hackathon</span>
             <br />
-            <span className="text-gradient">ISOC-ESMT 2026</span>
+            <span className="text-gradient bg-gradient-to-r from-[#FF6B35] to-[#1E3A5F] bg-clip-text text-transparent">
+              ISOC-ESMT 2026
+            </span>
           </motion.h1>
 
           <motion.p
@@ -65,11 +63,57 @@ const HeroSection = () => (
           </motion.div>
         </motion.div>
 
+        {/* VIDÉO ÉLÉGANTE INTÉGRÉE */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 1, delay: 0.4 }}
+          className="mb-16"
+        >
+          <div className="relative mx-auto max-w-4xl">
+            {/* Container vidéo premium */}
+            <div className="relative rounded-3xl overflow-hidden shadow-2xl bg-black">
+              {/* Vidéo */}
+              <div className="relative aspect-video">
+                <video
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  className="w-full h-full object-cover"
+                  poster="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1920 1080'%3E%3Crect fill='%23FF6B35'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.3em' fill='white' font-family='sans-serif' font-size='48'%3EChargement...%3C/text%3E%3C/svg%3E"
+                >
+                  <source src="https://imgur.com/BTKm4He.mp4" type="video/mp4" />
+                </video>
+                
+                {/* Overlay subtil pour profondeur */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent pointer-events-none"></div>
+              </div>
+              
+              {/* Badge élégant */}
+              <div className="absolute top-6 right-6">
+                <div className="bg-white/90 backdrop-blur-sm px-4 py-2 rounded-full shadow-lg border border-white/20">
+                  <div className="flex items-center gap-2">
+                    <div className="w-2 h-2 bg-[#FF6B35] rounded-full animate-pulse"></div>
+                    <span className="text-[#212529] text-sm font-semibold">🎬 Teaser</span>
+                  </div>
+                </div>
+              </div>
+              
+              {/* Bordure premium */}
+              <div className="absolute inset-0 rounded-3xl border-2 border-[#FF6B35]/20 pointer-events-none"></div>
+            </div>
+            
+            {/* Shadow effect */}
+            <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 w-3/4 h-8 bg-gradient-to-r from-[#FF6B35]/10 via-[#1E3A5F]/10 to-[#FF6B35]/10 rounded-full blur-xl"></div>
+          </div>
+        </motion.div>
+
         {/* Countdown Timer */}
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
+          transition={{ duration: 0.8, delay: 0.6 }}
           className="flex justify-center mb-16"
         >
           <div className="bg-white rounded-2xl border border-[#E9ECEF] shadow-xl p-8">
@@ -81,7 +125,7 @@ const HeroSection = () => (
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.5 }}
+          transition={{ duration: 0.8, delay: 0.8 }}
           className="flex flex-col sm:flex-row items-center justify-center gap-6"
         >
           <Link

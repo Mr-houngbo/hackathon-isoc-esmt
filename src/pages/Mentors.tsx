@@ -94,18 +94,20 @@ const Mentors = () => {
                   >
                     <div className="bg-white rounded-2xl border border-[#E9ECEF] shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden">
                       {/* Photo */}
-                      <div className="relative h-48 bg-gradient-to-br from-[#FF6B35]/10 to-[#1E3A5F]/10 flex items-center justify-center">
-                        {mentor.photo_url ? (
-                          <img 
-                            src={mentor.photo_url} 
-                            alt={mentor.nom}
-                            className="w-full h-full object-cover"
-                          />
-                        ) : (
-                          <div className="w-20 h-20 rounded-full bg-gradient-to-r from-[#FF6B35] to-[#1E3A5F] flex items-center justify-center">
-                            <User size={40} className="text-white" />
-                          </div>
-                        )}
+                      <div className="relative w-full pt-[100%] bg-gradient-to-br from-[#FF6B35]/10 to-[#1E3A5F]/10">
+                        <div className="absolute inset-0 flex items-center justify-center overflow-hidden rounded-t-2xl">
+                          {mentor.photo_url ? (
+                            <img 
+                              src={mentor.photo_url} 
+                              alt={mentor.nom}
+                              className="w-full h-full object-cover object-top"
+                            />
+                          ) : (
+                            <div className="w-20 h-20 rounded-full bg-gradient-to-r from-[#FF6B35] to-[#1E3A5F] flex items-center justify-center">
+                              <User size={40} className="text-white" />
+                            </div>
+                          )}
+                        </div>
                       </div>
                       
                       {/* Info */}
@@ -191,18 +193,20 @@ const Mentors = () => {
                   >
                     <div className="bg-white rounded-2xl border border-[#E9ECEF] shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden">
                       {/* Photo */}
-                      <div className="relative h-48 bg-gradient-to-br from-[#1E3A5F]/10 to-[#FF6B35]/10 flex items-center justify-center">
-                        {jury.photo_url ? (
-                          <img 
-                            src={jury.photo_url} 
-                            alt={jury.nom}
-                            className="w-full h-full object-cover"
-                          />
-                        ) : (
-                          <div className="w-20 h-20 rounded-full bg-gradient-to-r from-[#1E3A5F] to-[#FF6B35] flex items-center justify-center">
-                            <User size={40} className="text-white" />
-                          </div>
-                        )}
+                      <div className="relative w-full pt-[100%] bg-gradient-to-br from-[#1E3A5F]/10 to-[#FF6B35]/10">
+                        <div className="absolute inset-0 flex items-center justify-center overflow-hidden rounded-t-2xl">
+                          {jury.photo_url ? (
+                            <img 
+                              src={jury.photo_url} 
+                              alt={jury.nom}
+                              className="w-full h-full object-cover object-top"
+                            />
+                          ) : (
+                            <div className="w-20 h-20 rounded-full bg-gradient-to-r from-[#1E3A5F] to-[#FF6B35] flex items-center justify-center">
+                              <User size={40} className="text-white" />
+                            </div>
+                          )}
+                        </div>
                       </div>
                       
                       {/* Info */}
