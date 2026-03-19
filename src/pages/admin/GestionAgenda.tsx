@@ -3,90 +3,591 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import AdminLayout from "@/components/layout/AdminLayout";
 import { toast } from "sonner";
-import { Plus, Trash2, Edit2, Save, X } from "lucide-react";
+import { Plus, Trash2, Save, Search, Filter, Download, Calendar, Clock, MapPin } from "lucide-react";
+import { motion } from "framer-motion";
 
 const GestionAgenda = () => {
   const queryClient = useQueryClient();
-  const [editing, setEditing] = useState<string | null>(null);
-  const [form, setForm] = useState({ jour: 1, heure_debut: '', heure_fin: '', titre: '', description: '', lieu: '' });
   const [showAdd, setShowAdd] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filterType, setFilterType] = useState<'toutes' | 'jour1' | 'jour2' | 'jour3'>('toutes');
+  const [form, setForm] = useState({ 
+    titre: '', 
+    description: '',
+    heure_debut: '',
+    heure_fin: '',
+    lieu: '',
+    jour: 1 as number,
+    intervenant: ''
+  });
 
-  const { data: items } = useQuery({
+  const { data: agenda, isLoading, error, refetch } = useQuery({
     queryKey: ["admin-agenda"],
     queryFn: async () => {
-      const { data, error } = await supabase.from("agenda").select("*").order("jour").order("heure_debut");
+      const { data, error } = await supabase.from("agenda").select("*").order("created_at", { ascending: true });
       if (error) throw error;
       return data;
     },
   });
 
-  const addItem = useMutation({
+  const filteredAgenda = agenda?.filter((item) => {
+    const matchesSearch = item.titre?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      item.description?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      item.lieu?.toLowerCase().includes(searchTerm.toLowerCase());
+    
+    switch (filterType) {
+      case 'jour1':
+        return matchesSearch && item.jour === 1;
+      case 'jour2':
+        return matchesSearch && item.jour === 2;
+      case 'jour3':
+        return matchesSearch && item.jour === 3;
+      default:
+        return matchesSearch;
+    }
+  }) || [];
+
+  const stats = {
+    total: agenda?.length || 0,
+    jour1: agenda?.filter((a) => a.jour === 1).length || 0,
+    jour2: agenda?.filter((a) => a.jour === 2).length || 0,
+    jour3: agenda?.filter((a) => a.jour === 3).length || 0,
+  };
+
+  const addAgenda = useMutation({
     mutationFn: async () => {
       const { error } = await supabase.from("agenda").insert({ ...form });
       if (error) throw error;
     },
-    onSuccess: () => { queryClient.invalidateQueries({ queryKey: ["admin-agenda"] }); setShowAdd(false); setForm({ jour: 1, heure_debut: '', heure_fin: '', titre: '', description: '', lieu: '' }); toast.success("Ajouté"); },
+    onSuccess: () => { 
+      queryClient.invalidateQueries({ queryKey: ["admin-agenda"] }); 
+      setShowAdd(false); 
+      setForm({ titre: '', description: '', heure_debut: '', heure_fin: '', lieu: '', jour: 1, intervenant: '' }); 
+      toast.success("Événement ajouté à l'agenda avec succès"); 
+    },
+    onError: (error) => {
+      toast.error(`Erreur: ${error.message}`);
+    },
   });
 
-  const deleteItem = useMutation({
+  const deleteAgenda = useMutation({
     mutationFn: async (id: string) => {
       const { error } = await supabase.from("agenda").delete().eq("id", id);
       if (error) throw error;
     },
-    onSuccess: () => { queryClient.invalidateQueries({ queryKey: ["admin-agenda"] }); toast.success("Supprimé"); },
+    onSuccess: () => { 
+      queryClient.invalidateQueries({ queryKey: ["admin-agenda"] }); 
+      toast.success("Événement supprimé de l'agenda avec succès"); 
+    },
+    onError: (error) => {
+      toast.error(`Erreur: ${error.message}`);
+    },
   });
+
+  if (isLoading) {
+    return (
+      <AdminLayout>
+        <div className="flex items-center justify-center min-h-screen">
+          <div className="flex flex-col items-center gap-4">
+            <div className="w-12 h-12 rounded-full border-4 border-[#00873E] border-t-transparent animate-spin"></div>
+            <p className="text-[#9CA3AF]">Chargement de l'agenda...</p>
+          </div>
+        </div>
+      </AdminLayout>
+    );
+  }
+
+  if (error) {
+    return (
+      <AdminLayout>
+        <div className="flex items-center justify-center min-h-screen">
+          <div className="text-center">
+            <p className="text-[#DC2626] text-lg font-bold mb-4">Erreur de chargement</p>
+            <p className="text-[#9CA3AF]">{error.message}</p>
+          </div>
+        </div>
+      </AdminLayout>
+    );
+  }
 
   return (
     <AdminLayout>
-      <div className="flex items-center justify-between mb-6">
-        <h1 className="font-display text-2xl font-bold">Gestion de l'agenda</h1>
-        <button onClick={() => setShowAdd(!showAdd)}
-          className="flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-medium text-primary-foreground">
-          <Plus size={16} /> Ajouter
-        </button>
-      </div>
-
-      {showAdd && (
-        <div className="rounded-xl border border-border bg-card p-4 mb-6 space-y-3">
-          <div className="grid sm:grid-cols-3 gap-3">
-            <select value={form.jour} onChange={(e) => setForm({ ...form, jour: Number(e.target.value) })}
-              className="rounded-lg border border-input bg-background px-3 py-2 text-sm">
-              <option value={1}>Jour 1</option>
-              <option value={2}>Jour 2</option>
-            </select>
-            <input placeholder="Heure début" value={form.heure_debut} onChange={(e) => setForm({ ...form, heure_debut: e.target.value })}
-              className="rounded-lg border border-input bg-background px-3 py-2 text-sm" />
-            <input placeholder="Heure fin" value={form.heure_fin} onChange={(e) => setForm({ ...form, heure_fin: e.target.value })}
-              className="rounded-lg border border-input bg-background px-3 py-2 text-sm" />
-          </div>
-          <input placeholder="Titre" value={form.titre} onChange={(e) => setForm({ ...form, titre: e.target.value })}
-            className="w-full rounded-lg border border-input bg-background px-3 py-2 text-sm" />
-          <input placeholder="Description" value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })}
-            className="w-full rounded-lg border border-input bg-background px-3 py-2 text-sm" />
-          <input placeholder="Lieu" value={form.lieu} onChange={(e) => setForm({ ...form, lieu: e.target.value })}
-            className="w-full rounded-lg border border-input bg-background px-3 py-2 text-sm" />
-          <button onClick={() => addItem.mutate()} className="rounded-lg bg-primary px-4 py-2 text-sm font-medium text-primary-foreground">
-            <Save size={14} className="inline mr-1" /> Enregistrer
-          </button>
-        </div>
-      )}
-
-      {[1, 2].map((jour) => (
-        <div key={jour} className="mb-6">
-          <h2 className="font-display font-semibold mb-3">Jour {jour}</h2>
-          <div className="space-y-2">
-            {items?.filter((i) => i.jour === jour).map((item) => (
-              <div key={item.id} className="flex items-center gap-3 rounded-lg border border-border bg-card p-3 text-sm">
-                <span className="min-w-[60px] text-muted-foreground">{item.heure_debut}</span>
-                <span className="flex-1 font-medium">{item.titre}</span>
-                <button onClick={() => deleteItem.mutate(item.id)} className="text-destructive hover:bg-destructive/10 rounded p-1">
-                  <Trash2 size={14} />
+      <div className="min-h-screen bg-[#0A0A0A]">
+        {/* Header */}
+        <div className="bg-gradient-to-r from-[#00873E]/10 to-[#FBBF24]/10 backdrop-blur-sm border-b border-[#2D3748]/20">
+          <div className="container py-6">
+            <div className="flex items-center justify-between">
+              <motion.div
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6 }}
+              >
+                <h1 
+                  className="font-display text-3xl font-bold text-[#F9FAFB]"
+                  style={{ fontFamily: 'Sora, sans-serif', fontWeight: 800 }}
+                >
+                  Gestion de l'Agenda
+                </h1>
+                <p 
+                  className="text-[#9CA3AF] mt-2"
+                  style={{ fontFamily: 'DM Sans, sans-serif' }}
+                >
+                  Administration du programme du Hackathon ISOC-ESMT 2026
+                </p>
+              </motion.div>
+              
+              <div className="flex gap-2">
+                <button
+                  onClick={() => setShowAdd(!showAdd)}
+                  className="px-4 py-2 rounded-lg bg-[#00873E] text-[#F9FAFB] hover:bg-[#006450] transition-colors"
+                  style={{ fontFamily: 'DM Sans, sans-serif' }}
+                >
+                  <Plus size={16} className="mr-2" />
+                  Ajouter un événement
+                </button>
+                <button
+                  onClick={() => window.print()}
+                  className="px-4 py-2 rounded-lg bg-[#1F2937] text-[#9CA3AF] hover:bg-[#2D3748] transition-colors"
+                  style={{ fontFamily: 'DM Sans, sans-serif' }}
+                >
+                  <Download size={16} className="mr-2" />
+                  Imprimer
                 </button>
               </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Stats Cards */}
+        <div className="container py-8">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+          >
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.5, delay: 0.1 }}
+                className="relative overflow-hidden rounded-2xl border border-[#2D3748] bg-[#111827] p-6 hover:border-[#FBBF24]/50 hover:shadow-xl hover:shadow-[#FBBF24]/10 transition-all duration-300"
+              >
+                <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-[#FBBF24]/5 opacity-0"></div>
+                
+                <div className="relative z-10">
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center gap-3">
+                      <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-[#00873E]/20 to-[#FBBF24]/20 flex items-center justify-center">
+                        <Calendar size={24} className="text-[#F9FAFB]" />
+                      </div>
+                      <div>
+                        <p 
+                          className="text-2xl font-bold text-[#F9FAFB]"
+                          style={{ fontFamily: 'Sora, sans-serif', fontWeight: 700 }}
+                        >
+                          {stats.total}
+                        </p>
+                        <p 
+                          className="text-xs text-[#9CA3AF] mt-1"
+                          style={{ fontFamily: 'DM Sans, sans-serif' }}
+                        >
+                          Total événements
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+              
+              <motion.div
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.5, delay: 0.2 }}
+                className="relative overflow-hidden rounded-2xl border border-[#2D3748] bg-[#111827] p-6 hover:border-[#10B981]/50 hover:shadow-xl hover:shadow-[#10B981]/10 transition-all duration-300"
+              >
+                <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-[#10B981]/5 opacity-0"></div>
+                
+                <div className="relative z-10">
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center gap-3">
+                      <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-[#10B981]/20 to-[#10B981]/20 flex items-center justify-center">
+                        <Calendar size={24} className="text-[#F9FAFB]" />
+                      </div>
+                      <div>
+                        <p 
+                          className="text-2xl font-bold text-[#F9FAFB]"
+                          style={{ fontFamily: 'Sora, sans-serif', fontWeight: 700 }}
+                        >
+                          {stats.jour1}
+                        </p>
+                        <p 
+                          className="text-xs text-[#9CA3AF] mt-1"
+                          style={{ fontFamily: 'DM Sans, sans-serif' }}
+                        >
+                          Jour 1
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+              
+              <motion.div
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.5, delay: 0.3 }}
+                className="relative overflow-hidden rounded-2xl border border-[#2D3748] bg-[#111827] p-6 hover:border-[#F59E0B]/50 hover:shadow-xl hover:shadow-[#F59E0B]/10 transition-all duration-300"
+              >
+                <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-[#F59E0B]/5 opacity-0"></div>
+                
+                <div className="relative z-10">
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center gap-3">
+                      <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-[#F59E0B]/20 to-[#F59E0B]/20 flex items-center justify-center">
+                        <Calendar size={24} className="text-[#F9FAFB]" />
+                      </div>
+                      <div>
+                        <p 
+                          className="text-2xl font-bold text-[#F9FAFB]"
+                          style={{ fontFamily: 'Sora, sans-serif', fontWeight: 700 }}
+                        >
+                          {stats.jour2}
+                        </p>
+                        <p 
+                          className="text-xs text-[#9CA3AF] mt-1"
+                          style={{ fontFamily: 'DM Sans, sans-serif' }}
+                        >
+                          Jour 2
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+              
+              <motion.div
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.5, delay: 0.4 }}
+                className="relative overflow-hidden rounded-2xl border border-[#2D3748] bg-[#111827] p-6 hover:border-[#D4AF37]/50 hover:shadow-xl hover:shadow-[#D4AF37]/10 transition-all duration-300"
+              >
+                <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-[#D4AF37]/5 opacity-0"></div>
+                
+                <div className="relative z-10">
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center gap-3">
+                      <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-[#D4AF37]/20 to-[#D4AF37]/20 flex items-center justify-center">
+                        <Calendar size={24} className="text-[#F9FAFB]" />
+                      </div>
+                      <div>
+                        <p 
+                          className="text-2xl font-bold text-[#F9FAFB]"
+                          style={{ fontFamily: 'Sora, sans-serif', fontWeight: 700 }}
+                        >
+                          {stats.jour3}
+                        </p>
+                        <p 
+                          className="text-xs text-[#9CA3AF] mt-1"
+                          style={{ fontFamily: 'DM Sans, sans-serif' }}
+                        >
+                          Jour 3
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            </div>
+          </motion.div>
+        </div>
+
+        {/* Add Form */}
+        {showAdd && (
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="container py-6"
+          >
+            <div className="rounded-2xl border border-[#2D3748] bg-[#111827] p-6">
+              <h2 
+                className="font-display text-xl font-bold text-[#F9FAFB] mb-6"
+                style={{ fontFamily: 'Sora, sans-serif' }}
+              >
+                Ajouter un Événement
+              </h2>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="space-y-4">
+                  <div>
+                    <label className="block text-sm font-medium text-[#9CA3AF] mb-2" style={{ fontFamily: 'DM Sans, sans-serif' }}>Titre de l'événement</label>
+                    <input 
+                      placeholder="Titre de l'événement" 
+                      value={form.titre} 
+                      onChange={(e) => setForm({ ...form, titre: e.target.value })}
+                      className="w-full px-4 py-2 rounded-xl border border-[#2D3748] bg-[#1F2937] text-[#F9FAFB] placeholder-[#9CA3AF] focus:outline-none focus:ring-2 focus:ring-[#FBBF24] focus:border-transparent transition-all duration-300"
+                      style={{ fontFamily: 'DM Sans, sans-serif' }}
+                    />
+                  </div>
+                  
+                  <div>
+                    <label className="block text-sm font-medium text-[#9CA3AF] mb-2" style={{ fontFamily: 'DM Sans, sans-serif' }}>Jour</label>
+                    <select 
+                      value={form.jour} 
+                      onChange={(e) => setForm({ ...form, jour: parseInt(e.target.value) })}
+                      className="w-full px-4 py-2 rounded-xl border border-[#2D3748] bg-[#1F2937] text-[#F9FAFB] focus:outline-none focus:ring-2 focus:ring-[#FBBF24] focus:border-transparent transition-all duration-300"
+                      style={{ fontFamily: 'DM Sans, sans-serif' }}
+                    >
+                      <option value={1}>Jour 1</option>
+                      <option value={2}>Jour 2</option>
+                      <option value={3}>Jour 3</option>
+                    </select>
+                  </div>
+                  
+                  <div>
+                    <label className="block text-sm font-medium text-[#9CA3AF] mb-2" style={{ fontFamily: 'DM Sans, sans-serif' }}>Intervenant</label>
+                    <input 
+                      placeholder="Nom de l'intervenant" 
+                      value={form.intervenant} 
+                      onChange={(e) => setForm({ ...form, intervenant: e.target.value })}
+                      className="w-full px-4 py-2 rounded-xl border border-[#2D3748] bg-[#1F2937] text-[#F9FAFB] placeholder-[#9CA3AF] focus:outline-none focus:ring-2 focus:ring-[#FBBF24] focus:border-transparent transition-all duration-300"
+                      style={{ fontFamily: 'DM Sans, sans-serif' }}
+                    />
+                  </div>
+                </div>
+                
+                <div className="space-y-4">
+                  <div>
+                    <label className="block text-sm font-medium text-[#9CA3AF] mb-2" style={{ fontFamily: 'DM Sans, sans-serif' }}>Heure de début</label>
+                    <input 
+                      type="time"
+                      value={form.heure_debut} 
+                      onChange={(e) => setForm({ ...form, heure_debut: e.target.value })}
+                      className="w-full px-4 py-2 rounded-xl border border-[#2D3748] bg-[#1F2937] text-[#F9FAFB] placeholder-[#9CA3AF] focus:outline-none focus:ring-2 focus:ring-[#FBBF24] focus:border-transparent transition-all duration-300"
+                      style={{ fontFamily: 'DM Sans, sans-serif' }}
+                    />
+                  </div>
+                  
+                  <div>
+                    <label className="block text-sm font-medium text-[#9CA3AF] mb-2" style={{ fontFamily: 'DM Sans, sans-serif' }}>Heure de fin</label>
+                    <input 
+                      type="time"
+                      value={form.heure_fin} 
+                      onChange={(e) => setForm({ ...form, heure_fin: e.target.value })}
+                      className="w-full px-4 py-2 rounded-xl border border-[#2D3748] bg-[#1F2937] text-[#F9FAFB] placeholder-[#9CA3AF] focus:outline-none focus:ring-2 focus:ring-[#FBBF24] focus:border-transparent transition-all duration-300"
+                      style={{ fontFamily: 'DM Sans, sans-serif' }}
+                    />
+                  </div>
+                  
+                  <div>
+                    <label className="block text-sm font-medium text-[#9CA3AF] mb-2" style={{ fontFamily: 'DM Sans, sans-serif' }}>Lieu</label>
+                    <input 
+                      placeholder="Lieu de l'événement" 
+                      value={form.lieu} 
+                      onChange={(e) => setForm({ ...form, lieu: e.target.value })}
+                      className="w-full px-4 py-2 rounded-xl border border-[#2D3748] bg-[#1F2937] text-[#F9FAFB] placeholder-[#9CA3AF] focus:outline-none focus:ring-2 focus:ring-[#FBBF24] focus:border-transparent transition-all duration-300"
+                      style={{ fontFamily: 'DM Sans, sans-serif' }}
+                    />
+                  </div>
+                </div>
+              </div>
+              
+              <div className="mt-6 space-y-4">
+                <div>
+                  <label className="block text-sm font-medium text-[#9CA3AF] mb-2" style={{ fontFamily: 'DM Sans, sans-serif' }}>Intervenant (optionnel)</label>
+                  <input 
+                    placeholder="Nom de l'intervenant" 
+                    value={form.intervenant} 
+                    onChange={(e) => setForm({ ...form, intervenant: e.target.value })}
+                    className="w-full px-4 py-2 rounded-xl border border-[#2D3748] bg-[#1F2937] text-[#F9FAFB] placeholder-[#9CA3AF] focus:outline-none focus:ring-2 focus:ring-[#FBBF24] focus:border-transparent transition-all duration-300"
+                    style={{ fontFamily: 'DM Sans, sans-serif' }}
+                  />
+                </div>
+                
+                <div>
+                  <label className="block text-sm font-medium text-[#9CA3AF] mb-2" style={{ fontFamily: 'DM Sans, sans-serif' }}>Description</label>
+                  <textarea 
+                    placeholder="Description de l'événement..." 
+                    value={form.description} 
+                    onChange={(e) => setForm({ ...form, description: e.target.value })}
+                    rows={3}
+                    className="w-full px-4 py-2 rounded-xl border border-[#2D3748] bg-[#1F2937] text-[#F9FAFB] placeholder-[#9CA3AF] focus:outline-none focus:ring-2 focus:ring-[#FBBF24] focus:border-transparent transition-all duration-300"
+                    style={{ fontFamily: 'DM Sans, sans-serif' }}
+                  />
+                </div>
+              </div>
+              
+              <div className="flex justify-end gap-3 mt-6">
+                <button
+                  onClick={() => setShowAdd(false)}
+                  className="px-6 py-2 rounded-xl border border-[#2D3748] text-[#9CA3AF] hover:bg-[#2D3748] transition-colors"
+                  style={{ fontFamily: 'DM Sans, sans-serif' }}
+                >
+                  Annuler
+                </button>
+                <button
+                  onClick={() => addAgenda.mutate()}
+                  className="px-6 py-2 rounded-xl bg-[#00873E] text-[#F9FAFB] hover:bg-[#006450] transition-colors flex items-center gap-2"
+                  style={{ fontFamily: 'DM Sans, sans-serif' }}
+                >
+                  <Save size={16} />
+                  Enregistrer
+                </button>
+              </div>
+            </div>
+          </motion.div>
+        )}
+
+        {/* Filters and Search */}
+        <div className="container py-6">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+          >
+            <div className="flex flex-col lg:flex-row gap-4 items-start lg:items-center justify-between">
+              <div className="flex-1">
+                <div className="flex items-center gap-3">
+                  <Search size={20} className="text-[#9CA3AF]" />
+                  <input
+                    type="text"
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    placeholder="Rechercher un événement..."
+                    className="flex-1 px-4 py-2 rounded-xl border border-[#2D3748] bg-[#111827] text-[#F9FAFB] placeholder-[#9CA3AF] focus:outline-none focus:ring-2 focus:ring-[#FBBF24] focus:border-transparent transition-all duration-300"
+                    style={{ fontFamily: 'DM Sans, sans-serif' }}
+                  />
+                </div>
+              </div>
+              
+              <div className="flex gap-2">
+                <button
+                  onClick={() => setFilterType('toutes')}
+                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
+                    filterType === 'toutes' ? 'bg-[#00873E] text-[#F9FAFB]' : 'bg-[#1F2937] text-[#9CA3AF] hover:bg-[#2D3748]'
+                  }`}
+                  style={{ fontFamily: 'DM Sans, sans-serif' }}
+                >
+                  Toutes
+                </button>
+                <button
+                  onClick={() => setFilterType('jour1')}
+                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
+                    filterType === 'jour1' ? 'bg-[#10B981] text-[#F9FAFB]' : 'bg-[#1F2937] text-[#9CA3AF] hover:bg-[#2D3748]'
+                  }`}
+                  style={{ fontFamily: 'DM Sans, sans-serif' }}
+                >
+                  Jour 1
+                </button>
+                <button
+                  onClick={() => setFilterType('jour2')}
+                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
+                    filterType === 'jour2' ? 'bg-[#F59E0B] text-[#F9FAFB]' : 'bg-[#1F2937] text-[#9CA3AF] hover:bg-[#2D3748]'
+                  }`}
+                  style={{ fontFamily: 'DM Sans, sans-serif' }}
+                >
+                  Jour 2
+                </button>
+                <button
+                  onClick={() => setFilterType('jour3')}
+                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
+                    filterType === 'jour3' ? 'bg-[#D4AF37] text-[#F9FAFB]' : 'bg-[#1F2937] text-[#9CA3AF] hover:bg-[#2D3748]'
+                  }`}
+                  style={{ fontFamily: 'DM Sans, sans-serif' }}
+                >
+                  Jour 3
+                </button>
+              </div>
+              
+              <div className="flex items-center gap-2">
+                <Filter size={20} className="text-[#9CA3AF]" />
+                <span className="text-sm text-[#9CA3AF]" style={{ fontFamily: 'DM Sans, sans-serif' }}>
+                  {filteredAgenda.length} résultat{filteredAgenda.length > 1 ? 's' : ''}
+                </span>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+
+        {/* Agenda Timeline */}
+        <div className="container pb-8">
+          <div className="space-y-6">
+            {filteredAgenda.map((item) => (
+              <motion.div
+                key={item.id}
+                initial={{ opacity: 0, x: -50 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.5 }}
+                className="relative overflow-hidden rounded-2xl border border-[#2D3748] bg-[#111827] hover:border-[#FBBF24]/50 hover:shadow-xl hover:shadow-[#FBBF24]/10 transition-all duration-300"
+              >
+                <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-[#FBBF24]/5 opacity-0"></div>
+                
+                <div className="relative z-10 p-6">
+                  <div className="flex items-start justify-between mb-4">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-3 mb-2">
+                        <span className={`inline-block px-3 py-1 rounded-full text-xs font-bold ${
+                          item.jour === 1 ? 'bg-[#10B981]/20 text-[#10B981]' : 
+                          item.jour === 2 ? 'bg-[#F59E0B]/20 text-[#F59E0B]' : 
+                          'bg-[#D4AF37]/20 text-[#D4AF37]'
+                        }`}>
+                          {item.jour === 1 ? '📅 Jour 1' : 
+                           item.jour === 2 ? '📅 Jour 2' : 
+                           '📅 Jour 3'}
+                        </span>
+                        
+                        <h3 
+                          className="font-bold text-[#F9FAFB]"
+                          style={{ fontFamily: 'Sora, sans-serif' }}
+                        >
+                          {item.titre}
+                        </h3>
+                      </div>
+                      
+                      <div className="flex items-center gap-4 text-sm text-[#9CA3AF]" style={{ fontFamily: 'DM Sans, sans-serif' }}>
+                        <div className="flex items-center gap-1">
+                          <Calendar size={14} />
+                          <span>{new Date(item.created_at).toLocaleDateString('fr-FR')}</span>
+                        </div>
+                        
+                        <div className="flex items-center gap-1">
+                          <Clock size={14} />
+                          <span>{item.heure_debut} - {item.heure_fin}</span>
+                        </div>
+                        
+                        {item.lieu && (
+                          <div className="flex items-center gap-1">
+                            <MapPin size={14} />
+                            <span>{item.lieu}</span>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                    
+                    <button
+                      onClick={() => deleteAgenda.mutate(item.id)}
+                      className="p-2 rounded-lg bg-[#DC2626] text-[#F9FAFB] hover:bg-[#B91C1C] transition-colors"
+                      style={{ fontFamily: 'DM Sans, sans-serif' }}
+                    >
+                      <Trash2 size={16} />
+                    </button>
+                  </div>
+                  
+                  <div className="space-y-2">
+                    {/* Intervenant section removed as property doesn't exist */}
+                    
+                    {item.description && (
+                      <p className="text-sm text-[#9CA3AF] line-clamp-3" style={{ fontFamily: 'DM Sans, sans-serif' }}>
+                        📝 {item.description}
+                      </p>
+                    )}
+                  </div>
+                </div>
+              </motion.div>
             ))}
           </div>
         </div>
-      ))}
+      </div>
     </AdminLayout>
   );
 };

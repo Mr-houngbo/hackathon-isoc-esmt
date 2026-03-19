@@ -2,7 +2,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import AdminLayout from "@/components/layout/AdminLayout";
 import { toast } from "sonner";
-import { Eye, Check, X, Search, Filter, Download, Calendar, Users, UserCheck, AlertTriangle, Trash2, Edit, Save } from "lucide-react";
+import { Eye, Search, Filter, Download, Users, UserCheck, Trash2 } from "lucide-react";
 import { motion } from "framer-motion";
 import { useState } from "react";
 
@@ -51,10 +51,10 @@ const GestionInscriptions = () => {
       if (error) throw error;
       return id;
     },
-    onSuccess: () => {
+    onSuccess: (deletedId) => {
       toast.success("Inscription supprimée avec succès");
       refetch();
-      if (selected === id) setSelected(null);
+      if (selected === deletedId) setSelected(null);
     },
     onError: (error) => {
       toast.error(`Erreur: ${error.message}`);
@@ -167,7 +167,8 @@ const GestionInscriptions = () => {
                       </div>
                     </div>
                   </div>
-                </motion.div>
+                </div>
+              </motion.div>
               
               <motion.div
                 initial={{ opacity: 0, scale: 0.8 }}
@@ -199,7 +200,8 @@ const GestionInscriptions = () => {
                       </div>
                     </div>
                   </div>
-                </motion.div>
+                </div>
+              </motion.div>
               
               <motion.div
                 initial={{ opacity: 0, scale: 0.8 }}
@@ -231,7 +233,8 @@ const GestionInscriptions = () => {
                       </div>
                     </div>
                   </div>
-                </motion.div>
+                </div>
+              </motion.div>
               
               <motion.div
                 initial={{ opacity: 0, scale: 0.8 }}
@@ -263,7 +266,8 @@ const GestionInscriptions = () => {
                       </div>
                     </div>
                   </div>
-                </motion.div>
+                </div>
+              </motion.div>
             </div>
           </motion.div>
         </div>
@@ -407,7 +411,7 @@ const GestionInscriptions = () => {
                       <td className="py-4 px-6">
                         <div className="flex items-center justify-center gap-2">
                           <button
-                            onClick={() => setShowDetails(eq.id)}
+                            onClick={() => setShowDetails(true)}
                             className="p-1 rounded bg-[#00873E] text-[#F9FAFB] hover:bg-[#006450] transition-colors"
                             style={{ fontFamily: 'DM Sans, sans-serif' }}
                           >
@@ -428,6 +432,7 @@ const GestionInscriptions = () => {
               </table>
             </div>
           </div>
+        </div>
 
         {/* Details Modal */}
         {selectedEquipe && showDetails && (
@@ -443,6 +448,7 @@ const GestionInscriptions = () => {
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.3 }}
               className="relative w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-2xl border border-[#2D3748] bg-[#111827] shadow-2xl"
+              onClick={(e) => e.stopPropagation()}
             >
               <div className="sticky top-0 right-0 p-4 border-b border-[#2D3748] bg-[#1F2937] z-10">
                 <button
@@ -450,7 +456,7 @@ const GestionInscriptions = () => {
                   className="p-2 rounded-lg bg-[#DC2626] text-[#F9FAFB] hover:bg-[#B91C1C] transition-colors"
                   style={{ fontFamily: 'DM Sans, sans-serif' }}
                 >
-                  <X size={24} />
+                  ✕
                 </button>
               </div>
               
@@ -517,7 +523,7 @@ const GestionInscriptions = () => {
                     </div>
                   </div>
                   
-                  <div>
+                  <div className="md:col-span-2">
                     <h3 
                       className="font-semibold text-[#F9FAFB] mb-2"
                       style={{ fontFamily: 'Sora, sans-serif' }}
@@ -542,7 +548,7 @@ const GestionInscriptions = () => {
                     </div>
                   </div>
                 </div>
-              </motion.div>
+              </div>
             </motion.div>
           </motion.div>
         )}

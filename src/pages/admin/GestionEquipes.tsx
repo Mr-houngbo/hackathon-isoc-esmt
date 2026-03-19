@@ -3,81 +3,89 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import AdminLayout from "@/components/layout/AdminLayout";
 import { toast } from "sonner";
-import { Plus, Trash2, Save, Search, Filter, Download, Image, Calendar, Eye } from "lucide-react";
+import { Plus, Trash2, Save, Search, Filter, Download, Users, Trophy, Award } from "lucide-react";
 import { motion } from "framer-motion";
 
-const GestionGalerie = () => {
+const GestionEquipes = () => {
   const queryClient = useQueryClient();
   const [showAdd, setShowAdd] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
-  const [filterType, setFilterType] = useState<'toutes' | 'equipes' | 'photos' | 'videos'>('toutes');
+  const [filterType, setFilterType] = useState<'toutes' | 'selectionnees' | 'en_attente'>('toutes');
   const [form, setForm] = useState({ 
-    titre: '', 
-    type: 'photo' as string,
-    url: '', 
-    description: '',
-    equipe_id: ''
+    nom_equipe: '', 
+    nom_projet: '', 
+    description: '', 
+    logo_url: '', 
+    selectionnee: false as boolean
   });
 
-  const { data: galerie, isLoading, error, refetch } = useQuery({
-    queryKey: ["admin-galerie"],
+  const { data: equipes, isLoading, error, refetch } = useQuery({
+    queryKey: ["admin-equipes"],
     queryFn: async () => {
-      const { data, error } = await supabase.from("galerie").select("*").order("created_at", { ascending: false });
+      const { data, error } = await supabase.from("equipes").select("*").order("created_at", { ascending: false });
       if (error) throw error;
       return data;
     },
   });
 
-  const filteredGalerie = galerie?.filter((item) => {
-    const matchesSearch = item.titre?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      item.description?.toLowerCase().includes(searchTerm.toLowerCase());
+  const filteredEquipes = equipes?.filter((equipe) => {
+    const matchesSearch = equipe.nom_equipe?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      equipe.nom_projet?.toLowerCase().includes(searchTerm.toLowerCase());
     
     switch (filterType) {
-      case 'equipes':
-        return matchesSearch && item.type === 'equipe';
-      case 'photos':
-        return matchesSearch && item.type === 'photo';
-      case 'videos':
-        return matchesSearch && item.type === 'video';
+      case 'selectionnees':
+        return matchesSearch && equipe.selectionnee;
+      case 'en_attente':
+        return matchesSearch && !equipe.selectionnee;
       default:
         return matchesSearch;
     }
   }) || [];
 
   const stats = {
-    total: galerie?.length || 0,
-    equipes: galerie?.filter((g) => g.type === 'equipe').length || 0,
-    photos: galerie?.filter((g) => g.type === 'photo').length || 0,
-    videos: galerie?.filter((g) => g.type === 'video').length || 0,
+    total: equipes?.length || 0,
+    selectionnees: equipes?.filter((e) => e.selectionnee).length || 0,
+    en_attente: equipes?.filter((e) => !e.selectionnee).length || 0,
   };
 
-  const addGalerie = useMutation({
+  const addEquipe = useMutation({
     mutationFn: async () => {
-      const { error } = await supabase.from("galerie").insert({ ...form });
+      const { error } = await supabase.from("equipes").insert({ ...form });
       if (error) throw error;
     },
     onSuccess: () => { 
-      queryClient.invalidateQueries({ queryKey: ["admin-galerie"] }); 
+      queryClient.invalidateQueries({ queryKey: ["admin-equipes"] }); 
       setShowAdd(false); 
-      setForm({ titre: '', type: 'photo', url: '', description: '', equipe_id: '' }); 
-      toast.success("Élément ajouté à la galerie avec succès"); 
+      setForm({ nom_equipe: '', nom_projet: '', description: '', logo_url: '', selectionnee: false }); 
+      toast.success("Équipe ajoutée avec succès"); 
     },
     onError: (error) => {
       toast.error(`Erreur: ${error.message}`);
     },
   });
 
-  const deleteGalerie = useMutation({
+  const deleteEquipe = useMutation({
     mutationFn: async (id: string) => {
-      const { error } = await supabase.from("galerie").delete().eq("id", id);
+      const { error } = await supabase.from("equipes").delete().eq("id", id);
       if (error) throw error;
     },
     onSuccess: () => { 
-      queryClient.invalidateQueries({ queryKey: ["admin-galerie"] }); 
-      toast.success("Élément supprimé de la galerie avec succès"); 
+      queryClient.invalidateQueries({ queryKey: ["admin-equipes"] }); 
+      toast.success("Équipe supprimée avec succès"); 
     },
     onError: (error) => {
       toast.error(`Erreur: ${error.message}`);
+    },
+  });
+
+  const toggleSelection = useMutation({
+    mutationFn: async ({ id, selectionnee }: { id: string; selectionnee: boolean }) => {
+      const { error } = await supabase.from("equipes").update({ selectionnee }).eq("id", id);
+      if (error) throw error;
+    },
+    onSuccess: () => { 
+      queryClient.invalidateQueries({ queryKey: ["admin-equipes"] }); 
+      toast.success("Statut mis à jour"); 
     },
   });
 
@@ -87,7 +95,7 @@ const GestionGalerie = () => {
         <div className="flex items-center justify-center min-h-screen">
           <div className="flex flex-col items-center gap-4">
             <div className="w-12 h-12 rounded-full border-4 border-[#00873E] border-t-transparent animate-spin"></div>
-            <p className="text-[#9CA3AF]">Chargement de la galerie...</p>
+            <p className="text-[#9CA3AF]">Chargement des équipes...</p>
           </div>
         </div>
       </AdminLayout>
@@ -123,13 +131,13 @@ const GestionGalerie = () => {
                   className="font-display text-3xl font-bold text-[#F9FAFB]"
                   style={{ fontFamily: 'Sora, sans-serif', fontWeight: 800 }}
                 >
-                  Gestion de la Galerie
+                  Gestion des Équipes
                 </h1>
                 <p 
                   className="text-[#9CA3AF] mt-2"
                   style={{ fontFamily: 'DM Sans, sans-serif' }}
                 >
-                  Administration du Wall of Fame du Hackathon ISOC-ESMT 2026
+                  Administration des équipes participantes au Hackathon ISOC-ESMT 2026
                 </p>
               </motion.div>
               
@@ -140,7 +148,7 @@ const GestionGalerie = () => {
                   style={{ fontFamily: 'DM Sans, sans-serif' }}
                 >
                   <Plus size={16} className="mr-2" />
-                  Ajouter un média
+                  Ajouter une Équipe
                 </button>
                 <button
                   onClick={() => window.print()}
@@ -162,7 +170,7 @@ const GestionGalerie = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               <motion.div
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
@@ -175,7 +183,7 @@ const GestionGalerie = () => {
                   <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center gap-3">
                       <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-[#00873E]/20 to-[#FBBF24]/20 flex items-center justify-center">
-                        <Image size={24} className="text-[#F9FAFB]" />
+                        <Users size={24} className="text-[#F9FAFB]" />
                       </div>
                       <div>
                         <p 
@@ -188,7 +196,7 @@ const GestionGalerie = () => {
                           className="text-xs text-[#9CA3AF] mt-1"
                           style={{ fontFamily: 'DM Sans, sans-serif' }}
                         >
-                          Total médias
+                          Total des équipes
                         </p>
                       </div>
                     </div>
@@ -208,20 +216,20 @@ const GestionGalerie = () => {
                   <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center gap-3">
                       <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-[#10B981]/20 to-[#10B981]/20 flex items-center justify-center">
-                        <Image size={24} className="text-[#F9FAFB]" />
+                        <Trophy size={24} className="text-[#F9FAFB]" />
                       </div>
                       <div>
                         <p 
                           className="text-2xl font-bold text-[#F9FAFB]"
                           style={{ fontFamily: 'Sora, sans-serif', fontWeight: 700 }}
                         >
-                          {stats.photos}
+                          {stats.selectionnees}
                         </p>
                         <p 
                           className="text-xs text-[#9CA3AF] mt-1"
                           style={{ fontFamily: 'DM Sans, sans-serif' }}
                         >
-                          Photos
+                          Équipes sélectionnées
                         </p>
                       </div>
                     </div>
@@ -241,53 +249,20 @@ const GestionGalerie = () => {
                   <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center gap-3">
                       <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-[#F59E0B]/20 to-[#F59E0B]/20 flex items-center justify-center">
-                        <Image size={24} className="text-[#F9FAFB]" />
+                        <Award size={24} className="text-[#F9FAFB]" />
                       </div>
                       <div>
                         <p 
                           className="text-2xl font-bold text-[#F9FAFB]"
                           style={{ fontFamily: 'Sora, sans-serif', fontWeight: 700 }}
                         >
-                          {stats.videos}
+                          {stats.en_attente}
                         </p>
                         <p 
                           className="text-xs text-[#9CA3AF] mt-1"
                           style={{ fontFamily: 'DM Sans, sans-serif' }}
                         >
-                          Vidéos
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-              
-              <motion.div
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.5, delay: 0.4 }}
-                className="relative overflow-hidden rounded-2xl border border-[#2D3748] bg-[#111827] p-6 hover:border-[#D4AF37]/50 hover:shadow-xl hover:shadow-[#D4AF37]/10 transition-all duration-300"
-              >
-                <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-[#D4AF37]/5 opacity-0"></div>
-                
-                <div className="relative z-10">
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="flex items-center gap-3">
-                      <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-[#D4AF37]/20 to-[#D4AF37]/20 flex items-center justify-center">
-                        <Image size={24} className="text-[#F9FAFB]" />
-                      </div>
-                      <div>
-                        <p 
-                          className="text-2xl font-bold text-[#F9FAFB]"
-                          style={{ fontFamily: 'Sora, sans-serif', fontWeight: 700 }}
-                        >
-                          {stats.equipes}
-                        </p>
-                        <p 
-                          className="text-xs text-[#9CA3AF] mt-1"
-                          style={{ fontFamily: 'DM Sans, sans-serif' }}
-                        >
-                          Équipes
+                          En attente
                         </p>
                       </div>
                     </div>
@@ -311,72 +286,58 @@ const GestionGalerie = () => {
                 className="font-display text-xl font-bold text-[#F9FAFB] mb-6"
                 style={{ fontFamily: 'Sora, sans-serif' }}
               >
-                Ajouter un Média
+                Ajouter une Équipe
               </h2>
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-4">
                   <div>
-                    <label className="block text-sm font-medium text-[#9CA3AF] mb-2" style={{ fontFamily: 'DM Sans, sans-serif' }}>Titre</label>
+                    <label className="block text-sm font-medium text-[#9CA3AF] mb-2" style={{ fontFamily: 'DM Sans, sans-serif' }}>Nom de l'équipe</label>
                     <input 
-                      placeholder="Titre du média" 
-                      value={form.titre} 
-                      onChange={(e) => setForm({ ...form, titre: e.target.value })}
+                      placeholder="Nom de l'équipe" 
+                      value={form.nom_equipe} 
+                      onChange={(e) => setForm({ ...form, nom_equipe: e.target.value })}
                       className="w-full px-4 py-2 rounded-xl border border-[#2D3748] bg-[#1F2937] text-[#F9FAFB] placeholder-[#9CA3AF] focus:outline-none focus:ring-2 focus:ring-[#FBBF24] focus:border-transparent transition-all duration-300"
                       style={{ fontFamily: 'DM Sans, sans-serif' }}
                     />
                   </div>
                   
                   <div>
-                    <label className="block text-sm font-medium text-[#9CA3AF] mb-2" style={{ fontFamily: 'DM Sans, sans-serif' }}>Type de média</label>
-                    <select 
-                      value={form.type} 
-                      onChange={(e) => setForm({ ...form, type: e.target.value })}
-                      className="w-full px-4 py-2 rounded-xl border border-[#2D3748] bg-[#1F2937] text-[#F9FAFB] focus:outline-none focus:ring-2 focus:ring-[#FBBF24] focus:border-transparent transition-all duration-300"
+                    <label className="block text-sm font-medium text-[#9CA3AF] mb-2" style={{ fontFamily: 'DM Sans, sans-serif' }}>Nom du projet</label>
+                    <input 
+                      placeholder="Nom du projet" 
+                      value={form.nom_projet} 
+                      onChange={(e) => setForm({ ...form, nom_projet: e.target.value })}
+                      className="w-full px-4 py-2 rounded-xl border border-[#2D3748] bg-[#1F2937] text-[#F9FAFB] placeholder-[#9CA3AF] focus:outline-none focus:ring-2 focus:ring-[#FBBF24] focus:border-transparent transition-all duration-300"
                       style={{ fontFamily: 'DM Sans, sans-serif' }}
-                    >
-                      <option value="photo">Photo</option>
-                      <option value="video">Vidéo</option>
-                      <option value="equipe">Équipe</option>
-                    </select>
+                    />
                   </div>
                 </div>
                 
                 <div className="space-y-4">
                   <div>
-                    <label className="block text-sm font-medium text-[#9CA3AF] mb-2" style={{ fontFamily: 'DM Sans, sans-serif' }}>URL du média</label>
-                    <input 
-                      placeholder="URL de l'image ou vidéo" 
-                      value={form.url} 
-                      onChange={(e) => setForm({ ...form, url: e.target.value })}
+                    <label className="block text-sm font-medium text-[#9CA3AF] mb-2" style={{ fontFamily: 'DM Sans, sans-serif' }}>Description</label>
+                    <textarea 
+                      placeholder="Description du projet..." 
+                      value={form.description} 
+                      onChange={(e) => setForm({ ...form, description: e.target.value })}
+                      rows={3}
                       className="w-full px-4 py-2 rounded-xl border border-[#2D3748] bg-[#1F2937] text-[#F9FAFB] placeholder-[#9CA3AF] focus:outline-none focus:ring-2 focus:ring-[#FBBF24] focus:border-transparent transition-all duration-300"
                       style={{ fontFamily: 'DM Sans, sans-serif' }}
                     />
                   </div>
                   
                   <div>
-                    <label className="block text-sm font-medium text-[#9CA3AF] mb-2" style={{ fontFamily: 'DM Sans, sans-serif' }}>ID Équipe (optionnel)</label>
+                    <label className="block text-sm font-medium text-[#9CA3AF] mb-2" style={{ fontFamily: 'DM Sans, sans-serif' }}>URL Logo</label>
                     <input 
-                      placeholder="ID de l'équipe associée" 
-                      value={form.equipe_id} 
-                      onChange={(e) => setForm({ ...form, equipe_id: e.target.value })}
+                      placeholder="URL du logo" 
+                      value={form.logo_url} 
+                      onChange={(e) => setForm({ ...form, logo_url: e.target.value })}
                       className="w-full px-4 py-2 rounded-xl border border-[#2D3748] bg-[#1F2937] text-[#F9FAFB] placeholder-[#9CA3AF] focus:outline-none focus:ring-2 focus:ring-[#FBBF24] focus:border-transparent transition-all duration-300"
                       style={{ fontFamily: 'DM Sans, sans-serif' }}
                     />
                   </div>
                 </div>
-              </div>
-              
-              <div className="mt-6">
-                <label className="block text-sm font-medium text-[#9CA3AF] mb-2" style={{ fontFamily: 'DM Sans, sans-serif' }}>Description</label>
-                <textarea 
-                  placeholder="Description du média..." 
-                  value={form.description} 
-                  onChange={(e) => setForm({ ...form, description: e.target.value })}
-                  rows={3}
-                  className="w-full px-4 py-2 rounded-xl border border-[#2D3748] bg-[#1F2937] text-[#F9FAFB] placeholder-[#9CA3AF] focus:outline-none focus:ring-2 focus:ring-[#FBBF24] focus:border-transparent transition-all duration-300"
-                  style={{ fontFamily: 'DM Sans, sans-serif' }}
-                />
               </div>
               
               <div className="flex justify-end gap-3 mt-6">
@@ -388,7 +349,7 @@ const GestionGalerie = () => {
                   Annuler
                 </button>
                 <button
-                  onClick={() => addGalerie.mutate()}
+                  onClick={() => addEquipe.mutate()}
                   className="px-6 py-2 rounded-xl bg-[#00873E] text-[#F9FAFB] hover:bg-[#006450] transition-colors flex items-center gap-2"
                   style={{ fontFamily: 'DM Sans, sans-serif' }}
                 >
@@ -415,7 +376,7 @@ const GestionGalerie = () => {
                     type="text"
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
-                    placeholder="Rechercher un média..."
+                    placeholder="Rechercher une équipe..."
                     className="flex-1 px-4 py-2 rounded-xl border border-[#2D3748] bg-[#111827] text-[#F9FAFB] placeholder-[#9CA3AF] focus:outline-none focus:ring-2 focus:ring-[#FBBF24] focus:border-transparent transition-all duration-300"
                     style={{ fontFamily: 'DM Sans, sans-serif' }}
                   />
@@ -433,50 +394,41 @@ const GestionGalerie = () => {
                   Toutes
                 </button>
                 <button
-                  onClick={() => setFilterType('photos')}
+                  onClick={() => setFilterType('selectionnees')}
                   className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
-                    filterType === 'photos' ? 'bg-[#10B981] text-[#F9FAFB]' : 'bg-[#1F2937] text-[#9CA3AF] hover:bg-[#2D3748]'
+                    filterType === 'selectionnees' ? 'bg-[#10B981] text-[#F9FAFB]' : 'bg-[#1F2937] text-[#9CA3AF] hover:bg-[#2D3748]'
                   }`}
                   style={{ fontFamily: 'DM Sans, sans-serif' }}
                 >
-                  Photos
+                  Sélectionnées
                 </button>
                 <button
-                  onClick={() => setFilterType('videos')}
+                  onClick={() => setFilterType('en_attente')}
                   className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
-                    filterType === 'videos' ? 'bg-[#F59E0B] text-[#F9FAFB]' : 'bg-[#1F2937] text-[#9CA3AF] hover:bg-[#2D3748]'
+                    filterType === 'en_attente' ? 'bg-[#F59E0B] text-[#F9FAFB]' : 'bg-[#1F2937] text-[#9CA3AF] hover:bg-[#2D3748]'
                   }`}
                   style={{ fontFamily: 'DM Sans, sans-serif' }}
                 >
-                  Vidéos
-                </button>
-                <button
-                  onClick={() => setFilterType('equipes')}
-                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
-                    filterType === 'equipes' ? 'bg-[#D4AF37] text-[#F9FAFB]' : 'bg-[#1F2937] text-[#9CA3AF] hover:bg-[#2D3748]'
-                  }`}
-                  style={{ fontFamily: 'DM Sans, sans-serif' }}
-                >
-                  Équipes
+                  En attente
                 </button>
               </div>
               
               <div className="flex items-center gap-2">
                 <Filter size={20} className="text-[#9CA3AF]" />
                 <span className="text-sm text-[#9CA3AF]" style={{ fontFamily: 'DM Sans, sans-serif' }}>
-                  {filteredGalerie.length} résultat{filteredGalerie.length > 1 ? 's' : ''}
+                  {filteredEquipes.length} résultat{filteredEquipes.length > 1 ? 's' : ''}
                 </span>
               </div>
             </div>
           </motion.div>
         </div>
 
-        {/* Gallery Grid */}
+        {/* Teams Grid */}
         <div className="container pb-8">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredGalerie.map((item) => (
+            {filteredEquipes.map((equipe) => (
               <motion.div
-                key={item.id}
+                key={equipe.id}
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.5 }}
@@ -484,58 +436,54 @@ const GestionGalerie = () => {
               >
                 <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-[#FBBF24]/5 opacity-0"></div>
                 
-                <div className="relative z-10">
-                  <div className="aspect-video mb-4 rounded-lg overflow-hidden bg-[#1F2937]">
-                    {item.type === 'photo' ? (
-                      <img 
-                        src={item.url} 
-                        alt={item.titre}
-                        className="w-full h-full object-cover"
-                      />
-                    ) : item.type === 'video' ? (
-                      <video 
-                        src={item.url} 
-                        controls
-                        className="w-full h-full object-cover"
-                      />
-                    ) : (
-                      <div className="w-full h-full flex items-center justify-center">
-                        <Image size={48} className="text-[#9CA3AF]" />
+                <div className="relative z-10 p-6">
+                  <div className="flex items-start justify-between mb-4">
+                    <div className="flex items-center gap-3">
+                      {equipe.logo_url ? (
+                        <img 
+                          src={equipe.logo_url} 
+                          alt={equipe.nom_equipe}
+                          className="w-12 h-12 rounded-full object-cover border-2 border-[#2D3748]"
+                        />
+                      ) : (
+                        <div className="w-12 h-12 rounded-full bg-gradient-to-r from-[#00873E] to-[#FBBF24] flex items-center justify-center">
+                          <span className="text-white font-bold text-lg">
+                            {equipe.nom_equipe?.charAt(0)?.toUpperCase() || 'E'}
+                          </span>
+                        </div>
+                      )}
+                      <div className="flex-1">
+                        <h3 
+                          className="font-bold text-[#F9FAFB]"
+                          style={{ fontFamily: 'Sora, sans-serif' }}
+                        >
+                          {equipe.nom_equipe}
+                        </h3>
+                        <p 
+                          className="text-sm text-[#9CA3AF]"
+                          style={{ fontFamily: 'DM Sans, sans-serif' }}
+                        >
+                          {equipe.nom_projet}
+                        </p>
                       </div>
-                    )}
-                  </div>
-                  
-                  <div className="flex items-start justify-between mb-2">
-                    <div className="flex-1">
-                      <h3 
-                        className="font-bold text-[#F9FAFB] text-sm"
-                        style={{ fontFamily: 'Sora, sans-serif' }}
-                      >
-                        {item.titre}
-                      </h3>
-                      <span className={`inline-block px-2 py-1 rounded-full text-xs font-bold ${
-                        item.type === 'photo' ? 'bg-[#10B981]/20 text-[#10B981]' : 
-                        item.type === 'video' ? 'bg-[#F59E0B]/20 text-[#F59E0B]' : 
-                        'bg-[#D4AF37]/20 text-[#D4AF37]'
-                      }`}>
-                        {item.type === 'photo' ? '📷 Photo' : 
-                         item.type === 'video' ? '🎥 Vidéo' : 
-                         '👥 Équipe'}
-                      </span>
                     </div>
                     
                     <div className="flex gap-2">
                       <button
-                        onClick={() => window.open(item.url, '_blank')}
-                        className="p-2 rounded-lg bg-[#00873E] text-[#F9FAFB] hover:bg-[#006450] transition-colors"
+                        onClick={() => toggleSelection.mutate({ id: equipe.id, selectionnee: !equipe.selectionnee })}
+                        className={`p-2 rounded-lg transition-colors ${
+                          equipe.selectionnee 
+                            ? 'bg-[#10B981] text-[#F9FAFB] hover:bg-[#059669]' 
+                            : 'bg-[#F59E0B] text-[#F9FAFB] hover:bg-[#D97706]'
+                        }`}
                         style={{ fontFamily: 'DM Sans, sans-serif' }}
-                        title="Voir en grand"
+                        title={equipe.selectionnee ? 'Désélectionner' : 'Sélectionner'}
                       >
-                        <Eye size={16} />
+                        <Trophy size={16} />
                       </button>
                       
                       <button
-                        onClick={() => deleteGalerie.mutate(item.id)}
+                        onClick={() => deleteEquipe.mutate(equipe.id)}
                         className="p-2 rounded-lg bg-[#DC2626] text-[#F9FAFB] hover:bg-[#B91C1C] transition-colors"
                         style={{ fontFamily: 'DM Sans, sans-serif' }}
                       >
@@ -544,15 +492,23 @@ const GestionGalerie = () => {
                     </div>
                   </div>
                   
-                  {item.description && (
-                    <p className="text-xs text-[#9CA3AF] line-clamp-2" style={{ fontFamily: 'DM Sans, sans-serif' }}>
-                      📝 {item.description}
+                  <div className="space-y-2">
+                    <span className={`inline-block px-3 py-1 rounded-full text-xs font-bold ${
+                      equipe.selectionnee ? 'bg-[#10B981]/20 text-[#10B981]' : 'bg-[#F59E0B]/20 text-[#F59E0B]'
+                    }`}>
+                      {equipe.selectionnee ? '🏆 Sélectionnée' : '⏳ En attente'}
+                    </span>
+                    
+                    {equipe.description && (
+                      <p className="text-xs text-[#9CA3AF] line-clamp-2" style={{ fontFamily: 'DM Sans, sans-serif' }}>
+                        📝 {equipe.description}
+                      </p>
+                    )}
+                    
+                    <p className="text-xs text-[#9CA3AF]" style={{ fontFamily: 'DM Sans, sans-serif' }}>
+                      📅 {new Date(equipe.created_at).toLocaleDateString('fr-FR')}
                     </p>
-                  )}
-                  
-                  <p className="text-xs text-[#9CA3AF] mt-2" style={{ fontFamily: 'DM Sans, sans-serif' }}>
-                    📅 {new Date(item.created_at).toLocaleDateString('fr-FR')}
-                  </p>
+                  </div>
                 </div>
               </motion.div>
             ))}
@@ -563,4 +519,4 @@ const GestionGalerie = () => {
   );
 };
 
-export default GestionGalerie;
+export default GestionEquipes;

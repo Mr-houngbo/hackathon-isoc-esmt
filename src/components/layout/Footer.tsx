@@ -174,6 +174,14 @@ const Footer = () => (
             <Link to="#" className="text-[#9CA3AF] hover:text-[#00873E] transition-colors duration-300" style={{ fontFamily: 'DM Sans, sans-serif' }}>
               Confidentialité
             </Link>
+            <Link 
+              to="/admin/dashboard" 
+              className="text-[#4B5563] hover:text-[#6B7280] transition-colors duration-300" 
+              style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '10px' }}
+              title="Accès Admin"
+            >
+              ad
+            </Link>
           </div>
         </div>
       </div>
