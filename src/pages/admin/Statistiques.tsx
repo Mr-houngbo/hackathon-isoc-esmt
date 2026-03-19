@@ -17,31 +17,85 @@ import {
   PieChart,
   ArrowUp,
   ArrowDown,
-  Minus
+  Minus,
+  Trophy
 } from "lucide-react";
 import { motion } from "framer-motion";
 
 const Statistiques = () => {
-  // Récupérer les équipes avec leurs membres
+  // Récupérer les équipes avec leurs membres (jointure correcte)
   const { data: equipes, isLoading: loadingEquipes } = useQuery({
     queryKey: ["admin-stats-equipes"],
     queryFn: async () => {
       const { data, error } = await supabase
         .from("equipes")
-        .select("*, membres(*)")
+        .select(`
+          *,
+          membres (
+            id,
+            nom_prenom,
+            genre,
+            filiere,
+            niveau_etudes,
+            telephone,
+            email,
+            etablissement,
+            competences,
+            role_equipe,
+            disponible_2_jours,
+            accepte_conditions,
+            autorise_photos,
+            competence_autre,
+            created_at
+          )
+        `)
         .order('created_at', { ascending: false });
       if (error) throw error;
       return data;
     },
   });
 
-  // Récupérer les membres pour analyser les données démographiques
+  // Récupérer tous les membres pour analyses démographiques
   const { data: membres, isLoading: loadingMembres } = useQuery({
     queryKey: ["admin-stats-membres"],
     queryFn: async () => {
       const { data, error } = await supabase
         .from("membres")
-        .select("*");
+        .select(`
+          *,
+          equipes (
+            id,
+            type_candidature,
+            statut,
+            a_projet,
+            domaine_projet,
+            niveau_technique
+          )
+        `);
+      if (error) throw error;
+      return data;
+    },
+  });
+
+  // Récupérer les badges pour statistiques de distribution
+  const { data: badges } = useQuery({
+    queryKey: ["admin-stats-badges"],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("badges")
+        .select("*, equipe_id, membre_id, envoye, date_envoi");
+      if (error) throw error;
+      return data;
+    },
+  });
+
+  // Récupérer les certificats pour statistiques de réussite
+  const { data: certificats } = useQuery({
+    queryKey: ["admin-stats-certificats"],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("certificats")
+        .select("*, type, rang, envoye, date_envoi");
       if (error) throw error;
       return data;
     },
@@ -66,56 +120,60 @@ const Statistiques = () => {
     equipesSelectionnees: equipes?.filter(e => (e as any).statut === 'selectionne').length || 0,
     equipesEnAttente: equipes?.filter(e => (e as any).statut === 'en_attente').length || 0,
     equipesNonSelectionnees: equipes?.filter(e => (e as any).statut === 'non_selectionne').length || 0,
-    totalMembres: equipes?.reduce((acc, eq) => acc + ((eq.membres as any[])?.length || 0), 0) || 0,
+    totalMembres: equipes?.reduce((acc, eq) => acc + (eq.membres?.length || 0), 0) || 0,
     projetsIndividuels: equipes?.filter(e => e.type_candidature === 'individuel').length || 0,
     projetsEquipe: equipes?.filter(e => e.type_candidature === 'equipe').length || 0,
     projetsAvecProjet: equipes?.filter(e => e.a_projet === 'oui').length || 0,
     projetsSansProjet: equipes?.filter(e => e.a_projet === 'non').length || 0,
+    badgesEnvoyes: badges?.filter(b => b.envoye === true).length || 0,
+    badgesTotal: badges?.length || 0,
+    certificatsParticipation: certificats?.filter(c => c.type === 'participation').length || 0,
+    certificatsLaureats: certificats?.filter(c => c.type === 'laureat').length || 0,
   };
 
-  // Analyser les sources d'information depuis les données réelles
-  const sourceInfoStats = membres?.reduce((acc, membre) => {
-    const source = membre.source_info || 'Non spécifié';
+  // Analyser les sources d'information depuis les données réelles (table equipes)
+  const sourceInfoStats = equipes?.reduce((acc, equipe) => {
+    const source = equipe.source_info || 'Non spécifié';
     acc[source] = (acc[source] || 0) + 1;
     return acc;
   }, {} as Record<string, number>);
 
-  // Analyser les domaines de projets
+  // Analyser les domaines de projets depuis equipes
   const domaineProjetStats = equipes?.reduce((acc, equipe) => {
     const domaine = equipe.domaine_projet || 'Non spécifié';
     acc[domaine] = (acc[domaine] || 0) + 1;
     return acc;
   }, {} as Record<string, number>);
 
-  // Analyser les niveaux techniques
+  // Analyser les niveaux techniques depuis equipes
   const niveauTechniqueStats = equipes?.reduce((acc, equipe) => {
     const niveau = equipe.niveau_technique || 'Non spécifié';
     acc[niveau] = (acc[niveau] || 0) + 1;
     return acc;
   }, {} as Record<string, number>);
 
-  // Analyser les niveaux d'études
+  // Analyser les niveaux d'études depuis membres
   const niveauEtudesStats = membres?.reduce((acc, membre) => {
     const niveau = membre.niveau_etudes || 'Non spécifié';
     acc[niveau] = (acc[niveau] || 0) + 1;
     return acc;
   }, {} as Record<string, number>);
 
-  // Analyser les filières
+  // Analyser les filières depuis membres
   const filiereStats = membres?.reduce((acc, membre) => {
     const filiere = membre.filiere || 'Non spécifié';
     acc[filiere] = (acc[filiere] || 0) + 1;
     return acc;
   }, {} as Record<string, number>);
 
-  // Analyser les genres
+  // Analyser les genres depuis membres
   const genreStats = membres?.reduce((acc, membre) => {
     const genre = membre.genre || 'Non précisé';
     acc[genre] = (acc[genre] || 0) + 1;
     return acc;
   }, {} as Record<string, number>);
 
-  // Analyser les rôles dans les équipes
+  // Analyser les rôles dans les équipes depuis membres
   const roleStats = membres?.reduce((acc, membre) => {
     if (membre.role_equipe) {
       acc[membre.role_equipe] = (acc[membre.role_equipe] || 0) + 1;
@@ -123,13 +181,27 @@ const Statistiques = () => {
     return acc;
   }, {} as Record<string, number>);
 
-  // Analyser les compétences
+  // Analyser les compétences depuis membres (array)
   const competencesStats = membres?.reduce((acc, membre) => {
     if (membre.competences && Array.isArray(membre.competences)) {
-      (membre.competences as string[]).forEach(comp => {
+      membre.competences.forEach(comp => {
         acc[comp] = (acc[comp] || 0) + 1;
       });
     }
+    return acc;
+  }, {} as Record<string, number>);
+
+  // Analyser les établissements depuis membres
+  const etablissementStats = membres?.reduce((acc, membre) => {
+    const etablissement = membre.etablissement || 'Non spécifié';
+    acc[etablissement] = (acc[etablissement] || 0) + 1;
+    return acc;
+  }, {} as Record<string, number>);
+
+  // Analyser la disponibilité des membres
+  const disponibiliteStats = membres?.reduce((acc, membre) => {
+    const disponible = membre.disponible_2_jours ? 'Disponible' : 'Non disponible';
+    acc[disponible] = (acc[disponible] || 0) + 1;
     return acc;
   }, {} as Record<string, number>);
 
@@ -629,59 +701,191 @@ const Statistiques = () => {
           </div>
         </div>
 
-        {/* Domaines de Projets et Compétences */}
+        {/* Badges et Certificats */}
         <div className="container pb-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            {/* Domaines de Projets */}
+            {/* Distribution des Badges */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.9 }}
+              transition={{ duration: 0.6, delay: 1.1 }}
               className="rounded-2xl border border-[#E9ECEF] bg-white p-6"
             >
               <div className="flex items-center gap-3 mb-6">
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-r from-[#FF6B35]/10 to-[#FF6B35]/10 flex items-center justify-center">
-                  <Target className="text-[#FF6B35]" size={20} />
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-r from-[#FFD700]/10 to-[#FFD700]/10 flex items-center justify-center">
+                  <Award className="text-[#FFD700]" size={20} />
                 </div>
                 <h2 
                   className="font-display text-xl font-bold text-[#212529]"
                   style={{ fontFamily: 'Sora, sans-serif', fontWeight: 700 }}
                 >
-                  Domaines de Projets
+                  Distribution des Badges
+                </h2>
+              </div>
+              
+              <div className="space-y-6">
+                <div className="flex items-center justify-between p-4 rounded-xl bg-[#FFD700]/5 border border-[#FFD700]/10">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-xl bg-gradient-to-r from-[#FFD700]/10 to-[#FFD700]/10 flex items-center justify-center">
+                      <Award className="text-[#FFD700]" size={20} />
+                    </div>
+                    <div>
+                      <p className="font-medium text-[#212529]" style={{ fontFamily: 'DM Sans, sans-serif' }}>
+                        Badges Envoyés
+                      </p>
+                      <p className="text-xs text-[#6C757D]" style={{ fontFamily: 'DM Sans, sans-serif' }}>
+                        Participants ayant reçu leur badge
+                      </p>
+                    </div>
+                  </div>
+                  <div className="text-right">
+                    <p className="text-2xl font-bold text-[#FFD700]" style={{ fontFamily: 'Sora, sans-serif' }}>
+                      {statsReelles.badgesEnvoyes}
+                    </p>
+                    <p className="text-xs text-[#6C757D]" style={{ fontFamily: 'DM Sans, sans-serif' }}>
+                      {statsReelles.badgesTotal > 0 ? Math.round(statsReelles.badgesEnvoyes / statsReelles.badgesTotal * 100) : 0}%
+                    </p>
+                  </div>
+                </div>
+
+                <div className="p-4 rounded-xl bg-[#F8F9FA] border border-[#E9ECEF]">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-sm text-[#6C757D]" style={{ fontFamily: 'DM Sans, sans-serif' }}>
+                      Total Badges à Distribuer
+                    </span>
+                    <span className="text-2xl font-bold text-[#212529]" style={{ fontFamily: 'Sora, sans-serif' }}>
+                      {statsReelles.badgesTotal}
+                    </span>
+                  </div>
+                  <div className="text-xs text-[#6C757D]" style={{ fontFamily: 'DM Sans, sans-serif' }}>
+                    Reste à envoyer : {statsReelles.badgesTotal - statsReelles.badgesEnvoyes} badges
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Certificats de Réussite */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 1.2 }}
+              className="rounded-2xl border border-[#E9ECEF] bg-white p-6"
+            >
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-r from-[#00873E]/10 to-[#00873E]/10 flex items-center justify-center">
+                  <Target className="text-[#00873E]" size={20} />
+                </div>
+                <h2 
+                  className="font-display text-xl font-bold text-[#212529]"
+                  style={{ fontFamily: 'Sora, sans-serif', fontWeight: 700 }}
+                >
+                  Certificats de Réussite
+                </h2>
+              </div>
+              
+              <div className="space-y-6">
+                <div className="flex items-center justify-between p-4 rounded-xl bg-[#00873E]/5 border border-[#00873E]/10">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-xl bg-gradient-to-r from-[#00873E]/10 to-[#00873E]/10 flex items-center justify-center">
+                      <Target className="text-[#00873E]" size={20} />
+                    </div>
+                    <div>
+                      <p className="font-medium text-[#212529]" style={{ fontFamily: 'DM Sans, sans-serif' }}>
+                        Certificats de Participation
+                      </p>
+                      <p className="text-xs text-[#6C757D]" style={{ fontFamily: 'DM Sans, sans-serif' }}>
+                        Tous les participants
+                      </p>
+                    </div>
+                  </div>
+                  <div className="text-right">
+                    <p className="text-2xl font-bold text-[#00873E]" style={{ fontFamily: 'Sora, sans-serif' }}>
+                      {statsReelles.certificatsParticipation}
+                    </p>
+                    <p className="text-xs text-[#6C757D]" style={{ fontFamily: 'DM Sans, sans-serif' }}>
+                      {statsReelles.totalMembres > 0 ? Math.round(statsReelles.certificatsParticipation / statsReelles.totalMembres * 100) : 0}%
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-center justify-between p-4 rounded-xl bg-[#FF6B35]/5 border border-[#FF6B35]/10">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-xl bg-gradient-to-r from-[#FF6B35]/10 to-[#FF6B35]/10 flex items-center justify-center">
+                      <Trophy className="text-[#FF6B35]" size={20} />
+                    </div>
+                    <div>
+                      <p className="font-medium text-[#212529]" style={{ fontFamily: 'DM Sans, sans-serif' }}>
+                        Certificats de Lauréats
+                      </p>
+                      <p className="text-xs text-[#6C757D]" style={{ fontFamily: 'DM Sans, sans-serif' }}>
+                        Équipes gagnantes
+                      </p>
+                    </div>
+                  </div>
+                  <div className="text-right">
+                    <p className="text-2xl font-bold text-[#FF6B35]" style={{ fontFamily: 'Sora, sans-serif' }}>
+                      {statsReelles.certificatsLaureats}
+                    </p>
+                    <p className="text-xs text-[#6C757D]" style={{ fontFamily: 'DM Sans, sans-serif' }}>
+                      {statsReelles.totalMembres > 0 ? Math.round(statsReelles.certificatsLaureats / statsReelles.totalMembres * 100) : 0}%
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+
+        {/* Établissements et Disponibilité */}
+        <div className="container pb-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            {/* Établissements */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 1.3 }}
+              className="rounded-2xl border border-[#E9ECEF] bg-white p-6"
+            >
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-r from-[#1E3A5F]/10 to-[#1E3A5F]/10 flex items-center justify-center">
+                  <Globe className="text-[#1E3A5F]" size={20} />
+                </div>
+                <h2 
+                  className="font-display text-xl font-bold text-[#212529]"
+                  style={{ fontFamily: 'Sora, sans-serif', fontWeight: 700 }}
+                >
+                  Établissements Représentés
                 </h2>
               </div>
               
               <div className="space-y-3">
-                {Object.entries(domaineProjetStats).map(([domaine, nombre], index) => {
-                  const totalDomaines = Object.values(domaineProjetStats).reduce((a, b) => a + b, 0);
-                  const pourcentage = totalDomaines > 0 ? (nombre / totalDomaines * 100).toFixed(1) : '0';
+                {Object.entries(etablissementStats).map(([etablissement, nombre], index) => {
+                  const totalEtablissements = Object.values(etablissementStats).reduce((a, b) => a + b, 0);
+                  const pourcentage = totalEtablissements > 0 ? (nombre / totalEtablissements * 100).toFixed(1) : '0';
                   
                   return (
                     <motion.div
-                      key={domaine}
+                      key={etablissement}
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ duration: 0.3, delay: index * 0.1 }}
                       className="flex items-center justify-between p-3 rounded-xl bg-[#F8F9FA] hover:bg-[#F8F9FA]/80 transition-colors"
                     >
                       <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 rounded-full bg-gradient-to-r from-[#FF6B35]/10 to-[#FF6B35]/10 flex items-center justify-center text-sm font-bold text-[#FF6B35]">
-                          🎯
+                        <div className="w-8 h-8 rounded-full bg-gradient-to-r from-[#1E3A5F]/10 to-[#1E3A5F]/10 flex items-center justify-center text-sm font-bold text-[#1E3A5F]">
+                          🏫
                         </div>
                         <div>
                           <p className="font-medium text-[#212529]" style={{ fontFamily: 'DM Sans, sans-serif' }}>
-                            {domaine === 'Vie étudiante' ? '🎓 Vie étudiante' : 
-                             domaine === 'Administration' ? '🏢 Administration' : 
-                             domaine === 'Pédagogie' ? '📚 Pédagogie' : 
-                             domaine === 'Campus' ? '🏫 Campus' : domaine}
+                            {etablissement}
                           </p>
                           <p className="text-xs text-[#6C757D]" style={{ fontFamily: 'DM Sans, sans-serif' }}>
-                            {nombre} projets
+                            {nombre} participants
                           </p>
                         </div>
                       </div>
                       <div className="text-right">
-                        <span className="text-sm font-bold text-[#FF6B35]" style={{ fontFamily: 'Sora, sans-serif' }}>
+                        <span className="text-sm font-bold text-[#1E3A5F]" style={{ fontFamily: 'Sora, sans-serif' }}>
                           {pourcentage}%
                         </span>
                       </div>
@@ -691,56 +895,58 @@ const Statistiques = () => {
               </div>
             </motion.div>
 
-            {/* Compétences Principales */}
+            {/* Disponibilité des Participants */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 1.0 }}
+              transition={{ duration: 0.6, delay: 1.4 }}
               className="rounded-2xl border border-[#E9ECEF] bg-white p-6"
             >
               <div className="flex items-center gap-3 mb-6">
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-r from-[#1E3A5F]/10 to-[#1E3A5F]/10 flex items-center justify-center">
-                  <Award className="text-[#1E3A5F]" size={20} />
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-r from-[#6C757D]/10 to-[#6C757D]/10 flex items-center justify-center">
+                  <Calendar className="text-[#6C757D]" size={20} />
                 </div>
                 <h2 
                   className="font-display text-xl font-bold text-[#212529]"
                   style={{ fontFamily: 'Sora, sans-serif', fontWeight: 700 }}
                 >
-                  Compétences Principales
+                  Disponibilité des Participants
                 </h2>
               </div>
               
               <div className="space-y-3">
-                {Object.entries(competencesStats)
-                  .sort(([,a], [,b]) => b - a)
-                  .slice(0, 5)
-                  .map(([competence, nombre], index) => {
-                  const totalCompetences = Object.values(competencesStats).reduce((a, b) => a + b, 0);
-                  const pourcentage = totalCompetences > 0 ? (nombre / totalCompetences * 100).toFixed(1) : '0';
+                {Object.entries(disponibiliteStats).map(([dispo, nombre], index) => {
+                  const totalDispo = Object.values(disponibiliteStats).reduce((a, b) => a + b, 0);
+                  const pourcentage = totalDispo > 0 ? (nombre / totalDispo * 100).toFixed(1) : '0';
+                  const isDisponible = dispo === 'Disponible';
                   
                   return (
                     <motion.div
-                      key={competence}
+                      key={dispo}
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ duration: 0.3, delay: index * 0.1 }}
                       className="flex items-center justify-between p-3 rounded-xl bg-[#F8F9FA] hover:bg-[#F8F9FA]/80 transition-colors"
                     >
                       <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 rounded-full bg-gradient-to-r from-[#1E3A5F]/10 to-[#1E3A5F]/10 flex items-center justify-center text-sm font-bold text-[#1E3A5F]">
-                          🛠️
+                        <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold ${
+                          isDisponible 
+                            ? 'bg-gradient-to-r from-[#00873E]/10 to-[#00873E]/10 text-[#00873E]' 
+                            : 'bg-gradient-to-r from-[#DC2626]/10 to-[#DC2626]/10 text-[#DC2626]'
+                        }`}>
+                          {isDisponible ? '✓' : '✗'}
                         </div>
                         <div>
                           <p className="font-medium text-[#212529]" style={{ fontFamily: 'DM Sans, sans-serif' }}>
-                            {competence}
+                            {dispo}
                           </p>
                           <p className="text-xs text-[#6C757D]" style={{ fontFamily: 'DM Sans, sans-serif' }}>
-                            {nombre} mentions
+                            {nombre} participants
                           </p>
                         </div>
                       </div>
                       <div className="text-right">
-                        <span className="text-sm font-bold text-[#1E3A5F]" style={{ fontFamily: 'Sora, sans-serif' }}>
+                        <span className={`text-sm font-bold ${isDisponible ? 'text-[#00873E]' : 'text-[#DC2626]'}`} style={{ fontFamily: 'Sora, sans-serif' }}>
                           {pourcentage}%
                         </span>
                       </div>
