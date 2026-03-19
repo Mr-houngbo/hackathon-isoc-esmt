@@ -17,8 +17,8 @@ const GestionAgenda = () => {
     heure_debut: '',
     heure_fin: '',
     lieu: '',
-    jour: 1 as number,
-    intervenant: ''
+    jour: 1 as number
+    // ✅ Champ 'intervenant' supprimé car il n'existe pas dans la BD
   });
 
   const { data: agenda, isLoading, error, refetch } = useQuery({
@@ -61,8 +61,9 @@ const GestionAgenda = () => {
     },
     onSuccess: () => { 
       queryClient.invalidateQueries({ queryKey: ["admin-agenda"] }); 
+      queryClient.invalidateQueries({ queryKey: ["agenda"] }); // Synchronisation page publique
       setShowAdd(false); 
-      setForm({ titre: '', description: '', heure_debut: '', heure_fin: '', lieu: '', jour: 1, intervenant: '' }); 
+      setForm({ titre: '', description: '', heure_debut: '', heure_fin: '', lieu: '', jour: 1 }); // ✅ Champ intervenant supprimé 
       toast.success("Événement ajouté à l'agenda avec succès"); 
     },
     onError: (error) => {
@@ -77,6 +78,7 @@ const GestionAgenda = () => {
     },
     onSuccess: () => { 
       queryClient.invalidateQueries({ queryKey: ["admin-agenda"] }); 
+      queryClient.invalidateQueries({ queryKey: ["agenda"] }); // Synchronisation page publique
       toast.success("Événement supprimé de l'agenda avec succès"); 
     },
     onError: (error) => {
@@ -344,16 +346,7 @@ const GestionAgenda = () => {
                     </select>
                   </div>
                   
-                  <div>
-                    <label className="block text-sm font-medium text-[#6C757D] mb-2" style={{ fontFamily: 'DM Sans, sans-serif' }}>Intervenant</label>
-                    <input 
-                      placeholder="Nom de l'intervenant" 
-                      value={form.intervenant} 
-                      onChange={(e) => setForm({ ...form, intervenant: e.target.value })}
-                      className="w-full px-4 py-2 rounded-xl border border-[#E9ECEF] bg-[bg-white] text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FF6B35] focus:border-transparent transition-all duration-300"
-                      style={{ fontFamily: 'DM Sans, sans-serif' }}
-                    />
-                  </div>
+                  // Champ 'intervenant' supprimé car il n'existe pas dans la BD
                 </div>
                 
                 <div className="space-y-4">
@@ -393,16 +386,7 @@ const GestionAgenda = () => {
               </div>
               
               <div className="mt-6 space-y-4">
-                <div>
-                  <label className="block text-sm font-medium text-[#6C757D] mb-2" style={{ fontFamily: 'DM Sans, sans-serif' }}>Intervenant (optionnel)</label>
-                  <input 
-                    placeholder="Nom de l'intervenant" 
-                    value={form.intervenant} 
-                    onChange={(e) => setForm({ ...form, intervenant: e.target.value })}
-                    className="w-full px-4 py-2 rounded-xl border border-[#E9ECEF] bg-[bg-white] text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FF6B35] focus:border-transparent transition-all duration-300"
-                    style={{ fontFamily: 'DM Sans, sans-serif' }}
-                  />
-                </div>
+                // Champ 'intervenant' supprimé car il n'existe pas dans la BD
                 
                 <div>
                   <label className="block text-sm font-medium text-[#6C757D] mb-2" style={{ fontFamily: 'DM Sans, sans-serif' }}>Description</label>

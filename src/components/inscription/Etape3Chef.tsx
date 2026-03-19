@@ -214,8 +214,12 @@ const Etape3Chef = ({ data, onChange, errors = {} }: Props) => {
             <input
               type="tel"
               value={data.chef.telephone || ''}
-              onChange={(e) => updateChef('telephone', e.target.value)}
+              onChange={(e) => {
+                const value = e.target.value.replace(/\D/g, '').slice(0, 9);
+                updateChef('telephone', value);
+              }}
               placeholder="77 000 00 00"
+              maxLength={9}
               className="w-full px-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FF6B35]/20 focus:border-[#FF6B35]/50 transition-all"
               style={{ fontFamily: 'DM Sans, sans-serif' }}
             />
@@ -301,20 +305,20 @@ const Etape3Chef = ({ data, onChange, errors = {} }: Props) => {
         >
           Compétences principales
         </h4>
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
           {COMPETENCES.map((competence) => (
             <button
               key={competence}
               type="button"
               onClick={() => toggleCompetence(competence)}
-              className={`p-3 rounded-xl border-2 transition-all duration-300 hover:scale-105 ${
+              className={`p-3 rounded-xl border-2 transition-all duration-300 hover:scale-105 min-h-[3.5rem] flex items-center justify-center ${
                 data.chef.competences.includes(competence)
                   ? 'border-[#FF6B35] bg-[#FF6B35]/10'
                   : 'border-[#E9ECEF] bg-white hover:border-[#FF6B35]/30'
               }`}
             >
               <span 
-                className="text-sm font-medium"
+                className="text-sm font-medium text-center leading-tight"
                 style={{ fontFamily: 'DM Sans, sans-serif' }}
               >
                 <span className={data.chef.competences.includes(competence) ? 'text-[#FF6B35]' : 'text-[#6C757D]'}>

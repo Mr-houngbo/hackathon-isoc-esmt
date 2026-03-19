@@ -12,11 +12,11 @@ const GestionBadges = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [filterType, setFilterType] = useState<'tous' | 'envoyes' | 'non_envoyes'>('tous');
   const [form, setForm] = useState({ 
-    membre_id: '', 
-    equipe_id: '',
+    membre_id: null, // ✅ UUID null au lieu de chaîne vide
+    equipe_id: null, // ✅ UUID null au lieu de chaîne vide
     qr_code_url: '',
     envoye: false,
-    date_envoi: ''
+    date_envoi: null // ✅ Date null au lieu de chaîne vide
   });
 
   const { data: badges, isLoading, error, refetch } = useQuery({
@@ -71,7 +71,7 @@ const GestionBadges = () => {
     onSuccess: () => { 
       queryClient.invalidateQueries({ queryKey: ["admin-badges"] }); 
       setShowAdd(false); 
-      setForm({ membre_id: '', equipe_id: '', qr_code_url: '', envoye: false, date_envoi: '' }); 
+      setForm({ membre_id: null, equipe_id: null, qr_code_url: '', envoye: false, date_envoi: null }); // ✅ UUID null 
       toast.success("Badge ajouté avec succès"); 
     },
     onError: (error) => {

@@ -10,13 +10,11 @@ const GestionGalerie = () => {
   const queryClient = useQueryClient();
   const [showAdd, setShowAdd] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
-  const [filterType, setFilterType] = useState<'toutes' | 'equipes' | 'photos' | 'videos'>('toutes');
   const [form, setForm] = useState({ 
-    titre: '', 
-    type: 'photo' as string,
-    url: '', 
+    titre_projet: '', // ✅ Champ corrigé
+    photo_url: '', // ✅ Champ corrigé
     description: '',
-    equipe_id: ''
+    equipe_id: null // ✅ UUID null au lieu de chaîne vide
   });
 
   const { data: galerie, isLoading, error, refetch } = useQuery({
@@ -29,26 +27,19 @@ const GestionGalerie = () => {
   });
 
   const filteredGalerie = galerie?.filter((item) => {
-    const matchesSearch = item.titre?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    const matchesSearch = item.titre_projet?.toLowerCase().includes(searchTerm.toLowerCase()) ||
       item.description?.toLowerCase().includes(searchTerm.toLowerCase());
     
-    switch (filterType) {
-      case 'equipes':
-        return matchesSearch && item.type === 'equipe';
-      case 'photos':
-        return matchesSearch && item.type === 'photo';
-      case 'videos':
-        return matchesSearch && item.type === 'video';
-      default:
-        return matchesSearch;
-    }
+    // Filtre simple par recherche, plus de filtre par type car le champ n'existe pas
+    return matchesSearch;
   }) || [];
 
   const stats = {
     total: galerie?.length || 0,
-    equipes: galerie?.filter((g) => g.type === 'equipe').length || 0,
-    photos: galerie?.filter((g) => g.type === 'photo').length || 0,
-    videos: galerie?.filter((g) => g.type === 'video').length || 0,
+    // Le champ 'type' n'existe pas, on compte juste le total
+    equipes: 0,
+    photos: galerie?.length || 0,
+    videos: 0,
   };
 
   const addGalerie = useMutation({
@@ -58,8 +49,9 @@ const GestionGalerie = () => {
     },
     onSuccess: () => { 
       queryClient.invalidateQueries({ queryKey: ["admin-galerie"] }); 
+      queryClient.invalidateQueries({ queryKey: ["galerie"] }); // Synchronisation page publique
       setShowAdd(false); 
-      setForm({ titre: '', type: 'photo', url: '', description: '', equipe_id: '' }); 
+      setForm({ titre_projet: '', photo_url: '', description: '', equipe_id: null }); // ✅ UUID null // ✅ Champs corrigés 
       toast.success("Élément ajouté à la galerie avec succès"); 
     },
     onError: (error) => {
@@ -74,6 +66,7 @@ const GestionGalerie = () => {
     },
     onSuccess: () => { 
       queryClient.invalidateQueries({ queryKey: ["admin-galerie"] }); 
+      queryClient.invalidateQueries({ queryKey: ["galerie"] }); // Synchronisation page publique
       toast.success("Élément supprimé de la galerie avec succès"); 
     },
     onError: (error) => {
@@ -317,29 +310,17 @@ const GestionGalerie = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-4">
                   <div>
-                    <label className="block text-sm font-medium text-[#6C757D] mb-2" style={{ fontFamily: 'DM Sans, sans-serif' }}>Titre</label>
+                    <label className="block text-sm font-medium text-[#6C757D] mb-2" style={{ fontFamily: 'DM Sans, sans-serif' }}>Titre du projet</label>
                     <input 
-                      placeholder="Titre du média" 
-                      value={form.titre} 
-                      onChange={(e) => setForm({ ...form, titre: e.target.value })}
+                      placeholder="Titre du projet" 
+                      value={form.titre_projet} // ✅ Champ corrigé
+                      onChange={(e) => setForm({ ...form, titre_projet: e.target.value })} // ✅ Champ corrigé
                       className="w-full px-4 py-2 rounded-xl border border-[#E9ECEF] bg-[bg-white] text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FF6B35] focus:border-transparent transition-all duration-300"
                       style={{ fontFamily: 'DM Sans, sans-serif' }}
                     />
                   </div>
                   
-                  <div>
-                    <label className="block text-sm font-medium text-[#6C757D] mb-2" style={{ fontFamily: 'DM Sans, sans-serif' }}>Type de média</label>
-                    <select 
-                      value={form.type} 
-                      onChange={(e) => setForm({ ...form, type: e.target.value })}
-                      className="w-full px-4 py-2 rounded-xl border border-[#E9ECEF] bg-[bg-white] text-[#212529] focus:outline-none focus:ring-2 focus:ring-[#FF6B35] focus:border-transparent transition-all duration-300"
-                      style={{ fontFamily: 'DM Sans, sans-serif' }}
-                    >
-                      <option value="photo">Photo</option>
-                      <option value="video">Vidéo</option>
-                      <option value="equipe">Équipe</option>
-                    </select>
-                  </div>
+                  // Champ 'type' supprimé car il n'existe pas dans la BD
                 </div>
                 
                 <div className="space-y-4">
@@ -347,8 +328,8 @@ const GestionGalerie = () => {
                     <label className="block text-sm font-medium text-[#6C757D] mb-2" style={{ fontFamily: 'DM Sans, sans-serif' }}>URL du média</label>
                     <input 
                       placeholder="URL de l'image ou vidéo" 
-                      value={form.url} 
-                      onChange={(e) => setForm({ ...form, url: e.target.value })}
+                      value={form.photo_url} // ✅ Champ corrigé
+                      onChange={(e) => setForm({ ...form, photo_url: e.target.value })} // ✅ Champ corrigé
                       className="w-full px-4 py-2 rounded-xl border border-[#E9ECEF] bg-[bg-white] text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FF6B35] focus:border-transparent transition-all duration-300"
                       style={{ fontFamily: 'DM Sans, sans-serif' }}
                     />
@@ -407,65 +388,17 @@ const GestionGalerie = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
           >
-            <div className="flex flex-col lg:flex-row gap-4 items-start lg:items-center justify-between">
-              <div className="flex-1">
-                <div className="flex items-center gap-3">
-                  <Search size={20} className="text-[#6C757D]" />
-                  <input
-                    type="text"
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    placeholder="Rechercher un média..."
-                    className="flex-1 px-4 py-2 rounded-xl border border-[#E9ECEF] bg-[white] text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FF6B35] focus:border-transparent transition-all duration-300"
-                    style={{ fontFamily: 'DM Sans, sans-serif' }}
-                  />
-                </div>
-              </div>
-              
-              <div className="flex gap-2">
-                <button
-                  onClick={() => setFilterType('toutes')}
-                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
-                    filterType === 'toutes' ? 'bg-[#1E3A5F] text-white' : 'bg-[bg-white] text-[#6C757D] hover:bg-[#E9ECEF]'
-                  }`}
+            <div className="flex justify-center">
+              <div className="flex items-center gap-3 flex-1 max-w-md">
+                <Search size={20} className="text-[#6C757D]" />
+                <input
+                  type="text"
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  placeholder="Rechercher un média..."
+                  className="flex-1 px-4 py-2 rounded-xl border border-[#E9ECEF] bg-[white] text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FF6B35] focus:border-transparent transition-all duration-300"
                   style={{ fontFamily: 'DM Sans, sans-serif' }}
-                >
-                  Toutes
-                </button>
-                <button
-                  onClick={() => setFilterType('photos')}
-                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
-                    filterType === 'photos' ? 'bg-[#10B981] text-[#212529]' : 'bg-[bg-white] text-[#6C757D] hover:bg-[#E9ECEF]'
-                  }`}
-                  style={{ fontFamily: 'DM Sans, sans-serif' }}
-                >
-                  Photos
-                </button>
-                <button
-                  onClick={() => setFilterType('videos')}
-                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
-                    filterType === 'videos' ? 'bg-[#F59E0B] text-[#212529]' : 'bg-[bg-white] text-[#6C757D] hover:bg-[#E9ECEF]'
-                  }`}
-                  style={{ fontFamily: 'DM Sans, sans-serif' }}
-                >
-                  Vidéos
-                </button>
-                <button
-                  onClick={() => setFilterType('equipes')}
-                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
-                    filterType === 'equipes' ? 'bg-[#D4AF37] text-[#212529]' : 'bg-[bg-white] text-[#6C757D] hover:bg-[#E9ECEF]'
-                  }`}
-                  style={{ fontFamily: 'DM Sans, sans-serif' }}
-                >
-                  Équipes
-                </button>
-              </div>
-              
-              <div className="flex items-center gap-2">
-                <Filter size={20} className="text-[#6C757D]" />
-                <span className="text-sm text-[#6C757D]" style={{ fontFamily: 'DM Sans, sans-serif' }}>
-                  {filteredGalerie.length} résultat{filteredGalerie.length > 1 ? 's' : ''}
-                </span>
+                />
               </div>
             </div>
           </motion.div>
@@ -486,16 +419,10 @@ const GestionGalerie = () => {
                 
                 <div className="relative z-10">
                   <div className="aspect-video mb-4 rounded-lg overflow-hidden bg-[bg-white]">
-                    {item.type === 'photo' ? (
+                    {item.photo_url ? ( // ✅ Champ corrigé
                       <img 
-                        src={item.url} 
-                        alt={item.titre}
-                        className="w-full h-full object-cover"
-                      />
-                    ) : item.type === 'video' ? (
-                      <video 
-                        src={item.url} 
-                        controls
+                        src={item.photo_url} // ✅ Champ corrigé
+                        alt={item.titre_projet} // ✅ Champ corrigé
                         className="w-full h-full object-cover"
                       />
                     ) : (
@@ -511,22 +438,16 @@ const GestionGalerie = () => {
                         className="font-bold text-[#212529] text-sm"
                         style={{ fontFamily: 'Sora, sans-serif' }}
                       >
-                        {item.titre}
+                        {item.titre_projet} // ✅ Champ corrigé
                       </h3>
-                      <span className={`inline-block px-2 py-1 rounded-full text-xs font-bold ${
-                        item.type === 'photo' ? 'bg-[#10B981]/20 text-[#10B981]' : 
-                        item.type === 'video' ? 'bg-[#F59E0B]/20 text-[#F59E0B]' : 
-                        'bg-[#D4AF37]/20 text-[#D4AF37]'
-                      }`}>
-                        {item.type === 'photo' ? '📷 Photo' : 
-                         item.type === 'video' ? '🎥 Vidéo' : 
-                         '👥 Équipe'}
+                      <span className="inline-block px-2 py-1 rounded-full text-xs font-bold bg-[#10B981]/20 text-[#10B981]">
+                        📷 Média
                       </span>
                     </div>
                     
                     <div className="flex gap-2">
                       <button
-                        onClick={() => window.open(item.url, '_blank')}
+                        onClick={() => window.open(item.photo_url, '_blank')} // ✅ Champ corrigé
                         className="p-2 rounded-lg bg-[#1E3A5F] text-white hover:bg-[#006450] transition-colors"
                         style={{ fontFamily: 'DM Sans, sans-serif' }}
                         title="Voir en grand"

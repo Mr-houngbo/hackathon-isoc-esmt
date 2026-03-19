@@ -30,21 +30,22 @@ const prizes = [
 ];
 
 const PrizeCard = ({ prize, index }: { prize: typeof prizes[0]; index: number }) => {
-  const [isFlipped, setIsFlipped] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
 
   return (
     <motion.div
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, delay: index * 0.1 }}
-      className="relative h-80 cursor-pointer"
-      onClick={() => setIsFlipped(!isFlipped)}
+      className="relative h-80"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
       style={{ perspective: "1000px" }}
     >
       <motion.div
         className="relative w-full h-full"
-        animate={{ rotateY: isFlipped ? 180 : 0 }}
-        transition={{ duration: 0.6 }}
+        animate={{ rotateY: isHovered ? 180 : 0 }}
+        transition={{ duration: 0.4 }}
         style={{ transformStyle: "preserve-3d" }}
       >
         {/* Front Face */}
@@ -67,7 +68,7 @@ const PrizeCard = ({ prize, index }: { prize: typeof prizes[0]; index: number })
               className="text-sm text-[#6C757D] text-center"
               style={{ fontFamily: 'DM Sans, sans-serif' }}
             >
-              Cliquez pour découvrir
+              Survolez pour découvrir
             </p>
           </div>
         </div>
@@ -126,7 +127,7 @@ const PrizesSection = () => (
           className="text-[#6C757D] max-w-2xl mx-auto text-lg leading-relaxed"
           style={{ fontFamily: 'DM Sans, sans-serif' }}
         >
-          Cliquez sur chaque carte pour découvrir les récompenses exceptionnelles qui attendent les innovateurs.
+          Des récompenses exceptionnelles attendent les innovateurs talentueux.
         </p>
       </motion.div>
 

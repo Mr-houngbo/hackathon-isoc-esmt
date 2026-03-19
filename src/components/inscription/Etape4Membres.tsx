@@ -9,7 +9,6 @@ interface Props {
   errors?: Record<string, string>;
 }
 
-const COMPETENCES = ['Dev Web', 'Dev Mobile', 'Design UI-UX', 'Data', 'IA', 'Business', 'Communication', 'Autre'];
 const NIVEAUX_ETUDES = ['L1', 'L2', 'L3', 'M1', 'M2'];
 const ROLES = ['Dev', 'Design', 'Business', 'Communication', 'Autre'];
 
@@ -20,19 +19,6 @@ const Etape4Membres = ({ data, onChange, errors = {} }: Props) => {
     const membres = [...data.membres];
     membres[index] = { ...membres[index], [field]: value };
     onChange({ membres });
-  };
-
-  const toggleCompetence = (membreIndex: number, competence: string) => {
-    const competences = data.membres[membreIndex].competences.includes(competence)
-      ? data.membres[membreIndex].competences.filter(c => c !== competence)
-      : [...data.membres[membreIndex].competences, competence];
-    
-    updateMembre(membreIndex, 'competences', competences);
-    
-    // Si on décoche "Autre", vider le champ competence_autre
-    if (competence === 'Autre' && !competences.includes('Autre')) {
-      updateMembre(membreIndex, 'competence_autre', '');
-    }
   };
 
   const toggleBlock = (index: number) => {
@@ -289,6 +275,39 @@ const Etape4Membres = ({ data, onChange, errors = {} }: Props) => {
                       </label>
                     </div>
 
+                    {/* Champ "Autre" pour le rôle si sélectionné */}
+                    {membre.role_equipe === 'Autre' && (
+                      <motion.div
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.3 }}
+                        className="mt-3"
+                      >
+                        <label className="block">
+                          <span 
+                            className="font-display text-sm font-semibold text-[#212529] mb-2 block"
+                            style={{ fontFamily: 'Sora, sans-serif' }}
+                          >
+                            Précisez votre rôle <span className="text-[#DC2626]">*</span>
+                          </span>
+                          <input
+                            type="text"
+                            value={(membre as any).role_autre || ''}
+                            onChange={(e) => updateMembre(index, 'role_autre', e.target.value)}
+                            placeholder="Décrivez votre rôle dans l'équipe"
+                            className="w-full px-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FF6B35]/20 focus:border-[#FF6B35]/50 transition-all"
+                            style={{ fontFamily: 'DM Sans, sans-serif' }}
+                            required
+                          />
+                          {errors[`m${index}_role_autre`] && (
+                            <p className="text-[#DC2626] text-xs mt-1" style={{ fontFamily: 'DM Sans, sans-serif' }}>
+                              {errors[`m${index}_role_autre`]}
+                            </p>
+                          )}
+                        </label>
+                      </motion.div>
+                    )}
+
                     {/* Téléphone */}
                     <div>
                       <label className="block">
@@ -301,8 +320,12 @@ const Etape4Membres = ({ data, onChange, errors = {} }: Props) => {
                         <input
                           type="tel"
                           value={membre.telephone || ''}
-                          onChange={(e) => updateMembre(index, 'telephone', e.target.value)}
+                          onChange={(e) => {
+                            const value = e.target.value.replace(/\D/g, '').slice(0, 9);
+                            updateMembre(index, 'telephone', value);
+                          }}
                           placeholder="77 000 00 00"
+                          maxLength={9}
                           className="w-full px-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FF6B35]/20 focus:border-[#FF6B35]/50 transition-all"
                           style={{ fontFamily: 'DM Sans, sans-serif' }}
                         />
@@ -363,59 +386,6 @@ const Etape4Membres = ({ data, onChange, errors = {} }: Props) => {
                         )}
                       </label>
                     </div>
-                  </div>
-
-                  {/* Compétences */}
-                  <div>
-                    <h4 
-                      className="font-display text-sm font-semibold text-[#212529] mb-3"
-                      style={{ fontFamily: 'Sora, sans-serif' }}
-                    >
-                      Compétences
-                    </h4>
-                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-                      {COMPETENCES.map((competence) => (
-                        <button
-                          key={competence}
-                          type="button"
-                          onClick={() => toggleCompetence(index, competence)}
-                          className={`p-2 rounded-lg border-2 transition-all duration-300 hover:scale-105 ${
-                            membre.competences.includes(competence)
-                              ? 'border-[#FF6B35] bg-[#FF6B35]/10'
-                              : 'border-[#E9ECEF] bg-white hover:border-[#FF6B35]/30'
-                          }`}
-                        >
-                          <span 
-                            className="text-xs font-medium"
-                            style={{ fontFamily: 'DM Sans, sans-serif' }}
-                          >
-                            <span className={membre.competences.includes(competence) ? 'text-[#FF6B35]' : 'text-[#6C757D]'}>
-                              {competence}
-                            </span>
-                          </span>
-                        </button>
-                      ))}
-                    </div>
-                    
-                    {/* Champ "Autre" si sélectionné */}
-                    {membre.competences.includes('Autre') && (
-                      <div className="mt-3">
-                        <input
-                          type="text"
-                          value={membre.competence_autre || ''}
-                          onChange={(e) => updateMembre(index, 'competence_autre', e.target.value)}
-                          placeholder="Précisez votre compétence"
-                          className="w-full px-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FF6B35]/20 focus:border-[#FF6B35]/50 transition-all"
-                          style={{ fontFamily: 'DM Sans, sans-serif' }}
-                          required
-                        />
-                        {errors[`m${index}_competence_autre`] && (
-                          <p className="text-[#DC2626] text-xs mt-1" style={{ fontFamily: 'DM Sans, sans-serif' }}>
-                            {errors[`m${index}_competence_autre`]}
-                          </p>
-                        )}
-                      </div>
-                    )}
                   </div>
 
                   {/* Disponibilité */}

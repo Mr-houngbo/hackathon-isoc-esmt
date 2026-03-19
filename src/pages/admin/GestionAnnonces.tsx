@@ -3,21 +3,17 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import AdminLayout from "@/components/layout/AdminLayout";
 import { toast } from "sonner";
-import { Plus, Trash2, Save, Search, Filter, Download, Megaphone, Calendar, Eye } from "lucide-react";
+import { Plus, Trash2, Save, Search, Download, Megaphone, Calendar, Eye } from "lucide-react";
 import { motion } from "framer-motion";
 
 const GestionAnnonces = () => {
   const queryClient = useQueryClient();
   const [showAdd, setShowAdd] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
-  const [filterType, setFilterType] = useState<'toutes' | 'actives' | 'archivees'>('toutes');
   const [form, setForm] = useState({ 
     titre: '', 
-    contenu: '',
-    date_debut: '',
-    date_fin: '',
-    type: 'info' as string,
-    priorite: 'moyenne' as string
+    contenu: ''
+    // ✅ Seuls les champs qui existent dans la BD sont conservés
   });
 
   const { data: annonces, isLoading, error, refetch } = useQuery({
@@ -33,20 +29,11 @@ const GestionAnnonces = () => {
     const matchesSearch = annonce.titre?.toLowerCase().includes(searchTerm.toLowerCase()) ||
       annonce.contenu?.toLowerCase().includes(searchTerm.toLowerCase());
     
-    switch (filterType) {
-      case 'actives':
-        return matchesSearch && new Date(annonce.date_fin) >= new Date();
-      case 'archivees':
-        return matchesSearch && new Date(annonce.date_fin) < new Date();
-      default:
-        return matchesSearch;
-    }
+    return matchesSearch;
   }) || [];
 
   const stats = {
     total: annonces?.length || 0,
-    actives: annonces?.filter((a) => new Date(a.date_fin) >= new Date()).length || 0,
-    archivees: annonces?.filter((a) => new Date(a.date_fin) < new Date()).length || 0,
   };
 
   const addAnnonce = useMutation({
@@ -57,7 +44,7 @@ const GestionAnnonces = () => {
     onSuccess: () => { 
       queryClient.invalidateQueries({ queryKey: ["admin-annonces"] }); 
       setShowAdd(false); 
-      setForm({ titre: '', contenu: '', date_debut: '', date_fin: '', type: 'info', priorite: 'moyenne' }); 
+      setForm({ titre: '', contenu: '' }); // ✅ Champs corrigés
       toast.success("Annonce ajoutée avec succès"); 
     },
     onError: (error) => {
@@ -70,27 +57,14 @@ const GestionAnnonces = () => {
       const { error } = await supabase.from("annonces").delete().eq("id", id);
       if (error) throw error;
     },
-    onSuccess: () => { 
-      queryClient.invalidateQueries({ queryKey: ["admin-annonces"] }); 
-      toast.success("Annonce supprimée avec succès"); 
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["admin-annonces"] });
+      toast.success("Annonce supprimée avec succès");
     },
     onError: (error) => {
       toast.error(`Erreur: ${error.message}`);
     },
   });
-
-  if (isLoading) {
-    return (
-      <AdminLayout>
-        <div className="flex items-center justify-center min-h-screen">
-          <div className="flex flex-col items-center gap-4">
-            <div className="w-12 h-12 rounded-full border-4 border-[#1E3A5F] border-t-transparent animate-spin"></div>
-            <p className="text-[#6C757D]">Chargement des annonces...</p>
-          </div>
-        </div>
-      </AdminLayout>
-    );
-  }
 
   if (error) {
     return (
@@ -127,7 +101,7 @@ const GestionAnnonces = () => {
                   className="text-[#6C757D] mt-2"
                   style={{ fontFamily: 'DM Sans, sans-serif' }}
                 >
-                  Administration des annonces du Hackathon ISOC-ESMT 2026
+                  Administration des annonces pour le Hackathon ISOC-ESMT 2026
                 </p>
               </motion.div>
               
@@ -160,7 +134,7 @@ const GestionAnnonces = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
               <motion.div
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
@@ -186,73 +160,7 @@ const GestionAnnonces = () => {
                           className="text-xs text-[#6C757D] mt-1"
                           style={{ fontFamily: 'DM Sans, sans-serif' }}
                         >
-                          Total annonces
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-              
-              <motion.div
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.5, delay: 0.2 }}
-                className="relative overflow-hidden rounded-2xl border border-[#E9ECEF] bg-[white] p-6 hover:border-[#10B981]/50 hover:shadow-xl hover:shadow-[#10B981]/10 transition-all duration-300"
-              >
-                <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-[#10B981]/5 opacity-0"></div>
-                
-                <div className="relative z-10">
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="flex items-center gap-3">
-                      <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-[#10B981]/20 to-[#10B981]/20 flex items-center justify-center">
-                        <Megaphone size={24} className="text-[#212529]" />
-                      </div>
-                      <div>
-                        <p 
-                          className="text-2xl font-bold text-[#212529]"
-                          style={{ fontFamily: 'Sora, sans-serif', fontWeight: 700 }}
-                        >
-                          {stats.actives}
-                        </p>
-                        <p 
-                          className="text-xs text-[#6C757D] mt-1"
-                          style={{ fontFamily: 'DM Sans, sans-serif' }}
-                        >
-                          Annonces actives
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-              
-              <motion.div
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.5, delay: 0.3 }}
-                className="relative overflow-hidden rounded-2xl border border-[#E9ECEF] bg-[white] p-6 hover:border-[#F59E0B]/50 hover:shadow-xl hover:shadow-[#F59E0B]/10 transition-all duration-300"
-              >
-                <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-[#F59E0B]/5 opacity-0"></div>
-                
-                <div className="relative z-10">
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="flex items-center gap-3">
-                      <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-[#F59E0B]/20 to-[#F59E0B]/20 flex items-center justify-center">
-                        <Megaphone size={24} className="text-[#212529]" />
-                      </div>
-                      <div>
-                        <p 
-                          className="text-2xl font-bold text-[#212529]"
-                          style={{ fontFamily: 'Sora, sans-serif', fontWeight: 700 }}
-                        >
-                          {stats.archivees}
-                        </p>
-                        <p 
-                          className="text-xs text-[#6C757D] mt-1"
-                          style={{ fontFamily: 'DM Sans, sans-serif' }}
-                        >
-                          Annonces archivées
+                          Total des annonces
                         </p>
                       </div>
                     </div>
@@ -279,83 +187,29 @@ const GestionAnnonces = () => {
                 Ajouter une Annonce
               </h2>
               
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="space-y-4">
-                  <div>
-                    <label className="block text-sm font-medium text-[#6C757D] mb-2" style={{ fontFamily: 'DM Sans, sans-serif' }}>Titre de l'annonce</label>
-                    <input 
-                      placeholder="Titre de l'annonce" 
-                      value={form.titre} 
-                      onChange={(e) => setForm({ ...form, titre: e.target.value })}
-                      className="w-full px-4 py-2 rounded-xl border border-[#E9ECEF] bg-[bg-white] text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FF6B35] focus:border-transparent transition-all duration-300"
-                      style={{ fontFamily: 'DM Sans, sans-serif' }}
-                    />
-                  </div>
-                  
-                  <div>
-                    <label className="block text-sm font-medium text-[#6C757D] mb-2" style={{ fontFamily: 'DM Sans, sans-serif' }}>Type d'annonce</label>
-                    <select 
-                      value={form.type} 
-                      onChange={(e) => setForm({ ...form, type: e.target.value })}
-                      className="w-full px-4 py-2 rounded-xl border border-[#E9ECEF] bg-[bg-white] text-[#212529] focus:outline-none focus:ring-2 focus:ring-[#FF6B35] focus:border-transparent transition-all duration-300"
-                      style={{ fontFamily: 'DM Sans, sans-serif' }}
-                    >
-                      <option value="info">Information</option>
-                      <option value="urgent">Urgent</option>
-                      <option value="rappel">Rappel</option>
-                    </select>
-                  </div>
-                  
-                  <div>
-                    <label className="block text-sm font-medium text-[#6C757D] mb-2" style={{ fontFamily: 'DM Sans, sans-serif' }}>Priorité</label>
-                    <select 
-                      value={form.priorite} 
-                      onChange={(e) => setForm({ ...form, priorite: e.target.value })}
-                      className="w-full px-4 py-2 rounded-xl border border-[#E9ECEF] bg-[bg-white] text-[#212529] focus:outline-none focus:ring-2 focus:ring-[#FF6B35] focus:border-transparent transition-all duration-300"
-                      style={{ fontFamily: 'DM Sans, sans-serif' }}
-                    >
-                      <option value="basse">Basse</option>
-                      <option value="moyenne">Moyenne</option>
-                      <option value="haute">Haute</option>
-                    </select>
-                  </div>
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium text-[#6C757D] mb-2" style={{ fontFamily: 'DM Sans, sans-serif' }}>Titre</label>
+                  <input 
+                    placeholder="Titre de l'annonce" 
+                    value={form.titre} 
+                    onChange={(e) => setForm({ ...form, titre: e.target.value })}
+                    className="w-full px-4 py-2 rounded-xl border border-[#E9ECEF] bg-[bg-white] text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FF6B35] focus:border-transparent transition-all duration-300"
+                    style={{ fontFamily: 'DM Sans, sans-serif' }}
+                  />
                 </div>
                 
-                <div className="space-y-4">
-                  <div>
-                    <label className="block text-sm font-medium text-[#6C757D] mb-2" style={{ fontFamily: 'DM Sans, sans-serif' }}>Date de début</label>
-                    <input 
-                      type="date"
-                      value={form.date_debut} 
-                      onChange={(e) => setForm({ ...form, date_debut: e.target.value })}
-                      className="w-full px-4 py-2 rounded-xl border border-[#E9ECEF] bg-[bg-white] text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FF6B35] focus:border-transparent transition-all duration-300"
-                      style={{ fontFamily: 'DM Sans, sans-serif' }}
-                    />
-                  </div>
-                  
-                  <div>
-                    <label className="block text-sm font-medium text-[#6C757D] mb-2" style={{ fontFamily: 'DM Sans, sans-serif' }}>Date de fin</label>
-                    <input 
-                      type="date"
-                      value={form.date_fin} 
-                      onChange={(e) => setForm({ ...form, date_fin: e.target.value })}
-                      className="w-full px-4 py-2 rounded-xl border border-[#E9ECEF] bg-[bg-white] text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FF6B35] focus:border-transparent transition-all duration-300"
-                      style={{ fontFamily: 'DM Sans, sans-serif' }}
-                    />
-                  </div>
+                <div>
+                  <label className="block text-sm font-medium text-[#6C757D] mb-2" style={{ fontFamily: 'DM Sans, sans-serif' }}>Contenu</label>
+                  <textarea 
+                    placeholder="Contenu de l'annonce..." 
+                    value={form.contenu} 
+                    onChange={(e) => setForm({ ...form, contenu: e.target.value })}
+                    rows={4}
+                    className="w-full px-4 py-2 rounded-xl border border-[#E9ECEF] bg-[bg-white] text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FF6B35] focus:border-transparent transition-all duration-300"
+                    style={{ fontFamily: 'DM Sans, sans-serif' }}
+                  />
                 </div>
-              </div>
-              
-              <div className="mt-6">
-                <label className="block text-sm font-medium text-[#6C757D] mb-2" style={{ fontFamily: 'DM Sans, sans-serif' }}>Contenu de l'annonce</label>
-                <textarea 
-                  placeholder="Contenu détaillé de l'annonce..." 
-                  value={form.contenu} 
-                  onChange={(e) => setForm({ ...form, contenu: e.target.value })}
-                  rows={5}
-                  className="w-full px-4 py-2 rounded-xl border border-[#E9ECEF] bg-[bg-white] text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FF6B35] focus:border-transparent transition-all duration-300"
-                  style={{ fontFamily: 'DM Sans, sans-serif' }}
-                />
               </div>
               
               <div className="flex justify-end gap-3 mt-6">
@@ -386,69 +240,30 @@ const GestionAnnonces = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
           >
-            <div className="flex flex-col lg:flex-row gap-4 items-start lg:items-center justify-between">
-              <div className="flex-1">
-                <div className="flex items-center gap-3">
-                  <Search size={20} className="text-[#6C757D]" />
-                  <input
-                    type="text"
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    placeholder="Rechercher une annonce..."
-                    className="flex-1 px-4 py-2 rounded-xl border border-[#E9ECEF] bg-[white] text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FF6B35] focus:border-transparent transition-all duration-300"
-                    style={{ fontFamily: 'DM Sans, sans-serif' }}
-                  />
-                </div>
-              </div>
-              
-              <div className="flex gap-2">
-                <button
-                  onClick={() => setFilterType('toutes')}
-                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
-                    filterType === 'toutes' ? 'bg-[#1E3A5F] text-white' : 'bg-[bg-white] text-[#6C757D] hover:bg-[#E9ECEF]'
-                  }`}
+            <div className="flex justify-center">
+              <div className="flex items-center gap-3 flex-1 max-w-md">
+                <Search size={20} className="text-[#6C757D]" />
+                <input
+                  type="text"
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  placeholder="Rechercher une annonce..."
+                  className="flex-1 px-4 py-2 rounded-xl border border-[#E9ECEF] bg-[white] text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FF6B35] focus:border-transparent transition-all duration-300"
                   style={{ fontFamily: 'DM Sans, sans-serif' }}
-                >
-                  Toutes
-                </button>
-                <button
-                  onClick={() => setFilterType('actives')}
-                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
-                    filterType === 'actives' ? 'bg-[#10B981] text-[#212529]' : 'bg-[bg-white] text-[#6C757D] hover:bg-[#E9ECEF]'
-                  }`}
-                  style={{ fontFamily: 'DM Sans, sans-serif' }}
-                >
-                  Actives
-                </button>
-                <button
-                  onClick={() => setFilterType('archivees')}
-                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
-                    filterType === 'archivees' ? 'bg-[#F59E0B] text-[#212529]' : 'bg-[bg-white] text-[#6C757D] hover:bg-[#E9ECEF]'
-                  }`}
-                  style={{ fontFamily: 'DM Sans, sans-serif' }}
-                >
-                  Archivées
-                </button>
-              </div>
-              
-              <div className="flex items-center gap-2">
-                <Filter size={20} className="text-[#6C757D]" />
-                <span className="text-sm text-[#6C757D]" style={{ fontFamily: 'DM Sans, sans-serif' }}>
-                  {filteredAnnonces.length} résultat{filteredAnnonces.length > 1 ? 's' : ''}
-                </span>
+                />
               </div>
             </div>
           </motion.div>
         </div>
 
-        {/* Announcements List */}
+        {/* Annonces Grid */}
         <div className="container pb-8">
-          <div className="space-y-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredAnnonces.map((annonce) => (
               <motion.div
                 key={annonce.id}
-                initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.5 }}
                 className="relative overflow-hidden rounded-2xl border border-[#E9ECEF] bg-[white] hover:border-[#FF6B35]/50 hover:shadow-xl hover:shadow-[#FF6B35]/10 transition-all duration-300"
               >
@@ -457,65 +272,31 @@ const GestionAnnonces = () => {
                 <div className="relative z-10 p-6">
                   <div className="flex items-start justify-between mb-4">
                     <div className="flex-1">
-                      <div className="flex items-center gap-3 mb-2">
-                        <span className={`inline-block px-3 py-1 rounded-full text-xs font-bold ${
-                          annonce.type === 'urgent' ? 'bg-[#DC2626]/20 text-[#DC2626]' : 
-                          annonce.type === 'rappel' ? 'bg-[#F59E0B]/20 text-[#F59E0B]' : 
-                          'bg-[#10B981]/20 text-[#10B981]'
-                        }`}>
-                          {annonce.type === 'urgent' ? '🚨 Urgent' : 
-                           annonce.type === 'rappel' ? '📢 Rappel' : 
-                           'ℹ️ Information'}
-                        </span>
-                        
-                        <h3 
-                          className="font-bold text-[#212529]"
-                          style={{ fontFamily: 'Sora, sans-serif' }}
-                        >
-                          {annonce.titre}
-                        </h3>
-                      </div>
+                      <h3 
+                        className="font-bold text-[#212529] mb-2"
+                        style={{ fontFamily: 'Sora, sans-serif' }}
+                      >
+                        {annonce.titre}
+                      </h3>
                       
-                      <div className="flex items-center gap-4 text-sm text-[#6C757D]" style={{ fontFamily: 'DM Sans, sans-serif' }}>
-                        <div className="flex items-center gap-1">
-                          <Calendar size={14} />
-                          <span>Du {new Date(annonce.date_debut).toLocaleDateString('fr-FR')}</span>
-                        </div>
-                        
-                        <div className="flex items-center gap-1">
-                          <Calendar size={14} />
-                          <span>Au {new Date(annonce.date_fin).toLocaleDateString('fr-FR')}</span>
-                        </div>
+                      <div className="flex items-center gap-1 text-xs text-[#6C757D] mb-3">
+                        <Calendar size={14} />
+                        <span>{new Date(annonce.created_at).toLocaleDateString('fr-FR')}</span>
                       </div>
                     </div>
                     
-                    <div className="flex gap-2">
-                      <button
-                        onClick={() => window.open(`/annonces/${annonce.id}`, '_blank')}
-                        className="p-2 rounded-lg bg-[#1E3A5F] text-white hover:bg-[#006450] transition-colors"
-                        style={{ fontFamily: 'DM Sans, sans-serif' }}
-                        title="Voir l'annonce"
-                      >
-                        <Eye size={16} />
-                      </button>
-                      
-                      <button
-                        onClick={() => deleteAnnonce.mutate(annonce.id)}
-                        className="p-2 rounded-lg bg-[#DC2626] text-[#212529] hover:bg-[#B91C1C] transition-colors"
-                        style={{ fontFamily: 'DM Sans, sans-serif' }}
-                      >
-                        <Trash2 size={16} />
-                      </button>
-                    </div>
+                    <button
+                      onClick={() => deleteAnnonce.mutate(annonce.id)}
+                      className="p-2 rounded-lg bg-[#DC2626] text-[#212529] hover:bg-[#B91C1C] transition-colors"
+                      style={{ fontFamily: 'DM Sans, sans-serif' }}
+                    >
+                      <Trash2 size={16} />
+                    </button>
                   </div>
                   
                   <div className="space-y-2">
                     <p className="text-sm text-[#6C757D] line-clamp-3" style={{ fontFamily: 'DM Sans, sans-serif' }}>
-                      📝 {annonce.contenu}
-                    </p>
-                    
-                    <p className="text-xs text-[#6C757D]" style={{ fontFamily: 'DM Sans, sans-serif' }}>
-                      📅 Créée le {new Date(annonce.created_at).toLocaleDateString('fr-FR')}
+                      {annonce.contenu}
                     </p>
                   </div>
                 </div>

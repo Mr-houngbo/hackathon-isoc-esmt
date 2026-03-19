@@ -19,11 +19,22 @@ const tierIcons: Record<string, any> = {
 const tierLabels: Record<string, string> = { or: '🥇 Or', argent: '🥈 Argent', bronze: '🥉 Bronze' };
 
 const Partenaires = () => {
-  const { data: partenaires, isLoading } = useQuery({
+  const { data: partenaires, isLoading, error } = useQuery({
     queryKey: ["partenaires"],
     queryFn: async () => {
+      console.log("🔍 Récupération des partenaires...");
+      
       const { data, error } = await supabase.from("partenaires").select("*").order("created_at");
-      if (error) throw error;
+      
+      console.log("📊 Résultat query partenaires:", { data, error });
+      console.log("🔍 Champs partenaires:", data?.[0] ? Object.keys(data[0]) : "Aucun partenaire");
+      
+      if (error) {
+        console.error("❌ Erreur query partenaires:", error);
+        throw error;
+      }
+      
+      console.log(`✅ ${data?.length || 0} partenaires trouvés`);
       return data;
     },
   });
@@ -145,44 +156,32 @@ const Partenaires = () => {
                           </div>
                         </div>
                         
-                        {partenaire.secteur && (
+                        {partenaire.site_url && (
                           <div className="flex items-center gap-2 mb-4">
                             <Globe size={14} className="text-[#6C757D]" />
-                            <span 
-                              className="text-sm text-[#6C757D]"
+                            <a 
+                              href={partenaire.site_url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-sm text-[#1E3A5F] hover:text-[#FF6B35] transition-colors"
                               style={{ fontFamily: 'DM Sans, sans-serif' }}
                             >
-                              {partenaire.secteur}
-                            </span>
+                              Visiter le site
+                            </a>
                           </div>
                         )}
                       </div>
                     </div>
                     
-                    {/* Content */}
+                    {/* Content - Simplifié */}
                     <div className="px-6 pb-6">
-                      <div className="space-y-3">
-                        {partenaire.avantages?.slice(0, 3).map((avantage: string, idx: number) => (
-                          <div key={idx} className="flex items-start gap-3">
-                            <div className="w-2 h-2 rounded-full bg-[#FF6B35] mt-2"></div>
-                            <span 
-                              className="text-sm text-[#6C757D] leading-relaxed"
-                              style={{ fontFamily: 'DM Sans, sans-serif' }}
-                            >
-                              {avantage}
-                            </span>
-                          </div>
-                        ))}
-                        {partenaire.avantages && partenaire.avantages.length > 3 && (
-                          <div className="text-center pt-2">
-                            <span 
-                              className="text-xs text-[#6C757D] font-medium"
-                              style={{ fontFamily: 'DM Sans, sans-serif' }}
-                            >
-                              +{partenaire.avantages.length - 3} autre{partenaire.avantages.length - 3 > 1 ? 's' : ''}
-                            </span>
-                          </div>
-                        )}
+                      <div className="text-center">
+                        <p 
+                          className="text-sm text-[#6C757D]"
+                          style={{ fontFamily: 'DM Sans, sans-serif' }}
+                        >
+                          Partenaire de niveau {tierLabels[partenaire.niveau]}
+                        </p>
                       </div>
                     </div>
                     
@@ -191,9 +190,9 @@ const Partenaires = () => {
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-2">
                           <ExternalLink size={14} className="text-[#6C757D]" />
-                          {partenaire.website ? (
+                          {partenaire.site_url ? (
                             <a 
-                              href={partenaire.website}
+                              href={partenaire.site_url}
                               target="_blank"
                               rel="noopener noreferrer"
                               className="text-sm text-[#1E3A5F] hover:text-[#FF6B35] transition-colors"

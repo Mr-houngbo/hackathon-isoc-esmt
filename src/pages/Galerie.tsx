@@ -6,36 +6,38 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 
 const Galerie = () => {
-  const [filterEdition, setFilterEdition] = useState<string>('toutes');
   const [searchTerm, setSearchTerm] = useState<string>('');
 
-  const { data: items, isLoading } = useQuery({
-    queryKey: ["galerie", filterEdition, searchTerm],
+  const { data: items, isLoading, error } = useQuery({
+    queryKey: ["galerie", searchTerm],
     queryFn: async () => {
+      console.log("🔍 Récupération de la galerie...");
+      
       let query = supabase
         .from("galerie")
-        .select("*")
+        .select("*, equipes(*)") // Jointure avec équipes pour obtenir le nom
         .order("created_at", { ascending: false });
       
-      if (filterEdition !== 'toutes') {
-        query = query.eq('edition', filterEdition);
-      }
+      // Pas de filtre par édition car le champ n'existe pas dans la BD
       
       if (searchTerm) {
         query = query.ilike('titre_projet', `%${searchTerm}%`);
       }
       
       const { data, error } = await query;
-      if (error) throw error;
+      
+      console.log("📊 Résultat query galerie:", { data, error });
+      console.log("🔍 Champs galerie:", data?.[0] ? Object.keys(data[0]) : "Aucun élément");
+      
+      if (error) {
+        console.error("❌ Erreur query galerie:", error);
+        throw error;
+      }
+      
+      console.log(`✅ ${data?.length || 0} éléments trouvés`);
       return data;
     },
   });
-
-  const editions = [
-    { value: 'toutes', label: 'Toutes éditions', color: 'text-[#6C757D]' },
-    { value: '2026', label: 'Édition 2026', color: 'text-[#FF6B35]' },
-    { value: '2025', label: 'Édition 2025', color: 'text-[#1E3A5F]' },
-  ];
 
   return (
     <Layout>
@@ -74,7 +76,7 @@ const Galerie = () => {
 
         {/* Filters */}
         <div className="container py-8">
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-6 mb-8">
+          <div className="flex justify-center mb-8">
             {/* Search */}
             <div className="relative flex-1 max-w-md">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-[#6C757D]" size={20} />
@@ -86,24 +88,6 @@ const Galerie = () => {
                 className="w-full pl-12 pr-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FF6B35]/20 focus:border-[#FF6B35]/50 transition-all"
                 style={{ fontFamily: 'DM Sans, sans-serif' }}
               />
-            </div>
-
-            {/* Edition Filter */}
-            <div className="flex gap-2">
-              {editions.map((edition) => (
-                <button
-                  key={edition.value}
-                  onClick={() => setFilterEdition(edition.value)}
-                  className={`px-4 py-2 rounded-lg font-medium transition-all ${
-                    filterEdition === edition.value
-                      ? 'bg-[#FF6B35] text-white'
-                      : 'bg-white text-[#6C757D] border border-[#E9ECEF] hover:border-[#FF6B35]/30'
-                  }`}
-                  style={{ fontFamily: 'DM Sans, sans-serif' }}
-                >
-                  {edition.label}
-                </button>
-              ))}
             </div>
           </div>
         </div>
@@ -165,7 +149,7 @@ const Galerie = () => {
                     {/* Image */}
                     <div className="relative h-48 overflow-hidden">
                       <img 
-                        src={item.image_url} 
+                        src={item.photo_url} // ✅ Champ corrigé
                         alt={item.titre_projet}
                         className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" 
                       />
@@ -173,12 +157,12 @@ const Galerie = () => {
                       {/* Overlay */}
                       <div className="absolute inset-0 bg-gradient-to-t from-white/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                       
-                      {/* Edition Badge */}
-                      <div className="absolute top-4 right-4">
+                      {/* Edition Badge - Supprimé car le champ n'existe pas */}
+                      {/* <div className="absolute top-4 right-4">
                         <span className="px-3 py-1 rounded-full bg-[#1E3A5F]/90 text-white text-xs font-bold backdrop-blur-sm">
                           {item.edition}
                         </span>
-                      </div>
+                      </div> */}
                     </div>
                     
                     {/* Content */}
@@ -192,26 +176,27 @@ const Galerie = () => {
                             {item.titre_projet}
                           </h3>
                           
-                          {item.nom_equipe && (
+                          {item.equipes?.nom_equipe && (
                             <div className="flex items-center gap-2 mb-3">
                               <Trophy size={14} className="text-[#FF6B35]" />
                               <span 
                                 className="text-sm text-[#6C757D]"
                                 style={{ fontFamily: 'DM Sans, sans-serif' }}
                               >
-                                {item.nom_equipe}
+                                {item.equipes.nom_equipe}
                               </span>
                             </div>
                           )}
                         </div>
                         
-                        {item.position && (
+                        {/* Position - Supprimé car le champ n'existe pas */}
+                        {/* {item.position && (
                           <div className="text-right">
                             <span className="text-xs text-[#1E3A5F] font-medium">
                               {item.position === 1 ? '🥇 1er' : item.position === 2 ? '🥈 2ème' : item.position === 3 ? '🥉 3ème' : `Top ${item.position}`}
                             </span>
                           </div>
-                        )}
+                        )} */}
                       </div>
                       
                       {item.description && (
@@ -226,15 +211,16 @@ const Galerie = () => {
                       <div className="flex items-center gap-4 text-xs text-[#6C757D]">
                         <div className="flex items-center gap-1">
                           <Calendar size={12} className="text-[#FF6B35]" />
-                          <span>{item.edition}</span>
+                          <span>{new Date(item.created_at).toLocaleDateString()}</span>
                         </div>
                         
-                        {item.technologies && (
+                        {/* Technologies - Supprimé car le champ n'existe pas */}
+                        {/* {item.technologies && (
                           <div className="flex items-center gap-1">
                             <Camera size={12} className="text-[#1E3A5F]" />
                             <span>{item.technologies}</span>
                           </div>
-                        )}
+                        )} */}
                       </div>
                     </div>
                     

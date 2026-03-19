@@ -5,11 +5,22 @@ import { Clock, MapPin, Calendar, Coffee, Code, Trophy, Users } from "lucide-rea
 import { motion } from "framer-motion";
 
 const Agenda = () => {
-  const { data: items, isLoading } = useQuery({
+  const { data: items, isLoading, error } = useQuery({
     queryKey: ["agenda"],
     queryFn: async () => {
+      console.log("🔍 Récupération de l'agenda...");
+      
       const { data, error } = await supabase.from("agenda").select("*").order("heure_debut");
-      if (error) throw error;
+      
+      console.log("📊 Résultat query agenda:", { data, error });
+      console.log("🔍 Champs agenda:", data?.[0] ? Object.keys(data[0]) : "Aucun événement");
+      
+      if (error) {
+        console.error("❌ Erreur query agenda:", error);
+        throw error;
+      }
+      
+      console.log(`✅ ${data?.length || 0} événements trouvés`);
       return data;
     },
   });

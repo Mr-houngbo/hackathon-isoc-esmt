@@ -16,11 +16,8 @@ const GestionMentors = () => {
     titre: '', 
     entreprise: '', 
     photo_url: '', 
-    type: 'mentor' as string,
-    expertise: '',
-    bio: '',
-    linkedin_url: '',
-    email: ''
+    type: 'mentor' as string
+    // ✅ Seuls les champs qui existent dans la BD sont conservés
   });
 
   const { data: mentors, isLoading, error, refetch } = useQuery({
@@ -60,8 +57,9 @@ const GestionMentors = () => {
     },
     onSuccess: () => { 
       queryClient.invalidateQueries({ queryKey: ["admin-mentors"] }); 
+      queryClient.invalidateQueries({ queryKey: ["mentors"] }); // Synchronisation page publique
       setShowAdd(false); 
-      setForm({ nom: '', titre: '', entreprise: '', photo_url: '', type: 'mentor', expertise: '', bio: '', linkedin_url: '', email: '' }); 
+      setForm({ nom: '', titre: '', entreprise: '', photo_url: '', type: 'mentor' }); // ✅ Champs corrigés
       toast.success("Mentor ajouté avec succès"); 
     },
     onError: (error) => {
@@ -74,27 +72,15 @@ const GestionMentors = () => {
       const { error } = await supabase.from("mentors").delete().eq("id", id);
       if (error) throw error;
     },
-    onSuccess: () => { 
-      queryClient.invalidateQueries({ queryKey: ["admin-mentors"] }); 
-      toast.success("Mentor supprimé avec succès"); 
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["admin-mentors"] });
+      queryClient.invalidateQueries({ queryKey: ["mentors"] }); // Synchronisation page publique
+      toast.success("Mentor supprimé avec succès");
     },
     onError: (error) => {
       toast.error(`Erreur: ${error.message}`);
     },
   });
-
-  if (isLoading) {
-    return (
-      <AdminLayout>
-        <div className="flex items-center justify-center min-h-screen">
-          <div className="flex flex-col items-center gap-4">
-            <div className="w-12 h-12 rounded-full border-4 border-[#1E3A5F] border-t-transparent animate-spin"></div>
-            <p className="text-[#6C757D]">Chargement des mentors...</p>
-          </div>
-        </div>
-      </AdminLayout>
-    );
-  }
 
   if (error) {
     return (
@@ -297,18 +283,6 @@ const GestionMentors = () => {
                   </div>
                   
                   <div>
-                    <label className="block text-sm font-medium text-[#6C757D] mb-2" style={{ fontFamily: 'DM Sans, sans-serif' }}>Email</label>
-                    <input 
-                      type="email"
-                      placeholder="Email professionnel" 
-                      value={form.email} 
-                      onChange={(e) => setForm({ ...form, email: e.target.value })}
-                      className="w-full px-4 py-2 rounded-xl border border-[#E9ECEF] bg-[bg-white] text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FF6B35] focus:border-transparent transition-all duration-300"
-                      style={{ fontFamily: 'DM Sans, sans-serif' }}
-                    />
-                  </div>
-                  
-                  <div>
                     <label className="block text-sm font-medium text-[#6C757D] mb-2" style={{ fontFamily: 'DM Sans, sans-serif' }}>Type</label>
                     <select 
                       value={form.type} 
@@ -335,22 +309,11 @@ const GestionMentors = () => {
                   </div>
                   
                   <div>
-                    <label className="block text-sm font-medium text-[#6C757D] mb-2" style={{ fontFamily: 'DM Sans, sans-serif' }}>Entreprise/Organisation</label>
+                    <label className="block text-sm font-medium text-[#6C757D] mb-2" style={{ fontFamily: 'DM Sans, sans-serif' }}>Entreprise</label>
                     <input 
-                      placeholder="Entreprise ou organisation" 
+                      placeholder="Entreprise" 
                       value={form.entreprise} 
                       onChange={(e) => setForm({ ...form, entreprise: e.target.value })}
-                      className="w-full px-4 py-2 rounded-xl border border-[#E9ECEF] bg-[bg-white] text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FF6B35] focus:border-transparent transition-all duration-300"
-                      style={{ fontFamily: 'DM Sans, sans-serif' }}
-                    />
-                  </div>
-                  
-                  <div>
-                    <label className="block text-sm font-medium text-[#6C757D] mb-2" style={{ fontFamily: 'DM Sans, sans-serif' }}>Expertise</label>
-                    <input 
-                      placeholder="Domaine d'expertise" 
-                      value={form.expertise} 
-                      onChange={(e) => setForm({ ...form, expertise: e.target.value })}
                       className="w-full px-4 py-2 rounded-xl border border-[#E9ECEF] bg-[bg-white] text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FF6B35] focus:border-transparent transition-all duration-300"
                       style={{ fontFamily: 'DM Sans, sans-serif' }}
                     />
@@ -358,40 +321,15 @@ const GestionMentors = () => {
                 </div>
               </div>
               
-              <div className="mt-6 space-y-4">
-                <div>
-                  <label className="block text-sm font-medium text-[#6C757D] mb-2" style={{ fontFamily: 'DM Sans, sans-serif' }}>Biographie</label>
-                  <textarea 
-                    placeholder="Courte biographie..." 
-                    value={form.bio} 
-                    onChange={(e) => setForm({ ...form, bio: e.target.value })}
-                    rows={3}
-                    className="w-full px-4 py-2 rounded-xl border border-[#E9ECEF] bg-[bg-white] text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FF6B35] focus:border-transparent transition-all duration-300"
-                    style={{ fontFamily: 'DM Sans, sans-serif' }}
-                  />
-                </div>
-                
-                <div>
-                  <label className="block text-sm font-medium text-[#6C757D] mb-2" style={{ fontFamily: 'DM Sans, sans-serif' }}>URL Photo</label>
-                  <input 
-                    placeholder="URL de la photo" 
-                    value={form.photo_url} 
-                    onChange={(e) => setForm({ ...form, photo_url: e.target.value })}
-                    className="w-full px-4 py-2 rounded-xl border border-[#E9ECEF] bg-[bg-white] text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FF6B35] focus:border-transparent transition-all duration-300"
-                    style={{ fontFamily: 'DM Sans, sans-serif' }}
-                  />
-                </div>
-                
-                <div>
-                  <label className="block text-sm font-medium text-[#6C757D] mb-2" style={{ fontFamily: 'DM Sans, sans-serif' }}>URL LinkedIn</label>
-                  <input 
-                    placeholder="URL du profil LinkedIn" 
-                    value={form.linkedin_url} 
-                    onChange={(e) => setForm({ ...form, linkedin_url: e.target.value })}
-                    className="w-full px-4 py-2 rounded-xl border border-[#E9ECEF] bg-[bg-white] text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FF6B35] focus:border-transparent transition-all duration-300"
-                    style={{ fontFamily: 'DM Sans, sans-serif' }}
-                  />
-                </div>
+              <div className="mt-6">
+                <label className="block text-sm font-medium text-[#6C757D] mb-2" style={{ fontFamily: 'DM Sans, sans-serif' }}>URL Photo</label>
+                <input 
+                  placeholder="URL de la photo" 
+                  value={form.photo_url} 
+                  onChange={(e) => setForm({ ...form, photo_url: e.target.value })}
+                  className="w-full px-4 py-2 rounded-xl border border-[#E9ECEF] bg-[bg-white] text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FF6B35] focus:border-transparent transition-all duration-300"
+                  style={{ fontFamily: 'DM Sans, sans-serif' }}
+                />
               </div>
               
               <div className="flex justify-end gap-3 mt-6">
@@ -537,42 +475,6 @@ const GestionMentors = () => {
                     }`}>
                       {mentor.type === 'mentor' ? '🎓 Mentor' : '⚖️ Jury'}
                     </span>
-                    
-                    {mentor.expertise && (
-                      <p className="text-xs text-[#6C757D]" style={{ fontFamily: 'DM Sans, sans-serif' }}>
-                        🎯 {mentor.expertise}
-                      </p>
-                    )}
-                    
-                    {mentor.bio && (
-                      <p className="text-xs text-[#6C757D] line-clamp-2" style={{ fontFamily: 'DM Sans, sans-serif' }}>
-                        📝 {mentor.bio}
-                      </p>
-                    )}
-                    
-                    <div className="flex gap-2 pt-2">
-                      {mentor.email && (
-                        <a 
-                          href={`mailto:${mentor.email}`}
-                          className="text-xs text-[#1E3A5F] hover:text-[#FF6B35] transition-colors"
-                          style={{ fontFamily: 'DM Sans, sans-serif' }}
-                        >
-                          ✉️ Email
-                        </a>
-                      )}
-                      
-                      {mentor.linkedin_url && (
-                        <a 
-                          href={mentor.linkedin_url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-xs text-[#0077B5] hover:text-[#00A0DC] transition-colors"
-                          style={{ fontFamily: 'DM Sans, sans-serif' }}
-                        >
-                          💼 LinkedIn
-                        </a>
-                      )}
-                    </div>
                   </div>
                 </div>
               </motion.div>

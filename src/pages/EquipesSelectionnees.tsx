@@ -5,15 +5,35 @@ import { Users, User, BookOpen, Trophy, Star, Award, Code, Zap, Target } from "l
 import { motion } from "framer-motion";
 
 const EquipesSelectionnees = () => {
-  const { data: equipes, isLoading } = useQuery({
+  const { data: equipes, isLoading, error } = useQuery({
     queryKey: ["equipes-selectionnees"],
     queryFn: async () => {
+      console.log("🔍 Récupération des équipes sélectionnées...");
+      
+      // D'abord, vérifions toutes les équipes
+      const { data: allEquipes, error: allError } = await supabase
+        .from("equipes")
+        .select("*")
+        .order("created_at", { ascending: true });
+      
+      console.log("📊 Toutes les équipes dans la BD:", allEquipes);
+      console.log("🔍 Champs disponibles:", allEquipes?.[0] ? Object.keys(allEquipes[0]) : "Aucune équipe");
+      
+      // Ensuite, récupérons seulement les sélectionnées avec le bon champ
       const { data, error } = await supabase
         .from("equipes")
         .select("*, membres(*)")
-        .eq("selectionnee", true)
+        .eq("statut", "selectionne") // ✅ Champ corrigé
         .order("created_at", { ascending: true });
-      if (error) throw error;
+      
+      console.log("📊 Résultat query équipes sélectionnées:", { data, error });
+      
+      if (error) {
+        console.error("❌ Erreur query équipes:", error);
+        throw error;
+      }
+      
+      console.log(`✅ ${data?.length || 0} équipes sélectionnées trouvées`);
       return data;
     },
   });
