@@ -29,6 +29,8 @@ import GestionPartenaires from "./pages/admin/GestionPartenaires";
 import GestionGalerie from "./pages/admin/GestionGalerie";
 import GestionAnnonces from "./pages/admin/GestionAnnonces";
 import GestionBadges from "./pages/admin/GestionBadges";
+import GestionComite from "./pages/admin/GestionComite";
+import SelectionFinale from "./pages/admin/SelectionFinale";
 import Classement from "./pages/admin/Classement";
 import Statistiques from "./pages/admin/Statistiques";
 
@@ -67,6 +69,8 @@ const App = () => (
             <Route path="/admin/galerie" element={<ProtectedRoute><GestionGalerie /></ProtectedRoute>} />
             <Route path="/admin/annonces" element={<ProtectedRoute><GestionAnnonces /></ProtectedRoute>} />
             <Route path="/admin/badges" element={<ProtectedRoute><GestionBadges /></ProtectedRoute>} />
+            <Route path="/admin/comite" element={<ProtectedRoute><GestionComite /></ProtectedRoute>} />
+            <Route path="/admin/selection" element={<ProtectedRoute><SelectionFinale /></ProtectedRoute>} />
             <Route path="/admin/classement" element={<ProtectedRoute><Classement /></ProtectedRoute>} />
             <Route path="/admin/statistiques" element={<ProtectedRoute><Statistiques /></ProtectedRoute>} />
 

@@ -8,7 +8,7 @@ interface Props {
   errors?: Record<string, string>;
 }
 
-const DOMAINES = ['Vie étudiante', 'Administration', 'Pédagogie', 'Campus', 'Autre'];
+const DOMAINES = ['Vie étudiante', 'Administration', 'Pédagogie', 'Campus'];
 
 const Etape5Projet = ({ data, onChange, errors = {} }: Props) => {
   const wordCount = (text: string) => text.trim() === '' ? 0 : text.trim().split(/\s+/).length;
@@ -195,26 +195,7 @@ const Etape5Projet = ({ data, onChange, errors = {} }: Props) => {
               )}
             </label>
 
-            {/* Champ "Autre" si sélectionné */}
-            {data.domaine_projet === 'Autre' && (
-              <div className="mt-4">
-                <input
-                  type="text"
-                  value={data.domaine_projet_autre || ''}
-                  onChange={(e) => onChange({ domaine_projet_autre: e.target.value })}
-                  placeholder="Précisez le domaine du projet"
-                  className="w-full px-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FF6B35]/20 focus:border-[#FF6B35]/50 transition-all"
-                  style={{ fontFamily: 'DM Sans, sans-serif' }}
-                  required
-                />
-                {errors.domaine_projet_autre && (
-                  <p className="text-[#DC2626] text-xs mt-1" style={{ fontFamily: 'DM Sans, sans-serif' }}>
-                    {errors.domaine_projet_autre}
-                  </p>
-                )}
-              </div>
-            )}
-          </motion.div>
+                      </motion.div>
 
           {/* Problématique */}
           <motion.div

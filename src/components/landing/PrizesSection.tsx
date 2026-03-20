@@ -6,7 +6,7 @@ const prizes = [
   { 
     rank: "1er Prix", 
     amount: "250 000 FCFA", 
-    bonus: "+ 6 mois d'incubation", 
+    bonus: "+ 6 mois d'accompagnement", 
     color: "from-[#FF6B35] to-[#FF8C42]",
     icon: Crown,
     description: "Accompagnement personnalisé et lancement officiel du projet"
@@ -14,7 +14,7 @@ const prizes = [
   { 
     rank: "2ème Prix", 
     amount: "150 000 FCFA", 
-    bonus: "+ 3 mois d'incubation", 
+    bonus: "+ 3 mois d'accompagnement", 
     color: "from-[#1E3A5F] to-[#2C5282]",
     icon: Medal,
     description: "Programme de développement et mise en relation avec des partenaires"
@@ -22,7 +22,7 @@ const prizes = [
   { 
     rank: "3ème Prix", 
     amount: "50 000 FCFA", 
-    bonus: "+ 3 mois d'incubation", 
+    bonus: "+ 3 mois d'accompagnement", 
     color: "from-[#FFA947] to-[#FF6B35]",
     icon: Award,
     description: "Soutien technique et accès à l'écosystème entrepreneurial"
@@ -120,14 +120,14 @@ const PrizesSection = () => (
           className="font-display text-4xl sm:text-5xl font-bold text-[#212529] mb-4"
           style={{ fontFamily: 'Sora, sans-serif', fontWeight: 800 }}
         >
-          Des prix pour <span className="text-gradient">récompenser</span> l'innovation
+          Des prix exceptionnels
         </h2>
         <div className="w-24 h-1 bg-gradient-to-r from-[#FF6B35] to-[#1E3A5F] mx-auto rounded-full mb-6"></div>
         <p 
           className="text-[#6C757D] max-w-2xl mx-auto text-lg leading-relaxed"
           style={{ fontFamily: 'DM Sans, sans-serif' }}
         >
-          Des récompenses exceptionnelles attendent les innovateurs talentueux.
+          Au total : <span className="text-[#FF6B35] font-bold">450 000 FCFA</span> de prix + accompagnement pour les meilleurs projets.
         </p>
       </motion.div>
 

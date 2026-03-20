@@ -11,7 +11,7 @@ const reasons = [
   {
     icon: Trophy,
     title: "Gagner des prix",
-    description: "Jusqu'à 250 000 FCFA + 6 mois d'incubation pour les meilleurs projets.",
+    description: "Jusqu'à 450 000 FCFA (en tout) + des mois d'accompagnement pour les meilleurs projets.",
     color: "bleu"
   },
   {
@@ -54,7 +54,7 @@ const WhyParticipate = () => (
           className="text-[#6C757D] max-w-2xl mx-auto text-lg leading-relaxed"
           style={{ fontFamily: 'DM Sans, sans-serif' }}
         >
-          Une expérience unique pour développer vos compétences et porter vos idées avec l'accompagnement des meilleurs experts.
+          Une expérience unique pour développer vos compétences et porter vos idées avec l'accompagnement des meilleurs experts. Ouvert à tous les étudiants, avec une priorité pour ceux de l'ESMT.
         </p>
       </motion.div>
 

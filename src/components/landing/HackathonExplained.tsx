@@ -130,7 +130,7 @@ const HackathonExplained = () => {
               className="text-[#6C757D] text-lg max-w-3xl mx-auto text-justify"
               style={{ fontFamily: 'DM Sans, sans-serif' }}
             >
-              Une expérience unique au cœur de l'École Supérieure Multinationale des Télécommunications
+              Une expérience unique organisée par l'ISOC-ESMT, ouverte à tous les étudiants avec une priorité pour ceux de l'École Supérieure Multinationale des Télécommunications
             </p>
           </div>
 
@@ -155,8 +155,8 @@ const HackathonExplained = () => {
                 className="text-[#6C757D] leading-relaxed text-justify"
                 style={{ fontFamily: 'DM Sans, sans-serif' }}
               >
-                Rassemblons les talents de toutes les filières : tech, design, business, communication. 
-                La diversité des profils est notre force pour créer des solutions complètes.
+                Rassemblons les talents de toutes les filières et de tous établissements : tech, design, business, communication. 
+                La diversité des profils et des origines est notre force pour créer des solutions complètes et innovantes.
               </p>
             </motion.div>
 

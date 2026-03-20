@@ -78,8 +78,9 @@ const CTASection = () => (
             className="text-white/90 text-xl max-w-2xl mx-auto mb-10 leading-relaxed"
             style={{ fontFamily: 'DM Sans, sans-serif' }}
           >
-            Rejoignez 40 innovateurs pour 48h de création intensive. 
-            Transformez vos idées en prototypes et gagnez jusqu'à 250 000 FCFA.
+            Rejoignez des innovateurs de tous horizons pour 48h de création intensive. 
+            Transformez vos idées en prototypes et gagnez jusqu'à 450 000 FCFA (en tout). 
+            Ouvert à tous les étudiants, avec priorité ESMT.
           </motion.p>
           
           {/* Stats */}
@@ -100,7 +101,7 @@ const CTASection = () => (
             </div>
             <div className="text-center">
               <div className="text-3xl font-bold text-white mb-1" style={{ fontFamily: 'Sora, sans-serif' }}>450K</div>
-              <div className="text-sm text-white/80" style={{ fontFamily: 'DM Sans, sans-serif' }}>FCFA en prix</div>
+              <div className="text-sm text-white/80" style={{ fontFamily: 'DM Sans, sans-serif' }}>FCFA en prix (en tout)</div>
             </div>
           </motion.div>
           

@@ -26,6 +26,7 @@ const ANNEES = [
 const GestionGalerie = () => {
   const queryClient = useQueryClient();
   const [showAdd, setShowAdd] = useState(false);
+  const [editingItem, setEditingItem] = useState<any>(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedAnnee, setSelectedAnnee] = useState<number>(2026);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
@@ -92,9 +93,10 @@ const GestionGalerie = () => {
       if (error) throw error;
     },
     onSuccess: () => { 
-      queryClient.invalidateQueries({ queryKey: ["admin-galerie"] }); 
+      queryClient.invalidateQueries({ queryKey: ["admin-galerie", selectedAnnee] }); 
       queryClient.invalidateQueries({ queryKey: ["galerie"] }); // Synchronisation page publique
       setShowAdd(false); 
+      setEditingItem(null);
       setForm({ titre_projet: '', photo_url: '', description: '', equipe_id: null, categorie: 'general', annee: 2026, type_categorie: 'general' }); // ✅ UUID null // ✅ Champs corrigés // ✅ Nouveaux champs 
       toast.success("Élément ajouté à la galerie avec succès"); 
     },
@@ -112,6 +114,22 @@ const GestionGalerie = () => {
       queryClient.invalidateQueries({ queryKey: ["admin-galerie", selectedAnnee] }); 
       queryClient.invalidateQueries({ queryKey: ["galerie"] }); // Synchronisation page publique
       toast.success("Catégorie mise à jour avec succès"); 
+    },
+    onError: (error) => {
+      toast.error(`Erreur: ${error.message}`);
+    },
+  });
+
+  const updateGalerie = useMutation({
+    mutationFn: async ({ id, titre_projet, description }: { id: string; titre_projet: string; description: string }) => {
+      const { error } = await supabase.from("galerie").update({ titre_projet, description }).eq("id", id);
+      if (error) throw error;
+    },
+    onSuccess: () => { 
+      queryClient.invalidateQueries({ queryKey: ["admin-galerie", selectedAnnee] }); 
+      queryClient.invalidateQueries({ queryKey: ["galerie"] }); // Synchronisation page publique
+      setEditingItem(null);
+      toast.success("Élément modifié avec succès"); 
     },
     onError: (error) => {
       toast.error(`Erreur: ${error.message}`);
@@ -363,7 +381,7 @@ const GestionGalerie = () => {
                 className="font-display text-xl font-bold text-[#212529] mb-6"
                 style={{ fontFamily: 'Sora, sans-serif' }}
               >
-                Ajouter un Média
+                {editingItem ? 'Modifier un Média' : 'Ajouter un Média'}
               </h2>
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -446,19 +464,31 @@ const GestionGalerie = () => {
               
               <div className="flex justify-end gap-3 mt-6">
                 <button
-                  onClick={() => setShowAdd(false)}
+                  onClick={() => {
+                    setShowAdd(false);
+                    setEditingItem(null);
+                    setForm({ 
+                      titre_projet: '', 
+                      photo_url: '', 
+                      description: '', 
+                      equipe_id: null, 
+                      categorie: 'general', 
+                      annee: 2026, 
+                      type_categorie: 'general' 
+                    });
+                  }}
                   className="px-6 py-2 rounded-xl border border-[#E9ECEF] text-[#6C757D] hover:bg-[#E9ECEF] transition-colors"
                   style={{ fontFamily: 'DM Sans, sans-serif' }}
                 >
                   Annuler
                 </button>
                 <button
-                  onClick={() => addGalerie.mutate()}
+                  onClick={() => editingItem ? updateGalerie.mutate({ id: editingItem.id, titre_projet: form.titre_projet, description: form.description }) : addGalerie.mutate()}
                   className="px-6 py-2 rounded-xl bg-[#1E3A5F] text-white hover:bg-[#006450] transition-colors flex items-center gap-2"
                   style={{ fontFamily: 'DM Sans, sans-serif' }}
                 >
                   <Save size={16} />
-                  Enregistrer
+                  {editingItem ? 'Mettre à jour' : 'Enregistrer'}
                 </button>
               </div>
             </div>
@@ -569,6 +599,27 @@ const GestionGalerie = () => {
                         title="Voir en grand"
                       >
                         <Eye size={16} />
+                      </button>
+                      
+                      <button
+                        onClick={() => {
+                          setEditingItem(item);
+                          setForm({
+                            titre_projet: item.titre_projet,
+                            photo_url: item.photo_url,
+                            description: item.description || '',
+                            equipe_id: item.equipe_id,
+                            categorie: item.categorie || 'general',
+                            annee: item.annee || 2026,
+                            type_categorie: item.type_categorie || 'general'
+                          });
+                          setShowAdd(true);
+                        }}
+                        className="p-2 rounded-lg bg-[#F59E0B] text-[#212529] hover:bg-[#F59E0B]/80 transition-colors"
+                        style={{ fontFamily: 'DM Sans, sans-serif' }}
+                        title="Modifier"
+                      >
+                        <Save size={16} />
                       </button>
                       
                       <button

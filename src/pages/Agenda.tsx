@@ -41,7 +41,7 @@ const Agenda = () => {
         { titre: "Publication des résultats officiels", icone: Trophy },
         { titre: "Diffusion de la vidéo récapitulative", icone: Code },
         { titre: "Mise en place de l'équipe de suivi et d'accompagnement", icone: Users },
-        { titre: "Démarrage du programme d'incubation", icone: Rocket },
+        { titre: "Démarrage du programme d'accompagnement", icone: Rocket },
         { titre: "Rédaction et partage du rapport final aux partenaires", icone: Target }
       ]
     }

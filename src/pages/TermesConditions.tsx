@@ -86,7 +86,7 @@ const TermesConditions = () => {
                     style={{ fontFamily: 'DM Sans, sans-serif' }}
                   >
                     <strong>Équipes pluridisciplinaires</strong> - La composition équilibrée entre profils techniques (tech), design, business et communication est vivement encouragée. 
-                    Les étudiants de toutes les filières (INGC, PREPA, LTI, LMEN, LES, etc.) sont les bienvenus.
+                    Les étudiants de toutes les filières et de tous établissements sont les bienvenus pour favoriser la diversité des compétences.
                   </p>
                 </div>
                 <div className="flex items-start gap-3">
@@ -126,7 +126,7 @@ const TermesConditions = () => {
                     className="text-[#6C757D] leading-relaxed"
                     style={{ fontFamily: 'DM Sans, sans-serif' }}
                   >
-                    <strong>Définition des thématiques</strong> - Les thématiques du hackathon sont définies en concertation avec les partenaires. Chaque partenaire est invité à soumettre un défi basé sur ses besoins métiers ou une problématique sectorielle qu'il souhaite voir adressée par les équipes.
+                    <strong>Définition des thématiques</strong> - Les thématiques du hackathon sont ouvertes et définies en concertation avec les partenaires. Chaque partenaire est invité à soumettre un défi basé sur ses besoins métiers ou une problématique sectorielle, mais les équipes peuvent également proposer leurs propres thématiques innovantes en lien avec les technologies actuelles.
                   </p>
                 </div>
                 <div className="bg-[#F8F9FA] rounded-xl p-4 mt-4">
@@ -218,7 +218,7 @@ const TermesConditions = () => {
                     className="text-[#6C757D] leading-relaxed"
                     style={{ fontFamily: 'DM Sans, sans-serif' }}
                   >
-                    <strong>Éligibilité</strong> - La participation est ouverte exclusivement aux étudiants régulièrement inscrits à l'ESMT, toutes filières et tous niveaux confondus.
+                    <strong>Éligibilité</strong> - La participation est ouverte à tous les étudiants, avec une priorité accordée aux étudiants régulièrement inscrits à l'ESMT. Les étudiants des autres établissements sont les bienvenus dans la limite des places disponibles.
                   </p>
                 </div>
                 <div className="flex items-start gap-3">
@@ -227,7 +227,7 @@ const TermesConditions = () => {
                     className="text-[#6C757D] leading-relaxed"
                     style={{ fontFamily: 'DM Sans, sans-serif' }}
                   >
-                    <strong>Statut administratif</strong> - Chaque participant doit être en règle avec l'administration de l'ESMT (frais de scolarité payés, dossier administratif complet).
+                    <strong>Statut administratif</strong> - Les étudiants de l'ESMT doivent être en règle avec l'administration (frais de scolarité payés, dossier administratif complet). Les étudiants des autres établissements doivent fournir un certificat de scolarité valide.
                   </p>
                 </div>
                 <div className="flex items-start gap-3">

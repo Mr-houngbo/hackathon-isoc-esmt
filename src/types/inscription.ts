@@ -41,7 +41,6 @@ export interface InscriptionData {
   a_projet: 'oui' | 'non' | '';
   nom_projet: string;
   domaine_projet: string;
-  domaine_projet_autre: string; // si 'Autre' sélectionné
   problematique: string;
   solution: string;
 
@@ -80,7 +79,6 @@ export const defaultInscriptionData: InscriptionData = {
   a_projet: '',
   nom_projet: '',
   domaine_projet: '',
-  domaine_projet_autre: '',
   problematique: '',
   solution: '',
   niveau_technique: '',

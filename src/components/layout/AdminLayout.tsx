@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "@/context/AuthContext";
-import { LayoutDashboard, Users, Calendar, UserCheck, Handshake, Image, Megaphone, BadgeCheck, LogOut, Trophy, BarChart3 } from "lucide-react";
+import { LayoutDashboard, Users, Calendar, UserCheck, Handshake, Image, Megaphone, BadgeCheck, LogOut, Trophy, BarChart3, Users as UsersIcon } from "lucide-react";
 
 const links = [
   { path: "/admin/dashboard", icon: LayoutDashboard, label: "Dashboard" },
@@ -12,6 +12,8 @@ const links = [
   { path: "/admin/galerie", icon: Image, label: "Galerie" },
   { path: "/admin/annonces", icon: Megaphone, label: "Annonces" },
   { path: "/admin/badges", icon: BadgeCheck, label: "Badges" },
+  { path: "/admin/comite", icon: UsersIcon, label: "Comité" },
+  { path: "/admin/selection", icon: Trophy, label: "Sélection" },
   { path: "/admin/classement", icon: Trophy, label: "Classement" },
   { path: "/admin/statistiques", icon: BarChart3, label: "Statistiques" },
 ];

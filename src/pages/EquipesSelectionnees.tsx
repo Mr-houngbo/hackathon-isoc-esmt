@@ -19,11 +19,12 @@ const EquipesSelectionnees = () => {
       console.log("📊 Toutes les équipes dans la BD:", allEquipes);
       console.log("🔍 Champs disponibles:", allEquipes?.[0] ? Object.keys(allEquipes[0]) : "Aucune équipe");
       
-      // Ensuite, récupérons seulement les sélectionnées avec le bon champ
+      // Ensuite, récupérons seulement les sélectionnées et publiées avec le bon champ
       const { data, error } = await supabase
         .from("equipes")
         .select("*, membres(*)")
         .eq("statut", "selectionne") // ✅ Champ corrigé
+        .eq("publiee", true) // ✅ Seulement les équipes publiées
         .order("created_at", { ascending: true });
       
       console.log("📊 Résultat query équipes sélectionnées:", { data, error });
