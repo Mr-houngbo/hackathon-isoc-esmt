@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { InscriptionData } from "@/types/inscription";
-import { CheckCircle, Mail, Linkedin, MessageCircle, Calendar } from "lucide-react";
+import { CheckCircle, Mail, Linkedin, MessageCircle } from "lucide-react";
 import { Link } from "react-router-dom";
 
 interface Props {
@@ -83,27 +83,10 @@ const Etape8Confirmation = ({ data }: Props) => {
           className="text-[#6C757D] text-sm"
           style={{ fontFamily: 'DM Sans, sans-serif' }}
         >
-          📬 Le comité de sélection examinera votre dossier et vous contactera par email sous 72h.
+          📬 Le comité de sélection examinera votre dossier et vous contactera par email une semaine avant la date du hackathon.
         </p>
       </motion.div>
 
-      {/* Date Key */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.5, duration: 0.5 }}
-        className="max-w-2xl mx-auto bg-gradient-to-r from-[#FF6B35]/10 to-[#1E3A5F]/10 rounded-2xl border border-[#E9ECEF] p-4"
-      >
-        <div className="flex items-center justify-center gap-2">
-          <Calendar size={20} className="text-[#FF6B35]" />
-          <p 
-            className="text-[#212529] font-medium"
-            style={{ fontFamily: 'DM Sans, sans-serif' }}
-          >
-            🚀 Hackathon : 17 & 18 Avril 2026
-          </p>
-        </div>
-      </motion.div>
 
       {/* Contact Links */}
       <motion.div
@@ -125,14 +108,14 @@ const Etape8Confirmation = ({ data }: Props) => {
               href={lien.href}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-3 px-4 py-3 bg-gradient-to-r from-[#FF6B35]/10 to-[#1E3A5F]/10 rounded-xl hover:from-[#FF6B35]/20 hover:to-[#1E3A5F]/20 transition-all duration-300"
+              className="flex items-center gap-3 px-4 py-3 bg-gradient-to-r from-[#FF6B35] to-[#1E3A5F] rounded-xl hover:from-[#FF6B35]/90 hover:to-[#1E3A5F]/90 transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-[#FF6B35]/30 border-2 border-transparent hover:border-[#FF6B35]/20"
             >
               <lien.icon 
                 size={18} 
                 className={lien.label.includes('WhatsApp') ? 'text-[#25D366]' : lien.label.includes('LinkedIn') ? 'text-[#0077B5]' : 'text-[#FF6B35]'} 
               />
               <span 
-                className="text-sm font-medium text-[#212529]"
+                className="text-sm font-bold text-white"
                 style={{ fontFamily: 'DM Sans, sans-serif' }}
               >
                 {lien.label}

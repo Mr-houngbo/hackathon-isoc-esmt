@@ -1,21 +1,46 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import AdminLayout from "@/components/layout/AdminLayout";
 import { toast } from "sonner";
-import { Plus, Trash2, Save, Search, Filter, Download, Image, Calendar, Eye } from "lucide-react";
+import { Plus, Trash2, Save, Search, Filter, Download, Image, Calendar, Eye, Tag, Clock, Users, Award } from "lucide-react";
 import { motion } from "framer-motion";
+
+const CATEGORIES = [
+  { value: 'general', label: 'Général', icon: Image, color: '#6C757D' },
+  { value: 'annee_derniere', label: 'Année dernière', icon: Clock, color: '#FF6B35' },
+  { value: 'cette_annee', label: 'Cette année', icon: Calendar, color: '#1E3A5F' },
+  { value: 'equipes', label: 'Équipes', icon: Users, color: '#00873E' },
+  { value: 'mentors', label: 'Mentors', icon: Award, color: '#8B5CF6' },
+  { value: 'partenaires', label: 'Partenaires', icon: Tag, color: '#F59E0B' },
+  { value: 'ceremonie', label: 'Cérémonie', icon: Award, color: '#DC2626' },
+];
 
 const GestionGalerie = () => {
   const queryClient = useQueryClient();
   const [showAdd, setShowAdd] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
+  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const [form, setForm] = useState({ 
     titre_projet: '', // ✅ Champ corrigé
     photo_url: '', // ✅ Champ corrigé
     description: '',
-    equipe_id: null // ✅ UUID null au lieu de chaîne vide
+    equipe_id: null, // ✅ UUID null au lieu de chaîne vide
+    categorie: 'general' // Catégorie par défaut
   });
+
+  // Fermer le dropdown quand on clique ailleurs
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as HTMLElement;
+      if (!target.closest('[data-dropdown]')) {
+        setOpenDropdown(null);
+      }
+    };
+    
+    document.addEventListener('click', handleClickOutside);
+    return () => document.removeEventListener('click', handleClickOutside);
+  }, []);
 
   const { data: galerie, isLoading, error, refetch } = useQuery({
     queryKey: ["admin-galerie"],
@@ -30,16 +55,19 @@ const GestionGalerie = () => {
     const matchesSearch = item.titre_projet?.toLowerCase().includes(searchTerm.toLowerCase()) ||
       item.description?.toLowerCase().includes(searchTerm.toLowerCase());
     
-    // Filtre simple par recherche, plus de filtre par type car le champ n'existe pas
     return matchesSearch;
   }) || [];
 
+  // Statistiques par catégorie
   const stats = {
     total: galerie?.length || 0,
-    // Le champ 'type' n'existe pas, on compte juste le total
-    equipes: 0,
-    photos: galerie?.length || 0,
-    videos: 0,
+    general: galerie?.filter(item => item.categorie === 'general').length || 0,
+    annee_derniere: galerie?.filter(item => item.categorie === 'annee_derniere').length || 0,
+    cette_annee: galerie?.filter(item => item.categorie === 'cette_annee').length || 0,
+    equipes: galerie?.filter(item => item.categorie === 'equipes').length || 0,
+    mentors: galerie?.filter(item => item.categorie === 'mentors').length || 0,
+    partenaires: galerie?.filter(item => item.categorie === 'partenaires').length || 0,
+    ceremonie: galerie?.filter(item => item.categorie === 'ceremonie').length || 0,
   };
 
   const addGalerie = useMutation({
@@ -51,8 +79,23 @@ const GestionGalerie = () => {
       queryClient.invalidateQueries({ queryKey: ["admin-galerie"] }); 
       queryClient.invalidateQueries({ queryKey: ["galerie"] }); // Synchronisation page publique
       setShowAdd(false); 
-      setForm({ titre_projet: '', photo_url: '', description: '', equipe_id: null }); // ✅ UUID null // ✅ Champs corrigés 
+      setForm({ titre_projet: '', photo_url: '', description: '', equipe_id: null, categorie: 'general' }); // ✅ UUID null // ✅ Champs corrigés 
       toast.success("Élément ajouté à la galerie avec succès"); 
+    },
+    onError: (error) => {
+      toast.error(`Erreur: ${error.message}`);
+    },
+  });
+
+  const updateCategorie = useMutation({
+    mutationFn: async ({ id, categorie }: { id: string; categorie: string }) => {
+      const { error } = await supabase.from("galerie").update({ categorie }).eq("id", id);
+      if (error) throw error;
+    },
+    onSuccess: () => { 
+      queryClient.invalidateQueries({ queryKey: ["admin-galerie"] }); 
+      queryClient.invalidateQueries({ queryKey: ["galerie"] }); // Synchronisation page publique
+      toast.success("Catégorie mise à jour avec succès"); 
     },
     onError: (error) => {
       toast.error(`Erreur: ${error.message}`);
@@ -208,7 +251,7 @@ const GestionGalerie = () => {
                           className="text-2xl font-bold text-[#212529]"
                           style={{ fontFamily: 'Sora, sans-serif', fontWeight: 700 }}
                         >
-                          {stats.photos}
+                          {stats.total}
                         </p>
                         <p 
                           className="text-xs text-[#6C757D] mt-1"
@@ -241,7 +284,7 @@ const GestionGalerie = () => {
                           className="text-2xl font-bold text-[#212529]"
                           style={{ fontFamily: 'Sora, sans-serif', fontWeight: 700 }}
                         >
-                          {stats.videos}
+                          {stats.equipes}
                         </p>
                         <p 
                           className="text-xs text-[#6C757D] mt-1"
@@ -333,6 +376,20 @@ const GestionGalerie = () => {
                       className="w-full px-4 py-2 rounded-xl border border-[#E9ECEF] bg-[bg-white] text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FF6B35] focus:border-transparent transition-all duration-300"
                       style={{ fontFamily: 'DM Sans, sans-serif' }}
                     />
+                  </div>
+                  
+                  <div>
+                    <label className="block text-sm font-medium text-[#6C757D] mb-2" style={{ fontFamily: 'DM Sans, sans-serif' }}>Catégorie</label>
+                    <select 
+                      value={form.categorie}
+                      onChange={(e) => setForm({ ...form, categorie: e.target.value })}
+                      className="w-full px-4 py-2 rounded-xl border border-[#E9ECEF] bg-[white] text-[#212529] focus:outline-none focus:ring-2 focus:ring-[#FF6B35] focus:border-transparent transition-all duration-300"
+                      style={{ fontFamily: 'DM Sans, sans-serif' }}
+                    >
+                      {CATEGORIES.map((cat) => (
+                        <option key={cat.value} value={cat.value}>{cat.label}</option>
+                      ))}
+                    </select>
                   </div>
                   
                   <div>
@@ -440,8 +497,12 @@ const GestionGalerie = () => {
                       >
                         {item.titre_projet} // ✅ Champ corrigé
                       </h3>
-                      <span className="inline-block px-2 py-1 rounded-full text-xs font-bold bg-[#10B981]/20 text-[#10B981]">
-                        📷 Média
+                      <span className="inline-block px-2 py-1 rounded-full text-xs font-bold" 
+                            style={{ 
+                              backgroundColor: CATEGORIES.find(c => c.value === item.categorie)?.color + '20' || '#6C757D20',
+                              color: CATEGORIES.find(c => c.value === item.categorie)?.color || '#6C757D'
+                            }}>
+                        {CATEGORIES.find(c => c.value === item.categorie)?.label || 'Général'}
                       </span>
                     </div>
                     
@@ -462,6 +523,63 @@ const GestionGalerie = () => {
                       >
                         <Trash2 size={16} />
                       </button>
+                    </div>
+                  </div>
+                  
+                  {/* Bouton de classement élégant */}
+                  <div className="mb-3">
+                    <div className="relative" data-dropdown>
+                      <button
+                        onClick={() => setOpenDropdown(openDropdown === item.id ? null : item.id)}
+                        className="flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-medium bg-gradient-to-r from-[#FF6B35] to-[#1E3A5F] text-white hover:from-[#FF6B35]/90 hover:to-[#1E3A5F]/90 transition-all shadow-md"
+                        style={{ fontFamily: 'DM Sans, sans-serif' }}
+                      >
+                        <Tag size={12} />
+                        {CATEGORIES.find(c => c.value === item.categorie)?.label || 'Classer'}
+                        <svg className="w-3 h-3 ml-1" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
+                        </svg>
+                      </button>
+                      
+                      {/* Menu déroulant */}
+                      {openDropdown === item.id && (
+                        <div className="absolute bottom-full left-0 mb-1 w-48 bg-white rounded-lg shadow-xl border border-[#E9ECEF] z-[9999] overflow-hidden">
+                          <div className="py-1 max-h-64 overflow-y-auto">
+                            {CATEGORIES.map((categorie) => {
+                              const isSelected = item.categorie === categorie.value;
+                              const Icon = categorie.icon;
+                              return (
+                                <button
+                                  key={categorie.value}
+                                  onClick={() => {
+                                    updateCategorie.mutate({ id: item.id, categorie: categorie.value });
+                                    setOpenDropdown(null);
+                                  }}
+                                  className={`w-full flex items-center gap-3 px-3 py-2 text-xs font-medium transition-colors ${
+                                    isSelected
+                                      ? 'bg-[#FF6B35]/10 text-[#FF6B35]'
+                                      : 'text-[#6C757D] hover:bg-[#F8F9FA] hover:text-[#212529]'
+                                  }`}
+                                  style={{ fontFamily: 'DM Sans, sans-serif' }}
+                                >
+                                  <div 
+                                    className="w-4 h-4 rounded flex items-center justify-center"
+                                    style={{ backgroundColor: isSelected ? categorie.color : categorie.color + '20' }}
+                                  >
+                                    <Icon size={10} style={{ color: isSelected ? 'white' : categorie.color }} />
+                                  </div>
+                                  {categorie.label}
+                                  {isSelected && (
+                                    <svg className="w-4 h-4 ml-auto" fill="currentColor" viewBox="0 0 20 20">
+                                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                                    </svg>
+                                  )}
+                                </button>
+                              );
+                            })}
+                          </div>
+                        </div>
+                      )}
                     </div>
                   </div>
                   

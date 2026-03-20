@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { InscriptionData } from "@/types/inscription";
-import { Lightbulb, X, CheckCircle } from "lucide-react";
+import { X, Lightbulb } from "lucide-react";
 
 interface Props {
   data: InscriptionData;
@@ -9,15 +9,10 @@ interface Props {
 }
 
 const DOMAINES = ['Vie étudiante', 'Administration', 'Pédagogie', 'Campus', 'Autre'];
-const NIVEAUX_AVANCEMENT = [
-  { value: 'concept', label: 'Concept', desc: 'Idée en cours de réflexion', icon: Lightbulb },
-  { value: 'esquisse', label: 'Esquisse', desc: 'Maquettes ou wireframes réalisés', icon: CheckCircle },
-  { value: 'prototype', label: 'Prototype', desc: 'Version fonctionnelle existante', icon: CheckCircle }
-];
 
 const Etape5Projet = ({ data, onChange, errors = {} }: Props) => {
   const wordCount = (text: string) => text.trim() === '' ? 0 : text.trim().split(/\s+/).length;
-  const isOverLimit = wordCount(data.solution) > 150;
+  const isOverLimit = wordCount(data.solution) > 250;
 
   return (
     <div className="space-y-8">
@@ -278,13 +273,13 @@ const Etape5Projet = ({ data, onChange, errors = {} }: Props) => {
                   className={`text-xs ${isOverLimit ? 'text-[#DC2626]' : 'text-[#6C757D]'}`}
                   style={{ fontFamily: 'DM Sans, sans-serif' }}
                 >
-                  {wordCount(data.solution)} / 150 mots
+                  {wordCount(data.solution)} / 250 mots
                 </span>
                 <span 
                   className={`text-xs ${isOverLimit ? 'text-[#DC2626]' : 'text-[#6C757D]'}`}
                   style={{ fontFamily: 'DM Sans, sans-serif' }}
                 >
-                  {isOverLimit ? '⚠️ Limite dépassée' : 'Maximum 150 mots'}
+                  {isOverLimit ? '⚠️ Limite dépassée' : 'Maximum 250 mots'}
                 </span>
               </div>
               {errors.solution && (
@@ -292,108 +287,6 @@ const Etape5Projet = ({ data, onChange, errors = {} }: Props) => {
                   {errors.solution}
                 </p>
               )}
-            </label>
-          </motion.div>
-
-          {/* Technologies */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.7 }}
-            className="bg-white rounded-2xl border border-[#E9ECEF] p-6 shadow-lg"
-          >
-            <label className="block">
-              <span 
-                className="font-display text-sm font-semibold text-[#212529] mb-2 block"
-                style={{ fontFamily: 'Sora, sans-serif' }}
-              >
-                Technologies envisagées <span className="text-[#9CA3AF] text-xs">(optionnel)</span>
-              </span>
-              <input
-                type="text"
-                value={data.technologies || ''}
-                onChange={(e) => onChange({ technologies: e.target.value })}
-                placeholder="Ex: React, Node.js, MongoDB..."
-                className="w-full px-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FF6B35]/20 focus:border-[#FF6B35]/50 transition-all"
-                style={{ fontFamily: 'DM Sans, sans-serif' }}
-              />
-            </label>
-          </motion.div>
-
-          {/* Niveau d'avancement */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.8 }}
-            className="bg-white rounded-2xl border border-[#E9ECEF] p-6 shadow-lg"
-          >
-            <h4 
-              className="font-display text-lg font-semibold text-[#212529] mb-4"
-              style={{ fontFamily: 'Sora, sans-serif' }}
-            >
-              Niveau d'avancement <span className="text-[#9CA3AF] text-xs">(optionnel)</span>
-            </h4>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-              {NIVEAUX_AVANCEMENT.map((niveau) => (
-                <button
-                  key={niveau.value}
-                  type="button"
-                  onClick={() => onChange({ niveau_avancement: niveau.value })}
-                  className={`p-4 rounded-xl border-2 transition-all duration-300 hover:scale-105 ${
-                    data.niveau_avancement === niveau.value
-                      ? 'border-[#FF6B35] bg-[#FF6B35]/10'
-                      : 'border-[#E9ECEF] bg-white hover:border-[#FF6B35]/30'
-                  }`}
-                >
-                  <div className="flex flex-col items-center gap-2">
-                    <niveau.icon 
-                      size={24} 
-                      className={data.niveau_avancement === niveau.value ? 'text-[#FF6B35]' : 'text-[#6C757D]'}
-                    />
-                    <span 
-                      className="font-display text-sm font-bold"
-                      style={{ fontFamily: 'Sora, sans-serif' }}
-                    >
-                      <span className={data.niveau_avancement === niveau.value ? 'text-[#FF6B35]' : 'text-[#212529]'}>
-                        {niveau.label}
-                      </span>
-                    </span>
-                    <span 
-                      className="text-xs text-center"
-                      style={{ fontFamily: 'DM Sans, sans-serif' }}
-                    >
-                      <span className={data.niveau_avancement === niveau.value ? 'text-[#FF6B35]' : 'text-[#6C757D]'}>
-                        {niveau.desc}
-                      </span>
-                    </span>
-                  </div>
-                </button>
-              ))}
-            </div>
-          </motion.div>
-
-          {/* Contraintes techniques */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.9 }}
-            className="bg-white rounded-2xl border border-[#E9ECEF] p-6 shadow-lg"
-          >
-            <label className="block">
-              <span 
-                className="font-display text-sm font-semibold text-[#212529] mb-2 block"
-                style={{ fontFamily: 'Sora, sans-serif' }}
-              >
-                Contraintes techniques <span className="text-[#9CA3AF] text-xs">(optionnel)</span>
-              </span>
-              <textarea
-                value={data.contraintes_techniques || ''}
-                onChange={(e) => onChange({ contraintes_techniques: e.target.value })}
-                placeholder="Décrivez les contraintes techniques que vous pourriez rencontrer..."
-                rows={3}
-                className="w-full px-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FF6B35]/20 focus:border-[#FF6B35]/50 transition-all resize-none"
-                style={{ fontFamily: 'DM Sans, sans-serif' }}
-              />
             </label>
           </motion.div>
         </>

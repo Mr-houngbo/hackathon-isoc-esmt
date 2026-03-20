@@ -11,6 +11,7 @@ interface Props {
 
 const NIVEAUX_ETUDES = ['L1', 'L2', 'L3', 'M1', 'M2'];
 const ROLES = ['Dev', 'Design', 'Business', 'Communication', 'Autre'];
+const FILIERES = ['INGC', 'PREPA', 'Informatique', 'Génie', 'Management', 'Communication', 'Autre'];
 
 const Etape4Membres = ({ data, onChange, errors = {} }: Props) => {
   const [expandedBlocks, setExpandedBlocks] = useState([0]); // Membre 2 ouvert par défaut
@@ -170,7 +171,7 @@ const Etape4Membres = ({ data, onChange, errors = {} }: Props) => {
                           Genre <span className="text-[#DC2626]">*</span>
                         </span>
                         <div className="flex gap-1 flex-wrap">
-                          {['homme', 'femme', 'non_precise'].map((genre) => (
+                          {['homme', 'femme'].map((genre) => (
                             <button
                               key={genre}
                               type="button"
@@ -182,7 +183,7 @@ const Etape4Membres = ({ data, onChange, errors = {} }: Props) => {
                               }`}
                               style={{ fontFamily: 'DM Sans, sans-serif' }}
                             >
-                              {genre === 'homme' ? 'Homme' : genre === 'femme' ? 'Femme' : 'Préfère'}
+                              {genre === 'homme' ? 'Homme' : 'Femme'}
                             </button>
                           ))}
                         </div>
@@ -203,14 +204,17 @@ const Etape4Membres = ({ data, onChange, errors = {} }: Props) => {
                         >
                           Filière <span className="text-[#DC2626]">*</span>
                         </span>
-                        <input
-                          type="text"
+                        <select
                           value={membre.filiere || ''}
                           onChange={(e) => updateMembre(index, 'filiere', e.target.value)}
-                          placeholder="Filière"
-                          className="w-full px-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FF6B35]/20 focus:border-[#FF6B35]/50 transition-all"
+                          className="w-full px-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] focus:outline-none focus:ring-2 focus:ring-[#FF6B35]/20 focus:border-[#FF6B35]/50 transition-all"
                           style={{ fontFamily: 'DM Sans, sans-serif' }}
-                        />
+                        >
+                          <option value="">Sélectionnez votre filière</option>
+                          {FILIERES.map((filiere) => (
+                            <option key={filiere} value={filiere}>{filiere}</option>
+                          ))}
+                        </select>
                         {errors[`m${index}_filiere`] && (
                           <p className="text-[#DC2626] text-xs mt-1" style={{ fontFamily: 'DM Sans, sans-serif' }}>
                             {errors[`m${index}_filiere`]}

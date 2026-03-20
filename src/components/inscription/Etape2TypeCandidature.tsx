@@ -184,28 +184,6 @@ const Etape2TypeCandidature = ({ data, onChange }: Props) => {
           </label>
         </motion.div>
       )}
-
-      {/* Info sur le nombre de membres */}
-      {data.type_candidature && (
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.4 }}
-          className="bg-gradient-to-r from-[#FF6B35]/10 to-[#1E3A5F]/10 rounded-2xl border border-[#E9ECEF] p-4"
-        >
-          <p 
-            className="text-center text-sm"
-            style={{ fontFamily: 'DM Sans, sans-serif' }}
-          >
-            <span className="text-[#212529]">
-              {data.type_candidature === 'individuel' 
-                ? '✅ Candidature individuelle - 1 participant'
-                : '✅ Candidature en équipe - 4 participants (fixe)'
-              }
-            </span>
-          </p>
-        </motion.div>
-      )}
     </div>
   );
 };

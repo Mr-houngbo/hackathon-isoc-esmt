@@ -86,7 +86,7 @@ const TermesConditions = () => {
                     style={{ fontFamily: 'DM Sans, sans-serif' }}
                   >
                     <strong>Équipes pluridisciplinaires</strong> - La composition équilibrée entre profils techniques (tech), design, business et communication est vivement encouragée. 
-                    Les étudiants de toutes les filières (LTI, LMEN, LES, etc.) sont les bienvenus.
+                    Les étudiants de toutes les filières (INGC, PREPA, LTI, LMEN, LES, etc.) sont les bienvenus.
                   </p>
                 </div>
                 <div className="flex items-start gap-3">

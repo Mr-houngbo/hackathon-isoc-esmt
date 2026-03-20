@@ -10,6 +10,7 @@ interface Props {
 
 const COMPETENCES = ['Dev Web', 'Dev Mobile', 'Design UI-UX', 'Data', 'IA', 'Business', 'Communication', 'Autre'];
 const NIVEAUX_ETUDES = ['L1', 'L2', 'L3', 'M1', 'M2'];
+const FILIERES = ['INGC', 'PREPA', 'Informatique', 'Génie', 'Management', 'Communication', 'Autre'];
 
 const Etape3Chef = ({ data, onChange, errors = {} }: Props) => {
   const updateChef = (field: string, value: any) => {
@@ -21,16 +22,17 @@ const Etape3Chef = ({ data, onChange, errors = {} }: Props) => {
     });
   };
 
-  const toggleCompetence = (competence: string) => {
-    const competences = data.chef.competences.includes(competence)
-      ? data.chef.competences.filter(c => c !== competence)
-      : [...data.chef.competences, competence];
-    
-    updateChef('competences', competences);
-    
-    // Si on décoche "Autre", vider le champ competence_autre
-    if (competence === 'Autre' && !competences.includes('Autre')) {
-      updateChef('competence_autre', '');
+  const selectCompetence = (competence: string) => {
+    // Si on clique sur la compétence déjà sélectionnée, on la désélectionne
+    if (data.chef.competences.includes(competence)) {
+      updateChef('competences', []);
+      // Si on désélectionne "Autre", vider le champ competence_autre
+      if (competence === 'Autre') {
+        updateChef('competence_autre', '');
+      }
+    } else {
+      // Sinon, on sélectionne cette compétence unique
+      updateChef('competences', [competence]);
     }
   };
 
@@ -51,15 +53,24 @@ const Etape3Chef = ({ data, onChange, errors = {} }: Props) => {
             className="font-display text-2xl font-bold text-[#212529]"
             style={{ fontFamily: 'Sora, sans-serif', fontWeight: 700 }}
           >
-            Chef de projet
+            {data.type_candidature === 'individuel' ? 'Vos informations' : 'Chef de projet'}
           </h3>
         </div>
-        <p 
-          className="text-[#6C757D] text-lg"
-          style={{ fontFamily: 'DM Sans, sans-serif' }}
-        >
-          Informations du responsable de l'équipe
-        </p>
+          {data.type_candidature === 'individuel' ? (
+            <p 
+              className="text-[#6C757D] text-lg"
+              style={{ fontFamily: 'DM Sans, sans-serif' }}
+            >
+              Vos informations personnelles
+            </p>
+          ) : (
+            <p 
+              className="text-[#6C757D] text-lg"
+              style={{ fontFamily: 'DM Sans, sans-serif' }}
+            >
+              Informations du responsable de l'équipe
+            </p>
+          )}
         <div className="w-16 h-1 bg-gradient-to-r from-[#FF6B35] to-[#1E3A5F] mx-auto rounded-full mt-4"></div>
       </motion.div>
 
@@ -110,7 +121,7 @@ const Etape3Chef = ({ data, onChange, errors = {} }: Props) => {
               Genre <span className="text-[#DC2626]">*</span>
             </span>
             <div className="flex gap-1 flex-wrap">
-              {['homme', 'femme', 'non_precise'].map((genre) => (
+              {['homme', 'femme'].map((genre) => (
                 <button
                   key={genre}
                   type="button"
@@ -122,7 +133,7 @@ const Etape3Chef = ({ data, onChange, errors = {} }: Props) => {
                   }`}
                   style={{ fontFamily: 'DM Sans, sans-serif' }}
                 >
-                  {genre === 'homme' ? 'Homme' : genre === 'femme' ? 'Femme' : 'Préfère'}
+                  {genre === 'homme' ? 'Homme' : 'Femme'}
                 </button>
               ))}
             </div>
@@ -148,14 +159,17 @@ const Etape3Chef = ({ data, onChange, errors = {} }: Props) => {
             >
               Filière / Classe <span className="text-[#DC2626]">*</span>
             </span>
-            <input
-              type="text"
+            <select
               value={data.chef.filiere || ''}
               onChange={(e) => updateChef('filiere', e.target.value)}
-              placeholder="Votre filière"
-              className="w-full px-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FF6B35]/20 focus:border-[#FF6B35]/50 transition-all"
+              className="w-full px-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] focus:outline-none focus:ring-2 focus:ring-[#FF6B35]/20 focus:border-[#FF6B35]/50 transition-all"
               style={{ fontFamily: 'DM Sans, sans-serif' }}
-            />
+            >
+              <option value="">Sélectionnez votre filière</option>
+              {FILIERES.map((filiere) => (
+                <option key={filiere} value={filiere}>{filiere}</option>
+              ))}
+            </select>
             {errors.filiere && (
               <p className="text-[#DC2626] text-xs mt-1" style={{ fontFamily: 'DM Sans, sans-serif' }}>
                 {errors.filiere}
@@ -310,7 +324,7 @@ const Etape3Chef = ({ data, onChange, errors = {} }: Props) => {
             <button
               key={competence}
               type="button"
-              onClick={() => toggleCompetence(competence)}
+              onClick={() => selectCompetence(competence)}
               className={`p-3 rounded-xl border-2 transition-all duration-300 hover:scale-105 min-h-[3.5rem] flex items-center justify-center ${
                 data.chef.competences.includes(competence)
                   ? 'border-[#FF6B35] bg-[#FF6B35]/10'
@@ -328,6 +342,11 @@ const Etape3Chef = ({ data, onChange, errors = {} }: Props) => {
             </button>
           ))}
         </div>
+        {errors.competences && (
+          <p className="text-[#DC2626] text-xs mt-2" style={{ fontFamily: 'DM Sans, sans-serif' }}>
+            {errors.competences}
+          </p>
+        )}
         
         {/* Champ "Autre" si sélectionné */}
         {data.chef.competences.includes('Autre') && (

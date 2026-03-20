@@ -244,6 +244,7 @@ export type Database = {
           id: string
           photo_url: string | null
           titre_projet: string
+          categorie: string | null
         }
         Insert: {
           created_at?: string | null
@@ -252,6 +253,7 @@ export type Database = {
           id?: string
           photo_url?: string | null
           titre_projet: string
+          categorie?: string | null
         }
         Update: {
           created_at?: string | null
@@ -260,6 +262,7 @@ export type Database = {
           id?: string
           photo_url?: string | null
           titre_projet?: string
+          categorie?: string | null
         }
         Relationships: [
           {

@@ -11,7 +11,7 @@ export interface InscriptionData {
   // Step 3 — Chef
   chef: {
     nom_prenom: string;
-    genre: 'homme' | 'femme' | 'non_precise' | ''; // obligatoire
+    genre: 'homme' | 'femme' | ''; // obligatoire
     filiere: string;
     niveau_etudes: 'L1' | 'L2' | 'L3' | 'M1' | 'M2' | '';
     telephone: string;
@@ -25,7 +25,7 @@ export interface InscriptionData {
   // Step 4 — Membres (toujours 3 blocs si equipe)
   membres: {
     nom_prenom: string;
-    genre: 'homme' | 'femme' | 'non_precise' | '';
+    genre: 'homme' | 'femme' | '';
     filiere: string;
     niveau_etudes: 'L1' | 'L2' | 'L3' | 'M1' | 'M2' | '';
     role_equipe: 'Dev' | 'Design' | 'Business' | 'Communication' | 'Autre' | '';
@@ -44,9 +44,6 @@ export interface InscriptionData {
   domaine_projet_autre: string; // si 'Autre' sélectionné
   problematique: string;
   solution: string;
-  technologies: string;
-  niveau_avancement: 'concept' | 'esquisse' | 'prototype' | '';
-  contraintes_techniques: string;
 
   // Step 6 — Profil
   niveau_technique: 'debutant' | 'intermediaire' | 'avance' | '';
@@ -86,9 +83,6 @@ export const defaultInscriptionData: InscriptionData = {
   domaine_projet_autre: '',
   problematique: '',
   solution: '',
-  technologies: '',
-  niveau_avancement: '',
-  contraintes_techniques: '',
   niveau_technique: '',
   motivation: '',
   esperances: '',

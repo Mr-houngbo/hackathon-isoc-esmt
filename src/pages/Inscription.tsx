@@ -72,6 +72,8 @@ const validateStep = (step: number, formData: InscriptionData) => {
         errors.etablissement = '🏫 Veuillez indiquer votre établissement (ex: "ESMT Dakar")';
       if (formData.chef.competences.includes('Autre') && !formData.chef.competence_autre.trim())
         errors.competence_autre = '💡 Veuillez décrire votre compétence spécifique';
+      if (formData.chef.competences.length === 0)
+        errors.competences = '🛠️ Veuillez sélectionner au moins une compétence principale';
       if (formData.chef.disponible_2_jours === null) 
         errors.disponible_2_jours = '📅 Veuillez confirmer votre disponibilité';
       if (formData.chef.disponible_2_jours === false) 
@@ -120,8 +122,8 @@ const validateStep = (step: number, formData: InscriptionData) => {
           errors.problematique = '❓ Veuillez décrire le problème que votre projet résout';
         if (!formData.solution.trim()) 
           errors.solution = '💡 Veuillez expliquer votre solution proposée';
-        if (wordCount(formData.solution) > 150) 
-          errors.solution = `📝 Trop long (${wordCount(formData.solution)}/150 mots). Soyez plus concis`;
+        if (wordCount(formData.solution) > 250) 
+          errors.solution = `📝 Trop long (${wordCount(formData.solution)}/250 mots). Soyez plus concis`;
       }
       break;
 

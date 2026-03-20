@@ -1,15 +1,26 @@
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import Layout from "@/components/layout/Layout";
-import { Image, Camera, Calendar, Trophy, Filter, Search } from "lucide-react";
+import { Image, Camera, Calendar, Trophy, Filter, Search, Tag, Clock, Users, Award } from "lucide-react";
 import { motion } from "framer-motion";
 import { useState } from "react";
 
+const CATEGORIES = [
+  { value: 'general', label: 'Général', icon: Image, color: '#6C757D' },
+  { value: 'annee_derniere', label: 'Année dernière', icon: Clock, color: '#FF6B35' },
+  { value: 'cette_annee', label: 'Cette année', icon: Calendar, color: '#1E3A5F' },
+  { value: 'equipes', label: 'Équipes', icon: Users, color: '#00873E' },
+  { value: 'mentors', label: 'Mentors', icon: Award, color: '#8B5CF6' },
+  { value: 'partenaires', label: 'Partenaires', icon: Tag, color: '#F59E0B' },
+  { value: 'ceremonie', label: 'Cérémonie', icon: Trophy, color: '#DC2626' },
+];
+
 const Galerie = () => {
   const [searchTerm, setSearchTerm] = useState<string>('');
+  const [selectedCategorie, setSelectedCategorie] = useState<string>('all');
 
   const { data: items, isLoading, error } = useQuery({
-    queryKey: ["galerie", searchTerm],
+    queryKey: ["galerie", searchTerm, selectedCategorie],
     queryFn: async () => {
       console.log("🔍 Récupération de la galerie...");
       
@@ -18,8 +29,12 @@ const Galerie = () => {
         .select("*, equipes(*)") // Jointure avec équipes pour obtenir le nom
         .order("created_at", { ascending: false });
       
-      // Pas de filtre par édition car le champ n'existe pas dans la BD
+      // Filtre par catégorie
+      if (selectedCategorie !== 'all') {
+        query = query.eq('categorie', selectedCategorie);
+      }
       
+      // Filtre par recherche
       if (searchTerm) {
         query = query.ilike('titre_projet', `%${searchTerm}%`);
       }
@@ -76,7 +91,7 @@ const Galerie = () => {
 
         {/* Filters */}
         <div className="container py-8">
-          <div className="flex justify-center mb-8">
+          <div className="flex flex-col lg:flex-row gap-6 items-center justify-center mb-8">
             {/* Search */}
             <div className="relative flex-1 max-w-md">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-[#6C757D]" size={20} />
@@ -88,6 +103,44 @@ const Galerie = () => {
                 className="w-full pl-12 pr-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FF6B35]/20 focus:border-[#FF6B35]/50 transition-all"
                 style={{ fontFamily: 'DM Sans, sans-serif' }}
               />
+            </div>
+
+            {/* Category Filters */}
+            <div className="flex flex-wrap gap-2 justify-center">
+              <button
+                onClick={() => setSelectedCategorie('all')}
+                className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all ${
+                  selectedCategorie === 'all'
+                    ? 'bg-gradient-to-r from-[#FF6B35] to-[#1E3A5F] text-white shadow-lg'
+                    : 'bg-white text-[#6C757D] border border-[#E9ECEF] hover:border-[#FF6B35]/30 hover:text-[#212529]'
+                }`}
+                style={{ fontFamily: 'DM Sans, sans-serif' }}
+              >
+                <Filter size={16} />
+                Toutes
+              </button>
+              
+              {CATEGORIES.map((categorie) => {
+                const Icon = categorie.icon;
+                return (
+                  <button
+                    key={categorie.value}
+                    onClick={() => setSelectedCategorie(categorie.value)}
+                    className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all ${
+                      selectedCategorie === categorie.value
+                        ? 'text-white shadow-lg'
+                        : 'text-[#6C757D] border border-[#E9ECEF] hover:border-[#FF6B35]/30 hover:text-[#212529]'
+                    }`}
+                    style={{
+                      backgroundColor: selectedCategorie === categorie.value ? categorie.color : 'white',
+                      fontFamily: 'DM Sans, sans-serif'
+                    }}
+                  >
+                    <Icon size={16} />
+                    {categorie.label}
+                  </button>
+                );
+              })}
             </div>
           </div>
         </div>
@@ -137,7 +190,12 @@ const Galerie = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}
             >
-              {items.map((item, index) => (
+              {items.map((item, index) => {
+                const categorie = CATEGORIES.find(c => c.value === item.categorie);
+                const Icon = categorie?.icon || Image;
+                const categorieColor = categorie?.color || '#6C757D';
+                
+                return (
                 <motion.div
                   key={item.id}
                   initial={{ opacity: 0, y: 30 }}
@@ -145,32 +203,36 @@ const Galerie = () => {
                   transition={{ duration: 0.6, delay: 0.1 * index }}
                   className="group"
                 >
-                  <div className="relative overflow-hidden rounded-2xl border border-[#E9ECEF] bg-white transition-all duration-300 hover:border-[#FF6B35]/50 hover:shadow-xl hover:shadow-[#FF6B35]/10">
+                  <div className="relative overflow-hidden rounded-2xl border border-[#E9ECEF] bg-white transition-all duration-500 hover:border-[#FF6B35]/30 hover:shadow-2xl hover:shadow-[#FF6B35]/10">
+                    {/* Category Badge */}
+                    <div className="absolute top-4 left-4 z-10">
+                      <div 
+                        className="flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold text-white shadow-lg"
+                        style={{ backgroundColor: categorieColor }}
+                      >
+                        <Icon size={12} />
+                        {categorie?.label || 'Général'}
+                      </div>
+                    </div>
+                    
                     {/* Image */}
-                    <div className="relative h-48 overflow-hidden">
+                    <div className="relative h-56 overflow-hidden">
                       <img 
                         src={item.photo_url} // ✅ Champ corrigé
                         alt={item.titre_projet}
-                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" 
+                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
                       />
                       
-                      {/* Overlay */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-white/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                      
-                      {/* Edition Badge - Supprimé car le champ n'existe pas */}
-                      {/* <div className="absolute top-4 right-4">
-                        <span className="px-3 py-1 rounded-full bg-[#1E3A5F]/90 text-white text-xs font-bold backdrop-blur-sm">
-                          {item.edition}
-                        </span>
-                      </div> */}
+                      {/* Gradient Overlay */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                     </div>
                     
                     {/* Content */}
-                    <div className="p-6">
+                    <div className="p-6 relative">
                       <div className="flex items-start justify-between mb-4">
-                        <div>
+                        <div className="flex-1">
                           <h3 
-                            className="font-display text-lg font-bold text-[#212529] mb-2 group-hover:text-[#FF6B35] transition-colors"
+                            className="font-display text-xl font-bold text-[#212529] mb-2 group-hover:text-[#FF6B35] transition-colors"
                             style={{ fontFamily: 'Sora, sans-serif' }}
                           >
                             {item.titre_projet}
@@ -180,7 +242,7 @@ const Galerie = () => {
                             <div className="flex items-center gap-2 mb-3">
                               <Trophy size={14} className="text-[#FF6B35]" />
                               <span 
-                                className="text-sm text-[#6C757D]"
+                                className="text-sm font-medium text-[#6C757D]"
                                 style={{ fontFamily: 'DM Sans, sans-serif' }}
                               >
                                 {item.equipes.nom_equipe}
@@ -188,47 +250,38 @@ const Galerie = () => {
                             </div>
                           )}
                         </div>
-                        
-                        {/* Position - Supprimé car le champ n'existe pas */}
-                        {/* {item.position && (
-                          <div className="text-right">
-                            <span className="text-xs text-[#1E3A5F] font-medium">
-                              {item.position === 1 ? '🥇 1er' : item.position === 2 ? '🥈 2ème' : item.position === 3 ? '🥉 3ème' : `Top ${item.position}`}
-                            </span>
-                          </div>
-                        )} */}
                       </div>
                       
                       {item.description && (
                         <p 
-                          className="text-sm text-[#6C757D] leading-relaxed mb-4"
+                          className="text-sm text-[#6C757D] leading-relaxed mb-4 line-clamp-2 group-hover:line-clamp-3 transition-all duration-300"
                           style={{ fontFamily: 'DM Sans, sans-serif' }}
                         >
                           {item.description}
                         </p>
                       )}
                       
-                      <div className="flex items-center gap-4 text-xs text-[#6C757D]">
-                        <div className="flex items-center gap-1">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-1 text-xs text-[#6C757D]">
                           <Calendar size={12} className="text-[#FF6B35]" />
-                          <span>{new Date(item.created_at).toLocaleDateString()}</span>
+                          <span>{new Date(item.created_at).toLocaleDateString('fr-FR')}</span>
                         </div>
                         
-                        {/* Technologies - Supprimé car le champ n'existe pas */}
-                        {/* {item.technologies && (
-                          <div className="flex items-center gap-1">
-                            <Camera size={12} className="text-[#1E3A5F]" />
-                            <span>{item.technologies}</span>
-                          </div>
-                        )} */}
+                        {/* View Button */}
+                        <button
+                          onClick={() => window.open(item.photo_url, '_blank')}
+                          className="flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-medium bg-gradient-to-r from-[#FF6B35] to-[#1E3A5F] text-white hover:from-[#FF6B35]/90 hover:to-[#1E3A5F]/90 transition-all opacity-0 group-hover:opacity-100"
+                          style={{ fontFamily: 'DM Sans, sans-serif' }}
+                        >
+                          <Image size={12} />
+                          Voir
+                        </button>
                       </div>
                     </div>
-                    
-                    {/* Hover Effect */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-white/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                   </div>
                 </motion.div>
-              ))}
+              );
+            })}
             </motion.div>
           )}
         </div>
