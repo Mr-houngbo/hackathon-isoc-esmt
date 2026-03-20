@@ -2,9 +2,30 @@ import { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import AdminLayout from "@/components/layout/AdminLayout";
+import ImageUpload from "@/components/ui/ImageUpload";
 import { toast } from "sonner";
 import { Plus, Trash2, Save, Search, Filter, Download, Building2, Award, Globe } from "lucide-react";
 import { motion } from "framer-motion";
+
+// Fonction pour valider et normaliser les URLs
+const normalizeUrl = (url: string) => {
+  if (!url) return '';
+  
+  // Supprimer les espaces et les caractères indésirables
+  let cleanUrl = url.trim();
+  
+  // Si l'URL ne commence pas par http:// ou https://, ajouter https://
+  if (!cleanUrl.match(/^https?:\/\//)) {
+    cleanUrl = `https://${cleanUrl}`;
+  }
+  
+  // Supprimer localhost ou domaines invalides
+  if (cleanUrl.includes('localhost') || cleanUrl.includes('127.0.0.1')) {
+    return '';
+  }
+  
+  return cleanUrl;
+};
 
 const GestionPartenaires = () => {
   const queryClient = useQueryClient();
@@ -53,7 +74,12 @@ const GestionPartenaires = () => {
 
   const addPartenaire = useMutation({
     mutationFn: async () => {
-      const { error } = await supabase.from("partenaires").insert({ ...form });
+      // Normaliser l'URL du site avant l'insertion
+      const normalizedData = {
+        ...form,
+        site_url: normalizeUrl(form.site_url)
+      };
+      const { error } = await supabase.from("partenaires").insert(normalizedData);
       if (error) throw error;
     },
     onSuccess: () => { 
@@ -333,25 +359,30 @@ const GestionPartenaires = () => {
                 
                 <div className="space-y-4">
                   <div>
-                    <label className="block text-sm font-medium text-[#6C757D] mb-2" style={{ fontFamily: 'DM Sans, sans-serif' }}>URL du logo</label>
-                    <input 
-                      placeholder="URL du logo" 
-                      value={form.logo_url} 
-                      onChange={(e) => setForm({ ...form, logo_url: e.target.value })}
-                      className="w-full px-4 py-2 rounded-xl border border-[#E9ECEF] bg-[bg-white] text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FF6B35] focus:border-transparent transition-all duration-300"
-                      style={{ fontFamily: 'DM Sans, sans-serif' }}
+                    <label className="block text-sm font-medium text-[#6C757D] mb-2" style={{ fontFamily: 'DM Sans, sans-serif' }}>Logo du partenaire</label>
+                    <ImageUpload
+                      value={form.logo_url}
+                      onChange={(url) => setForm({ ...form, logo_url: url })}
+                      placeholder="Uploader le logo du partenaire"
+                      bucket="partenaires"
+                      folder="logos"
                     />
                   </div>
                   
                   <div>
                     <label className="block text-sm font-medium text-[#6C757D] mb-2" style={{ fontFamily: 'DM Sans, sans-serif' }}>URL du site web</label>
                     <input 
-                      placeholder="URL du site web" 
+                      placeholder="ex: www.exemple.com" 
                       value={form.site_url} 
                       onChange={(e) => setForm({ ...form, site_url: e.target.value })}
                       className="w-full px-4 py-2 rounded-xl border border-[#E9ECEF] bg-[bg-white] text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FF6B35] focus:border-transparent transition-all duration-300"
                       style={{ fontFamily: 'DM Sans, sans-serif' }}
                     />
+                    {form.site_url && (
+                      <p className="text-xs text-[#6C757D] mt-1" style={{ fontFamily: 'DM Sans, sans-serif' }}>
+                        {normalizeUrl(form.site_url) ? `✅ Deviendra: ${normalizeUrl(form.site_url)}` : '❌ URL invalide (localhost non autorisé)'}
+                      </p>
+                    )}
                   </div>
                 </div>
               </div>
@@ -500,18 +531,21 @@ const GestionPartenaires = () => {
                   
                   <div className="space-y-2">
                     <div className="flex gap-2 pt-2">
-                      {partenaire.site_url && (
-                        <a 
-                          href={partenaire.site_url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-xs text-[#1E3A5F] hover:text-[#FF6B35] transition-colors flex items-center gap-1"
-                          style={{ fontFamily: 'DM Sans, sans-serif' }}
-                        >
-                          <Globe size={12} />
-                          Site web
-                        </a>
-                      )}
+                      {(() => {
+                        const normalizedUrl = normalizeUrl(partenaire.site_url || '');
+                        return normalizedUrl ? (
+                          <a 
+                            href={normalizedUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-xs text-[#1E3A5F] hover:text-[#FF6B35] transition-colors flex items-center gap-1"
+                            style={{ fontFamily: 'DM Sans, sans-serif' }}
+                          >
+                            <Globe size={12} />
+                            Site web
+                          </a>
+                        ) : null;
+                      })()}
                     </div>
                   </div>
                 </div>

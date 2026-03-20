@@ -2,31 +2,38 @@ import { useState, useEffect, useRef } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import AdminLayout from "@/components/layout/AdminLayout";
+import ImageUpload from "@/components/ui/ImageUpload";
 import { toast } from "sonner";
-import { Plus, Trash2, Save, Search, Filter, Download, Image, Calendar, Eye, Tag, Clock, Users, Award } from "lucide-react";
+import { Plus, Trash2, Save, Search, Filter, Download, Image, Calendar, Eye, Tag, Clock, Users, Award, Star, Building, Trophy } from "lucide-react";
 import { motion } from "framer-motion";
 
-const CATEGORIES = [
-  { value: 'general', label: 'Général', icon: Image, color: '#6C757D' },
-  { value: 'annee_derniere', label: 'Année dernière', icon: Clock, color: '#FF6B35' },
-  { value: 'cette_annee', label: 'Cette année', icon: Calendar, color: '#1E3A5F' },
-  { value: 'equipes', label: 'Équipes', icon: Users, color: '#00873E' },
+const TYPE_CATEGORIES = [
+  { value: 'team_isoc_esmt', label: 'TEAM ISOC ESMT', icon: Star, color: '#FF6B35' },
   { value: 'mentors', label: 'Mentors', icon: Award, color: '#8B5CF6' },
-  { value: 'partenaires', label: 'Partenaires', icon: Tag, color: '#F59E0B' },
-  { value: 'ceremonie', label: 'Cérémonie', icon: Award, color: '#DC2626' },
+  { value: 'jury', label: 'Jury', icon: Trophy, color: '#DC2626' },
+  { value: 'equipes', label: 'Équipes', icon: Users, color: '#00873E' },
+  { value: 'partenaires', label: 'Partenaires', icon: Building, color: '#F59E0B' },
+  { value: 'general', label: 'Général', icon: Image, color: '#6C757D' },
+];
+
+const ANNEES = [
+  { value: 2025, label: '2025' },
+  { value: 2026, label: '2026' },
+  { value: 2027, label: '2027' },
+  { value: 2028, label: '2028' },
 ];
 
 const GestionGalerie = () => {
   const queryClient = useQueryClient();
   const [showAdd, setShowAdd] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
+  const [selectedAnnee, setSelectedAnnee] = useState<number>(2026);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const [form, setForm] = useState({ 
-    titre_projet: '', // ✅ Champ corrigé
-    photo_url: '', // ✅ Champ corrigé
-    description: '',
-    equipe_id: null, // ✅ UUID null au lieu de chaîne vide
-    categorie: 'general' // Catégorie par défaut
+    titre_projet: '',     photo_url: '',     description: '',
+    equipe_id: null,     categorie: 'general', // Ancien champ (à supprimer après migration)
+    annee: 2026, // Nouveau champ année
+    type_categorie: 'general' // Nouveau champ type_categorie
   });
 
   // Fermer le dropdown quand on clique ailleurs
@@ -43,9 +50,19 @@ const GestionGalerie = () => {
   }, []);
 
   const { data: galerie, isLoading, error, refetch } = useQuery({
-    queryKey: ["admin-galerie"],
+    queryKey: ["admin-galerie", selectedAnnee],
     queryFn: async () => {
-      const { data, error } = await supabase.from("galerie").select("*").order("created_at", { ascending: false });
+      let query = supabase.from("galerie").select("*");
+      
+      // Filtre par année si sélectionnée
+      if (selectedAnnee) {
+        query = query.eq('annee', selectedAnnee);
+      }
+      
+      // Ordre par date de création
+      query = query.order("created_at", { ascending: false });
+      
+      const { data, error } = await query;
       if (error) throw error;
       return data;
     },
@@ -58,16 +75,15 @@ const GestionGalerie = () => {
     return matchesSearch;
   }) || [];
 
-  // Statistiques par catégorie
+  // Statistiques par type de catégorie
   const stats = {
     total: galerie?.length || 0,
-    general: galerie?.filter(item => item.categorie === 'general').length || 0,
-    annee_derniere: galerie?.filter(item => item.categorie === 'annee_derniere').length || 0,
-    cette_annee: galerie?.filter(item => item.categorie === 'cette_annee').length || 0,
-    equipes: galerie?.filter(item => item.categorie === 'equipes').length || 0,
-    mentors: galerie?.filter(item => item.categorie === 'mentors').length || 0,
-    partenaires: galerie?.filter(item => item.categorie === 'partenaires').length || 0,
-    ceremonie: galerie?.filter(item => item.categorie === 'ceremonie').length || 0,
+    team_isoc_esmt: galerie?.filter(item => item.type_categorie === 'team_isoc_esmt').length || 0,
+    mentors: galerie?.filter(item => item.type_categorie === 'mentors').length || 0,
+    jury: galerie?.filter(item => item.type_categorie === 'jury').length || 0,
+    equipes: galerie?.filter(item => item.type_categorie === 'equipes').length || 0,
+    partenaires: galerie?.filter(item => item.type_categorie === 'partenaires').length || 0,
+    general: galerie?.filter(item => item.type_categorie === 'general').length || 0,
   };
 
   const addGalerie = useMutation({
@@ -79,7 +95,7 @@ const GestionGalerie = () => {
       queryClient.invalidateQueries({ queryKey: ["admin-galerie"] }); 
       queryClient.invalidateQueries({ queryKey: ["galerie"] }); // Synchronisation page publique
       setShowAdd(false); 
-      setForm({ titre_projet: '', photo_url: '', description: '', equipe_id: null, categorie: 'general' }); // ✅ UUID null // ✅ Champs corrigés 
+      setForm({ titre_projet: '', photo_url: '', description: '', equipe_id: null, categorie: 'general', annee: 2026, type_categorie: 'general' }); // ✅ UUID null // ✅ Champs corrigés // ✅ Nouveaux champs 
       toast.success("Élément ajouté à la galerie avec succès"); 
     },
     onError: (error) => {
@@ -87,13 +103,13 @@ const GestionGalerie = () => {
     },
   });
 
-  const updateCategorie = useMutation({
-    mutationFn: async ({ id, categorie }: { id: string; categorie: string }) => {
-      const { error } = await supabase.from("galerie").update({ categorie }).eq("id", id);
+  const updateTypeCategorie = useMutation({
+    mutationFn: async ({ id, type_categorie }: { id: string; type_categorie: string }) => {
+      const { error } = await supabase.from("galerie").update({ type_categorie }).eq("id", id);
       if (error) throw error;
     },
     onSuccess: () => { 
-      queryClient.invalidateQueries({ queryKey: ["admin-galerie"] }); 
+      queryClient.invalidateQueries({ queryKey: ["admin-galerie", selectedAnnee] }); 
       queryClient.invalidateQueries({ queryKey: ["galerie"] }); // Synchronisation page publique
       toast.success("Catégorie mise à jour avec succès"); 
     },
@@ -284,7 +300,7 @@ const GestionGalerie = () => {
                           className="text-2xl font-bold text-[#212529]"
                           style={{ fontFamily: 'Sora, sans-serif', fontWeight: 700 }}
                         >
-                          {stats.equipes}
+                          {stats.team_isoc_esmt}
                         </p>
                         <p 
                           className="text-xs text-[#6C757D] mt-1"
@@ -317,7 +333,7 @@ const GestionGalerie = () => {
                           className="text-2xl font-bold text-[#212529]"
                           style={{ fontFamily: 'Sora, sans-serif', fontWeight: 700 }}
                         >
-                          {stats.equipes}
+                          {stats.team_isoc_esmt}
                         </p>
                         <p 
                           className="text-xs text-[#6C757D] mt-1"
@@ -356,37 +372,48 @@ const GestionGalerie = () => {
                     <label className="block text-sm font-medium text-[#6C757D] mb-2" style={{ fontFamily: 'DM Sans, sans-serif' }}>Titre du projet</label>
                     <input 
                       placeholder="Titre du projet" 
-                      value={form.titre_projet} // ✅ Champ corrigé
-                      onChange={(e) => setForm({ ...form, titre_projet: e.target.value })} // ✅ Champ corrigé
-                      className="w-full px-4 py-2 rounded-xl border border-[#E9ECEF] bg-[bg-white] text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FF6B35] focus:border-transparent transition-all duration-300"
+                      value={form.titre_projet}                       onChange={(e) => setForm({ ...form, titre_projet: e.target.value })}                       className="w-full px-4 py-2 rounded-xl border border-[#E9ECEF] bg-[bg-white] text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FF6B35] focus:border-transparent transition-all duration-300"
                       style={{ fontFamily: 'DM Sans, sans-serif' }}
                     />
                   </div>
                   
-                  // Champ 'type' supprimé car il n'existe pas dans la BD
-                </div>
+                                  </div>
                 
                 <div className="space-y-4">
                   <div>
-                    <label className="block text-sm font-medium text-[#6C757D] mb-2" style={{ fontFamily: 'DM Sans, sans-serif' }}>URL du média</label>
-                    <input 
-                      placeholder="URL de l'image ou vidéo" 
-                      value={form.photo_url} // ✅ Champ corrigé
-                      onChange={(e) => setForm({ ...form, photo_url: e.target.value })} // ✅ Champ corrigé
-                      className="w-full px-4 py-2 rounded-xl border border-[#E9ECEF] bg-[bg-white] text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FF6B35] focus:border-transparent transition-all duration-300"
-                      style={{ fontFamily: 'DM Sans, sans-serif' }}
+                    <label className="block text-sm font-medium text-[#6C757D] mb-2" style={{ fontFamily: 'DM Sans, sans-serif' }}>Média (image)</label>
+                    <ImageUpload
+                      value={form.photo_url}
+                      onChange={(url) => setForm({ ...form, photo_url: url })}
+                      placeholder="Uploader une image pour la galerie"
+                      bucket="galerie"
+                      folder="medias"
                     />
                   </div>
                   
                   <div>
-                    <label className="block text-sm font-medium text-[#6C757D] mb-2" style={{ fontFamily: 'DM Sans, sans-serif' }}>Catégorie</label>
+                    <label className="block text-sm font-medium text-[#6C757D] mb-2" style={{ fontFamily: 'DM Sans, sans-serif' }}>Année</label>
                     <select 
-                      value={form.categorie}
-                      onChange={(e) => setForm({ ...form, categorie: e.target.value })}
+                      value={form.annee}
+                      onChange={(e) => setForm({ ...form, annee: parseInt(e.target.value) })}
                       className="w-full px-4 py-2 rounded-xl border border-[#E9ECEF] bg-[white] text-[#212529] focus:outline-none focus:ring-2 focus:ring-[#FF6B35] focus:border-transparent transition-all duration-300"
                       style={{ fontFamily: 'DM Sans, sans-serif' }}
                     >
-                      {CATEGORIES.map((cat) => (
+                      {ANNEES.map((annee) => (
+                        <option key={annee.value} value={annee.value}>{annee.label}</option>
+                      ))}
+                    </select>
+                  </div>
+                  
+                  <div>
+                    <label className="block text-sm font-medium text-[#6C757D] mb-2" style={{ fontFamily: 'DM Sans, sans-serif' }}>Type de catégorie</label>
+                    <select 
+                      value={form.type_categorie}
+                      onChange={(e) => setForm({ ...form, type_categorie: e.target.value })}
+                      className="w-full px-4 py-2 rounded-xl border border-[#E9ECEF] bg-[white] text-[#212529] focus:outline-none focus:ring-2 focus:ring-[#FF6B35] focus:border-transparent transition-all duration-300"
+                      style={{ fontFamily: 'DM Sans, sans-serif' }}
+                    >
+                      {TYPE_CATEGORIES.map((cat) => (
                         <option key={cat.value} value={cat.value}>{cat.label}</option>
                       ))}
                     </select>
@@ -445,7 +472,8 @@ const GestionGalerie = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
           >
-            <div className="flex justify-center">
+            <div className="flex flex-col lg:flex-row gap-6 items-center justify-center">
+              {/* Search */}
               <div className="flex items-center gap-3 flex-1 max-w-md">
                 <Search size={20} className="text-[#6C757D]" />
                 <input
@@ -456,6 +484,38 @@ const GestionGalerie = () => {
                   className="flex-1 px-4 py-2 rounded-xl border border-[#E9ECEF] bg-[white] text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FF6B35] focus:border-transparent transition-all duration-300"
                   style={{ fontFamily: 'DM Sans, sans-serif' }}
                 />
+              </div>
+
+              {/* Year Filters */}
+              <div className="flex flex-wrap gap-2 justify-center">
+                <button
+                  onClick={() => setSelectedAnnee(0)}
+                  className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all ${
+                    selectedAnnee === 0
+                      ? 'bg-gradient-to-r from-[#FF6B35] to-[#1E3A5F] text-white shadow-lg'
+                      : 'bg-white text-[#6C757D] border border-[#E9ECEF] hover:border-[#FF6B35]/30 hover:text-[#212529]'
+                  }`}
+                  style={{ fontFamily: 'DM Sans, sans-serif' }}
+                >
+                  <Calendar size={16} />
+                  Toutes
+                </button>
+                
+                {ANNEES.map((annee) => (
+                  <button
+                    key={annee.value}
+                    onClick={() => setSelectedAnnee(annee.value)}
+                    className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all ${
+                      selectedAnnee === annee.value
+                        ? 'bg-gradient-to-r from-[#FF6B35] to-[#1E3A5F] text-white shadow-lg'
+                        : 'bg-white text-[#6C757D] border border-[#E9ECEF] hover:border-[#FF6B35]/30 hover:text-[#212529]'
+                    }`}
+                    style={{ fontFamily: 'DM Sans, sans-serif' }}
+                  >
+                    <Calendar size={16} />
+                    {annee.label}
+                  </button>
+                ))}
               </div>
             </div>
           </motion.div>
@@ -476,11 +536,8 @@ const GestionGalerie = () => {
                 
                 <div className="relative z-10">
                   <div className="aspect-video mb-4 rounded-lg overflow-hidden bg-[bg-white]">
-                    {item.photo_url ? ( // ✅ Champ corrigé
-                      <img 
-                        src={item.photo_url} // ✅ Champ corrigé
-                        alt={item.titre_projet} // ✅ Champ corrigé
-                        className="w-full h-full object-cover"
+                    {item.photo_url ? (                       <img 
+                        src={item.photo_url}                         alt={item.titre_projet}                         className="w-full h-full object-cover"
                       />
                     ) : (
                       <div className="w-full h-full flex items-center justify-center">
@@ -495,21 +552,19 @@ const GestionGalerie = () => {
                         className="font-bold text-[#212529] text-sm"
                         style={{ fontFamily: 'Sora, sans-serif' }}
                       >
-                        {item.titre_projet} // ✅ Champ corrigé
-                      </h3>
+                        {item.titre_projet}                       </h3>
                       <span className="inline-block px-2 py-1 rounded-full text-xs font-bold" 
                             style={{ 
-                              backgroundColor: CATEGORIES.find(c => c.value === item.categorie)?.color + '20' || '#6C757D20',
-                              color: CATEGORIES.find(c => c.value === item.categorie)?.color || '#6C757D'
+                              backgroundColor: TYPE_CATEGORIES.find(c => c.value === item.type_categorie)?.color + '20' || '#6C757D20',
+                              color: TYPE_CATEGORIES.find(c => c.value === item.type_categorie)?.color || '#6C757D'
                             }}>
-                        {CATEGORIES.find(c => c.value === item.categorie)?.label || 'Général'}
+                        {TYPE_CATEGORIES.find(c => c.value === item.type_categorie)?.label || 'Général'}
                       </span>
                     </div>
                     
                     <div className="flex gap-2">
                       <button
-                        onClick={() => window.open(item.photo_url, '_blank')} // ✅ Champ corrigé
-                        className="p-2 rounded-lg bg-[#1E3A5F] text-white hover:bg-[#006450] transition-colors"
+                        onClick={() => window.open(item.photo_url, '_blank')}                         className="p-2 rounded-lg bg-[#1E3A5F] text-white hover:bg-[#006450] transition-colors"
                         style={{ fontFamily: 'DM Sans, sans-serif' }}
                         title="Voir en grand"
                       >
@@ -535,7 +590,7 @@ const GestionGalerie = () => {
                         style={{ fontFamily: 'DM Sans, sans-serif' }}
                       >
                         <Tag size={12} />
-                        {CATEGORIES.find(c => c.value === item.categorie)?.label || 'Classer'}
+                        {TYPE_CATEGORIES.find(c => c.value === item.type_categorie)?.label || 'Classer'}
                         <svg className="w-3 h-3 ml-1" fill="currentColor" viewBox="0 0 20 20">
                           <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
                         </svg>
@@ -545,14 +600,14 @@ const GestionGalerie = () => {
                       {openDropdown === item.id && (
                         <div className="absolute bottom-full left-0 mb-1 w-48 bg-white rounded-lg shadow-xl border border-[#E9ECEF] z-[9999] overflow-hidden">
                           <div className="py-1 max-h-64 overflow-y-auto">
-                            {CATEGORIES.map((categorie) => {
-                              const isSelected = item.categorie === categorie.value;
+                            {TYPE_CATEGORIES.map((categorie) => {
+                              const isSelected = item.type_categorie === categorie.value;
                               const Icon = categorie.icon;
                               return (
                                 <button
                                   key={categorie.value}
                                   onClick={() => {
-                                    updateCategorie.mutate({ id: item.id, categorie: categorie.value });
+                                    updateTypeCategorie.mutate({ id: item.id, type_categorie: categorie.value });
                                     setOpenDropdown(null);
                                   }}
                                   className={`w-full flex items-center gap-3 px-3 py-2 text-xs font-medium transition-colors ${

@@ -244,7 +244,9 @@ export type Database = {
           id: string
           photo_url: string | null
           titre_projet: string
-          categorie: string | null
+          categorie: string | null // Ancien champ (à supprimer après migration)
+          annee: number | null
+          type_categorie: string | null
         }
         Insert: {
           created_at?: string | null
@@ -253,7 +255,9 @@ export type Database = {
           id?: string
           photo_url?: string | null
           titre_projet: string
-          categorie?: string | null
+          categorie?: string | null // Ancien champ (à supprimer après migration)
+          annee?: number | null
+          type_categorie?: string | null
         }
         Update: {
           created_at?: string | null
@@ -262,7 +266,9 @@ export type Database = {
           id?: string
           photo_url?: string | null
           titre_projet?: string
-          categorie?: string | null
+          categorie?: string | null // Ancien champ (à supprimer après migration)
+          annee?: number | null
+          type_categorie?: string | null
         }
         Relationships: [
           {

@@ -1,26 +1,33 @@
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import Layout from "@/components/layout/Layout";
-import { Image, Camera, Calendar, Trophy, Filter, Search, Tag, Clock, Users, Award } from "lucide-react";
+import { Image, Camera, Calendar, Trophy, Filter, Search, Tag, Clock, Users, Award, Users2, Star, Building } from "lucide-react";
 import { motion } from "framer-motion";
 import { useState } from "react";
 
-const CATEGORIES = [
-  { value: 'general', label: 'Général', icon: Image, color: '#6C757D' },
-  { value: 'annee_derniere', label: 'Année dernière', icon: Clock, color: '#FF6B35' },
-  { value: 'cette_annee', label: 'Cette année', icon: Calendar, color: '#1E3A5F' },
-  { value: 'equipes', label: 'Équipes', icon: Users, color: '#00873E' },
+const TYPE_CATEGORIES = [
+  { value: 'team_isoc_esmt', label: 'TEAM ISOC ESMT', icon: Star, color: '#FF6B35' },
   { value: 'mentors', label: 'Mentors', icon: Award, color: '#8B5CF6' },
-  { value: 'partenaires', label: 'Partenaires', icon: Tag, color: '#F59E0B' },
-  { value: 'ceremonie', label: 'Cérémonie', icon: Trophy, color: '#DC2626' },
+  { value: 'jury', label: 'Jury', icon: Trophy, color: '#DC2626' },
+  { value: 'equipes', label: 'Équipes', icon: Users, color: '#00873E' },
+  { value: 'partenaires', label: 'Partenaires', icon: Building, color: '#F59E0B' },
+  { value: 'general', label: 'Général', icon: Image, color: '#6C757D' },
+];
+
+const ANNEES = [
+  { value: 2025, label: '2025' },
+  { value: 2026, label: '2026' },
+  { value: 2027, label: '2027' },
+  { value: 2028, label: '2028' },
 ];
 
 const Galerie = () => {
   const [searchTerm, setSearchTerm] = useState<string>('');
-  const [selectedCategorie, setSelectedCategorie] = useState<string>('all');
+  const [selectedAnnee, setSelectedAnnee] = useState<number>(2026);
+  const [selectedTypeCategorie, setSelectedTypeCategorie] = useState<string>('all');
 
   const { data: items, isLoading, error } = useQuery({
-    queryKey: ["galerie", searchTerm, selectedCategorie],
+    queryKey: ["galerie", searchTerm, selectedAnnee, selectedTypeCategorie],
     queryFn: async () => {
       console.log("🔍 Récupération de la galerie...");
       
@@ -29,9 +36,12 @@ const Galerie = () => {
         .select("*, equipes(*)") // Jointure avec équipes pour obtenir le nom
         .order("created_at", { ascending: false });
       
-      // Filtre par catégorie
-      if (selectedCategorie !== 'all') {
-        query = query.eq('categorie', selectedCategorie);
+      // Filtre par année
+      query = query.eq('annee', selectedAnnee);
+      
+      // Filtre par type de catégorie
+      if (selectedTypeCategorie !== 'all') {
+        query = query.eq('type_categorie', selectedTypeCategorie);
       }
       
       // Filtre par recherche
@@ -108,9 +118,9 @@ const Galerie = () => {
             {/* Category Filters */}
             <div className="flex flex-wrap gap-2 justify-center">
               <button
-                onClick={() => setSelectedCategorie('all')}
+                onClick={() => setSelectedTypeCategorie('all')}
                 className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all ${
-                  selectedCategorie === 'all'
+                  selectedTypeCategorie === 'all'
                     ? 'bg-gradient-to-r from-[#FF6B35] to-[#1E3A5F] text-white shadow-lg'
                     : 'bg-white text-[#6C757D] border border-[#E9ECEF] hover:border-[#FF6B35]/30 hover:text-[#212529]'
                 }`}
@@ -120,19 +130,51 @@ const Galerie = () => {
                 Toutes
               </button>
               
-              {CATEGORIES.map((categorie) => {
+              {ANNEES.map((annee) => (
+                <button
+                  key={annee.value}
+                  onClick={() => setSelectedAnnee(annee.value)}
+                  className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all ${
+                    selectedAnnee === annee.value
+                      ? 'bg-gradient-to-r from-[#FF6B35] to-[#1E3A5F] text-white shadow-lg'
+                      : 'bg-white text-[#6C757D] border border-[#E9ECEF] hover:border-[#FF6B35]/30 hover:text-[#212529]'
+                  }`}
+                  style={{ fontFamily: 'DM Sans, sans-serif' }}
+                >
+                  <Calendar size={16} />
+                  {annee.label}
+                </button>
+              ))}
+            </div>
+            
+            {/* Type Category Filters */}
+            <div className="flex flex-wrap gap-2 justify-center mt-4">
+              <button
+                onClick={() => setSelectedTypeCategorie('all')}
+                className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all ${
+                  selectedTypeCategorie === 'all'
+                    ? 'bg-gradient-to-r from-[#FF6B35] to-[#1E3A5F] text-white shadow-lg'
+                    : 'bg-white text-[#6C757D] border border-[#E9ECEF] hover:border-[#FF6B35]/30 hover:text-[#212529]'
+                }`}
+                style={{ fontFamily: 'DM Sans, sans-serif' }}
+              >
+                <Filter size={16} />
+                Tous types
+              </button>
+              
+              {TYPE_CATEGORIES.map((categorie) => {
                 const Icon = categorie.icon;
                 return (
                   <button
                     key={categorie.value}
-                    onClick={() => setSelectedCategorie(categorie.value)}
+                    onClick={() => setSelectedTypeCategorie(categorie.value)}
                     className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all ${
-                      selectedCategorie === categorie.value
+                      selectedTypeCategorie === categorie.value
                         ? 'text-white shadow-lg'
                         : 'text-[#6C757D] border border-[#E9ECEF] hover:border-[#FF6B35]/30 hover:text-[#212529]'
                     }`}
                     style={{
-                      backgroundColor: selectedCategorie === categorie.value ? categorie.color : 'white',
+                      backgroundColor: selectedTypeCategorie === categorie.value ? categorie.color : 'white',
                       fontFamily: 'DM Sans, sans-serif'
                     }}
                   >
@@ -191,7 +233,7 @@ const Galerie = () => {
               transition={{ duration: 0.8, delay: 0.4 }}
             >
               {items.map((item, index) => {
-                const categorie = CATEGORIES.find(c => c.value === item.categorie);
+                const categorie = TYPE_CATEGORIES.find(c => c.value === item.type_categorie);
                 const Icon = categorie?.icon || Image;
                 const categorieColor = categorie?.color || '#6C757D';
                 

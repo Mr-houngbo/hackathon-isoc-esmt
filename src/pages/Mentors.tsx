@@ -83,7 +83,7 @@ const Mentors = () => {
                 <div className="w-12 h-12 rounded-full border-4 border-[#1E3A5F] border-t-transparent animate-spin"></div>
               </div>
             ) : mentorsList.length > 0 ? (
-              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                 {mentorsList.map((mentor, index) => (
                   <motion.div
                     key={mentor.id}
@@ -94,24 +94,24 @@ const Mentors = () => {
                   >
                     <div className="bg-white rounded-2xl border border-[#E9ECEF] shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden">
                       {/* Photo */}
-                      <div className="relative w-full pt-[100%] bg-gradient-to-br from-[#FF6B35]/10 to-[#1E3A5F]/10">
+                      <div className="relative w-full pt-[85%] bg-gradient-to-br from-[#FF6B35]/10 to-[#1E3A5F]/10">
                         <div className="absolute inset-0 flex items-center justify-center overflow-hidden rounded-t-2xl">
                           {mentor.photo_url ? (
                             <img 
                               src={mentor.photo_url} 
                               alt={mentor.nom}
-                              className="w-full h-full object-cover object-top"
+                              className="w-full h-full object-cover object-center"
                             />
                           ) : (
-                            <div className="w-20 h-20 rounded-full bg-gradient-to-r from-[#FF6B35] to-[#1E3A5F] flex items-center justify-center">
-                              <User size={40} className="text-white" />
+                            <div className="w-16 h-16 rounded-full bg-gradient-to-r from-[#FF6B35] to-[#1E3A5F] flex items-center justify-center">
+                              <User size={32} className="text-white" />
                             </div>
                           )}
                         </div>
                       </div>
                       
                       {/* Info */}
-                      <div className="p-6">
+                      <div className="p-5">
                         <h3 
                           className="font-display text-lg font-bold text-[#212529] mb-2 group-hover:text-[#FF6B35] transition-colors"
                           style={{ fontFamily: 'Sora, sans-serif' }}
@@ -142,10 +142,10 @@ const Mentors = () => {
                         )}
                         
                         {/* Footer */}
-                        <div className="px-6 py-4 border-t border-[#E9ECEF] bg-[#F8F9FA]">
+                        <div className="px-5 py-3 border-t border-[#E9ECEF] bg-[#F8F9FA]">
                           <div className="text-center">
                             <p 
-                              className="text-sm text-[#6C757D]"
+                              className="text-xs text-[#6C757D]"
                               style={{ fontFamily: 'DM Sans, sans-serif' }}
                             >
                               Mentor
@@ -182,7 +182,7 @@ const Mentors = () => {
                 <div className="w-12 h-12 rounded-full border-4 border-[#1E3A5F] border-t-transparent animate-spin"></div>
               </div>
             ) : juryList.length > 0 ? (
-              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                 {juryList.map((jury, index) => (
                   <motion.div
                     key={jury.id}
@@ -193,24 +193,24 @@ const Mentors = () => {
                   >
                     <div className="bg-white rounded-2xl border border-[#E9ECEF] shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden">
                       {/* Photo */}
-                      <div className="relative w-full pt-[100%] bg-gradient-to-br from-[#1E3A5F]/10 to-[#FF6B35]/10">
+                      <div className="relative w-full pt-[85%] bg-gradient-to-br from-[#1E3A5F]/10 to-[#FF6B35]/10">
                         <div className="absolute inset-0 flex items-center justify-center overflow-hidden rounded-t-2xl">
                           {jury.photo_url ? (
                             <img 
                               src={jury.photo_url} 
                               alt={jury.nom}
-                              className="w-full h-full object-cover object-top"
+                              className="w-full h-full object-cover object-center"
                             />
                           ) : (
-                            <div className="w-20 h-20 rounded-full bg-gradient-to-r from-[#1E3A5F] to-[#FF6B35] flex items-center justify-center">
-                              <User size={40} className="text-white" />
+                            <div className="w-16 h-16 rounded-full bg-gradient-to-r from-[#1E3A5F] to-[#FF6B35] flex items-center justify-center">
+                              <User size={32} className="text-white" />
                             </div>
                           )}
                         </div>
                       </div>
                       
                       {/* Info */}
-                      <div className="p-6">
+                      <div className="p-5">
                         <h3 
                           className="font-display text-lg font-bold text-[#212529] mb-2 group-hover:text-[#1E3A5F] transition-colors"
                           style={{ fontFamily: 'Sora, sans-serif' }}
@@ -241,10 +241,10 @@ const Mentors = () => {
                         )}
                         
                         {/* Footer */}
-                        <div className="px-6 py-4 border-t border-[#E9ECEF] bg-[#F8F9FA]">
+                        <div className="px-5 py-3 border-t border-[#E9ECEF] bg-[#F8F9FA]">
                           <div className="text-center">
                             <p 
-                              className="text-sm text-[#6C757D]"
+                              className="text-xs text-[#6C757D]"
                               style={{ fontFamily: 'DM Sans, sans-serif' }}
                             >
                               Jury

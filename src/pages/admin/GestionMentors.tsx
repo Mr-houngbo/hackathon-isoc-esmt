@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import AdminLayout from "@/components/layout/AdminLayout";
+import ImageUpload from "@/components/ui/ImageUpload";
 import { toast } from "sonner";
 import { Plus, Trash2, Save, Search, Filter, Download, Users, UserCheck, Award } from "lucide-react";
 import { motion } from "framer-motion";
@@ -322,13 +323,13 @@ const GestionMentors = () => {
               </div>
               
               <div className="mt-6">
-                <label className="block text-sm font-medium text-[#6C757D] mb-2" style={{ fontFamily: 'DM Sans, sans-serif' }}>URL Photo</label>
-                <input 
-                  placeholder="URL de la photo" 
-                  value={form.photo_url} 
-                  onChange={(e) => setForm({ ...form, photo_url: e.target.value })}
-                  className="w-full px-4 py-2 rounded-xl border border-[#E9ECEF] bg-[bg-white] text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FF6B35] focus:border-transparent transition-all duration-300"
-                  style={{ fontFamily: 'DM Sans, sans-serif' }}
+                <label className="block text-sm font-medium text-[#6C757D] mb-2" style={{ fontFamily: 'DM Sans, sans-serif' }}>Photo du mentor</label>
+                <ImageUpload
+                  value={form.photo_url}
+                  onChange={(url) => setForm({ ...form, photo_url: url })}
+                  placeholder="Uploader la photo du mentor"
+                  bucket="mentors"
+                  folder="photos"
                 />
               </div>
               

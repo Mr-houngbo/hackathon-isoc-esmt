@@ -4,6 +4,26 @@ import Layout from "@/components/layout/Layout";
 import { ExternalLink, Globe, Building, Star, Crown, Award } from "lucide-react";
 import { motion } from "framer-motion";
 
+// Fonction pour valider et normaliser les URLs
+const normalizeUrl = (url: string) => {
+  if (!url) return '';
+  
+  // Supprimer les espaces et les caractères indésirables
+  let cleanUrl = url.trim();
+  
+  // Si l'URL ne commence pas par http:// ou https://, ajouter https://
+  if (!cleanUrl.match(/^https?:\/\//)) {
+    cleanUrl = `https://${cleanUrl}`;
+  }
+  
+  // Supprimer localhost ou domaines invalides
+  if (cleanUrl.includes('localhost') || cleanUrl.includes('127.0.0.1')) {
+    return '';
+  }
+  
+  return cleanUrl;
+};
+
 const tierGradients: Record<string, string> = {
   or: 'from-[#FFD700] to-[#FFA500]',
   argent: 'from-[#C0C0C0] to-[#808080]',
@@ -196,20 +216,23 @@ const Partenaires = () => {
                                 {partenaire.nom}
                               </h3>
                               
-                              {partenaire.site_url && (
-                                <div className="text-center">
-                                  <a 
-                                    href={partenaire.site_url}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className={`inline-flex items-center gap-1 text-xs px-3 py-1 rounded-full bg-gradient-to-r ${tierGradients[tier]} text-white hover:opacity-90 transition-opacity`}
-                                    style={{ fontFamily: 'DM Sans, sans-serif' }}
-                                  >
-                                    <Globe size={10} />
-                                    Visiter
-                                  </a>
-                                </div>
-                              )}
+                              {(() => {
+                                const normalizedUrl = normalizeUrl(partenaire.site_url || '');
+                                return normalizedUrl ? (
+                                  <div className="text-center">
+                                    <a 
+                                      href={normalizedUrl}
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                      className={`inline-flex items-center gap-1 text-xs px-3 py-1 rounded-full bg-gradient-to-r ${tierGradients[tier]} text-white hover:opacity-90 transition-opacity`}
+                                      style={{ fontFamily: 'DM Sans, sans-serif' }}
+                                    >
+                                      <Globe size={10} />
+                                      Visiter
+                                    </a>
+                                  </div>
+                                ) : null;
+                              })()}
                             </div>
 
                             {/* Hover Effect Overlay */}
