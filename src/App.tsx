@@ -17,6 +17,7 @@ import Partenaires from "./pages/Partenaires";
 import Galerie from "./pages/Galerie";
 import RetourPostHack from "./pages/RetourPostHack";
 import TermesConditions from "./pages/TermesConditions";
+import VerificationBadge from "./pages/public/VerificationBadge";
 
 // Admin pages
 import AdminLogin from "./pages/admin/AdminLogin";
@@ -54,6 +55,7 @@ const App = () => (
             <Route path="/galerie" element={<Galerie />} />
             <Route path="/retour" element={<RetourPostHack />} />
             <Route path="/termes-conditions" element={<TermesConditions />} />
+            <Route path="/verification/:badgeId" element={<VerificationBadge />} />
 
             {/* Admin */}
             <Route path="/admin/login" element={<AdminLogin />} />
