@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
+import { useNavigate } from "react-router-dom";
 import AttributionAuth from "@/components/auth/AttributionAuth";
 import { toast } from "sonner";
-import { Trophy, Users, CheckCircle, AlertCircle, ArrowRight, RefreshCw, Eye, Globe, UserPlus, Shield, AlertTriangle } from "lucide-react";
+import { Trophy, Users, CheckCircle, AlertCircle, ArrowRight, RefreshCw, Eye, Globe, UserPlus, Shield, AlertTriangle, ChevronDown, ChevronUp } from "lucide-react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -11,6 +12,7 @@ import { Badge } from "@/components/ui/badge";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 
 interface ClassementItem {
   id: string;
@@ -21,6 +23,22 @@ interface ClassementItem {
   score_moyen: number;
   bonus_equipe: number;
   score_final: number;
+}
+
+interface NoteDetail {
+  comite_nom: string;
+  comite_id: string;
+  score_total: number;
+  notes_critere: {
+    qualite_projet: number;
+    motivation: number;
+    clarte_problematique: number;
+    faisabilite: number;
+    competences_techniques: number;
+    coherence_profil: number;
+  };
+  soumis: boolean;
+  date_soumission: string;
 }
 
 interface EquipeIndividuelle {
@@ -38,8 +56,11 @@ interface EquipeIndividuelle {
 
 const Attribution = () => {
   const queryClient = useQueryClient();
+  const navigate = useNavigate();
   const [selectedIndividus, setSelectedIndividus] = useState<string[]>([]);
   const [nomEquipe, setNomEquipe] = useState('');
+  const [expandedNotes, setExpandedNotes] = useState<string | null>(null);
+  const [selectedEquipeForNotes, setSelectedEquipeForNotes] = useState<string | null>(null);
 
   // Récupérer le classement depuis la vue
   const { data: classement, isLoading, refetch } = useQuery({
@@ -264,6 +285,31 @@ const Attribution = () => {
     }
   }, [classement]);
 
+  // Récupérer les détails des notes pour une équipe
+  const { data: notesDetails, isLoading: isLoadingNotes } = useQuery({
+    queryKey: ["notes-details", selectedEquipeForNotes],
+    queryFn: async () => {
+      if (!selectedEquipeForNotes) return [];
+      
+      const { data, error } = await supabase
+        .from("notes")
+        .select(`
+          *,
+          comite:comite_id (
+            nom_prenom,
+            email
+          )
+        `)
+        .eq("equipe_id", selectedEquipeForNotes)
+        .eq("soumis", true)
+        .order("created_at", { ascending: false });
+      
+      if (error) throw error;
+      return data as any[];
+    },
+    enabled: !!selectedEquipeForNotes,
+  });
+
   // Obtenir le statut d'une équipe
   const getStatutInfo = (rang: number) => {
     if (rang < 40) return { status: 'selectionne', color: 'text-green-600', bgColor: 'bg-green-100', label: 'Sélectionné' };
@@ -272,7 +318,10 @@ const Attribution = () => {
   };
 
   // Vérifier si une équipe est publiée
-  const equipesPubliees = classement?.filter(e => e.statut === 'selectionne' && e.publiee === true).length || 0;
+  const equipesPubliees = classement?.filter((e: any) => {
+    console.log('Équipe:', e);
+    return (e as any).publiee === true;
+  }).length || 0;
 
   return (
     <AttributionAuth>
@@ -302,6 +351,14 @@ const Attribution = () => {
               </div>
               
               <div className="flex gap-3">
+                <button
+                  onClick={() => navigate("/admin/dashboard")}
+                  className="flex items-center gap-2 px-4 py-2 rounded-xl bg-gray-600 text-white hover:bg-gray-700 transition-colors"
+                  style={{ fontFamily: 'DM Sans, sans-serif' }}
+                >
+                  <ArrowRight size={16} className="rotate-180" />
+                  Retour à l'admin
+                </button>
                 <button
                   onClick={() => refetch()}
                   className="flex items-center gap-2 px-4 py-2 rounded-xl bg-[#1E3A5F] text-white hover:bg-[#2C5282] transition-colors"
@@ -352,25 +409,28 @@ const Attribution = () => {
                       Rang
                     </th>
                     <th className="text-left py-3 px-4 font-semibold text-[#212529]" style={{ fontFamily: 'DM Sans, sans-serif' }}>
-                      Nom équipe/candidat
+                      Équipe / Candidat
                     </th>
                     <th className="text-left py-3 px-4 font-semibold text-[#212529]" style={{ fontFamily: 'DM Sans, sans-serif' }}>
-                      Type
+                      Type de candidature
                     </th>
                     <th className="text-center py-3 px-4 font-semibold text-[#212529]" style={{ fontFamily: 'DM Sans, sans-serif' }}>
-                      Nb évaluateurs
+                      Nombre d'évaluateurs
                     </th>
                     <th className="text-center py-3 px-4 font-semibold text-[#212529]" style={{ fontFamily: 'DM Sans, sans-serif' }}>
-                      Score moyen/100
+                      Score moyen /100
                     </th>
                     <th className="text-center py-3 px-4 font-semibold text-[#212529]" style={{ fontFamily: 'DM Sans, sans-serif' }}>
-                      Bonus
+                      Bonus équipe
                     </th>
                     <th className="text-center py-3 px-4 font-semibold text-[#212529]" style={{ fontFamily: 'DM Sans, sans-serif' }}>
                       Score final
                     </th>
                     <th className="text-center py-3 px-4 font-semibold text-[#212529]" style={{ fontFamily: 'DM Sans, sans-serif' }}>
-                      Statut
+                      Voir les notes
+                    </th>
+                    <th className="text-center py-3 px-4 font-semibold text-[#212529]" style={{ fontFamily: 'DM Sans, sans-serif' }}>
+                      Statut final
                     </th>
                   </tr>
                 </thead>
@@ -396,14 +456,16 @@ const Attribution = () => {
                           </span>
                         </td>
                         <td className="py-3 px-4">
-                          <div>
-                            <p className="font-medium text-[#212529]" style={{ fontFamily: 'DM Sans, sans-serif' }}>
-                              {item.nom_equipe}
-                            </p>
-                            <p className="text-sm text-[#6C757D]" style={{ fontFamily: 'DM Sans, sans-serif' }}>
-                              {item.type_candidature}
-                            </p>
-                          </div>
+                          <p className="font-medium text-[#212529]" style={{ fontFamily: 'DM Sans, sans-serif' }}>
+                            {item.nom_equipe}
+                          </p>
+                        </td>
+                        <td className="py-3 px-4">
+                          <span className={`inline-flex items-center gap-1 px-2 py-1 rounded-lg text-xs font-medium ${
+                            item.type_candidature === 'equipe' ? 'bg-blue-100 text-blue-700' : 'bg-purple-100 text-purple-700'
+                          }`} style={{ fontFamily: 'DM Sans, sans-serif' }}>
+                            {item.type_candidature === 'equipe' ? 'Équipe' : 'Individuel'}
+                          </span>
                         </td>
                         <td className="py-3 px-4">
                           <span className={`inline-flex items-center gap-1 px-2 py-1 rounded-lg text-xs font-medium ${
@@ -427,8 +489,106 @@ const Attribution = () => {
                         </td>
                         <td className="py-3 px-4 text-center">
                           <span className="font-bold text-lg text-[#1E3A5F]" style={{ fontFamily: 'Sora, sans-serif' }}>
-                            {item.score_final}
+                            {(item as any).score_final}
                           </span>
+                        </td>
+                        <td className="py-3 px-4 text-center">
+                          <Dialog>
+                            <DialogTrigger asChild>
+                              <button
+                                onClick={() => setSelectedEquipeForNotes((item as any).id)}
+                                className="inline-flex items-center gap-1 px-3 py-1 rounded-lg text-xs font-medium bg-blue-100 text-blue-700 hover:bg-blue-200 transition-colors"
+                                style={{ fontFamily: 'DM Sans, sans-serif' }}
+                              >
+                                <Eye size={12} />
+                                Voir ({(item as any).nb_evaluateurs})
+                              </button>
+                            </DialogTrigger>
+                            <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto bg-gradient-to-br from-slate-50 to-blue-50 border-0 shadow-2xl">
+                              <DialogHeader className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white p-6 -m-6 mb-6 rounded-t-xl">
+                                <DialogTitle className="text-xl font-bold text-white">
+                                  📊 Détails des notes - {(item as any).nom_equipe}
+                                </DialogTitle>
+                                <DialogDescription className="text-blue-100">
+                                  Notes détaillées attribuées par les membres du comité de sélection
+                                </DialogDescription>
+                              </DialogHeader>
+                              
+                              <div className="mt-6 space-y-4 px-2">
+                                {isLoadingNotes ? (
+                                  <div className="text-center py-12">
+                                    <div className="inline-block w-8 h-8 border-3 border-blue-600 border-t-transparent animate-spin rounded-full"></div>
+                                    <p className="mt-4 text-gray-600 font-medium">Chargement des notes...</p>
+                                  </div>
+                                ) : notesDetails && notesDetails.length > 0 ? (
+                                  notesDetails.map((note: any, index: number) => (
+                                    <div key={note.id} className="bg-white/80 backdrop-blur-sm border border-blue-100 rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300">
+                                      <div className="flex items-center justify-between mb-4">
+                                        <div className="flex items-center space-x-3">
+                                          <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-full flex items-center justify-center text-white font-bold">
+                                            {note.comite?.nom_prenom?.charAt(0) || 'M'}
+                                          </div>
+                                          <div>
+                                            <h4 className="font-bold text-gray-800 text-lg">
+                                              {note.comite?.nom_prenom || 'Membre du comité'}
+                                            </h4>
+                                            <p className="text-sm text-gray-600">{note.comite?.email}</p>
+                                          </div>
+                                        </div>
+                                        <div className="text-right">
+                                          <div className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+                                            {note.score_total}/100
+                                          </div>
+                                          <div className="text-xs text-gray-500 mt-1">
+                                            {new Date(note.created_at).toLocaleDateString('fr-FR', { 
+                                              day: 'numeric', 
+                                              month: 'long', 
+                                              year: 'numeric' 
+                                            })}
+                                          </div>
+                                        </div>
+                                      </div>
+                                      
+                                      <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                                        <div className="bg-gradient-to-br from-blue-50 to-indigo-50 p-3 rounded-lg border border-blue-200">
+                                          <div className="text-xs text-blue-600 font-medium mb-1">🎯 Qualité du projet</div>
+                                          <div className="font-bold text-blue-800 text-lg">{note.qualite_projet || 0}/25</div>
+                                        </div>
+                                        <div className="bg-gradient-to-br from-green-50 to-emerald-50 p-3 rounded-lg border border-green-200">
+                                          <div className="text-xs text-green-600 font-medium mb-1">💪 Motivation</div>
+                                          <div className="font-bold text-green-800 text-lg">{note.motivation || 0}/20</div>
+                                        </div>
+                                        <div className="bg-gradient-to-br from-purple-50 to-violet-50 p-3 rounded-lg border border-purple-200">
+                                          <div className="text-xs text-purple-600 font-medium mb-1">🔍 Clarté problématique</div>
+                                          <div className="font-bold text-purple-800 text-lg">{note.clarte_problematique || 0}/20</div>
+                                        </div>
+                                        <div className="bg-gradient-to-br from-orange-50 to-amber-50 p-3 rounded-lg border border-orange-200">
+                                          <div className="text-xs text-orange-600 font-medium mb-1">⚙️ Faisabilité technique</div>
+                                          <div className="font-bold text-orange-800 text-lg">{note.faisabilite || 0}/15</div>
+                                        </div>
+                                        <div className="bg-gradient-to-br from-pink-50 to-rose-50 p-3 rounded-lg border border-pink-200">
+                                          <div className="text-xs text-pink-600 font-medium mb-1">🛠️ Compétences techniques</div>
+                                          <div className="font-bold text-pink-800 text-lg">{note.competences_techniques || 0}/10</div>
+                                        </div>
+                                        <div className="bg-gradient-to-br from-teal-50 to-cyan-50 p-3 rounded-lg border border-teal-200">
+                                          <div className="text-xs text-teal-600 font-medium mb-1">🎨 Cohérence du profil</div>
+                                          <div className="font-bold text-teal-800 text-lg">{note.coherence_profil || 0}/10</div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  ))
+                                ) : (
+                                  <div className="text-center py-12">
+                                    <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                                      <AlertCircle size={32} className="text-gray-400" />
+                                    </div>
+                                    <p className="text-gray-500 text-lg font-medium">Aucune note trouvée pour cette équipe</p>
+                                    <p className="text-gray-400 text-sm mt-2">Les membres du comité n'ont pas encore évalué cette équipe</p>
+                                  </div>
+                                )}
+                              </div>
+                            </DialogContent>
+                          </Dialog>
                         </td>
                         <td className="py-3 px-4 text-center">
                           <span className={`inline-flex items-center gap-1 px-2 py-1 rounded-lg text-xs font-medium ${statutInfo.bgColor} ${statutInfo.color}`} style={{ fontFamily: 'DM Sans, sans-serif' }}>
@@ -612,7 +772,19 @@ const Attribution = () => {
             </div>
 
             {/* Bouton de publication */}
-            <div className="flex justify-center">
+            <div className="flex justify-center gap-4">
+              {/* Bouton de test pour dépublication */}
+              <button
+                onClick={() => depublierMutation.mutate()}
+                disabled={depublierMutation.isPending}
+                className="px-6 py-3 rounded-xl border-2 border-red-500 text-red-300 hover:bg-red-800/50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+                style={{ fontFamily: 'DM Sans, sans-serif' }}
+              >
+                <AlertCircle size={16} />
+                {depublierMutation.isPending ? 'Dépublication...' : 'Retirer de la page publique (TEST)'}
+              </button>
+              
+              {/* Logique originale */}
               {equipesPubliees > 0 ? (
                 <button
                   onClick={() => depublierMutation.mutate()}
