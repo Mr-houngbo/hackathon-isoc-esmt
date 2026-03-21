@@ -214,6 +214,23 @@ const Footer = () => {
           <span className="flex items-center gap-1">
             Made with <Heart className="w-3 h-3 text-red-400 mx-1" /> in Sénégal
           </span>
+          <span className="text-slate-600 mx-1">•</span>
+          <Link 
+            to="/admin/dashboard" 
+            className="text-slate-700/50 hover:text-slate-600/70 transition-colors duration-300 cursor-default" 
+            style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '8px', letterSpacing: '-0.3px' }}
+            title="Accès Admin"
+          >
+            ad
+          </Link>
+          <Link 
+            to="/comite/login" 
+            className="text-slate-700/50 hover:text-slate-600/70 transition-colors duration-300 cursor-default" 
+            style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '8px', letterSpacing: '-0.3px' }}
+            title="Accès Comité"
+          >
+            co
+          </Link>
         </div>
         
         <div className="flex items-center gap-6 text-xs text-slate-400">
