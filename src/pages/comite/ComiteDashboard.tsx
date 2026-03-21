@@ -6,6 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { 
   FileText, 
   CheckCircle, 
@@ -38,6 +39,7 @@ const ComiteDashboard = () => {
   const { comiteMember } = useComiteAuth();
   const [assignments, setAssignments] = useState<Assignment[]>([]);
   const [loading, setLoading] = useState(true);
+  const [selectedAssignment, setSelectedAssignment] = useState<Assignment | null>(null);
   const [stats, setStats] = useState({
     totalAssignments: 0,
     completedEvaluations: 0,
@@ -105,6 +107,34 @@ const ComiteDashboard = () => {
       console.error('Erreur lors du chargement des dossiers:', error);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const fetchAssignmentDetails = async (assignment: Assignment) => {
+    try {
+      const { data: equipeDetails, error } = await supabase
+        .from('equipes')
+        .select(`
+          *,
+          membres(
+            nom_prenom,
+            filiere,
+            niveau_etudes,
+            role_equipe,
+            competences
+          )
+        `)
+        .eq('id', assignment.equipe.id)
+        .single();
+
+      if (error) throw error;
+      
+      setSelectedAssignment({
+        ...assignment,
+        equipe: equipeDetails
+      });
+    } catch (error) {
+      console.error('Erreur lors du chargement des détails:', error);
     }
   };
 
@@ -314,14 +344,103 @@ const ComiteDashboard = () => {
                     )}
                   </div>
                   <div className="flex items-center space-x-2">
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      className="bg-blue-800/50 border-blue-600/30 text-blue-300 hover:bg-blue-700/50 hover:text-white"
-                    >
-                      <Eye className="w-3 h-3 mr-1" />
-                      Aperçu
-                    </Button>
+                    <Dialog>
+                      <DialogTrigger asChild>
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          className="bg-blue-800/50 border-blue-600/30 text-blue-300 hover:bg-blue-700/50 hover:text-white"
+                          onClick={() => fetchAssignmentDetails(assignment)}
+                        >
+                          <Eye className="w-3 h-3 mr-1" />
+                          Aperçu
+                        </Button>
+                      </DialogTrigger>
+                      <DialogContent className="bg-blue-900/95 border-blue-700/30 backdrop-blur-xl max-w-4xl max-h-[80vh] overflow-y-auto">
+                        <DialogHeader>
+                          <DialogTitle className="text-white">
+                            Aperçu du dossier - {selectedAssignment?.equipe?.nom_equipe || 'Équipe'}
+                          </DialogTitle>
+                          <DialogDescription className="text-blue-300/70">
+                            Informations complètes du dossier de candidature
+                          </DialogDescription>
+                        </DialogHeader>
+                        {selectedAssignment && (
+                          <div className="space-y-6">
+                            {/* Informations principales */}
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                              <div>
+                                <h4 className="text-white font-medium mb-2">Nom de l'équipe</h4>
+                                <p className="text-blue-300">{selectedAssignment.equipe?.nom_equipe || 'Non spécifié'}</p>
+                              </div>
+                              <div>
+                                <h4 className="text-white font-medium mb-2">Nom du projet</h4>
+                                <p className="text-blue-300">{selectedAssignment.equipe?.nom_projet || 'Non spécifié'}</p>
+                              </div>
+                              <div>
+                                <h4 className="text-white font-medium mb-2">Type de candidature</h4>
+                                <Badge variant="outline" className="bg-blue-800/50 text-blue-300 border-blue-600/30">
+                                  {selectedAssignment.equipe?.type_candidature}
+                                </Badge>
+                              </div>
+                              <div>
+                                <h4 className="text-white font-medium mb-2">Date de soumission</h4>
+                                <p className="text-blue-300 flex items-center">
+                                  <Calendar className="w-3 h-3 mr-1" />
+                                  {new Date(selectedAssignment.equipe?.created_at).toLocaleDateString('fr-FR')}
+                                </p>
+                              </div>
+                            </div>
+
+                            {/* Description du projet */}
+                            {selectedAssignment.equipe && 'problematique' in selectedAssignment.equipe && (
+                              <div>
+                                <h4 className="text-white font-medium mb-3">Description du projet</h4>
+                                <div className="space-y-3">
+                                  <div>
+                                    <h5 className="text-blue-300 text-sm mb-1">Problématique</h5>
+                                    <p className="text-white bg-blue-800/30 rounded-lg p-3 border border-blue-700/30">
+                                      {(selectedAssignment.equipe as any).problematique || "Non spécifiée"}
+                                    </p>
+                                  </div>
+                                  <div>
+                                    <h5 className="text-blue-300 text-sm mb-1">Solution proposée</h5>
+                                    <p className="text-white bg-blue-800/30 rounded-lg p-3 border border-blue-700/30">
+                                      {(selectedAssignment.equipe as any).solution || "Non spécifiée"}
+                                    </p>
+                                  </div>
+                                  <div>
+                                    <h5 className="text-blue-300 text-sm mb-1">Motivation</h5>
+                                    <p className="text-white bg-blue-800/30 rounded-lg p-3 border border-blue-700/30">
+                                      {(selectedAssignment.equipe as any).motivation || "Non spécifiée"}
+                                    </p>
+                                  </div>
+                                </div>
+                              </div>
+                            )}
+
+                            {/* Membres de l'équipe */}
+                            {selectedAssignment.equipe && 'membres' in selectedAssignment.equipe && 
+                             (selectedAssignment.equipe as any).membres?.length > 0 && (
+                              <div>
+                                <h4 className="text-white font-medium mb-3">Membres de l'équipe</h4>
+                                <div className="space-y-2">
+                                  {(selectedAssignment.equipe as any).membres.map((membre: any, index: number) => (
+                                    <div key={index} className="bg-blue-800/30 rounded-lg p-3 border border-blue-700/30">
+                                      <p className="text-white font-medium">{membre.nom_prenom}</p>
+                                      <p className="text-blue-300/70 text-sm">{membre.filiere} - {membre.niveau_etudes}</p>
+                                      {membre.role_equipe && (
+                                        <p className="text-blue-300/50 text-xs mt-1">Rôle: {membre.role_equipe}</p>
+                                      )}
+                                    </div>
+                                  ))}
+                                </div>
+                              </div>
+                            )}
+                          </div>
+                        )}
+                      </DialogContent>
+                    </Dialog>
                     <Link to={`/comite/evaluation/${assignment.equipe_id}`}>
                       <Button
                         size="sm"
