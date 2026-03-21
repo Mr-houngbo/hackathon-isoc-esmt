@@ -11,13 +11,13 @@ import ProtectedRoute from "@/components/auth/ProtectedRoute";
 import Index from "./pages/Index";
 import Inscription from "./pages/Inscription";
 import EquipesSelectionnees from "./pages/EquipesSelectionnees";
-import ProfilParticipant from "./pages/ProfilParticipant";
 import Agenda from "./pages/Agenda";
 import Mentors from "./pages/Mentors";
 import Partenaires from "./pages/Partenaires";
 import Galerie from "./pages/Galerie";
-import RetourPostHack from "./pages/RetourPostHack";
 import TermesConditions from "./pages/TermesConditions";
+import Privacy from "./pages/Privacy";
+import Cookies from "./pages/Cookies";
 import VerificationBadge from "./pages/public/VerificationBadge";
 
 // Admin pages
@@ -57,13 +57,13 @@ const App = () => (
               <Route path="/" element={<Index />} />
               <Route path="/inscription" element={<Inscription />} />
               <Route path="/equipes-selectionnees" element={<EquipesSelectionnees />} />
-              <Route path="/participant/:id" element={<ProfilParticipant />} />
               <Route path="/agenda" element={<Agenda />} />
               <Route path="/mentors" element={<Mentors />} />
               <Route path="/partenaires" element={<Partenaires />} />
               <Route path="/galerie" element={<Galerie />} />
-              <Route path="/retour" element={<RetourPostHack />} />
               <Route path="/termes-conditions" element={<TermesConditions />} />
+              <Route path="/privacy" element={<Privacy />} />
+              <Route path="/cookies" element={<Cookies />} />
               <Route path="/verification/:badgeId" element={<VerificationBadge />} />
 
               {/* Admin */}

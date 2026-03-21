@@ -47,7 +47,7 @@ const HeroSection = () => (
 
             {/* Countdown Timer */}
             <div className="mb-8">
-              <div className="bg-white rounded-2xl border border-[#E9ECEF] shadow-lg p-4 w-auto lg:w-fit overflow-hidden">
+              <div className="bg-white rounded-2xl border border-[#E9ECEF] shadow-lg p-4 w-fit overflow-hidden mx-auto lg:mx-0">
                 <CountdownTimer />
               </div>
             </div>

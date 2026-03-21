@@ -295,12 +295,12 @@ const Inscription = () => {
 
   return (
     <Layout>
-      <div className="container max-w-2xl py-8 sm:py-12">
+      <div className="container max-w-4xl sm:max-w-2xl py-6 sm:py-8 md:py-12">
         {!submitted && (
           <StepIndicator currentStep={step} totalSteps={8} labels={stepLabels} />
         )}
 
-        <div className="rounded-2xl border border-[#E9ECEF] bg-white p-6 sm:p-8 shadow-lg">
+        <div className="rounded-xl sm:rounded-2xl border border-[#E9ECEF] bg-white p-4 sm:p-6 md:p-8 shadow-lg">
           <AnimatePresence mode="wait">
             <motion.div
               key={step}
@@ -314,18 +314,18 @@ const Inscription = () => {
           </AnimatePresence>
 
           {!submitted && (
-            <div className="mt-8 flex items-center justify-between">
+            <div className="mt-6 sm:mt-8 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 sm:gap-4">
               {step > 0 ? (
                 <button onClick={prevStep}
-                  className="flex items-center gap-2 rounded-lg border border-[#E9ECEF] px-4 py-2 text-sm font-medium text-[#6C757D] transition-colors hover:bg-[#F8F9FA]">
+                  className="flex items-center justify-center gap-2 rounded-lg border border-[#E9ECEF] px-4 py-2.5 text-sm font-medium text-[#6C757D] transition-colors hover:bg-[#F8F9FA] order-2 sm:order-1">
                   <ArrowLeft size={16} /> Précédent
                 </button>
-              ) : <div />}
+              ) : <div className="order-2 sm:order-1" />}
 
               <button
                 onClick={nextStep}
                 disabled={loading || (step === 2 && data.chef.disponible_2_jours === false)}
-                className="btn-premium flex items-center gap-2 rounded-lg px-6 py-2.5 text-sm font-semibold transition-all hover:scale-105 disabled:opacity-50 disabled:hover:scale-100"
+                className="btn-premium flex items-center justify-center gap-2 rounded-lg px-6 py-2.5 text-sm font-semibold transition-all hover:scale-105 disabled:opacity-50 disabled:hover:scale-100 order-1 sm:order-2 w-full sm:w-auto"
               >
                 {loading ? <Loader2 size={16} className="animate-spin" /> : null}
                 {step === 6 ? 'Envoyer la candidature' : 'Suivant'}

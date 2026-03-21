@@ -1,43 +1,181 @@
 import { Link } from "react-router-dom";
-import { Instagram, Linkedin, Mail, MapPin, Calendar, Trophy, Users } from "lucide-react";
+import { Instagram, Linkedin, Mail, MapPin, Phone, Globe, Heart, Sparkles, Crown } from "lucide-react";
 import { motion } from "framer-motion";
+import { useState } from "react";
+import LegalPopup from "@/components/ui/LegalPopup";
 
-const Footer = () => (
-  <footer className="relative overflow-hidden bg-[#F8F9FA] border-t border-[#E9ECEF]">
-    {/* Background decoration */}
-    <div className="absolute inset-0 bg-gradient-to-br from-[#FF6B35]/5 via-transparent to-[#1E3A5F]/5"></div>
-    
+const Footer = () => {
+  const [popupState, setPopupState] = useState<{
+    isOpen: boolean;
+    type: 'privacy' | 'terms' | 'cookies';
+  }>({
+    isOpen: false,
+    type: 'privacy'
+  });
+
+  const openPopup = (type: 'privacy' | 'terms' | 'cookies') => {
+    setPopupState({ isOpen: true, type });
+  };
+
+  const closePopup = () => {
+    setPopupState({ ...popupState, isOpen: false });
+  };
+
+  const viewFullPage = () => {
+    // Navigate to the full page based on type
+    const routes = {
+      privacy: '/privacy',
+      terms: '/termes-conditions',
+      cookies: '/cookies'
+    };
+    window.location.href = routes[popupState.type];
+  };
+
+  return (
+    <>
+      <footer className="relative bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white overflow-hidden">
+    {/* Background Pattern */}
+    <div className="absolute inset-0 opacity-5">
+      <div 
+        className="absolute inset-0" 
+        style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`
+        }}
+      ></div>
+    </div>
+
+    {/* Top Gradient Border */}
+    <div className="h-1 bg-gradient-to-r from-amber-500 via-orange-500 to-amber-500 shadow-lg shadow-orange-500/20"></div>
+
     <div className="container relative z-10 py-16">
-      <div className="grid gap-12 lg:grid-cols-4">
-        {/* Brand */}
-        <div className="lg:col-span-1">
-          <div className="mb-6">
-            <h3 
-              className="font-display text-2xl font-bold text-[#212529] mb-2"
-              style={{ fontFamily: 'Sora, sans-serif', fontWeight: 800 }}
-            >
-              Hackathon
-              <span className="text-gradient"> ISOC-ESMT</span>
-            </h3>
-            <p 
-              className="text-[#FF6B35] font-semibold"
-              style={{ fontFamily: 'Sora, sans-serif' }}
-            >
-              17-18 Avril 2026
-            </p>
+      {/* Main Footer Content */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+        
+        {/* Brand Section */}
+        <motion.div 
+          className="space-y-4"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 bg-gradient-to-br from-amber-500 to-orange-600 rounded-lg flex items-center justify-center shadow-lg">
+              <Crown className="w-5 h-5 text-white" />
+            </div>
+            <div>
+              <h3 
+                className="font-bold text-lg bg-gradient-to-r from-amber-400 to-orange-400 bg-clip-text text-transparent"
+                style={{ fontFamily: 'Sora, sans-serif' }}
+              >
+                Hackathon ISOC-ESMT
+              </h3>
+              <p className="text-xs text-amber-200 font-medium">Excellence & Innovation</p>
+            </div>
           </div>
-          <p 
-            className="text-sm text-[#6C757D] leading-relaxed max-w-sm"
+          <p className="text-sm text-slate-300 leading-relaxed">
+            Un événement d'excellence réunissant les talents les plus brillants pour façonner l'avenir du numérique.
+          </p>
+          <div className="flex items-center gap-2 text-xs text-amber-200">
+            <Sparkles className="w-3 h-3" />
+            <span>Premium Experience 2026</span>
+          </div>
+        </motion.div>
+
+        {/* Quick Links */}
+        <motion.div 
+          className="space-y-4"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.1 }}
+        >
+          <h4 
+            className="font-semibold text-sm uppercase tracking-wider text-amber-400 flex items-center gap-2"
             style={{ fontFamily: 'DM Sans, sans-serif' }}
           >
-            Organisé par le Club ISOC de l'École Supérieure Multinationale des Télécommunications, Dakar, Sénégal.
-          </p>
-          
-          {/* Social links */}
-          <div className="flex gap-3 mt-6">
+            <Globe className="w-4 h-4" />
+            Navigation
+          </h4>
+          <nav className="space-y-2">
+            <Link 
+              to="/inscription" 
+              className="block text-sm text-slate-300 hover:text-amber-400 transition-all duration-300 hover:translate-x-1"
+              style={{ fontFamily: 'DM Sans, sans-serif' }}
+            >
+              Inscription
+            </Link>
+            <Link 
+              to="/equipes-selectionnees" 
+              className="block text-sm text-slate-300 hover:text-amber-400 transition-all duration-300 hover:translate-x-1"
+              style={{ fontFamily: 'DM Sans, sans-serif' }}
+            >
+              Équipes Sélectionnées
+            </Link>
+            <Link 
+              to="/galerie" 
+              className="block text-sm text-slate-300 hover:text-amber-400 transition-all duration-300 hover:translate-x-1"
+              style={{ fontFamily: 'DM Sans, sans-serif' }}
+            >
+              Galerie
+            </Link>
+            <Link 
+              to="/contact" 
+              className="block text-sm text-slate-300 hover:text-amber-400 transition-all duration-300 hover:translate-x-1"
+              style={{ fontFamily: 'DM Sans, sans-serif' }}
+            >
+              Contact
+            </Link>
+          </nav>
+        </motion.div>
+
+        {/* Contact Info */}
+        <motion.div 
+          className="space-y-4"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+        >
+          <h4 
+            className="font-semibold text-sm uppercase tracking-wider text-amber-400 flex items-center gap-2"
+            style={{ fontFamily: 'DM Sans, sans-serif' }}
+          >
+            <MapPin className="w-4 h-4" />
+            Contact
+          </h4>
+          <div className="space-y-3">
+            <div className="flex items-start gap-3">
+              <MapPin className="w-4 h-4 text-amber-400 mt-0.5 flex-shrink-0" />
+              <span className="text-sm text-slate-300">ESMT Dakar, Sénégal</span>
+            </div>
+            <div className="flex items-center gap-3">
+              <Mail className="w-4 h-4 text-amber-400 flex-shrink-0" />
+              <a href="mailto:club_esmt@isoc.sn" className="text-sm text-slate-300 hover:text-amber-400 transition-colors">
+                club_esmt@isoc.sn
+              </a>
+            </div>
+            <div className="flex items-center gap-3">
+              <Phone className="w-4 h-4 text-amber-400 flex-shrink-0" />
+              <span className="text-sm text-slate-300">+221 33 000 00 00</span>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Social & Newsletter */}
+        <motion.div 
+          className="space-y-4"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.3 }}
+        >
+          <h4 
+            className="font-semibold text-sm uppercase tracking-wider text-amber-400"
+            style={{ fontFamily: 'DM Sans, sans-serif' }}
+          >
+            Suivez-nous
+          </h4>
+          <div className="flex gap-3">
             <a 
               href="https://instagram.com" 
-              className="w-10 h-10 rounded-lg bg-white border border-[#E9ECEF] flex items-center justify-center text-[#6C757D] hover:text-[#FF6B35] hover:border-[#FF6B35]/50 hover:bg-[#FF6B35]/5 transition-all duration-300 hover:scale-110"
+              className="w-10 h-10 bg-gradient-to-br from-amber-500/20 to-orange-600/20 border border-amber-500/30 rounded-lg flex items-center justify-center text-amber-400 hover:from-amber-500 hover:to-orange-600 hover:text-white transition-all duration-300 hover:shadow-lg hover:shadow-amber-500/25"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -45,7 +183,7 @@ const Footer = () => (
             </a>
             <a 
               href="https://www.linkedin.com/company/club-isoc-esmt/" 
-              className="w-10 h-10 rounded-lg bg-white border border-[#E9ECEF] flex items-center justify-center text-[#6C757D] hover:text-[#FF6B35] hover:border-[#FF6B35]/50 hover:bg-[#FF6B35]/5 transition-all duration-300 hover:scale-110"
+              className="w-10 h-10 bg-gradient-to-br from-amber-500/20 to-orange-600/20 border border-amber-500/30 rounded-lg flex items-center justify-center text-amber-400 hover:from-amber-500 hover:to-orange-600 hover:text-white transition-all duration-300 hover:shadow-lg hover:shadow-amber-500/25"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -53,151 +191,67 @@ const Footer = () => (
             </a>
             <a 
               href="mailto:club_esmt@isoc.sn" 
-              className="w-10 h-10 rounded-lg bg-white border border-[#E9ECEF] flex items-center justify-center text-[#6C757D] hover:text-[#FF6B35] hover:border-[#FF6B35]/50 hover:bg-[#FF6B35]/5 transition-all duration-300 hover:scale-110"
+              className="w-10 h-10 bg-gradient-to-br from-amber-500/20 to-orange-600/20 border border-amber-500/30 rounded-lg flex items-center justify-center text-amber-400 hover:from-amber-500 hover:to-orange-600 hover:text-white transition-all duration-300 hover:shadow-lg hover:shadow-amber-500/25"
             >
               <Mail size={18} />
             </a>
           </div>
-        </div>
-
-        {/* Quick Links */}
-        <div>
-          <h4 
-            className="font-display font-semibold text-[#212529] mb-6 flex items-center gap-2"
-            style={{ fontFamily: 'Sora, sans-serif' }}
-          >
-            <div className="w-1 h-4 bg-[#FF6B35] rounded-full"></div>
-            Navigation
-          </h4>
-          <div className="flex flex-col gap-3">
-            <Link 
-              to="/inscription" 
-              className="text-sm text-[#6C757D] hover:text-[#FF6B35] transition-colors duration-300 flex items-center gap-2"
-              style={{ fontFamily: 'DM Sans, sans-serif' }}
-            >
-              <Calendar size={14} /> Inscription
-            </Link>
-            <Link 
-              to="/agenda" 
-              className="text-sm text-[#6C757D] hover:text-[#FF6B35] transition-colors duration-300"
-              style={{ fontFamily: 'DM Sans, sans-serif' }}
-            >
-              Programme
-            </Link>
-            <Link 
-              to="/equipes-selectionnees" 
-              className="text-sm text-[#6C757D] hover:text-[#FF6B35] transition-colors duration-300 flex items-center gap-2"
-              style={{ fontFamily: 'DM Sans, sans-serif' }}
-            >
-              <Users size={14} /> Équipes
-            </Link>
-            <Link 
-              to="/galerie" 
-              className="text-sm text-[#6C757D] hover:text-[#FF6B35] transition-colors duration-300 flex items-center gap-2"
-              style={{ fontFamily: 'DM Sans, sans-serif' }}
-            >
-              <Trophy size={14} /> Wall of Fame
-            </Link>
+          <div className="text-xs text-slate-400">
+            <p>Rejoignez notre communauté</p>
+            <p className="text-amber-400 font-semibold mt-1">500+ membres actifs</p>
           </div>
-        </div>
-
-        {/* Event Info */}
-        <div>
-          <h4 
-            className="font-display font-semibold text-[#212529] mb-6 flex items-center gap-2"
-            style={{ fontFamily: 'Sora, sans-serif' }}
-          >
-            <div className="w-1 h-4 bg-[#1E3A5F] rounded-full"></div>
-            Événement
-          </h4>
-          <div className="flex flex-col gap-3 text-sm text-[#6C757D]">
-            <div className="flex items-center gap-2">
-              <MapPin size={14} className="text-[#FF6B35]" />
-              <span style={{ fontFamily: 'DM Sans, sans-serif' }}>ESMT, Dakar, Sénégal</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <Calendar size={14} className="text-[#FF6B35]" />
-              <span style={{ fontFamily: 'DM Sans, sans-serif' }}>17 & 18 Avril 2026</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <Users size={14} className="text-[#FF6B35]" />
-              <span style={{ fontFamily: 'DM Sans, sans-serif' }}>40 participants max</span>
-            </div>
-          </div>
-        </div>
-
-        {/* Contact */}
-        <div>
-          <h4 
-            className="font-display font-semibold text-[#212529] mb-6 flex items-center gap-2"
-            style={{ fontFamily: 'Sora, sans-serif' }}
-          >
-            <div className="w-1 h-4 bg-[#FF6B35] rounded-full"></div>
-            Contact
-          </h4>
-          <div className="flex flex-col gap-3 text-sm">
-            <a 
-              href="mailto:club_esmt@isoc.sn" 
-              className="text-[#6C757D] hover:text-[#FF6B35] transition-colors duration-300 flex items-center gap-2"
-              style={{ fontFamily: 'DM Sans, sans-serif' }}
-            >
-              <Mail size={14} className="text-[#FF6B35]" />
-              club_esmt@isoc.sn
-            </a>
-            <div 
-              className="text-[#6C757D]"
-              style={{ fontFamily: 'DM Sans, sans-serif' }}
-            >
-              <MapPin size={14} className="inline mr-2 text-[#FF6B35]" />
-              ESMT Dakar
-            </div>
-          </div>
-        </div>
+        </motion.div>
       </div>
 
-      {/* Bottom bar */}
-      <div className="mt-12 pt-8 border-t border-[#E9ECEF]">
-        <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-          <p 
-            className="text-xs text-[#6C757D]"
-            style={{ fontFamily: 'DM Sans, sans-serif' }}
+      {/* Divider */}
+      <div className="h-px bg-gradient-to-r from-transparent via-amber-500/50 to-transparent mb-8"></div>
+
+      {/* Bottom Section */}
+      <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+        <div className="flex items-center gap-2 text-sm text-slate-400">
+          <span>© 2026 Club ISOC — ESMT Dakar</span>
+          <span className="text-amber-400">•</span>
+          <span className="flex items-center gap-1">
+            Made with <Heart className="w-3 h-3 text-red-400 mx-1" /> in Sénégal
+          </span>
+        </div>
+        
+        <div className="flex items-center gap-6 text-xs text-slate-400">
+          <button 
+            onClick={() => openPopup('privacy')} 
+            className="hover:text-amber-400 transition-colors"
           >
-            © 2026 Club ISOC — ESMT Dakar. Tous droits réservés.
-          </p>
-          <div className="flex gap-6 text-xs">
-            <a href="/termes-conditions#mentions-legales" className="text-[#6C757D] hover:text-[#FF6B35] transition-colors duration-300" style={{ fontFamily: 'DM Sans, sans-serif' }} target="_blank" rel="noopener noreferrer">
-              Mentions légales
-            </a>
-            <a href="/termes-conditions" className="text-[#6C757D] hover:text-[#FF6B35] transition-colors duration-300" style={{ fontFamily: 'DM Sans, sans-serif' }} target="_blank" rel="noopener noreferrer">
-              Conditions
-            </a>
-            <a href="/termes-conditions#confidentialite" className="text-[#6C757D] hover:text-[#FF6B35] transition-colors duration-300" style={{ fontFamily: 'DM Sans, sans-serif' }} target="_blank" rel="noopener noreferrer">
-              Confidentialité
-            </a>
-            <Link 
-              to="/admin/dashboard" 
-              className="text-[#DEE2E6] hover:text-[#ADB5BD] transition-colors duration-300" 
-              style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '10px' }}
-              title="Accès Admin"
-            >
-              ad
-            </Link>
-            <Link 
-              to="/comite/login" 
-              className="text-[#DEE2E6] hover:text-[#ADB5BD] transition-colors duration-300 ml-2" 
-              style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '10px' }}
-              title="Espace Comité"
-            >
-              co
-            </Link>
-          </div>
+            Privacy
+          </button>
+          <button 
+            onClick={() => openPopup('terms')} 
+            className="hover:text-amber-400 transition-colors"
+          >
+            Terms
+          </button>
+          <button 
+            onClick={() => openPopup('cookies')} 
+            className="hover:text-amber-400 transition-colors"
+          >
+            Cookies
+          </button>
         </div>
       </div>
     </div>
 
-    {/* Decorative gradient line */}
-    <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-[#FF6B35] via-[#1E3A5F] to-[#FF6B35]"></div>
+    {/* Bottom Gradient Line */}
+    <div className="h-1 bg-gradient-to-r from-amber-600 via-orange-500 to-amber-600 shadow-lg shadow-orange-500/30"></div>
   </footer>
-);
+
+  {/* Legal Popup */}
+  <LegalPopup
+    isOpen={popupState.isOpen}
+    onClose={closePopup}
+    type={popupState.type}
+    onViewFull={viewFullPage}
+  />
+  </>
+  );
+};
 
 export default Footer;

@@ -58,7 +58,7 @@ const WhyParticipate = () => (
         </p>
       </motion.div>
 
-      <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+      <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
         {reasons.map((r, i) => (
           <motion.div
             key={r.title}
@@ -67,7 +67,7 @@ const WhyParticipate = () => (
             viewport={{ once: true }}
             transition={{ delay: i * 0.15 }}
             whileHover={{ y: -8, scale: 1.02 }}
-            className="group relative overflow-hidden rounded-2xl p-8 bg-white border border-[#E9ECEF] shadow-lg hover:shadow-xl transition-all duration-300"
+            className="group relative overflow-hidden rounded-xl sm:rounded-2xl p-3 sm:p-4 lg:p-8 bg-white border border-[#E9ECEF] shadow-lg hover:shadow-xl transition-all duration-300"
           >
             {/* Gradient background on hover */}
             <div className={`absolute inset-0 bg-gradient-to-br ${
@@ -77,12 +77,12 @@ const WhyParticipate = () => (
             } opacity-0 group-hover:opacity-100 transition-opacity duration-300`}></div>
             
             {/* Icon container */}
-            <div className={`relative z-10 mb-6 flex h-16 w-16 items-center justify-center rounded-2xl transition-all duration-300 ${
+            <div className={`relative z-10 mb-3 sm:mb-6 flex h-8 w-8 sm:h-12 sm:w-12 lg:h-16 lg:w-16 items-center justify-center rounded-xl sm:rounded-2xl transition-all duration-300 ${
               r.color === 'orange'
                 ? 'bg-[#FF6B35]/10 border-2 border-[#FF6B35]/20 group-hover:bg-[#FF6B35]/20 group-hover:border-[#FF6B35]/40'
                 : 'bg-[#1E3A5F]/10 border-2 border-[#1E3A5F]/20 group-hover:bg-[#1E3A5F]/20 group-hover:border-[#1E3A5F]/40'
             }`}>
-              <r.icon className={`h-8 w-8 transition-colors duration-300 ${
+              <r.icon className={`h-4 w-4 sm:h-6 sm:w-6 lg:h-8 lg:w-8 transition-colors duration-300 ${
                 r.color === 'orange' ? 'text-[#FF6B35]' : 'text-[#1E3A5F]'
               }`} />
             </div>
@@ -90,13 +90,13 @@ const WhyParticipate = () => (
             {/* Content */}
             <div className="relative z-10">
               <h3 
-                className="font-display font-bold text-xl mb-3 text-[#212529] transition-colors duration-300"
+                className="font-display font-bold text-xs sm:text-base lg:text-xl mb-2 sm:mb-3 text-[#212529] transition-colors duration-300"
                 style={{ fontFamily: 'Sora, sans-serif' }}
               >
                 {r.title}
               </h3>
               <p 
-                className="text-[#6C757D] leading-relaxed text-sm font-medium"
+                className="text-[#6C757D] leading-relaxed text-xs sm:text-sm font-medium"
                 style={{ fontFamily: 'DM Sans, sans-serif' }}
               >
                 {r.description}

@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { ArrowRight, Rocket, Sparkles, Timer } from "lucide-react";
 
 const CTASection = () => (
-  <section className="py-24 bg-gradient-to-br from-white to-[#F8F9FA] relative overflow-hidden">
+  <section className="py-24 bg-gradient-to-br from-white to-[#F8F9FA] relative overflow-hidden hidden lg:block">
     {/* Animated background */}
     <div className="absolute inset-0 overflow-hidden">
       <div className="absolute top-0 left-1/4 w-96 h-96 bg-[#FF6B35]/5 rounded-full blur-3xl animate-float-elegant"></div>

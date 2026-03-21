@@ -24,7 +24,7 @@ const ANNEES = [
 
 const Galerie = () => {
   const [searchTerm, setSearchTerm] = useState('');
-  const [selectedAnnee, setSelectedAnnee] = useState('2025');
+  const [selectedAnnee, setSelectedAnnee] = useState(2025);
   const [selectedTypeCategorie, setSelectedTypeCategorie] = useState('all');
   const [selectedItem, setSelectedItem] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -238,200 +238,51 @@ const Galerie = () => {
           </div>
         </div>
 
-        {/* Filters Futuristes */}
-        <div className="container py-8">
-          <motion.div 
-            className="backdrop-blur-xl bg-white/80 border border-blue-100 rounded-3xl p-6 shadow-xl"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.3 }}
-          >
-            {/* Indicateur de filtres actifs */}
-            {(selectedAnnee !== '2025' || selectedTypeCategorie !== 'all' || searchTerm) && (
-              <motion.div
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="mb-4 flex items-center justify-between bg-gradient-to-r from-blue-50 to-cyan-50 rounded-xl p-3 border border-blue-200"
-              >
-                <div className="flex items-center gap-2">
-                  <Filter size={16} className="text-blue-600" />
-                  <span className="text-sm font-medium text-blue-800">Filtres actifs</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  {selectedAnnee !== '2025' && (
-                    <span className="px-2 py-1 bg-blue-600 text-white text-xs rounded-full">
-                      {selectedAnnee}
-                    </span>
-                  )}
-                  {selectedTypeCategorie !== 'all' && (
-                    <span className="px-2 py-1 bg-cyan-600 text-white text-xs rounded-full">
-                      {TYPE_CATEGORIES.find(c => c.value === selectedTypeCategorie)?.label}
-                    </span>
-                  )}
-                  {searchTerm && (
-                    <span className="px-2 py-1 bg-gray-600 text-white text-xs rounded-full">
-                      "{searchTerm}"
-                    </span>
-                  )}
-                  <button
-                    onClick={() => {
-                      setSelectedAnnee('2025');
-                      setSelectedTypeCategorie('all');
-                      setSearchTerm('');
-                    }}
-                    className="px-2 py-1 bg-red-500 text-white text-xs rounded-full hover:bg-red-600 transition-colors"
-                  >
-                    Réinitialiser
-                  </button>
-                </div>
-              </motion.div>
-            )}
-            
-            <div className="flex flex-col lg:flex-row gap-6 items-center justify-between">
-              {/* Search Bar Futuriste */}
-              <div className="relative flex-1 max-w-md">
-                <motion.div
-                  className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-cyan-500/10 rounded-2xl blur-xl"
-                  animate={{ opacity: [0.3, 0.6, 0.3] }}
-                  transition={{ duration: 3, repeat: Infinity }}
-                />
-                <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-blue-500" size={20} />
+        {/* Filters Simplifiés Mobile */}
+        <div className="container py-6">
+          <motion.div className="bg-white/90 backdrop-blur-lg border border-blue-100 rounded-2xl p-4 sm:p-6 shadow-lg">
+            {/* Mobile Filters */}
+            <div className="flex flex-col sm:flex-row gap-4 items-center">
+              {/* Search */}
+              <div className="relative flex-1 w-full">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-blue-500" size={18} />
                 <input
                   type="text"
-                  placeholder="Rechercher une photo..."
+                  placeholder="Rechercher..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="relative w-full pl-12 pr-4 py-4 rounded-2xl border border-blue-200 bg-white/90 backdrop-blur-lg text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 transition-all"
-                  style={{ fontFamily: 'DM Sans, sans-serif' }}
+                  className="w-full pl-10 pr-4 py-2.5 rounded-lg border border-blue-200 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/50"
                 />
               </div>
 
-              {/* View Mode Toggle */}
-              <div className="flex items-center gap-2 bg-white/60 rounded-xl p-1 border border-blue-100">
+              {/* Quick Filters */}
+              <div className="flex gap-2 overflow-x-auto pb-1 sm:pb-0">
                 <button
-                  onClick={() => setViewMode('grid')}
-                  className={`p-2 rounded-lg transition-all ${
-                    viewMode === 'grid' 
-                      ? 'bg-gradient-to-r from-blue-600 to-cyan-600 text-white' 
-                      : 'text-gray-500 hover:text-gray-700'
+                  onClick={() => setSelectedTypeCategorie('all')}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap ${
+                    selectedTypeCategorie === 'all' ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-600'
                   }`}
                 >
-                  <Grid3x3 size={18} />
+                  Tout
                 </button>
-                <button
-                  onClick={() => setViewMode('masonry')}
-                  className={`p-2 rounded-lg transition-all ${
-                    viewMode === 'masonry' 
-                      ? 'bg-gradient-to-r from-blue-600 to-cyan-600 text-white' 
-                      : 'text-gray-500 hover:text-gray-700'
-                  }`}
-                >
-                  <Image size={18} />
-                </button>
+                {TYPE_CATEGORIES.slice(0, 3).map((cat) => {
+                  const Icon = cat.icon;
+                  return (
+                    <button
+                      key={cat.value}
+                      onClick={() => setSelectedTypeCategorie(cat.value)}
+                      className={`flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap ${
+                        selectedTypeCategorie === cat.value ? 'text-white' : 'bg-gray-100 text-gray-600'
+                      }`}
+                      style={{ backgroundColor: selectedTypeCategorie === cat.value ? cat.color : undefined }}
+                    >
+                      <Icon size={12} />
+                      {cat.label}
+                    </button>
+                  );
+                })}
               </div>
-
-              {/* Filter Toggle Button */}
-              <motion.button
-                onClick={() => setIsFilterPanelOpen(!isFilterPanelOpen)}
-                className="flex items-center gap-2 px-6 py-3 rounded-2xl bg-gradient-to-r from-blue-600 to-cyan-600 text-white font-medium shadow-lg shadow-blue-500/25 hover:shadow-xl hover:shadow-blue-500/40 transition-all"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <Filter size={18} />
-                Filtres
-                <motion.div
-                  className="w-2 h-2 bg-white rounded-full"
-                  animate={{ scale: [1, 1.5, 1] }}
-                  transition={{ duration: 2, repeat: Infinity }}
-                />
-              </motion.button>
             </div>
-
-            {/* Expandable Filter Panel */}
-            <AnimatePresence>
-              {isFilterPanelOpen && (
-                <motion.div
-                  initial={{ height: 0, opacity: 0 }}
-                  animate={{ height: 'auto', opacity: 1 }}
-                  exit={{ height: 0, opacity: 0 }}
-                  transition={{ duration: 0.3 }}
-                  className="overflow-hidden mt-6"
-                >
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    {/* Année Filters */}
-                    <div>
-                      <h3 className="text-gray-800 font-medium mb-3 flex items-center gap-2">
-                        <Calendar size={16} className="text-blue-600" />
-                        Année
-                      </h3>
-                      <div className="flex flex-wrap gap-2">
-                        {ANNEES.map((annee) => (
-                          <motion.button
-                            key={annee.value}
-                            onClick={() => setSelectedAnnee(annee.value)}
-                            className={`px-4 py-2 rounded-xl text-sm font-medium transition-all ${
-                              selectedAnnee === annee.value
-                                ? 'bg-gradient-to-r from-blue-600 to-cyan-600 text-white shadow-lg'
-                                : 'bg-white/60 text-gray-600 border border-blue-100 hover:bg-white/80'
-                            }`}
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
-                          >
-                            {annee.label}
-                          </motion.button>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* Category Filters */}
-                    <div>
-                      <h3 className="text-gray-800 font-medium mb-3 flex items-center gap-2">
-                        <Tag size={16} className="text-cyan-600" />
-                        Catégorie
-                      </h3>
-                      <div className="flex flex-wrap gap-2">
-                        <motion.button
-                          onClick={() => setSelectedTypeCategorie('all')}
-                          className={`px-4 py-2 rounded-xl text-sm font-medium transition-all ${
-                            selectedTypeCategorie === 'all'
-                              ? 'bg-gradient-to-r from-blue-600 to-cyan-600 text-white shadow-lg'
-                              : 'bg-white/60 text-gray-600 border border-blue-100 hover:bg-white/80'
-                          }`}
-                          whileHover={{ scale: 1.05 }}
-                          whileTap={{ scale: 0.95 }}
-                        >
-                          Toutes
-                        </motion.button>
-                        
-                        {TYPE_CATEGORIES.map((categorie) => {
-                          const Icon = categorie.icon;
-                          return (
-                            <motion.button
-                              key={categorie.value}
-                              onClick={() => setSelectedTypeCategorie(categorie.value)}
-                              className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all ${
-                                selectedTypeCategorie === categorie.value
-                                  ? 'text-white shadow-lg'
-                                  : 'text-gray-600 border border-blue-100 hover:bg-white/80'
-                              }`}
-                              style={{
-                                backgroundColor: selectedTypeCategorie === categorie.value ? categorie.color : 'rgba(255,255,255,0.6)',
-                                borderColor: selectedTypeCategorie === categorie.value ? categorie.color : 'rgba(59,130,246,0.2)'
-                              }}
-                              whileHover={{ scale: 1.05 }}
-                              whileTap={{ scale: 0.95 }}
-                            >
-                              <Icon size={14} />
-                              {categorie.label}
-                            </motion.button>
-                          );
-                        })}
-                      </div>
-                    </div>
-                  </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
           </motion.div>
         </div>
 
@@ -471,11 +322,7 @@ const Galerie = () => {
             </motion.div>
           ) : (
             <motion.div 
-              className={`grid gap-8 ${
-                viewMode === 'grid' 
-                  ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4' 
-                  : 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3'
-              }`}
+              className="grid gap-4 sm:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}
