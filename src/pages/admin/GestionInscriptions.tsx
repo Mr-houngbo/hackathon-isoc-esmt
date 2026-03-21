@@ -3,7 +3,9 @@ import { supabase } from "@/integrations/supabase/client";
 import AdminLayout from "@/components/layout/AdminLayout";
 import { motion } from "framer-motion";
 import { useState } from "react";
-import { Search, Users, User, Mail, Phone, MapPin, GraduationCap, Briefcase, Calendar, Eye, FileText, Globe, Github, Linkedin, Twitter } from "lucide-react";
+import { Search, Users, User, Mail, Phone, MapPin, GraduationCap, Briefcase, Calendar, Eye, FileText, Globe, Github, Linkedin, Twitter, Download, FileSpreadsheet } from "lucide-react";
+import { jsPDF } from "jspdf";
+import autoTable from "jspdf-autotable";
 
 interface Membre {
   id: string;
@@ -93,6 +95,148 @@ const GestionInscriptions = () => {
     });
   };
 
+  // Export functions
+  const exportToCSV = () => {
+    if (!filteredEquipes || filteredEquipes.length === 0) return;
+
+    const headers = [
+      'Type', 'Nom Équipe', 'Projet', 'Description', 'Technologies', 'Date',
+      'Membre', 'Email', 'Téléphone', 'Rôle', 'Filière', 'Niveau', 'École',
+      'LinkedIn', 'GitHub', 'Twitter'
+    ];
+
+    const rows: string[][] = [];
+    filteredEquipes.forEach((equipe) => {
+      const baseInfo = [
+        equipe.type_candidature,
+        equipe.nom_equipe,
+        equipe.nom_projet || '',
+        equipe.description_projet || '',
+        (equipe.technos || []).join(', '),
+        formatDate(equipe.created_at)
+      ];
+
+      if (equipe.membres && equipe.membres.length > 0) {
+        equipe.membres.forEach((membre) => {
+          rows.push([
+            ...baseInfo,
+            membre.nom_prenom,
+            membre.email,
+            membre.telephone || '',
+            membre.role_equipe,
+            membre.filiere,
+            membre.niveau_etudes,
+            membre.ecole || '',
+            membre.linkedin || '',
+            membre.github || '',
+            membre.twitter || ''
+          ]);
+        });
+      } else {
+        rows.push([...baseInfo, '', '', '', '', '', '', '', '', '', '', '']);
+      }
+    });
+
+    const csvContent = [
+      headers.join(','),
+      ...rows.map(row => row.map(cell => `"${(cell || '').replace(/"/g, '""')}"`).join(','))
+    ].join('\n');
+
+    const blob = new Blob(['\uFEFF' + csvContent], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    const url = URL.createObjectURL(blob);
+    link.setAttribute('href', url);
+    link.setAttribute('download', `inscriptions_${new Date().toISOString().split('T')[0]}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
+  const exportToPDF = () => {
+    if (!filteredEquipes || filteredEquipes.length === 0) return;
+
+    const doc = new jsPDF();
+    
+    // Header
+    doc.setFontSize(18);
+    doc.setTextColor(30, 58, 95);
+    doc.text('Liste des Inscriptions - Hackathon ISOC-ESMT', 14, 20);
+    
+    doc.setFontSize(10);
+    doc.setTextColor(100);
+    doc.text(`Exporté le ${new Date().toLocaleDateString('fr-FR')}`, 14, 28);
+    doc.text(`Total: ${filteredEquipes.length} candidatures`, 14, 33);
+
+    const tableData: (string | number)[][] = [];
+    filteredEquipes.forEach((equipe, idx) => {
+      const typeLabel = equipe.type_candidature === 'individuel' ? 'Individuel' : 'Équipe';
+      
+      if (equipe.membres && equipe.membres.length > 0) {
+        equipe.membres.forEach((membre, mIdx) => {
+          tableData.push([
+            idx + 1,
+            typeLabel,
+            equipe.nom_equipe,
+            membre.nom_prenom,
+            membre.email,
+            membre.telephone || '-',
+            membre.role_equipe,
+            membre.filiere,
+            membre.niveau_etudes,
+            equipe.nom_projet?.substring(0, 30) || '-'
+          ]);
+        });
+      } else {
+        tableData.push([
+          idx + 1,
+          typeLabel,
+          equipe.nom_equipe,
+          '-',
+          '-',
+          '-',
+          '-',
+          '-',
+          '-',
+          equipe.nom_projet?.substring(0, 30) || '-'
+        ]);
+      }
+    });
+
+    autoTable(doc, {
+      head: [['#', 'Type', 'Équipe', 'Membre', 'Email', 'Tél', 'Rôle', 'Filière', 'Niveau', 'Projet']],
+      body: tableData,
+      startY: 40,
+      theme: 'grid',
+      headStyles: {
+        fillColor: [30, 58, 95],
+        textColor: 255,
+        fontSize: 9
+      },
+      bodyStyles: {
+        fontSize: 8,
+        textColor: 50
+      },
+      alternateRowStyles: {
+        fillColor: [248, 249, 250]
+      },
+      columnStyles: {
+        0: { cellWidth: 8 },
+        1: { cellWidth: 20 },
+        2: { cellWidth: 30 },
+        3: { cellWidth: 25 },
+        4: { cellWidth: 35 },
+        5: { cellWidth: 22 },
+        6: { cellWidth: 20 },
+        7: { cellWidth: 25 },
+        8: { cellWidth: 18 },
+        9: { cellWidth: 35 }
+      },
+      margin: { top: 40 }
+    });
+
+    doc.save(`inscriptions_${new Date().toISOString().split('T')[0]}.pdf`);
+  };
+
   if (isLoading) {
     return (
       <AdminLayout>
@@ -143,18 +287,44 @@ const GestionInscriptions = () => {
             </div>
 
             {/* Stats */}
-            <div className="flex gap-6">
-              <div className="text-center">
-                <div className="text-2xl font-bold text-[#1E3A5F]">{stats.total}</div>
-                <div className="text-sm text-[#6C757D]">Total</div>
+            <div className="flex items-center gap-6">
+              <div className="flex gap-6">
+                <div className="text-center">
+                  <div className="text-2xl font-bold text-[#1E3A5F]">{stats.total}</div>
+                  <div className="text-sm text-[#6C757D]">Total</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-2xl font-bold text-[#FF6B35]">{stats.individuelles}</div>
+                  <div className="text-sm text-[#6C757D]">Individus</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-2xl font-bold text-[#10B981]">{stats.equipes}</div>
+                  <div className="text-sm text-[#6C757D]">Équipes</div>
+                </div>
               </div>
-              <div className="text-center">
-                <div className="text-2xl font-bold text-[#FF6B35]">{stats.individuelles}</div>
-                <div className="text-sm text-[#6C757D]">Individus</div>
-              </div>
-              <div className="text-center">
-                <div className="text-2xl font-bold text-[#10B981]">{stats.equipes}</div>
-                <div className="text-sm text-[#6C757D]">Équipes</div>
+              
+              {/* Export Buttons */}
+              <div className="flex items-center gap-2 pl-6 border-l border-[#E9ECEF]">
+                <button
+                  onClick={exportToCSV}
+                  disabled={!filteredEquipes || filteredEquipes.length === 0}
+                  className="group flex items-center gap-2 px-3 py-2 bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 disabled:from-gray-300 disabled:to-gray-400 text-white rounded-lg shadow-sm hover:shadow-md transition-all duration-300 disabled:cursor-not-allowed"
+                  style={{ fontFamily: 'DM Sans, sans-serif' }}
+                  title="Exporter en CSV"
+                >
+                  <FileSpreadsheet className="w-4 h-4 group-hover:scale-110 transition-transform" />
+                  <span className="text-sm font-medium">CSV</span>
+                </button>
+                <button
+                  onClick={exportToPDF}
+                  disabled={!filteredEquipes || filteredEquipes.length === 0}
+                  className="group flex items-center gap-2 px-3 py-2 bg-gradient-to-r from-rose-500 to-rose-600 hover:from-rose-600 hover:to-rose-700 disabled:from-gray-300 disabled:to-gray-400 text-white rounded-lg shadow-sm hover:shadow-md transition-all duration-300 disabled:cursor-not-allowed"
+                  style={{ fontFamily: 'DM Sans, sans-serif' }}
+                  title="Exporter en PDF"
+                >
+                  <Download className="w-4 h-4 group-hover:scale-110 transition-transform" />
+                  <span className="text-sm font-medium">PDF</span>
+                </button>
               </div>
             </div>
           </div>
