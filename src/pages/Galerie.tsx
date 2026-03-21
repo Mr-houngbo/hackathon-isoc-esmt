@@ -1,9 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import Layout from "@/components/layout/Layout";
-import { Image, Camera, Calendar, Trophy, Filter, Search, Tag, Clock, Users, Award, Users2, Star, Building, X, Maximize2, Heart, Share2, Download, Eye, Sparkles, Zap, Grid3x3 } from "lucide-react";
-import { motion, AnimatePresence, PanInfo } from "framer-motion";
-import { useState, useCallback, useEffect } from "react";
+import { Image, Camera, Calendar, Trophy, Filter, Search, Tag, Clock, Users, Award, Users2, Star, Building, X, Maximize2, Heart, Share2, Download, Eye, Sparkles, Zap, Grid3x3, Map, Play, Pause, Smartphone } from "lucide-react";
+import { motion, AnimatePresence, PanInfo, useScroll, useTransform } from "framer-motion";
+import { useState, useCallback, useEffect, useRef } from "react";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 
 const TYPE_CATEGORIES = [
@@ -29,12 +29,53 @@ const Galerie = () => {
   const [selectedItem, setSelectedItem] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [likedItems, setLikedItems] = useState<Set<string>>(new Set());
-  const [viewMode, setViewMode] = useState<'grid' | 'masonry'>('grid');
+  const [viewCounts, setViewCounts] = useState<Record<string, number>>({});
+  const [viewMode, setViewMode] = useState<'grid' | 'timeline' | 'tiktok'>('grid');
   const [isFilterPanelOpen, setIsFilterPanelOpen] = useState(false);
   const [hoveredCard, setHoveredCard] = useState<string | null>(null);
+  const [showMostLiked, setShowMostLiked] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  const [currentTikTokIndex, setCurrentTikTokIndex] = useState(0);
+  const timelineRef = useRef<HTMLDivElement>(null);
+  const tikTokContainerRef = useRef<HTMLDivElement>(null);
+
+  // Détecter si on est sur mobile
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+      if (window.innerWidth >= 768 && viewMode === 'tiktok') {
+        setViewMode('grid');
+      }
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, [viewMode]);
+
+  // Charger les likes depuis localStorage au montage
+  useEffect(() => {
+    const savedLikes = localStorage.getItem('galerie_likes');
+    if (savedLikes) {
+      setLikedItems(new Set(JSON.parse(savedLikes)));
+    }
+    const savedViews = localStorage.getItem('galerie_views');
+    if (savedViews) {
+      setViewCounts(JSON.parse(savedViews));
+    }
+  }, []);
+
+  // Sauvegarder les likes dans localStorage
+  useEffect(() => {
+    localStorage.setItem('galerie_likes', JSON.stringify([...likedItems]));
+  }, [likedItems]);
+
+  // Sauvegarder les vues dans localStorage
+  useEffect(() => {
+    localStorage.setItem('galerie_views', JSON.stringify(viewCounts));
+  }, [viewCounts]);
 
   const { data: items, isLoading, error } = useQuery({
-    queryKey: ["galerie", searchTerm, selectedAnnee, selectedTypeCategorie],
+    queryKey: ["galerie", searchTerm, selectedAnnee, selectedTypeCategorie, showMostLiked],
     queryFn: async () => {
       console.log("🔍 Récupération de la galerie...");
       
@@ -66,6 +107,16 @@ const Galerie = () => {
         throw error;
       }
       
+      // Trier par likes si le filtre est activé
+      if (showMostLiked && data) {
+        const savedLikes = JSON.parse(localStorage.getItem('galerie_likes') || '[]');
+        return data.sort((a: any, b: any) => {
+          const aLiked = savedLikes.includes(a.id) ? 1 : 0;
+          const bLiked = savedLikes.includes(b.id) ? 1 : 0;
+          return bLiked - aLiked;
+        });
+      }
+      
       console.log(`✅ ${data?.length || 0} éléments trouvés`);
       return data;
     },
@@ -83,10 +134,18 @@ const Galerie = () => {
     });
   }, []);
 
+  const incrementView = useCallback((itemId: string) => {
+    setViewCounts(prev => ({
+      ...prev,
+      [itemId]: (prev[itemId] || 0) + 1
+    }));
+  }, []);
+
   const openModal = useCallback((item: any) => {
     setSelectedItem(item);
     setIsModalOpen(true);
-  }, []);
+    incrementView(item.id);
+  }, [incrementView]);
 
   const closeModal = useCallback(() => {
     setIsModalOpen(false);
@@ -282,6 +341,52 @@ const Galerie = () => {
                   );
                 })}
               </div>
+
+              {/* Most Liked Filter */}
+              <button
+                onClick={() => setShowMostLiked(!showMostLiked)}
+                className={`flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap transition-all ${
+                  showMostLiked 
+                    ? 'bg-gradient-to-r from-orange-500 to-red-500 text-white shadow-md' 
+                    : 'bg-gray-100 text-gray-600 hover:bg-orange-100 hover:text-orange-600'
+                }`}
+              >
+                <Zap size={12} className={showMostLiked ? 'animate-pulse' : ''} />
+                🔥 Plus aimées
+              </button>
+
+              {/* View Mode Toggle */}
+              <div className="flex items-center gap-1 bg-gray-100 rounded-lg p-1">
+                <button
+                  onClick={() => setViewMode('grid')}
+                  className={`p-1.5 rounded-md transition-all ${
+                    viewMode === 'grid' ? 'bg-white shadow-sm text-blue-600' : 'text-gray-500 hover:text-gray-700'
+                  }`}
+                  title="Vue grille"
+                >
+                  <Grid3x3 size={16} />
+                </button>
+                <button
+                  onClick={() => setViewMode('timeline')}
+                  className={`p-1.5 rounded-md transition-all ${
+                    viewMode === 'timeline' ? 'bg-white shadow-sm text-blue-600' : 'text-gray-500 hover:text-gray-700'
+                  }`}
+                  title="Vue timeline"
+                >
+                  <Map size={16} />
+                </button>
+                {isMobile && (
+                  <button
+                    onClick={() => setViewMode('tiktok')}
+                    className={`p-1.5 rounded-md transition-all ${
+                      viewMode === 'tiktok' ? 'bg-white shadow-sm text-pink-600' : 'text-gray-500 hover:text-gray-700'
+                    }`}
+                    title="Mode TikTok"
+                  >
+                    <Smartphone size={16} />
+                  </button>
+                )}
+              </div>
             </div>
           </motion.div>
         </div>
@@ -320,6 +425,28 @@ const Galerie = () => {
               <h3 className="text-2xl font-bold text-white mb-4">Aucun projet trouvé</h3>
               <p className="text-gray-400 max-w-md mx-auto">Aucun projet ne correspond à votre recherche.</p>
             </motion.div>
+          ) : viewMode === 'tiktok' && isMobile ? (
+            /* TikTok View - Mode Mobile Swipe */
+            <TikTokView 
+              items={items} 
+              currentIndex={currentTikTokIndex}
+              setCurrentIndex={setCurrentTikTokIndex}
+              handleLike={handleLike}
+              likedItems={likedItems}
+              viewCounts={viewCounts}
+              incrementView={incrementView}
+              containerRef={tikTokContainerRef}
+            />
+          ) : viewMode === 'timeline' ? (
+            /* Timeline View - Mode Storytelling */
+            <TimelineView 
+              items={items} 
+              openModal={openModal}
+              handleLike={handleLike}
+              likedItems={likedItems}
+              selectedAnnee={selectedAnnee}
+              viewCounts={viewCounts}
+            />
           ) : (
             <motion.div 
               className="grid gap-4 sm:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
@@ -460,11 +587,11 @@ const Galerie = () => {
                           <div className="flex items-center gap-3 text-xs text-gray-500">
                             <div className="flex items-center gap-1">
                               <Heart size={10} className={isLiked ? 'text-red-500 fill-red-500' : ''} />
-                              <span>{Math.floor(Math.random() * 50) + 10}</span>
+                              <span>{likedItems.has(item.id) ? 1 : 0}</span>
                             </div>
                             <div className="flex items-center gap-1">
                               <Eye size={10} />
-                              <span>{Math.floor(Math.random() * 200) + 50}</span>
+                              <span>{viewCounts[item.id] || 0}</span>
                             </div>
                           </div>
                         </div>
@@ -591,11 +718,11 @@ const Galerie = () => {
                           <div className="flex items-center gap-4">
                             <div className="flex items-center gap-1">
                               <Eye size={14} />
-                              <span>{Math.floor(Math.random() * 500) + 100} vues</span>
+                              <span>{viewCounts[selectedItem.id] || 0} vues</span>
                             </div>
                             <div className="flex items-center gap-1">
                               <Heart size={14} />
-                              <span>{Math.floor(Math.random() * 100) + 20} likes</span>
+                              <span>{likedItems.has(selectedItem.id) ? 1 : 0} likes</span>
                             </div>
                           </div>
                         </div>
@@ -609,6 +736,446 @@ const Galerie = () => {
         </AnimatePresence>
       </div>
     </Layout>
+  );
+};
+
+// Composant TimelineView - Mode Storytelling
+interface TimelineViewProps {
+  items: any[];
+  openModal: (item: any) => void;
+  handleLike: (itemId: string) => void;
+  likedItems: Set<string>;
+  selectedAnnee: number;
+  viewCounts: Record<string, number>;
+}
+
+const TimelineView = ({ items, openModal, handleLike, likedItems, selectedAnnee, viewCounts }: TimelineViewProps) => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start end", "end start"]
+  });
+
+  const lineHeight = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
+
+  // Organiser les items par phases du hackathon
+  const getPhaseForIndex = (index: number, total: number) => {
+    if (index === 0) return { label: "🚀 Lancement", color: "#FF6B35" };
+    if (index === Math.floor(total / 3)) return { label: "⚡ En cours", color: "#3B82F6" };
+    if (index === Math.floor(total * 2 / 3)) return { label: "🏁 Final", color: "#8B5CF6" };
+    if (index === total - 1) return { label: "🏆 Awards", color: "#F59E0B" };
+    return null;
+  };
+
+  return (
+    <div ref={containerRef} className="relative max-w-5xl mx-auto py-12">
+      {/* Ligne de timeline centrale avec animation */}
+      <div className="absolute left-1/2 top-0 bottom-0 w-1 -translate-x-1/2 bg-gradient-to-b from-[#FF6B35]/20 via-[#3B82F6]/20 to-[#F59E0B]/20 rounded-full overflow-hidden">
+        <motion.div 
+          className="w-full bg-gradient-to-b from-[#FF6B35] via-[#3B82F6] to-[#F59E0B]"
+          style={{ height: lineHeight }}
+        />
+      </div>
+
+      {/* Items de la timeline */}
+      <div className="space-y-16">
+        {items.map((item, index) => {
+          const isLeft = index % 2 === 0;
+          const phase = getPhaseForIndex(index, items.length);
+          const categorie = TYPE_CATEGORIES.find(c => c.value === item.type_categorie);
+          const Icon = categorie?.icon || Image;
+          const isLiked = likedItems.has(item.id);
+
+          return (
+            <motion.div
+              key={item.id}
+              initial={{ opacity: 0, x: isLeft ? -50 : 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+              className={`relative flex items-center ${isLeft ? 'flex-row' : 'flex-row-reverse'}`}
+            >
+              {/* Phase Marker (si applicable) */}
+              {phase && (
+                <motion.div
+                  initial={{ scale: 0 }}
+                  whileInView={{ scale: 1 }}
+                  viewport={{ once: true }}
+                  className="absolute left-1/2 -translate-x-1/2 z-20"
+                  style={{ top: -40 }}
+                >
+                  <div 
+                    className="px-4 py-1.5 rounded-full text-xs font-bold text-white shadow-lg"
+                    style={{ backgroundColor: phase.color }}
+                  >
+                    {phase.label}
+                  </div>
+                </motion.div>
+              )}
+
+              {/* Point sur la timeline */}
+              <motion.div
+                className="absolute left-1/2 -translate-x-1/2 z-10"
+                whileHover={{ scale: 1.3 }}
+              >
+                <div 
+                  className="w-5 h-5 rounded-full border-4 border-white shadow-lg"
+                  style={{ backgroundColor: categorie?.color || '#6C757D' }}
+                />
+                <div 
+                  className="absolute inset-0 rounded-full animate-ping opacity-30"
+                  style={{ backgroundColor: categorie?.color || '#6C757D' }}
+                />
+              </motion.div>
+
+              {/* Card */}
+              <div className={`w-5/12 ${isLeft ? 'pr-12 text-right' : 'pl-12 text-left'}`}>
+                <motion.div
+                  whileHover={{ y: -5, scale: 1.02 }}
+                  className="relative group cursor-pointer"
+                  onClick={() => openModal(item)}
+                >
+                  {/* Image */}
+                  <div className="relative overflow-hidden rounded-2xl shadow-xl">
+                    <img
+                      src={item.photo_url}
+                      alt={item.titre_projet}
+                      className="w-full h-56 object-cover transition-transform duration-700 group-hover:scale-110"
+                    />
+                    
+                    {/* Overlay gradient */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-gray-900/80 via-gray-900/20 to-transparent" />
+                    
+                    {/* Badge catégorie */}
+                    <div 
+                      className="absolute top-3 left-3 px-3 py-1 rounded-full text-xs font-bold text-white flex items-center gap-1"
+                      style={{ backgroundColor: categorie?.color || '#6C757D' }}
+                    >
+                      <Icon size={12} />
+                      {categorie?.label}
+                    </div>
+
+                    {/* Like button avec compteur */}
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleLike(item.id);
+                      }}
+                      className="absolute top-3 right-3 px-2 py-1 rounded-full bg-white/90 flex items-center gap-1 transition-transform hover:scale-110"
+                    >
+                      <Heart 
+                        size={14} 
+                        className={isLiked ? 'text-red-500 fill-red-500' : 'text-gray-500'}
+                      />
+                      <span className="text-xs font-medium text-gray-700">{isLiked ? 1 : 0}</span>
+                    </button>
+
+                    {/* Contenu avec stats */}
+                    <div className="absolute bottom-0 left-0 right-0 p-4">
+                      <h3 className="text-white font-bold text-lg mb-1" style={{ fontFamily: 'Sora, sans-serif' }}>
+                        {item.titre_projet || 'Moment spécial'}
+                      </h3>
+                      <p className="text-white/80 text-sm line-clamp-2">
+                        {item.description}
+                      </p>
+                      <div className="flex items-center gap-3 mt-2 text-white/60 text-xs">
+                        <span className="flex items-center gap-1">
+                          <Calendar size={10} />
+                          {new Date(item.created_at).toLocaleDateString('fr-FR')}
+                        </span>
+                        <span>•</span>
+                        <span className="flex items-center gap-1">
+                          <Eye size={10} />
+                          {viewCounts[item.id] || 0} vues
+                        </span>
+                        <span>•</span>
+                        <span className="flex items-center gap-1">
+                          <Heart size={10} className={isLiked ? 'text-red-400 fill-red-400' : ''} />
+                          {isLiked ? 1 : 0}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Connector line */}
+                  <div 
+                    className={`absolute top-1/2 ${isLeft ? 'right-0 translate-x-full' : 'left-0 -translate-x-full'} w-12 h-px bg-gradient-to-r ${isLeft ? 'from-gray-300 to-transparent' : 'from-transparent to-gray-300'}`}
+                  />
+                </motion.div>
+              </div>
+
+              {/* Espace vide pour l'autre côté */}
+              <div className="w-5/12" />
+            </motion.div>
+          );
+        })}
+      </div>
+
+      {/* Fin de timeline */}
+      <motion.div
+        initial={{ opacity: 0, scale: 0 }}
+        whileInView={{ opacity: 1, scale: 1 }}
+        viewport={{ once: true }}
+        className="flex justify-center mt-16"
+      >
+        <div className="w-4 h-4 rounded-full bg-gradient-to-r from-[#FF6B35] via-[#3B82F6] to-[#F59E0B] animate-pulse" />
+      </motion.div>
+    </div>
+  );
+};
+
+// Composant TikTokView - Mode Mobile Swipe
+interface TikTokViewProps {
+  items: any[];
+  currentIndex: number;
+  setCurrentIndex: (index: number) => void;
+  handleLike: (itemId: string) => void;
+  likedItems: Set<string>;
+  viewCounts: Record<string, number>;
+  incrementView: (itemId: string) => void;
+  containerRef: React.RefObject<HTMLDivElement>;
+}
+
+const TikTokView = ({ 
+  items, 
+  currentIndex, 
+  setCurrentIndex, 
+  handleLike, 
+  likedItems, 
+  viewCounts,
+  incrementView,
+  containerRef 
+}: TikTokViewProps) => {
+  const [touchStart, setTouchStart] = useState<number | null>(null);
+  const [touchEnd, setTouchEnd] = useState<number | null>(null);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+
+  // Incrémenter la vue quand on arrive sur une nouvelle photo
+  useEffect(() => {
+    if (items[currentIndex]) {
+      incrementView(items[currentIndex].id);
+    }
+  }, [currentIndex, items, incrementView]);
+
+  const minSwipeDistance = 50;
+
+  const onTouchStart = (e: React.TouchEvent) => {
+    setTouchEnd(null);
+    setTouchStart(e.targetTouches[0].clientY);
+  };
+
+  const onTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientY);
+  };
+
+  const onTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+    
+    const distance = touchStart - touchEnd;
+    const isUpSwipe = distance > minSwipeDistance;
+    const isDownSwipe = distance < -minSwipeDistance;
+
+    if (isUpSwipe && currentIndex < items.length - 1 && !isTransitioning) {
+      setIsTransitioning(true);
+      setCurrentIndex(currentIndex + 1);
+      setTimeout(() => setIsTransitioning(false), 300);
+    }
+    if (isDownSwipe && currentIndex > 0 && !isTransitioning) {
+      setIsTransitioning(true);
+      setCurrentIndex(currentIndex - 1);
+      setTimeout(() => setIsTransitioning(false), 300);
+    }
+  };
+
+  const handleWheel = (e: React.WheelEvent) => {
+    if (isTransitioning) return;
+    
+    if (e.deltaY > 0 && currentIndex < items.length - 1) {
+      setIsTransitioning(true);
+      setCurrentIndex(currentIndex + 1);
+      setTimeout(() => setIsTransitioning(false), 300);
+    } else if (e.deltaY < 0 && currentIndex > 0) {
+      setIsTransitioning(true);
+      setCurrentIndex(currentIndex - 1);
+      setTimeout(() => setIsTransitioning(false), 300);
+    }
+  };
+
+  const currentItem = items[currentIndex];
+  const categorie = TYPE_CATEGORIES.find(c => c.value === currentItem?.type_categorie);
+  const Icon = categorie?.icon || Image;
+  const isLiked = likedItems.has(currentItem?.id || '');
+
+  return (
+    <div 
+      ref={containerRef}
+      className="fixed inset-0 z-50 bg-black md:hidden"
+      onTouchStart={onTouchStart}
+      onTouchMove={onTouchMove}
+      onTouchEnd={onTouchEnd}
+      onWheel={handleWheel}
+    >
+      {/* Progress indicator */}
+      <div className="absolute top-0 left-0 right-0 z-50 flex gap-1 p-2">
+        {items.map((_, idx) => (
+          <div 
+            key={idx}
+            className={`flex-1 h-1 rounded-full transition-all duration-300 ${
+              idx === currentIndex ? 'bg-white' : idx < currentIndex ? 'bg-white/50' : 'bg-white/20'
+            }`}
+          />
+        ))}
+      </div>
+
+      {/* Photo plein écran */}
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={currentItem?.id}
+          initial={{ opacity: 0, y: 100 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -100 }}
+          transition={{ duration: 0.3 }}
+          className="absolute inset-0"
+        >
+          <img
+            src={currentItem?.photo_url}
+            alt={currentItem?.titre_projet}
+            className="w-full h-full object-cover"
+          />
+          
+          {/* Gradient overlay bottom */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20" />
+        </motion.div>
+      </AnimatePresence>
+
+      {/* Top info */}
+      <div className="absolute top-12 left-4 right-4 z-40">
+        <div className="flex items-center gap-2">
+          <div 
+            className="px-3 py-1.5 rounded-full text-xs font-bold text-white flex items-center gap-1.5"
+            style={{ backgroundColor: categorie?.color || '#6C757D' }}
+          >
+            <Icon size={14} />
+            {categorie?.label || 'Général'}
+          </div>
+          <span className="text-white/80 text-xs">
+            {currentIndex + 1} / {items.length}
+          </span>
+        </div>
+      </div>
+
+      {/* Right side actions */}
+      <div className="absolute right-4 bottom-32 z-40 flex flex-col gap-4">
+        {/* Like button */}
+        <motion.button
+          onClick={() => handleLike(currentItem?.id)}
+          whileTap={{ scale: 0.9 }}
+          className="flex flex-col items-center gap-1"
+        >
+          <div className={`w-12 h-12 rounded-full flex items-center justify-center transition-all ${
+            isLiked 
+              ? 'bg-red-500 shadow-lg shadow-red-500/50' 
+              : 'bg-white/20 backdrop-blur-md'
+          }`}>
+            <Heart 
+              size={24} 
+              className={`transition-all ${isLiked ? 'text-white fill-white' : 'text-white'}`}
+            />
+          </div>
+          <span className="text-white text-xs font-medium">
+            {isLiked ? 1 : 0}
+          </span>
+        </motion.button>
+
+        {/* Views count */}
+        <div className="flex flex-col items-center gap-1">
+          <div className="w-12 h-12 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center">
+            <Eye size={24} className="text-white" />
+          </div>
+          <span className="text-white text-xs font-medium">
+            {viewCounts[currentItem?.id] || 0}
+          </span>
+        </div>
+
+        {/* Share button */}
+        <motion.button
+          whileTap={{ scale: 0.9 }}
+          className="flex flex-col items-center gap-1"
+        >
+          <div className="w-12 h-12 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center">
+            <Share2 size={22} className="text-white" />
+          </div>
+          <span className="text-white text-xs font-medium">Partager</span>
+        </motion.button>
+      </div>
+
+      {/* Bottom info */}
+      <div className="absolute bottom-8 left-4 right-20 z-40">
+        <h3 
+          className="text-white font-bold text-xl mb-2"
+          style={{ fontFamily: 'Sora, sans-serif' }}
+        >
+          {currentItem?.titre_projet || 'Photo anonyme'}
+        </h3>
+        
+        {currentItem?.description && (
+          <p className="text-white/80 text-sm mb-3 line-clamp-2">
+            {currentItem.description}
+          </p>
+        )}
+        
+        <div className="flex items-center gap-2 text-white/60 text-xs">
+          <Calendar size={12} />
+          <span>{new Date(currentItem?.created_at).toLocaleDateString('fr-FR')}</span>
+        </div>
+      </div>
+
+      {/* Scroll hint */}
+      {currentIndex === 0 && (
+        <motion.div 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="absolute bottom-8 left-1/2 -translate-x-1/2 z-40"
+        >
+          <motion.div
+            animate={{ y: [0, 10, 0] }}
+            transition={{ duration: 1.5, repeat: Infinity }}
+            className="text-white/60 text-xs flex flex-col items-center gap-1"
+          >
+            <span>Swipe up</span>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M12 5v14M5 12l7-7 7 7" />
+            </svg>
+          </motion.div>
+        </motion.div>
+      )}
+
+      {/* Navigation buttons (desktop testing) */}
+      <div className="absolute bottom-1/2 left-4 right-4 z-40 flex justify-between pointer-events-none md:flex">
+        <button
+          onClick={() => currentIndex > 0 && setCurrentIndex(currentIndex - 1)}
+          disabled={currentIndex === 0}
+          className={`pointer-events-auto w-10 h-10 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center transition-opacity ${
+            currentIndex === 0 ? 'opacity-0' : 'opacity-50'
+          }`}
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2">
+            <path d="M18 15l-6-6-6 6" />
+          </svg>
+        </button>
+        <button
+          onClick={() => currentIndex < items.length - 1 && setCurrentIndex(currentIndex + 1)}
+          disabled={currentIndex === items.length - 1}
+          className={`pointer-events-auto w-10 h-10 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center transition-opacity ${
+            currentIndex === items.length - 1 ? 'opacity-0' : 'opacity-50'
+          }`}
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2">
+            <path d="M6 9l6 6 6-6" />
+          </svg>
+        </button>
+      </div>
+    </div>
   );
 };
 
