@@ -4,7 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 
 interface AuthCtx {
   session: Session | null;
-  user: (User & { role?: string; comite_id?: string; nom_prenom?: string }) | null;
+  user: (User & { role?: string; nom_prenom?: string }) | null;
   loading: boolean;
   signOut: () => Promise<void>;
 }

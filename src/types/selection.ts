@@ -34,9 +34,3 @@ export interface Assignment {
   equipe: Equipe;
 }
 
-export interface ComiteMember {
-  id: string;
-  nom_prenom: string;
-  email: string;
-  created_at: string;
-}

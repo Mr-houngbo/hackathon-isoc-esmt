@@ -68,6 +68,42 @@ export type Database = {
         }
         Relationships: []
       }
+      assignments: {
+        Row: {
+          comite_id: string | null
+          created_at: string | null
+          equipe_id: string | null
+          id: string
+        }
+        Insert: {
+          comite_id?: string | null
+          created_at?: string | null
+          equipe_id?: string | null
+          id?: string
+        }
+        Update: {
+          comite_id?: string | null
+          created_at?: string | null
+          equipe_id?: string | null
+          id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "assignments_comite_id_fkey"
+            columns: ["comite_id"]
+            isOneToOne: false
+            referencedRelation: "comite"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "assignments_equipe_id_fkey"
+            columns: ["equipe_id"]
+            isOneToOne: false
+            referencedRelation: "equipes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       badges: {
         Row: {
           created_at: string | null
@@ -163,6 +199,27 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      comite: {
+        Row: {
+          created_at: string | null
+          email: string
+          id: string
+          nom_prenom: string
+        }
+        Insert: {
+          created_at?: string | null
+          email: string
+          id?: string
+          nom_prenom: string
+        }
+        Update: {
+          created_at?: string | null
+          email?: string
+          id?: string
+          nom_prenom?: string
+        }
+        Relationships: []
       }
       equipes: {
         Row: {
@@ -401,6 +458,69 @@ export type Database = {
           site_url?: string | null
         }
         Relationships: []
+      }
+      notes: {
+        Row: {
+          clarte_problematique: number | null
+          coherence_profil: number | null
+          comite_id: string | null
+          competences_techniques: number | null
+          created_at: string | null
+          equipe_id: string | null
+          faisabilite: number | null
+          id: string
+          motivation: number | null
+          qualite_projet: number | null
+          score_total: number | null
+          soumis: boolean | null
+          updated_at: string | null
+        }
+        Insert: {
+          clarte_problematique?: number | null
+          coherence_profil?: number | null
+          comite_id?: string | null
+          competences_techniques?: number | null
+          created_at?: string | null
+          equipe_id?: string | null
+          faisabilite?: number | null
+          id?: string
+          motivation?: number | null
+          qualite_projet?: number | null
+          score_total?: number | null
+          soumis?: boolean | null
+          updated_at?: string | null
+        }
+        Update: {
+          clarte_problematique?: number | null
+          coherence_profil?: number | null
+          comite_id?: string | null
+          competences_techniques?: number | null
+          created_at?: string | null
+          equipe_id?: string | null
+          faisabilite?: number | null
+          id?: string
+          motivation?: number | null
+          qualite_projet?: number | null
+          score_total?: number | null
+          soumis?: boolean | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "notes_comite_id_fkey"
+            columns: ["comite_id"]
+            isOneToOne: false
+            referencedRelation: "comite"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "notes_equipe_id_fkey"
+            columns: ["equipe_id"]
+            isOneToOne: false
+            referencedRelation: "equipes"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       retours: {
         Row: {

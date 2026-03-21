@@ -14,7 +14,8 @@ const Accueil = () => (
     <PrizesSection />
     <ProgrammePreview />
     <CTASection />
-  </Layout>
+    
+      </Layout>
 );
 
 export default Accueil;

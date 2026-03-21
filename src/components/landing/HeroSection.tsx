@@ -143,7 +143,7 @@ const HeroSection = () => (
     </div>
 
     {/* Animation CSS pour le flottement */}
-    <style jsx>{`
+    <style>{`
       @keyframes float {
         0%, 100% { transform: rotate(-4deg) translateY(0px); }
         50% { transform: rotate(-4deg) translateY(-10px); }

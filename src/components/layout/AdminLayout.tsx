@@ -1,20 +1,17 @@
 import { ReactNode } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "@/context/AuthContext";
-import { LayoutDashboard, Users, Calendar, UserCheck, Handshake, Image, Megaphone, BadgeCheck, LogOut, Trophy, BarChart3, Users as UsersIcon } from "lucide-react";
+import { LayoutDashboard, Users, Users as UsersIcon, UserCheck, Handshake, Image, BadgeCheck, LogOut, BarChart3, Shield } from "lucide-react";
 
 const links = [
   { path: "/admin/dashboard", icon: LayoutDashboard, label: "Dashboard" },
   { path: "/admin/inscriptions", icon: Users, label: "Inscriptions" },
-  { path: "/admin/agenda", icon: Calendar, label: "Agenda" },
   { path: "/admin/mentors", icon: UserCheck, label: "Mentors" },
   { path: "/admin/partenaires", icon: Handshake, label: "Partenaires" },
   { path: "/admin/galerie", icon: Image, label: "Galerie" },
-  { path: "/admin/annonces", icon: Megaphone, label: "Annonces" },
   { path: "/admin/badges", icon: BadgeCheck, label: "Badges" },
   { path: "/admin/comite", icon: UsersIcon, label: "Comité" },
-  { path: "/admin/selection", icon: Trophy, label: "Sélection" },
-  { path: "/admin/classement", icon: Trophy, label: "Classement" },
+  { path: "/admin/attribution", icon: Shield, label: "Attribution", sensitive: true },
   { path: "/admin/statistiques", icon: BarChart3, label: "Statistiques" },
 ];
 
@@ -32,11 +29,20 @@ const AdminLayout = ({ children }: { children: ReactNode }) => {
           {links.map((l) => (
             <Link key={l.path} to={l.path}
               className={`flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium transition-all duration-300 ${
-                location.pathname === l.path 
-                  ? 'bg-gradient-to-r from-[#1E3A5F] to-[#1E3A5F] text-white shadow-lg shadow-[#1E3A5F]/25 border border-[#1E3A5F]/20' 
-                  : 'text-[#6C757D] hover:text-[#212529] hover:bg-[#F8F9FA] hover:border hover:border-[#E9ECEF]/50'
+                l.sensitive 
+                  ? location.pathname === l.path 
+                    ? 'bg-gradient-to-r from-red-600 to-orange-600 text-white shadow-lg shadow-red-500/25 border border-red-600/30' 
+                    : 'text-red-600 hover:text-red-700 hover:bg-red-50 border border-red-200/50'
+                  : location.pathname === l.path 
+                    ? 'bg-gradient-to-r from-[#1E3A5F] to-[#1E3A5F] text-white shadow-lg shadow-[#1E3A5F]/25 border border-[#1E3A5F]/20' 
+                    : 'text-[#6C757D] hover:text-[#212529] hover:bg-[#F8F9FA] hover:border hover:border-[#E9ECEF]/50'
               }`}>
-              <l.icon size={16} className={location.pathname === l.path ? 'text-white' : 'text-[#1E3A5F]'} /> {l.label}
+              <l.icon size={16} className={location.pathname === l.path ? 'text-white' : l.sensitive ? 'text-red-600' : 'text-[#1E3A5F]'} /> {l.label}
+              {l.sensitive && (
+                <span className="ml-auto">
+                  <Shield size={12} className={location.pathname === l.path ? 'text-white' : 'text-red-500'} />
+                </span>
+              )}
             </Link>
           ))}
         </nav>

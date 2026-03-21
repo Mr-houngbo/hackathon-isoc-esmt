@@ -182,6 +182,14 @@ const Footer = () => (
             >
               ad
             </Link>
+            <Link 
+              to="/comite/login" 
+              className="text-[#DEE2E6] hover:text-[#ADB5BD] transition-colors duration-300 ml-2" 
+              style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '10px' }}
+              title="Espace Comité"
+            >
+              co
+            </Link>
           </div>
         </div>
       </div>

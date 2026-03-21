@@ -1,10 +1,16 @@
 import { useState, useEffect } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
-import AdminLayout from "@/components/layout/AdminLayout";
+import AttributionAuth from "@/components/auth/AttributionAuth";
 import { toast } from "sonner";
-import { Trophy, Users, CheckCircle, AlertCircle, ArrowRight, RefreshCw, Eye, Globe, UserPlus } from "lucide-react";
+import { Trophy, Users, CheckCircle, AlertCircle, ArrowRight, RefreshCw, Eye, Globe, UserPlus, Shield, AlertTriangle } from "lucide-react";
 import { motion } from "framer-motion";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 interface ClassementItem {
   id: string;
@@ -30,7 +36,7 @@ interface EquipeIndividuelle {
   };
 }
 
-const SelectionFinale = () => {
+const Attribution = () => {
   const queryClient = useQueryClient();
   const [selectedIndividus, setSelectedIndividus] = useState<string[]>([]);
   const [nomEquipe, setNomEquipe] = useState('');
@@ -53,18 +59,62 @@ const SelectionFinale = () => {
   const { data: individuelsSelectionnes } = useQuery({
     queryKey: ["individuels-selectionnes"],
     queryFn: async () => {
-      const { data, error } = await supabase
+      // Récupérer les équipes individuelles sélectionnées avec leurs notes
+      const { data: equipesData, error: equipesError } = await supabase
         .from("equipes")
         .select(`
-          *,
-          chef: membres!inner(membres(id, nom_prenom, filiere, niveau_etudes))
+          id,
+          nom_equipe,
+          type_candidature,
+          statut
         `)
         .eq("type_candidature", "individuel")
         .eq("statut", "selectionne")
-        .order("score_final", { ascending: false });
+        .order("created_at", { ascending: false });
       
-      if (error) throw error;
-      return data as EquipeIndividuelle[];
+      if (equipesError) throw equipesError;
+      
+      // Si pas d'équipes, retourner un tableau vide
+      if (!equipesData || equipesData.length === 0) {
+        return [];
+      }
+      
+      // Récupérer les notes pour chaque équipe individuellement
+      const equipesAvecNotes = await Promise.all(
+        equipesData.map(async (equipe) => {
+          // Récupérer les notes soumises pour cette équipe
+          const { data: notesData } = await supabase
+            .from("notes")
+            .select("score_total")
+            .eq("equipe_id", equipe.id)
+            .eq("soumis", true);
+          
+          // Calculer le score moyen
+          const scoreMoyen = notesData && notesData.length > 0 
+            ? Math.round(notesData.reduce((sum, note) => sum + note.score_total, 0) / notesData.length)
+            : 0;
+          
+          // Récupérer le chef de l'équipe
+          const { data: chefData } = await supabase
+            .from("membres")
+            .select("nom_prenom, filiere, niveau_etudes")
+            .eq("equipe_id", equipe.id)
+            .eq("role_equipe", "Chef de projet")
+            .limit(1)
+            .maybeSingle(); // maybeSingle pour éviter l'erreur si pas de chef
+          
+          return {
+            id: equipe.id,
+            nom_equipe: equipe.nom_equipe,
+            type_candidature: equipe.type_candidature,
+            statut: equipe.statut,
+            score_final: scoreMoyen,
+            chef: chefData || undefined
+          };
+        })
+      );
+      
+      return equipesAvecNotes as EquipeIndividuelle[];
     },
   });
 
@@ -102,52 +152,60 @@ const SelectionFinale = () => {
         throw new Error("Veuillez donner un nom à l'équipe");
       }
 
-      // 1. Créer la nouvelle équipe
-      const { data: nouvelleEquipe } = await supabase
-        .from("equipes")
-        .insert({
-          type_candidature: 'equipe',
-          nom_equipe: nomEquipe.trim(),
-          nombre_membres: 4,
-          statut: 'selectionne',
-          niveau_technique: individuelsSelectionnes[0]?.niveau_technique || '',
-        })
-        .select()
-        .single();
-
-      if (!nouvelleEquipe) throw new Error("Erreur lors de la création de l'équipe");
-
-      // 2. Rattacher les 4 membres à la nouvelle équipe
-      for (let i = 0; i < selectedIndividus.length; i++) {
-        const individuId = selectedIndividus[i];
-        
-        // Récupérer le membre (chef) de l'équipe individuelle
-        const { data: membre } = await supabase
-          .from("membres")
-          .select("*")
-          .eq("equipe_id", individuId)
+      try {
+        // 1. Créer la nouvelle équipe
+        const { data: nouvelleEquipe } = await supabase
+          .from("equipes")
+          .insert({
+            type_candidature: 'equipe',
+            nom_equipe: nomEquipe.trim(),
+            nombre_membres: 4,
+            statut: 'selectionne'
+          })
+          .select()
           .single();
 
-        if (!membre) continue;
+        if (!nouvelleEquipe) throw new Error("Erreur lors de la création de l'équipe");
 
-        // Mettre à jour equipe_id du membre
-        await supabase
-          .from("membres")
-          .update({
-            equipe_id: nouvelleEquipe.id,
-            est_chef: i === 0, // premier = chef
-            role_equipe: membre.competences?.[0] || 'Participant'
-          })
-          .eq("id", membre.id);
+        // 2. Rattacher les 4 membres à la nouvelle équipe
+        for (let i = 0; i < selectedIndividus.length; i++) {
+          const individuId = selectedIndividus[i];
+          
+          // Récupérer tous les membres de l'équipe individuelle
+          const { data: membres } = await supabase
+            .from("membres")
+            .select("*")
+            .eq("equipe_id", individuId);
+          
+          if (!membres || membres.length === 0) continue;
 
-        // Supprimer l'ancienne équipe individuelle
-        await supabase
-          .from("equipes")
-          .delete()
-          .eq("id", individuId);
+          // Mettre à jour le premier membre comme chef, les autres comme participants
+          for (let j = 0; j < membres.length; j++) {
+            const membre = membres[j];
+            await supabase
+              .from("membres")
+              .update({
+                equipe_id: nouvelleEquipe.id,
+                est_chef: i === 0 && j === 0, // premier du premier individu = chef
+                role_equipe: membre.competences && membre.competences.length > 0 
+                  ? membre.competences[0] 
+                  : 'Participant'
+              })
+              .eq("id", membre.id);
+          }
+
+          // Supprimer l'ancienne équipe individuelle
+          await supabase
+            .from("equipes")
+            .delete()
+            .eq("id", individuId);
+        }
+
+        return nouvelleEquipe;
+      } catch (error) {
+        console.error("Erreur détaillée lors du regroupement:", error);
+        throw new Error(`Erreur lors du regroupement: ${error.message}`);
       }
-
-      return nouvelleEquipe;
     },
     onSuccess: (nouvelleEquipe) => {
       queryClient.invalidateQueries({ queryKey: ["classement-selection"] });
@@ -214,11 +272,11 @@ const SelectionFinale = () => {
   };
 
   // Vérifier si une équipe est publiée
-  const equipesPubliees = classement?.filter(e => e.statut === 'selectionne').length || 0;
+  const equipesPubliees = classement?.filter(e => e.statut === 'selectionne' && e.publiee === true).length || 0;
 
   return (
-    <AdminLayout>
-      <div className="min-h-screen bg-gradient-to-br from-[#F8F9FA] to-white">
+    <AttributionAuth>
+      <div className="min-h-screen bg-gradient-to-br from-red-900 via-orange-900 to-red-950">
         <div className="container py-6">
           {/* Header */}
           <motion.div
@@ -505,27 +563,27 @@ const SelectionFinale = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.3 }}
-            className="bg-white rounded-2xl border border-[#E9ECEF] p-6 shadow-lg"
+            className="bg-red-800/50 backdrop-blur-xl rounded-2xl border border-red-700/30 p-6 shadow-2xl"
           >
             <div className="flex items-center justify-between mb-6">
               <h2 
-                className="font-display text-xl font-bold text-[#212529]"
+                className="font-display text-xl font-bold text-white"
                 style={{ fontFamily: 'Sora, sans-serif' }}
               >
                 Publication des Équipes Sélectionnées
               </h2>
               <div className="flex items-center gap-2">
                 <div className={`w-3 h-3 rounded-full ${
-                  equipesPubliees > 0 ? 'bg-green-500' : 'bg-gray-400'
+                  equipesPubliees > 0 ? 'bg-green-400' : 'bg-red-400'
                 }`}></div>
-                <span className="text-sm text-[#6C757D]" style={{ fontFamily: 'DM Sans, sans-serif' }}>
+                <span className="text-sm text-red-300" style={{ fontFamily: 'DM Sans, sans-serif' }}>
                   {equipesPubliees > 0 ? `${equipesPubliees} équipes en ligne` : 'Aucune équipe en ligne'}
                 </span>
               </div>
             </div>
 
             <p 
-              className="text-[#6C757D] mb-6"
+              className="text-red-300/70 mb-6"
               style={{ fontFamily: 'DM Sans, sans-serif' }}
             >
               Vérifiez la liste avant de publier sur la page publique
@@ -536,18 +594,18 @@ const SelectionFinale = () => {
               {classement?.filter(e => e.statut === 'selectionne').map((equipe) => (
                 <div
                   key={equipe.id}
-                  className="p-4 rounded-lg border border-[#E9ECEF] bg-[#F8F9FA]"
+                  className="p-4 rounded-lg border border-red-700/30 bg-red-900/30"
                 >
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="font-medium text-[#212529]" style={{ fontFamily: 'DM Sans, sans-serif' }}>
+                      <p className="font-medium text-white" style={{ fontFamily: 'DM Sans, sans-serif' }}>
                         {equipe.nom_equipe}
                       </p>
-                      <p className="text-sm text-[#6C757D]" style={{ fontFamily: 'DM Sans, sans-serif' }}>
+                      <p className="text-sm text-red-300/70" style={{ fontFamily: 'DM Sans, sans-serif' }}>
                         Score final: {equipe.score_final}
                       </p>
                     </div>
-                    <Eye size={16} className="text-[#6C757D]" />
+                    <Eye size={16} className="text-red-400" />
                   </div>
                 </div>
               ))}
@@ -559,7 +617,7 @@ const SelectionFinale = () => {
                 <button
                   onClick={() => depublierMutation.mutate()}
                   disabled={depublierMutation.isPending}
-                  className="px-6 py-3 rounded-xl border-2 border-[#DC2626] text-[#DC2626] hover:bg-[#B91C1C] transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+                  className="px-6 py-3 rounded-xl border-2 border-red-500 text-red-300 hover:bg-red-800/50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
                   style={{ fontFamily: 'DM Sans, sans-serif' }}
                 >
                   <AlertCircle size={16} />
@@ -569,7 +627,7 @@ const SelectionFinale = () => {
                 <button
                   onClick={() => publierMutation.mutate()}
                   disabled={publierMutation.isPending}
-                  className="px-6 py-3 rounded-xl bg-[#10B981] text-white hover:bg-[#059669] transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+                  className="px-6 py-3 rounded-xl bg-gradient-to-r from-green-600 to-green-500 text-white hover:from-green-500 hover:to-green-400 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 shadow-lg shadow-green-500/25"
                   style={{ fontFamily: 'DM Sans, sans-serif' }}
                 >
                   <Globe size={16} />
@@ -580,8 +638,8 @@ const SelectionFinale = () => {
           </motion.div>
         </div>
       </div>
-    </AdminLayout>
+    </AttributionAuth>
   );
 };
 
-export default SelectionFinale;
+export default Attribution;
