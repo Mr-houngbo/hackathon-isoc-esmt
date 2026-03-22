@@ -201,9 +201,6 @@ const Footer = () => {
         <div className="flex items-center gap-2 text-sm text-slate-400">
           <span>© 2026 Club ISOC — ESMT Dakar</span>
           <span className="text-[#FEEB09]">•</span>
-          <span className="flex items-center gap-1">
-            Made with <Heart className="w-3 h-3 text-red-400 mx-1" /> in Sénégal
-          </span>
           <span className="text-slate-600 mx-1">•</span>
           <Link 
             to="/admin/dashboard" 
