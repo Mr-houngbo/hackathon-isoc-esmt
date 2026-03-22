@@ -40,10 +40,10 @@ const EquipesSelectionnees = () => {
   });
 
   const getBadgeColor = (position?: number) => {
-    if (position === 1) return 'bg-gradient-to-r from-[#FF6B35] to-[#FF8C42]';
-    if (position === 2) return 'bg-gradient-to-r from-[#1E3A5F] to-[#2C5282]';
-    if (position === 3) return 'bg-gradient-to-r from-[#FFA947] to-[#FF6B35]';
-    return 'bg-gradient-to-r from-[#FF6B35] to-[#1E3A5F]';
+    if (position === 1) return 'bg-gradient-to-r from-[#FEEB09] to-[#FEEB09]';
+    if (position === 2) return 'bg-gradient-to-r from-[#24366E] to-[#2E4A8C]';
+    if (position === 3) return 'bg-gradient-to-r from-[#FFF04D] to-[#FEEB09]';
+    return 'bg-gradient-to-r from-[#FEEB09] to-[#24366E]';
   };
 
   const getBadgeIcon = (position?: number) => {
@@ -58,7 +58,7 @@ const EquipesSelectionnees = () => {
       <div className="min-h-screen bg-gradient-to-br from-[#F8F9FA] to-white">
         {/* Hero Section */}
         <div className="relative overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-br from-[#FF6B35]/5 via-[#1E3A5F]/5 to-transparent"></div>
+          <div className="absolute inset-0 bg-gradient-to-br from-[#FEEB09]/5 via-[#24366E]/5 to-transparent"></div>
           <div className="container relative z-10 py-16">
             <motion.div 
               className="text-center"
@@ -67,7 +67,7 @@ const EquipesSelectionnees = () => {
               transition={{ duration: 0.8 }}
             >
               <div className="flex items-center justify-center gap-4 mb-6">
-                <div className="w-16 h-16 rounded-full bg-gradient-to-r from-[#FF6B35] to-[#1E3A5F] flex items-center justify-center">
+                <div className="w-16 h-16 rounded-full bg-gradient-to-r from-[#FEEB09] to-[#24366E] flex items-center justify-center">
                   <Trophy size={32} className="text-white" />
                 </div>
                 <h1 
@@ -83,7 +83,7 @@ const EquipesSelectionnees = () => {
               >
                 Sélectionnées — Les talents retenus pour le hackathon
               </p>
-              <div className="w-24 h-1 bg-gradient-to-r from-[#FF6B35] to-[#1E3A5F] mx-auto rounded-full"></div>
+              <div className="w-24 h-1 bg-gradient-to-r from-[#FEEB09] to-[#24366E] mx-auto rounded-full"></div>
             </motion.div>
           </div>
         </div>
@@ -94,7 +94,7 @@ const EquipesSelectionnees = () => {
           {isLoading ? (
             <div className="flex justify-center py-20">
               <div className="flex flex-col items-center gap-4">
-                <div className="w-12 h-12 rounded-full border-4 border-[#FF6B35] border-t-transparent animate-spin"></div>
+                <div className="w-12 h-12 rounded-full border-4 border-[#FEEB09] border-t-transparent animate-spin"></div>
                 <p 
                   className="text-[#6C757D]"
                   style={{ fontFamily: 'DM Sans, sans-serif' }}
@@ -141,7 +141,7 @@ const EquipesSelectionnees = () => {
                   transition={{ duration: 0.6, delay: 0.1 * index }}
                   className="group"
                 >
-                  <div className="relative overflow-hidden rounded-2xl border border-[#E9ECEF] bg-white transition-all duration-300 hover:border-[#FF6B35]/50 hover:shadow-xl hover:shadow-[#FF6B35]/10">
+                  <div className="relative overflow-hidden rounded-2xl border border-[#E9ECEF] bg-white transition-all duration-300 hover:border-[#FEEB09]/50 hover:shadow-xl hover:shadow-[#FEEB09]/10">
                     {/* Badge Position */}
                     {eq.position && (
                       <motion.div
@@ -160,19 +160,19 @@ const EquipesSelectionnees = () => {
                     {/* Header */}
                     <div className="p-6 pb-4">
                       <div className="flex items-center gap-3 mb-4">
-                        <div className="w-10 h-10 rounded-full bg-[#FF6B35]/10 flex items-center justify-center">
-                          <Users size={20} className="text-[#FF6B35]" />
+                        <div className="w-10 h-10 rounded-full bg-[#FEEB09]/10 flex items-center justify-center">
+                          <Users size={20} className="text-[#FEEB09]" />
                         </div>
                         <div className="flex-1">
                           <h3 
-                            className="font-display text-lg font-bold text-[#212529] group-hover:text-[#FF6B35] transition-colors"
+                            className="font-display text-lg font-bold text-[#212529] group-hover:text-[#FEEB09] transition-colors"
                             style={{ fontFamily: 'Sora, sans-serif' }}
                           >
                             {eq.nom_equipe || "Participant individuel"}
                           </h3>
                           {eq.position && (
                             <span 
-                              className="text-xs text-[#FF6B35] font-medium"
+                              className="text-xs text-[#FEEB09] font-medium"
                               style={{ fontFamily: 'DM Sans, sans-serif' }}
                             >
                               {eq.position === 1 ? '🥇 1er' : eq.position === 2 ? '🥈 2ème' : eq.position === 3 ? '🥉 3ème' : `Top ${eq.position}`}
@@ -185,7 +185,7 @@ const EquipesSelectionnees = () => {
                       {eq.nom_projet && (
                         <div className="mb-4">
                           <p 
-                            className="text-sm font-semibold text-[#1E3A5F]"
+                            className="text-sm font-semibold text-[#24366E]"
                             style={{ fontFamily: 'DM Sans, sans-serif' }}
                           >
                             {eq.nom_projet}
@@ -235,7 +235,7 @@ const EquipesSelectionnees = () => {
                                   {m.nom_prenom}
                                 </span>
                                 {m.est_chef && (
-                                  <span className="px-2 py-0.5 rounded-full bg-[#1E3A5F]/10 text-[#1E3A5F] text-xs font-bold">
+                                  <span className="px-2 py-0.5 rounded-full bg-[#24366E]/10 text-[#24366E] text-xs font-bold">
                                     Chef
                                   </span>
                                 )}
@@ -272,7 +272,7 @@ const EquipesSelectionnees = () => {
                           {eq.competences_equipe.slice(0, 4).map((skill: string, idx: number) => (
                             <span 
                               key={idx}
-                              className="px-2 py-1 rounded-lg bg-[#FF6B35]/10 text-[#FF6B35] text-xs font-medium"
+                              className="px-2 py-1 rounded-lg bg-[#FEEB09]/10 text-[#FEEB09] text-xs font-medium"
                               style={{ fontFamily: 'DM Sans, sans-serif' }}
                             >
                               {skill}

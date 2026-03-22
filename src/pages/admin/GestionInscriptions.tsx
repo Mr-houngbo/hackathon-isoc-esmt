@@ -241,7 +241,7 @@ const GestionInscriptions = () => {
     return (
       <AdminLayout>
         <div className="flex items-center justify-center min-h-screen">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#1E3A5F]"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#24366E]"></div>
         </div>
       </AdminLayout>
     );
@@ -290,11 +290,11 @@ const GestionInscriptions = () => {
             <div className="flex items-center gap-6">
               <div className="flex gap-6">
                 <div className="text-center">
-                  <div className="text-2xl font-bold text-[#1E3A5F]">{stats.total}</div>
+                  <div className="text-2xl font-bold text-[#24366E]">{stats.total}</div>
                   <div className="text-sm text-[#6C757D]">Total</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-2xl font-bold text-[#FF6B35]">{stats.individuelles}</div>
+                  <div className="text-2xl font-bold text-[#FEEB09]">{stats.individuelles}</div>
                   <div className="text-sm text-[#6C757D]">Individus</div>
                 </div>
                 <div className="text-center">
@@ -338,7 +338,7 @@ const GestionInscriptions = () => {
                 placeholder="Rechercher par nom, projet ou membre..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 border border-[#E9ECEF] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1E3A5F]/20 focus:border-[#1E3A5F]"
+                className="w-full pl-10 pr-4 py-2 border border-[#E9ECEF] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#24366E]/20 focus:border-[#24366E]"
                 style={{ fontFamily: 'DM Sans, sans-serif' }}
               />
             </div>
@@ -347,7 +347,7 @@ const GestionInscriptions = () => {
                 onClick={() => setFilterType('toutes')}
                 className={`px-4 py-2 rounded-lg font-medium transition-colors ${
                   filterType === 'toutes' 
-                    ? 'bg-[#1E3A5F] text-white' 
+                    ? 'bg-[#24366E] text-white' 
                     : 'bg-white text-[#6C757D] border border-[#E9ECEF] hover:bg-[#F8F9FA]'
                 }`}
                 style={{ fontFamily: 'DM Sans, sans-serif' }}
@@ -358,7 +358,7 @@ const GestionInscriptions = () => {
                 onClick={() => setFilterType('individuelles')}
                 className={`px-4 py-2 rounded-lg font-medium transition-colors ${
                   filterType === 'individuelles' 
-                    ? 'bg-[#FF6B35] text-white' 
+                    ? 'bg-[#FEEB09] text-white' 
                     : 'bg-white text-[#6C757D] border border-[#E9ECEF] hover:bg-[#F8F9FA]'
                 }`}
                 style={{ fontFamily: 'DM Sans, sans-serif' }}
@@ -391,7 +391,7 @@ const GestionInscriptions = () => {
               className="bg-white rounded-2xl border border-[#E9ECEF] shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300"
             >
               {/* Header de la carte */}
-              <div className="bg-gradient-to-r from-[#1E3A5F] to-[#2C5282] p-6">
+              <div className="bg-gradient-to-r from-[#24366E] to-[#2E4A8C] p-6">
                 <div className="flex items-start justify-between">
                   <div className="flex-1">
                     <div className="flex items-center gap-3 mb-2">
@@ -427,7 +427,7 @@ const GestionInscriptions = () => {
                 {equipe.nom_projet && (
                   <div className="mb-6">
                     <h3 className="font-semibold text-[#212529] mb-2 flex items-center gap-2">
-                      <FileText className="w-4 h-4 text-[#1E3A5F]" />
+                      <FileText className="w-4 h-4 text-[#24366E]" />
                       Nom du projet
                     </h3>
                     <p className="text-[#6C757D] leading-relaxed">{equipe.nom_projet}</p>
@@ -437,7 +437,7 @@ const GestionInscriptions = () => {
                 {equipe.description_projet && (
                   <div className="mb-6">
                     <h3 className="font-semibold text-[#212529] mb-2 flex items-center gap-2">
-                      <FileText className="w-4 h-4 text-[#1E3A5F]" />
+                      <FileText className="w-4 h-4 text-[#24366E]" />
                       Description du projet
                     </h3>
                     <p className="text-[#6C757D] leading-relaxed">{equipe.description_projet}</p>
@@ -447,14 +447,14 @@ const GestionInscriptions = () => {
                 {equipe.technos && equipe.technos.length > 0 && (
                   <div className="mb-6">
                     <h3 className="font-semibold text-[#212529] mb-2 flex items-center gap-2">
-                      <Briefcase className="w-4 h-4 text-[#1E3A5F]" />
+                      <Briefcase className="w-4 h-4 text-[#24366E]" />
                       Technologies
                     </h3>
                     <div className="flex flex-wrap gap-2">
                       {equipe.technos.map((techno, idx) => (
                         <span 
                           key={idx}
-                          className="px-3 py-1 bg-[#1E3A5F]/10 text-[#1E3A5F] rounded-full text-sm font-medium"
+                          className="px-3 py-1 bg-[#24366E]/10 text-[#24366E] rounded-full text-sm font-medium"
                         >
                           {techno}
                         </span>
@@ -467,7 +467,7 @@ const GestionInscriptions = () => {
                 {equipe.membres && equipe.membres.length > 0 && (
                   <div className="mb-4">
                     <h3 className="font-semibold text-[#212529] mb-4 flex items-center gap-2">
-                      <Users className="w-4 h-4 text-[#1E3A5F]" />
+                      <Users className="w-4 h-4 text-[#24366E]" />
                       Membres ({equipe.membres.length})
                     </h3>
                     <div className="space-y-4">
@@ -568,7 +568,7 @@ const GestionInscriptions = () => {
               className="bg-white rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto"
               onClick={(e) => e.stopPropagation()}
             >
-              <div className="bg-gradient-to-r from-[#1E3A5F] to-[#2C5282] p-6 sticky top-0 z-10">
+              <div className="bg-gradient-to-r from-[#24366E] to-[#2E4A8C] p-6 sticky top-0 z-10">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
                     {getTypeIcon(selectedEquipe.type_candidature)}
@@ -606,7 +606,7 @@ const GestionInscriptions = () => {
                     <h3 className="font-semibold text-[#212529] mb-2">Technologies</h3>
                     <div className="flex flex-wrap gap-2">
                       {selectedEquipe.technos.map((techno, idx) => (
-                        <span key={idx} className="px-3 py-1 bg-[#1E3A5F]/10 text-[#1E3A5F] rounded-full text-sm font-medium">
+                        <span key={idx} className="px-3 py-1 bg-[#24366E]/10 text-[#24366E] rounded-full text-sm font-medium">
                           {techno}
                         </span>
                       ))}

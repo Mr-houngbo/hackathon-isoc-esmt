@@ -8,10 +8,10 @@ interface Props {
 }
 
 const sources = [
-  { value: 'Affiche ESMT', label: 'Affiche ESMT', icon: Target, color: 'text-[#FF6B35]' },
-  { value: 'Réseaux sociaux', label: 'Réseaux sociaux', icon: Heart, color: 'text-[#1E3A5F]' },
-  { value: 'Bouche à oreille', label: 'Bouche à oreille', icon: Sparkles, color: 'text-[#FF6B35]' },
-  { value: 'Passage en salle', label: 'Passage en salle', icon: Target, color: 'text-[#1E3A5F]' },
+  { value: 'Affiche ESMT', label: 'Affiche ESMT', icon: Target, color: 'text-[#FEEB09]' },
+  { value: 'Réseaux sociaux', label: 'Réseaux sociaux', icon: Heart, color: 'text-[#24366E]' },
+  { value: 'Bouche à oreille', label: 'Bouche à oreille', icon: Sparkles, color: 'text-[#FEEB09]' },
+  { value: 'Passage en salle', label: 'Passage en salle', icon: Target, color: 'text-[#24366E]' },
   { value: 'Autre', label: 'Autre', icon: Sparkles, color: 'text-[#6C757D]' }
 ];
 
@@ -28,7 +28,7 @@ const Etape7Motivation = ({ data, onChange }: Props) => {
         transition={{ duration: 0.5 }}
       >
         <div className="flex items-center justify-center gap-3 mb-4">
-          <div className="w-12 h-12 rounded-full bg-gradient-to-r from-[#FF6B35] to-[#1E3A5F] flex items-center justify-center">
+          <div className="w-12 h-12 rounded-full bg-gradient-to-r from-[#FEEB09] to-[#24366E] flex items-center justify-center">
             <Heart size={24} className="text-white" />
           </div>
           <h3 
@@ -44,7 +44,7 @@ const Etape7Motivation = ({ data, onChange }: Props) => {
         >
           Dites-nous pourquoi vous souhaitez participer
         </p>
-        <div className="w-16 h-1 bg-gradient-to-r from-[#FF6B35] to-[#1E3A5F] mx-auto rounded-full mt-4"></div>
+        <div className="w-16 h-1 bg-gradient-to-r from-[#FEEB09] to-[#24366E] mx-auto rounded-full mt-4"></div>
       </motion.div>
 
       {/* Motivation */}
@@ -66,7 +66,7 @@ const Etape7Motivation = ({ data, onChange }: Props) => {
             onChange={(e) => onChange({ motivation: e.target.value })}
             placeholder="Exprimez votre motivation en quelques mots..."
             rows={6}
-            className="w-full px-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FF6B35]/20 focus:border-[#FF6B35]/50 transition-all resize-none"
+            className="w-full px-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FEEB09]/20 focus:border-[#FEEB09]/50 transition-all resize-none"
             style={{ fontFamily: 'DM Sans, sans-serif' }}
           />
           <div className="flex justify-between items-center mt-2">
@@ -105,7 +105,7 @@ const Etape7Motivation = ({ data, onChange }: Props) => {
             onChange={(e) => onChange({ esperances: e.target.value })}
             placeholder="Décrivez vos attentes et objectifs..."
             rows={4}
-            className="w-full px-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FF6B35]/20 focus:border-[#FF6B35]/50 transition-all resize-none"
+            className="w-full px-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FEEB09]/20 focus:border-[#FEEB09]/50 transition-all resize-none"
             style={{ fontFamily: 'DM Sans, sans-serif' }}
           />
           <div className="flex justify-between items-center mt-2">
@@ -146,8 +146,8 @@ const Etape7Motivation = ({ data, onChange }: Props) => {
               onClick={() => onChange({ source_info: source.value })}
               className={`p-3 rounded-xl border-2 transition-all duration-300 hover:scale-105 ${
                 data.source_info === source.value
-                  ? 'border-[#FF6B35] bg-[#FF6B35]/10'
-                  : 'border-[#E9ECEF] bg-white hover:border-[#FF6B35]/30'
+                  ? 'border-[#FEEB09] bg-[#FEEB09]/10'
+                  : 'border-[#E9ECEF] bg-white hover:border-[#FEEB09]/30'
               }`}
             >
               <source.icon 

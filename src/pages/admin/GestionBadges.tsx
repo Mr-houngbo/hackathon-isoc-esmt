@@ -479,7 +479,7 @@ const GestionBadges = () => {
             onClick={() => setActiveSection('participants')}
             className={`flex-1 px-4 py-2 rounded-md font-medium transition-colors ${
               activeSection === 'participants'
-                ? 'bg-white text-[#FF6B35] shadow-sm'
+                ? 'bg-white text-[#FEEB09] shadow-sm'
                 : 'text-gray-600 hover:text-gray-900'
             }`}
           >
@@ -490,7 +490,7 @@ const GestionBadges = () => {
             onClick={() => setActiveSection('staff')}
             className={`flex-1 px-4 py-2 rounded-md font-medium transition-colors ${
               activeSection === 'staff'
-                ? 'bg-white text-[#FF6B35] shadow-sm'
+                ? 'bg-white text-[#FEEB09] shadow-sm'
                 : 'text-gray-600 hover:text-gray-900'
             }`}
           >
@@ -501,7 +501,7 @@ const GestionBadges = () => {
             onClick={() => setActiveSection('historique')}
             className={`flex-1 px-4 py-2 rounded-md font-medium transition-colors ${
               activeSection === 'historique'
-                ? 'bg-white text-[#FF6B35] shadow-sm'
+                ? 'bg-white text-[#FEEB09] shadow-sm'
                 : 'text-gray-600 hover:text-gray-900'
             }`}
           >
@@ -530,7 +530,7 @@ const GestionBadges = () => {
                     });
                   }}
                   disabled={genererBadgesMutation.isPending}
-                  className="px-4 py-2 bg-[#FF6B35] text-white rounded-lg hover:bg-[#FF6B35]/90 transition-colors disabled:opacity-50"
+                  className="px-4 py-2 bg-[#FEEB09] text-white rounded-lg hover:bg-[#FEEB09]/90 transition-colors disabled:opacity-50"
                 >
                   <RefreshCw className={`w-4 h-4 inline mr-2 ${genererBadgesMutation.isPending ? 'animate-spin' : ''}`} />
                   Générer tous les badges
@@ -584,7 +584,7 @@ const GestionBadges = () => {
 
             {isLoadingEquipes ? (
               <div className="text-center py-12">
-                <RefreshCw className="w-8 h-8 animate-spin mx-auto text-[#FF6B35]" />
+                <RefreshCw className="w-8 h-8 animate-spin mx-auto text-[#FEEB09]" />
                 <p className="text-gray-600 mt-2">Chargement des équipes...</p>
               </div>
             ) : (
@@ -630,7 +630,7 @@ const GestionBadges = () => {
                             <button
                               onClick={() => genererBadgesMutation.mutate({ equipeId: equipe.id })}
                               disabled={genererBadgesMutation.isPending}
-                              className="px-3 py-1 bg-[#FF6B35] text-white rounded-lg hover:bg-[#FF6B35]/90 transition-colors text-sm disabled:opacity-50"
+                              className="px-3 py-1 bg-[#FEEB09] text-white rounded-lg hover:bg-[#FEEB09]/90 transition-colors text-sm disabled:opacity-50"
                             >
                               Générer
                             </button>
@@ -715,7 +715,7 @@ const GestionBadges = () => {
                     type="text"
                     value={staffForm.nom_prenom}
                     onChange={(e) => setStaffForm({ ...staffForm, nom_prenom: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#FF6B35] focus:border-transparent"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#FEEB09] focus:border-transparent"
                     placeholder="Jean Dupont"
                   />
                 </div>
@@ -726,7 +726,7 @@ const GestionBadges = () => {
                   <select
                     value={staffForm.role}
                     onChange={(e) => setStaffForm({ ...staffForm, role: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#FF6B35] focus:border-transparent"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#FEEB09] focus:border-transparent"
                   >
                     <option value="">Sélectionner un rôle</option>
                     {Object.keys(ROLE_COLORS).map(role => (
@@ -742,7 +742,7 @@ const GestionBadges = () => {
                     type="text"
                     value={staffForm.organisation}
                     onChange={(e) => setStaffForm({ ...staffForm, organisation: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#FF6B35] focus:border-transparent"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#FEEB09] focus:border-transparent"
                     placeholder="ISOC ESMT"
                   />
                 </div>
@@ -750,7 +750,7 @@ const GestionBadges = () => {
               <button
                 onClick={() => genererStaffBadgeMutation.mutate(staffForm)}
                 disabled={!staffForm.nom_prenom || !staffForm.role || genererStaffBadgeMutation.isPending}
-                className="mt-4 px-4 py-2 bg-[#FF6B35] text-white rounded-lg hover:bg-[#FF6B35]/90 transition-colors disabled:opacity-50"
+                className="mt-4 px-4 py-2 bg-[#FEEB09] text-white rounded-lg hover:bg-[#FEEB09]/90 transition-colors disabled:opacity-50"
               >
                 <RefreshCw className={`w-4 h-4 inline mr-2 ${genererStaffBadgeMutation.isPending ? 'animate-spin' : ''}`} />
                 Générer le badge
@@ -782,7 +782,7 @@ const GestionBadges = () => {
                       value={searchTerm}
                       onChange={(e) => setSearchTerm(e.target.value)}
                       placeholder="Rechercher par nom, équipe..."
-                      className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#FF6B35] focus:border-transparent"
+                      className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#FEEB09] focus:border-transparent"
                     />
                   </div>
                 </div>
@@ -790,7 +790,7 @@ const GestionBadges = () => {
                   <select
                     value={filterType}
                     onChange={(e) => setFilterType(e.target.value as any)}
-                    className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#FF6B35] focus:border-transparent"
+                    className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#FEEB09] focus:border-transparent"
                   >
                     <option value="tous">Tous les types</option>
                     <option value="participants">Participants</option>
@@ -799,7 +799,7 @@ const GestionBadges = () => {
                   <select
                     value={filterStatus}
                     onChange={(e) => setFilterStatus(e.target.value as any)}
-                    className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#FF6B35] focus:border-transparent"
+                    className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#FEEB09] focus:border-transparent"
                   >
                     <option value="tous">Tous les statuts</option>
                     <option value="envoyes">Envoyés</option>
@@ -873,14 +873,14 @@ const GestionBadges = () => {
                           <div className="flex space-x-2">
                             <button
                               onClick={() => telechargerBadge(badge)}
-                              className="p-1 text-gray-600 hover:text-[#FF6B35] transition-colors"
+                              className="p-1 text-gray-600 hover:text-[#FEEB09] transition-colors"
                               title="Télécharger"
                             >
                               <Download className="w-4 h-4" />
                             </button>
                             <button
                               onClick={() => window.open(`/verification/${badge.id}`, '_blank')}
-                              className="p-1 text-gray-600 hover:text-[#FF6B35] transition-colors"
+                              className="p-1 text-gray-600 hover:text-[#FEEB09] transition-colors"
                               title="Vérifier"
                             >
                               <Eye className="w-4 h-4" />

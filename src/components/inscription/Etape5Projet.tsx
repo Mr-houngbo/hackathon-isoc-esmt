@@ -24,7 +24,7 @@ const Etape5Projet = ({ data, onChange, errors = {} }: Props) => {
         transition={{ duration: 0.5 }}
       >
         <div className="flex items-center justify-center gap-3 mb-4">
-          <div className="w-12 h-12 rounded-full bg-gradient-to-r from-[#FF6B35] to-[#1E3A5F] flex items-center justify-center">
+          <div className="w-12 h-12 rounded-full bg-gradient-to-r from-[#FEEB09] to-[#24366E] flex items-center justify-center">
             <Lightbulb size={24} className="text-white" />
           </div>
           <h3 
@@ -40,7 +40,7 @@ const Etape5Projet = ({ data, onChange, errors = {} }: Props) => {
         >
           Décrivez votre projet innovant
         </p>
-        <div className="w-16 h-1 bg-gradient-to-r from-[#FF6B35] to-[#1E3A5F] mx-auto rounded-full mt-4"></div>
+        <div className="w-16 h-1 bg-gradient-to-r from-[#FEEB09] to-[#24366E] mx-auto rounded-full mt-4"></div>
       </motion.div>
 
       {/* Question projet */}
@@ -62,20 +62,20 @@ const Etape5Projet = ({ data, onChange, errors = {} }: Props) => {
             onClick={() => onChange({ a_projet: 'oui' })}
             className={`p-4 rounded-xl border-2 transition-all duration-300 hover:scale-105 ${
               data.a_projet === 'oui'
-                ? 'border-[#FF6B35] bg-[#FF6B35]/10'
-                : 'border-[#E9ECEF] bg-white hover:border-[#FF6B35]/30'
+                ? 'border-[#FEEB09] bg-[#FEEB09]/10'
+                : 'border-[#E9ECEF] bg-white hover:border-[#FEEB09]/30'
             }`}
           >
             <div className="flex flex-col items-center gap-2">
               <Lightbulb 
                 size={24} 
-                className={data.a_projet === 'oui' ? 'text-[#FF6B35]' : 'text-[#6C757D]'}
+                className={data.a_projet === 'oui' ? 'text-[#FEEB09]' : 'text-[#6C757D]'}
               />
               <span 
                 className="font-display text-sm font-bold"
                 style={{ fontFamily: 'Sora, sans-serif' }}
               >
-                <span className={data.a_projet === 'oui' ? 'text-[#FF6B35]' : 'text-[#212529]'}>
+                <span className={data.a_projet === 'oui' ? 'text-[#FEEB09]' : 'text-[#212529]'}>
                   Oui
                 </span>
               </span>
@@ -86,20 +86,20 @@ const Etape5Projet = ({ data, onChange, errors = {} }: Props) => {
             onClick={() => onChange({ a_projet: 'non' })}
             className={`p-4 rounded-xl border-2 transition-all duration-300 hover:scale-105 ${
               data.a_projet === 'non'
-                ? 'border-[#FF6B35] bg-[#FF6B35]/10'
-                : 'border-[#E9ECEF] bg-white hover:border-[#FF6B35]/30'
+                ? 'border-[#FEEB09] bg-[#FEEB09]/10'
+                : 'border-[#E9ECEF] bg-white hover:border-[#FEEB09]/30'
             }`}
           >
             <div className="flex flex-col items-center gap-2">
               <X 
                 size={24} 
-                className={data.a_projet === 'non' ? 'text-[#FF6B35]' : 'text-[#6C757D]'}
+                className={data.a_projet === 'non' ? 'text-[#FEEB09]' : 'text-[#6C757D]'}
               />
               <span 
                 className="font-display text-sm font-bold"
                 style={{ fontFamily: 'Sora, sans-serif' }}
               >
-                <span className={data.a_projet === 'non' ? 'text-[#FF6B35]' : 'text-[#212529]'}>
+                <span className={data.a_projet === 'non' ? 'text-[#FEEB09]' : 'text-[#212529]'}>
                   Non
                 </span>
               </span>
@@ -119,7 +119,7 @@ const Etape5Projet = ({ data, onChange, errors = {} }: Props) => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.2 }}
-          className="p-6 rounded-xl bg-gradient-to-r from-[#FF6B35]/10 to-[#1E3A5F]/10 border border-[#E9ECEF] text-center"
+          className="p-6 rounded-xl bg-gradient-to-r from-[#FEEB09]/10 to-[#24366E]/10 border border-[#E9ECEF] text-center"
         >
           <p 
             className="text-[#212529] font-medium"
@@ -152,7 +152,7 @@ const Etape5Projet = ({ data, onChange, errors = {} }: Props) => {
                 value={data.nom_projet || ''}
                 onChange={(e) => onChange({ nom_projet: e.target.value })}
                 placeholder="Nom de votre projet"
-                className="w-full px-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FF6B35]/20 focus:border-[#FF6B35]/50 transition-all"
+                className="w-full px-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FEEB09]/20 focus:border-[#FEEB09]/50 transition-all"
                 style={{ fontFamily: 'DM Sans, sans-serif' }}
               />
               {errors.nom_projet && (
@@ -180,7 +180,7 @@ const Etape5Projet = ({ data, onChange, errors = {} }: Props) => {
               <select
                 value={data.domaine_projet || ''}
                 onChange={(e) => onChange({ domaine_projet: e.target.value })}
-                className="w-full px-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] focus:outline-none focus:ring-2 focus:ring-[#FF6B35]/20 focus:border-[#FF6B35]/50 transition-all"
+                className="w-full px-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] focus:outline-none focus:ring-2 focus:ring-[#FEEB09]/20 focus:border-[#FEEB09]/50 transition-all"
                 style={{ fontFamily: 'DM Sans, sans-serif' }}
               >
                 <option value="">Sélectionnez un domaine</option>
@@ -216,7 +216,7 @@ const Etape5Projet = ({ data, onChange, errors = {} }: Props) => {
                 onChange={(e) => onChange({ problematique: e.target.value })}
                 placeholder="Décrivez le problème que vous souhaitez résoudre..."
                 rows={4}
-                className="w-full px-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FF6B35]/20 focus:border-[#FF6B35]/50 transition-all resize-none"
+                className="w-full px-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FEEB09]/20 focus:border-[#FEEB09]/50 transition-all resize-none"
                 style={{ fontFamily: 'DM Sans, sans-serif' }}
               />
               {errors.problematique && (
@@ -246,7 +246,7 @@ const Etape5Projet = ({ data, onChange, errors = {} }: Props) => {
                 onChange={(e) => onChange({ solution: e.target.value })}
                 placeholder="Quelle solution votre projet apporte-t-il ?"
                 rows={4}
-                className="w-full px-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FF6B35]/20 focus:border-[#FF6B35]/50 transition-all resize-none"
+                className="w-full px-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FEEB09]/20 focus:border-[#FEEB09]/50 transition-all resize-none"
                 style={{ fontFamily: 'DM Sans, sans-serif' }}
               />
               <div className="flex justify-between items-center mt-2">

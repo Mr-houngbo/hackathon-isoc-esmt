@@ -7,7 +7,7 @@ const prizes = [
     rank: "1er Prix", 
     amount: "250 000 FCFA", 
     bonus: "+ 6 mois d'accompagnement", 
-    color: "from-[#FF6B35] to-[#FF8C42]",
+    color: "from-[#FEEB09] to-[#FEEB09]",
     icon: Crown,
     description: "Accompagnement personnalisé et lancement officiel du projet"
   },
@@ -15,7 +15,7 @@ const prizes = [
     rank: "2ème Prix", 
     amount: "150 000 FCFA", 
     bonus: "+ 3 mois d'accompagnement", 
-    color: "from-[#1E3A5F] to-[#2C5282]",
+    color: "from-[#24366E] to-[#2E4A8C]",
     icon: Medal,
     description: "Programme de développement et mise en relation avec des partenaires"
   },
@@ -23,7 +23,7 @@ const prizes = [
     rank: "3ème Prix", 
     amount: "50 000 FCFA", 
     bonus: "+ 3 mois d'accompagnement", 
-    color: "from-[#FFA947] to-[#FF6B35]",
+    color: "from-[#FFF04D] to-[#FEEB09]",
     icon: Award,
     description: "Soutien technique et accès à l'écosystème entrepreneurial"
   },
@@ -50,12 +50,12 @@ const PrizeCard = ({ prize, index }: { prize: typeof prizes[0]; index: number })
       >
         {/* Front Face */}
         <div 
-          className="absolute inset-0 rounded-2xl bg-gradient-to-br from-white to-[#F8F9FA] border border-[#E9ECEF] shadow-lg hover:shadow-xl transition-all duration-300 hover:border-[#FF6B35]/50"
+          className="absolute inset-0 rounded-2xl bg-gradient-to-br from-white to-[#F8F9FA] border border-[#E9ECEF] shadow-lg hover:shadow-xl transition-all duration-300 hover:border-[#FEEB09]/50"
           style={{ backfaceVisibility: "hidden" }}
         >
           <div className="flex flex-col items-center justify-center h-full p-6">
-            <div className="w-16 h-16 rounded-full bg-gradient-to-r from-[#FF6B35]/10 to-[#1E3A5F]/10 flex items-center justify-center mb-4">
-              <prize.icon size={32} className="text-[#FF6B35]" />
+            <div className="w-16 h-16 rounded-full bg-gradient-to-r from-[#FEEB09]/10 to-[#24366E]/10 flex items-center justify-center mb-4">
+              <prize.icon size={32} className="text-[#FEEB09]" />
             </div>
             <h3 
               className="font-display text-xl font-bold text-[#212529] mb-2"
@@ -63,7 +63,7 @@ const PrizeCard = ({ prize, index }: { prize: typeof prizes[0]; index: number })
             >
               {prize.rank}
             </h3>
-            <div className="w-16 h-1 bg-gradient-to-r from-[#FF6B35] to-[#1E3A5F] rounded-full mb-4"></div>
+            <div className="w-16 h-1 bg-gradient-to-r from-[#FEEB09] to-[#24366E] rounded-full mb-4"></div>
             <p 
               className="text-sm text-[#6C757D] text-center"
               style={{ fontFamily: 'DM Sans, sans-serif' }}
@@ -75,7 +75,7 @@ const PrizeCard = ({ prize, index }: { prize: typeof prizes[0]; index: number })
 
         {/* Back Face */}
         <div 
-          className="absolute inset-0 rounded-2xl bg-gradient-to-br from-[#FF6B35] to-[#1E3A5F] border border-[#FF6B35]/20 shadow-xl"
+          className="absolute inset-0 rounded-2xl bg-gradient-to-br from-[#FEEB09] to-[#24366E] border border-[#FEEB09]/20 shadow-xl"
           style={{ 
             backfaceVisibility: "hidden",
             transform: "rotateY(180deg)"
@@ -105,8 +105,8 @@ const PrizesSection = () => (
   <section className="py-24 bg-gradient-to-br from-white to-[#F8F9FA] relative overflow-hidden">
     {/* Background decorative elements */}
     <div className="absolute inset-0 overflow-hidden">
-      <div className="absolute top-32 right-1/4 w-72 h-72 bg-[#FF6B35]/3 rounded-full blur-3xl animate-float-elegant"></div>
-      <div className="absolute bottom-32 left-1/4 w-72 h-72 bg-[#1E3A5F]/3 rounded-full blur-3xl animate-float-elegant" style={{ animationDelay: '2s' }}></div>
+      <div className="absolute top-32 right-1/4 w-72 h-72 bg-[#FEEB09]/3 rounded-full blur-3xl animate-float-elegant"></div>
+      <div className="absolute bottom-32 left-1/4 w-72 h-72 bg-[#24366E]/3 rounded-full blur-3xl animate-float-elegant" style={{ animationDelay: '2s' }}></div>
     </div>
     
     <div className="container relative z-10">
@@ -122,12 +122,12 @@ const PrizesSection = () => (
         >
           Des prix exceptionnels
         </h2>
-        <div className="w-24 h-1 bg-gradient-to-r from-[#FF6B35] to-[#1E3A5F] mx-auto rounded-full mb-6"></div>
+        <div className="w-24 h-1 bg-gradient-to-r from-[#FEEB09] to-[#24366E] mx-auto rounded-full mb-6"></div>
         <p 
           className="text-[#6C757D] max-w-2xl mx-auto text-lg leading-relaxed"
           style={{ fontFamily: 'DM Sans, sans-serif' }}
         >
-          Au total : <span className="text-[#FF6B35] font-bold">450 000 FCFA</span> de prix + accompagnement pour les meilleurs projets.
+          Au total : <span className="text-[#FEEB09] font-bold">450 000 FCFA</span> de prix + accompagnement pour les meilleurs projets.
         </p>
       </motion.div>
 
@@ -139,7 +139,7 @@ const PrizesSection = () => (
     </div>
 
     {/* Decorative bottom gradient */}
-    <div className="absolute bottom-0 left-0 right-0 h-2 bg-gradient-to-r from-[#FF6B35] via-[#1E3A5F] to-[#FF6B35]"></div>
+    <div className="absolute bottom-0 left-0 right-0 h-2 bg-gradient-to-r from-[#FEEB09] via-[#24366E] to-[#FEEB09]"></div>
   </section>
 );
 

@@ -76,7 +76,7 @@ const VerificationBadge = () => {
       <Layout>
         <div className="min-h-screen bg-gradient-to-br from-[#F8F9FA] to-white flex items-center justify-center">
           <div className="text-center">
-            <RefreshCw className="w-12 h-12 animate-spin text-[#FF6B35] mx-auto mb-4" />
+            <RefreshCw className="w-12 h-12 animate-spin text-[#FEEB09] mx-auto mb-4" />
             <p className="text-gray-600">Vérification du badge en cours...</p>
           </div>
         </div>
@@ -145,7 +145,7 @@ const VerificationBadge = () => {
                   </p>
                   <a 
                     href="mailto:isoc.esmt@gmail.com" 
-                    className="text-[#FF6B35] hover:text-[#FF6B35]/80 transition-colors"
+                    className="text-[#FEEB09] hover:text-[#FEEB09]/80 transition-colors"
                   >
                     isoc.esmt@gmail.com
                   </a>
@@ -198,7 +198,7 @@ const VerificationBadge = () => {
                 <div className="space-y-4">
                   <button
                     onClick={() => navigate('/')}
-                    className="w-full px-4 py-3 bg-[#FF6B35] text-white rounded-xl hover:bg-[#FF6B35]/90 transition-colors"
+                    className="w-full px-4 py-3 bg-[#FEEB09] text-white rounded-xl hover:bg-[#FEEB09]/90 transition-colors"
                   >
                     <ArrowLeft className="w-4 h-4 inline mr-2" />
                     Retour à l'accueil
@@ -211,7 +211,7 @@ const VerificationBadge = () => {
                   </p>
                   <a 
                     href="mailto:isoc.esmt@gmail.com" 
-                    className="text-[#FF6B35] hover:text-[#FF6B35]/80 transition-colors"
+                    className="text-[#FEEB09] hover:text-[#FEEB09]/80 transition-colors"
                   >
                     isoc.esmt@gmail.com
                   </a>
@@ -296,9 +296,9 @@ const VerificationBadge = () => {
               </div>
 
               {/* Informations événement */}
-              <div className="bg-gradient-to-br from-[#FF6B35]/5 to-[#1E3A5F]/5 rounded-2xl p-6 mb-6">
+              <div className="bg-gradient-to-br from-[#FEEB09]/5 to-[#24366E]/5 rounded-2xl p-6 mb-6">
                 <h2 className="text-xl font-semibold text-gray-900 mb-4 flex items-center">
-                  <Calendar className="w-5 h-5 mr-2 text-[#FF6B35]" />
+                  <Calendar className="w-5 h-5 mr-2 text-[#FEEB09]" />
                   Événement
                 </h2>
                 
@@ -308,12 +308,12 @@ const VerificationBadge = () => {
                     2ème Hackathon ISOC-ESMT 2026
                   </div>
                   <div className="flex items-center text-gray-700">
-                    <Calendar className="w-4 h-4 mr-2 text-[#FF6B35]" />
+                    <Calendar className="w-4 h-4 mr-2 text-[#FEEB09]" />
                     <strong className="mr-2">Date :</strong>
                     17 & 18 Avril 2026
                   </div>
                   <div className="flex items-center text-gray-700">
-                    <MapPin className="w-4 h-4 mr-2 text-[#FF6B35]" />
+                    <MapPin className="w-4 h-4 mr-2 text-[#FEEB09]" />
                     <strong className="mr-2">Lieu :</strong>
                     ESMT Dakar, Sénégal
                   </div>
@@ -349,7 +349,7 @@ const VerificationBadge = () => {
               <div className="mt-8 flex flex-col sm:flex-row gap-4">
                 <button
                   onClick={() => navigate('/')}
-                  className="flex-1 px-6 py-3 bg-[#FF6B35] text-white rounded-xl hover:bg-[#FF6B35]/90 transition-colors"
+                  className="flex-1 px-6 py-3 bg-[#FEEB09] text-white rounded-xl hover:bg-[#FEEB09]/90 transition-colors"
                 >
                   <ArrowLeft className="w-4 h-4 inline mr-2" />
                   Retour à l'accueil

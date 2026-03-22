@@ -8,7 +8,7 @@ import { Plus, Trash2, Save, Search, Filter, Download, Image, Calendar, Eye, Tag
 import { motion } from "framer-motion";
 
 const TYPE_CATEGORIES = [
-  { value: 'team_isoc_esmt', label: 'TEAM ISOC ESMT', icon: Star, color: '#FF6B35' },
+  { value: 'team_isoc_esmt', label: 'TEAM ISOC ESMT', icon: Star, color: '#FEEB09' },
   { value: 'mentors', label: 'Mentors', icon: Award, color: '#8B5CF6' },
   { value: 'jury', label: 'Jury', icon: Trophy, color: '#DC2626' },
   { value: 'equipes', label: 'Équipes', icon: Users, color: '#00873E' },
@@ -156,7 +156,7 @@ const GestionGalerie = () => {
       <AdminLayout>
         <div className="flex items-center justify-center min-h-screen">
           <div className="flex flex-col items-center gap-4">
-            <div className="w-12 h-12 rounded-full border-4 border-[#1E3A5F] border-t-transparent animate-spin"></div>
+            <div className="w-12 h-12 rounded-full border-4 border-[#24366E] border-t-transparent animate-spin"></div>
             <p className="text-[#6C757D]">Chargement de la galerie...</p>
           </div>
         </div>
@@ -181,7 +181,7 @@ const GestionGalerie = () => {
     <AdminLayout>
       <div className="min-h-screen bg-gradient-to-br from-[#F8F9FA] to-white">
         {/* Header */}
-        <div className="bg-gradient-to-r from-[#1E3A5F]/10 to-[#FF6B35]/10 backdrop-blur-sm border-b border-[#E9ECEF]/20">
+        <div className="bg-gradient-to-r from-[#24366E]/10 to-[#FEEB09]/10 backdrop-blur-sm border-b border-[#E9ECEF]/20">
           <div className="container py-6">
             <div className="flex items-center justify-between">
               <motion.div
@@ -206,7 +206,7 @@ const GestionGalerie = () => {
               <div className="flex gap-2">
                 <button
                   onClick={() => setShowAdd(!showAdd)}
-                  className="px-4 py-2 rounded-lg bg-[#1E3A5F] text-white hover:bg-[#006450] transition-colors"
+                  className="px-4 py-2 rounded-lg bg-[#24366E] text-white hover:bg-[#006450] transition-colors"
                   style={{ fontFamily: 'DM Sans, sans-serif' }}
                 >
                   <Plus size={16} className="mr-2" />
@@ -237,14 +237,14 @@ const GestionGalerie = () => {
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.5, delay: 0.1 }}
-                className="relative overflow-hidden rounded-2xl border border-[#E9ECEF] bg-[white] p-6 hover:border-[#FF6B35]/50 hover:shadow-xl hover:shadow-[#FF6B35]/10 transition-all duration-300"
+                className="relative overflow-hidden rounded-2xl border border-[#E9ECEF] bg-[white] p-6 hover:border-[#FEEB09]/50 hover:shadow-xl hover:shadow-[#FEEB09]/10 transition-all duration-300"
               >
-                <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-[#FF6B35]/5 opacity-0"></div>
+                <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-[#FEEB09]/5 opacity-0"></div>
                 
                 <div className="relative z-10">
                   <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center gap-3">
-                      <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-[#1E3A5F]/20 to-[#FF6B35]/20 flex items-center justify-center">
+                      <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-[#24366E]/20 to-[#FEEB09]/20 flex items-center justify-center">
                         <Image size={24} className="text-[#212529]" />
                       </div>
                       <div>
@@ -390,7 +390,7 @@ const GestionGalerie = () => {
                     <label className="block text-sm font-medium text-[#6C757D] mb-2" style={{ fontFamily: 'DM Sans, sans-serif' }}>Titre du projet</label>
                     <input 
                       placeholder="Titre du projet" 
-                      value={form.titre_projet}                       onChange={(e) => setForm({ ...form, titre_projet: e.target.value })}                       className="w-full px-4 py-2 rounded-xl border border-[#E9ECEF] bg-[bg-white] text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FF6B35] focus:border-transparent transition-all duration-300"
+                      value={form.titre_projet}                       onChange={(e) => setForm({ ...form, titre_projet: e.target.value })}                       className="w-full px-4 py-2 rounded-xl border border-[#E9ECEF] bg-[bg-white] text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FEEB09] focus:border-transparent transition-all duration-300"
                       style={{ fontFamily: 'DM Sans, sans-serif' }}
                     />
                   </div>
@@ -414,7 +414,7 @@ const GestionGalerie = () => {
                     <select 
                       value={form.annee}
                       onChange={(e) => setForm({ ...form, annee: parseInt(e.target.value) })}
-                      className="w-full px-4 py-2 rounded-xl border border-[#E9ECEF] bg-[white] text-[#212529] focus:outline-none focus:ring-2 focus:ring-[#FF6B35] focus:border-transparent transition-all duration-300"
+                      className="w-full px-4 py-2 rounded-xl border border-[#E9ECEF] bg-[white] text-[#212529] focus:outline-none focus:ring-2 focus:ring-[#FEEB09] focus:border-transparent transition-all duration-300"
                       style={{ fontFamily: 'DM Sans, sans-serif' }}
                     >
                       {ANNEES.map((annee) => (
@@ -428,7 +428,7 @@ const GestionGalerie = () => {
                     <select 
                       value={form.type_categorie}
                       onChange={(e) => setForm({ ...form, type_categorie: e.target.value })}
-                      className="w-full px-4 py-2 rounded-xl border border-[#E9ECEF] bg-[white] text-[#212529] focus:outline-none focus:ring-2 focus:ring-[#FF6B35] focus:border-transparent transition-all duration-300"
+                      className="w-full px-4 py-2 rounded-xl border border-[#E9ECEF] bg-[white] text-[#212529] focus:outline-none focus:ring-2 focus:ring-[#FEEB09] focus:border-transparent transition-all duration-300"
                       style={{ fontFamily: 'DM Sans, sans-serif' }}
                     >
                       {TYPE_CATEGORIES.map((cat) => (
@@ -443,7 +443,7 @@ const GestionGalerie = () => {
                       placeholder="ID de l'équipe associée" 
                       value={form.equipe_id} 
                       onChange={(e) => setForm({ ...form, equipe_id: e.target.value })}
-                      className="w-full px-4 py-2 rounded-xl border border-[#E9ECEF] bg-[bg-white] text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FF6B35] focus:border-transparent transition-all duration-300"
+                      className="w-full px-4 py-2 rounded-xl border border-[#E9ECEF] bg-[bg-white] text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FEEB09] focus:border-transparent transition-all duration-300"
                       style={{ fontFamily: 'DM Sans, sans-serif' }}
                     />
                   </div>
@@ -457,7 +457,7 @@ const GestionGalerie = () => {
                   value={form.description} 
                   onChange={(e) => setForm({ ...form, description: e.target.value })}
                   rows={3}
-                  className="w-full px-4 py-2 rounded-xl border border-[#E9ECEF] bg-[bg-white] text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FF6B35] focus:border-transparent transition-all duration-300"
+                  className="w-full px-4 py-2 rounded-xl border border-[#E9ECEF] bg-[bg-white] text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FEEB09] focus:border-transparent transition-all duration-300"
                   style={{ fontFamily: 'DM Sans, sans-serif' }}
                 />
               </div>
@@ -484,7 +484,7 @@ const GestionGalerie = () => {
                 </button>
                 <button
                   onClick={() => editingItem ? updateGalerie.mutate({ id: editingItem.id, titre_projet: form.titre_projet, description: form.description }) : addGalerie.mutate()}
-                  className="px-6 py-2 rounded-xl bg-[#1E3A5F] text-white hover:bg-[#006450] transition-colors flex items-center gap-2"
+                  className="px-6 py-2 rounded-xl bg-[#24366E] text-white hover:bg-[#006450] transition-colors flex items-center gap-2"
                   style={{ fontFamily: 'DM Sans, sans-serif' }}
                 >
                   <Save size={16} />
@@ -511,7 +511,7 @@ const GestionGalerie = () => {
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                   placeholder="Rechercher un média..."
-                  className="flex-1 px-4 py-2 rounded-xl border border-[#E9ECEF] bg-[white] text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FF6B35] focus:border-transparent transition-all duration-300"
+                  className="flex-1 px-4 py-2 rounded-xl border border-[#E9ECEF] bg-[white] text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FEEB09] focus:border-transparent transition-all duration-300"
                   style={{ fontFamily: 'DM Sans, sans-serif' }}
                 />
               </div>
@@ -522,8 +522,8 @@ const GestionGalerie = () => {
                   onClick={() => setSelectedAnnee(0)}
                   className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all ${
                     selectedAnnee === 0
-                      ? 'bg-gradient-to-r from-[#FF6B35] to-[#1E3A5F] text-white shadow-lg'
-                      : 'bg-white text-[#6C757D] border border-[#E9ECEF] hover:border-[#FF6B35]/30 hover:text-[#212529]'
+                      ? 'bg-gradient-to-r from-[#FEEB09] to-[#24366E] text-white shadow-lg'
+                      : 'bg-white text-[#6C757D] border border-[#E9ECEF] hover:border-[#FEEB09]/30 hover:text-[#212529]'
                   }`}
                   style={{ fontFamily: 'DM Sans, sans-serif' }}
                 >
@@ -537,8 +537,8 @@ const GestionGalerie = () => {
                     onClick={() => setSelectedAnnee(annee.value)}
                     className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all ${
                       selectedAnnee === annee.value
-                        ? 'bg-gradient-to-r from-[#FF6B35] to-[#1E3A5F] text-white shadow-lg'
-                        : 'bg-white text-[#6C757D] border border-[#E9ECEF] hover:border-[#FF6B35]/30 hover:text-[#212529]'
+                        ? 'bg-gradient-to-r from-[#FEEB09] to-[#24366E] text-white shadow-lg'
+                        : 'bg-white text-[#6C757D] border border-[#E9ECEF] hover:border-[#FEEB09]/30 hover:text-[#212529]'
                     }`}
                     style={{ fontFamily: 'DM Sans, sans-serif' }}
                   >
@@ -560,9 +560,9 @@ const GestionGalerie = () => {
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.5 }}
-                className="relative overflow-hidden rounded-2xl border border-[#E9ECEF] bg-[white] hover:border-[#FF6B35]/50 hover:shadow-xl hover:shadow-[#FF6B35]/10 transition-all duration-300"
+                className="relative overflow-hidden rounded-2xl border border-[#E9ECEF] bg-[white] hover:border-[#FEEB09]/50 hover:shadow-xl hover:shadow-[#FEEB09]/10 transition-all duration-300"
               >
-                <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-[#FF6B35]/5 opacity-0"></div>
+                <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-[#FEEB09]/5 opacity-0"></div>
                 
                 <div className="relative z-10">
                   <div className="aspect-video mb-4 rounded-lg overflow-hidden bg-[bg-white]">
@@ -594,7 +594,7 @@ const GestionGalerie = () => {
                     
                     <div className="flex gap-2">
                       <button
-                        onClick={() => window.open(item.photo_url, '_blank')}                         className="p-2 rounded-lg bg-[#1E3A5F] text-white hover:bg-[#006450] transition-colors"
+                        onClick={() => window.open(item.photo_url, '_blank')}                         className="p-2 rounded-lg bg-[#24366E] text-white hover:bg-[#006450] transition-colors"
                         style={{ fontFamily: 'DM Sans, sans-serif' }}
                         title="Voir en grand"
                       >
@@ -637,7 +637,7 @@ const GestionGalerie = () => {
                     <div className="relative" data-dropdown>
                       <button
                         onClick={() => setOpenDropdown(openDropdown === item.id ? null : item.id)}
-                        className="flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-medium bg-gradient-to-r from-[#FF6B35] to-[#1E3A5F] text-white hover:from-[#FF6B35]/90 hover:to-[#1E3A5F]/90 transition-all shadow-md"
+                        className="flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-medium bg-gradient-to-r from-[#FEEB09] to-[#24366E] text-white hover:from-[#FEEB09]/90 hover:to-[#24366E]/90 transition-all shadow-md"
                         style={{ fontFamily: 'DM Sans, sans-serif' }}
                       >
                         <Tag size={12} />
@@ -663,7 +663,7 @@ const GestionGalerie = () => {
                                   }}
                                   className={`w-full flex items-center gap-3 px-3 py-2 text-xs font-medium transition-colors ${
                                     isSelected
-                                      ? 'bg-[#FF6B35]/10 text-[#FF6B35]'
+                                      ? 'bg-[#FEEB09]/10 text-[#FEEB09]'
                                       : 'text-[#6C757D] hover:bg-[#F8F9FA] hover:text-[#212529]'
                                   }`}
                                   style={{ fontFamily: 'DM Sans, sans-serif' }}

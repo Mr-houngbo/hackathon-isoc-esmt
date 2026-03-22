@@ -7,7 +7,7 @@ import { useState, useCallback, useEffect, useRef } from "react";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 
 const TYPE_CATEGORIES = [
-  { value: 'team_isoc_esmt', label: 'TEAM ISOC ESMT', icon: Star, color: '#FF6B35' },
+  { value: 'team_isoc_esmt', label: 'TEAM ISOC ESMT', icon: Star, color: '#FEEB09' },
   { value: 'mentors', label: 'Mentors', icon: Award, color: '#8B5CF6' },
   { value: 'jury', label: 'Jury', icon: Trophy, color: '#DC2626' },
   { value: 'equipes', label: 'Équipes', icon: Users, color: '#00873E' },
@@ -312,6 +312,27 @@ const Galerie = () => {
                   onChange={(e) => setSearchTerm(e.target.value)}
                   className="w-full pl-10 pr-4 py-2.5 rounded-lg border border-blue-200 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/50"
                 />
+              </div>
+
+              {/* Year Selector */}
+              <div className="relative w-full sm:w-auto">
+                <select
+                  value={selectedAnnee}
+                  onChange={(e) => setSelectedAnnee(Number(e.target.value))}
+                  className="w-full sm:w-32 pl-10 pr-4 py-2.5 rounded-lg border border-blue-200 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/50 appearance-none cursor-pointer"
+                >
+                  {ANNEES.map((annee) => (
+                    <option key={annee.value} value={annee.value}>
+                      {annee.label}
+                    </option>
+                  ))}
+                </select>
+                <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 text-blue-500" size={16} />
+                <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none">
+                  <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </div>
               </div>
 
               {/* Quick Filters */}
@@ -760,7 +781,7 @@ const TimelineView = ({ items, openModal, handleLike, likedItems, selectedAnnee,
 
   // Organiser les items par phases du hackathon
   const getPhaseForIndex = (index: number, total: number) => {
-    if (index === 0) return { label: "🚀 Lancement", color: "#FF6B35" };
+    if (index === 0) return { label: "🚀 Lancement", color: "#FEEB09" };
     if (index === Math.floor(total / 3)) return { label: "⚡ En cours", color: "#3B82F6" };
     if (index === Math.floor(total * 2 / 3)) return { label: "🏁 Final", color: "#8B5CF6" };
     if (index === total - 1) return { label: "🏆 Awards", color: "#F59E0B" };
@@ -770,9 +791,9 @@ const TimelineView = ({ items, openModal, handleLike, likedItems, selectedAnnee,
   return (
     <div ref={containerRef} className="relative max-w-5xl mx-auto py-12">
       {/* Ligne de timeline centrale avec animation */}
-      <div className="absolute left-1/2 top-0 bottom-0 w-1 -translate-x-1/2 bg-gradient-to-b from-[#FF6B35]/20 via-[#3B82F6]/20 to-[#F59E0B]/20 rounded-full overflow-hidden">
+      <div className="absolute left-1/2 top-0 bottom-0 w-1 -translate-x-1/2 bg-gradient-to-b from-[#FEEB09]/20 via-[#3B82F6]/20 to-[#F59E0B]/20 rounded-full overflow-hidden">
         <motion.div 
-          className="w-full bg-gradient-to-b from-[#FF6B35] via-[#3B82F6] to-[#F59E0B]"
+          className="w-full bg-gradient-to-b from-[#FEEB09] via-[#3B82F6] to-[#F59E0B]"
           style={{ height: lineHeight }}
         />
       </div>
@@ -918,7 +939,7 @@ const TimelineView = ({ items, openModal, handleLike, likedItems, selectedAnnee,
         viewport={{ once: true }}
         className="flex justify-center mt-16"
       >
-        <div className="w-4 h-4 rounded-full bg-gradient-to-r from-[#FF6B35] via-[#3B82F6] to-[#F59E0B] animate-pulse" />
+        <div className="w-4 h-4 rounded-full bg-gradient-to-r from-[#FEEB09] via-[#3B82F6] to-[#F59E0B] animate-pulse" />
       </motion.div>
     </div>
   );

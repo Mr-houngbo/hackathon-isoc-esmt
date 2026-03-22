@@ -361,7 +361,7 @@ const Attribution = () => {
                 </button>
                 <button
                   onClick={() => refetch()}
-                  className="flex items-center gap-2 px-4 py-2 rounded-xl bg-[#1E3A5F] text-white hover:bg-[#2C5282] transition-colors"
+                  className="flex items-center gap-2 px-4 py-2 rounded-xl bg-[#24366E] text-white hover:bg-[#2E4A8C] transition-colors"
                   style={{ fontFamily: 'DM Sans, sans-serif' }}
                 >
                   <RefreshCw size={16} />
@@ -488,7 +488,7 @@ const Attribution = () => {
                           </span>
                         </td>
                         <td className="py-3 px-4 text-center">
-                          <span className="font-bold text-lg text-[#1E3A5F]" style={{ fontFamily: 'Sora, sans-serif' }}>
+                          <span className="font-bold text-lg text-[#24366E]" style={{ fontFamily: 'Sora, sans-serif' }}>
                             {(item as any).score_final}
                           </span>
                         </td>
@@ -638,8 +638,8 @@ const Attribution = () => {
                       key={individu.id}
                       className={`p-3 rounded-lg border cursor-pointer transition-all ${
                         selectedIndividus.includes(individu.id)
-                          ? 'border-[#FF6B35] bg-[#FF6B35]/10'
-                          : 'border-[#E9ECEF] hover:border-[#FF6B35]/30'
+                          ? 'border-[#FEEB09] bg-[#FEEB09]/10'
+                          : 'border-[#E9ECEF] hover:border-[#FEEB09]/30'
                       }`}
                       onClick={() => {
                         if (selectedIndividus.includes(individu.id)) {
@@ -662,7 +662,7 @@ const Attribution = () => {
                           </p>
                         </div>
                         {selectedIndividus.includes(individu.id) && (
-                          <CheckCircle size={16} className="text-[#FF6B35]" />
+                          <CheckCircle size={16} className="text-[#FEEB09]" />
                         )}
                       </div>
                     </div>
@@ -688,7 +688,7 @@ const Attribution = () => {
                       value={nomEquipe}
                       onChange={(e) => setNomEquipe(e.target.value)}
                       placeholder="Nom de l'équipe"
-                      className="w-full px-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] focus:outline-none focus:ring-2 focus:ring-[#FF6B35]/20 focus:border-[#FF6B35]/50"
+                      className="w-full px-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] focus:outline-none focus:ring-2 focus:ring-[#FEEB09]/20 focus:border-[#FEEB09]/50"
                       style={{ fontFamily: 'DM Sans, sans-serif' }}
                     />
                   </div>
@@ -707,7 +707,7 @@ const Attribution = () => {
                   <button
                     onClick={() => regrouperMutation.mutate()}
                     disabled={selectedIndividus.length !== 4 || !nomEquipe.trim()}
-                    className="w-full px-4 py-3 rounded-xl bg-[#FF6B35] text-white hover:bg-[#FF8C42] transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                    className="w-full px-4 py-3 rounded-xl bg-[#FEEB09] text-white hover:bg-[#FEEB09] transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                     style={{ fontFamily: 'DM Sans, sans-serif' }}
                   >
                     <UserPlus size={16} />

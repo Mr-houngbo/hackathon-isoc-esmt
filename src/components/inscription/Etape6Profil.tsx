@@ -40,7 +40,7 @@ const Etape6Profil = ({ data, onChange, errors = {} }: Props) => {
         transition={{ duration: 0.5 }}
       >
         <div className="flex items-center justify-center gap-3 mb-4">
-          <div className="w-12 h-12 rounded-full bg-gradient-to-r from-[#FF6B35] to-[#1E3A5F] flex items-center justify-center">
+          <div className="w-12 h-12 rounded-full bg-gradient-to-r from-[#FEEB09] to-[#24366E] flex items-center justify-center">
             <Code size={24} className="text-white" />
           </div>
           <h3 
@@ -56,7 +56,7 @@ const Etape6Profil = ({ data, onChange, errors = {} }: Props) => {
         >
           Évaluez votre niveau technique global
         </p>
-        <div className="w-16 h-1 bg-gradient-to-r from-[#FF6B35] to-[#1E3A5F] mx-auto rounded-full mt-4"></div>
+        <div className="w-16 h-1 bg-gradient-to-r from-[#FEEB09] to-[#24366E] mx-auto rounded-full mt-4"></div>
       </motion.div>
 
       {/* Niveau technique */}
@@ -80,8 +80,8 @@ const Etape6Profil = ({ data, onChange, errors = {} }: Props) => {
               onClick={() => onChange({ niveau_technique: niveau.value as 'debutant' | 'intermediaire' | 'avance' })}
               className={`p-4 rounded-xl border-2 transition-all duration-300 hover:scale-105 ${
                 data.niveau_technique === niveau.value
-                  ? 'border-[#FF6B35] bg-[#FF6B35]/10'
-                  : 'border-[#E9ECEF] bg-white hover:border-[#FF6B35]/30'
+                  ? 'border-[#FEEB09] bg-[#FEEB09]/10'
+                  : 'border-[#E9ECEF] bg-white hover:border-[#FEEB09]/30'
               }`}
             >
               <div className="flex flex-col items-center gap-3">
@@ -91,7 +91,7 @@ const Etape6Profil = ({ data, onChange, errors = {} }: Props) => {
                     className="font-display text-sm font-bold block"
                     style={{ fontFamily: 'Sora, sans-serif' }}
                   >
-                    <span className={data.niveau_technique === niveau.value ? 'text-[#FF6B35]' : 'text-[#212529]'}>
+                    <span className={data.niveau_technique === niveau.value ? 'text-[#FEEB09]' : 'text-[#212529]'}>
                       {niveau.label}
                     </span>
                   </span>
@@ -99,7 +99,7 @@ const Etape6Profil = ({ data, onChange, errors = {} }: Props) => {
                     className="text-xs mt-1 block"
                     style={{ fontFamily: 'DM Sans, sans-serif' }}
                   >
-                    <span className={data.niveau_technique === niveau.value ? 'text-[#FF6B35]' : 'text-[#6C757D]'}>
+                    <span className={data.niveau_technique === niveau.value ? 'text-[#FEEB09]' : 'text-[#6C757D]'}>
                       {niveau.desc}
                     </span>
                   </span>
@@ -120,7 +120,7 @@ const Etape6Profil = ({ data, onChange, errors = {} }: Props) => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.2 }}
-        className="bg-gradient-to-r from-[#FF6B35]/10 to-[#1E3A5F]/10 rounded-2xl border border-[#E9ECEF] p-4"
+        className="bg-gradient-to-r from-[#FEEB09]/10 to-[#24366E]/10 rounded-2xl border border-[#E9ECEF] p-4"
       >
         <p 
           className="text-center text-sm"

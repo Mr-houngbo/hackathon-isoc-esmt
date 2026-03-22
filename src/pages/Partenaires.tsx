@@ -79,7 +79,7 @@ const Partenaires = () => {
       <div className="min-h-screen bg-gradient-to-br from-[#F8F9FA] to-white">
         {/* Hero Section */}
         <div className="relative overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-br from-[#FF6B35]/5 via-[#1E3A5F]/5 to-transparent"></div>
+          <div className="absolute inset-0 bg-gradient-to-br from-[#FEEB09]/5 via-[#24366E]/5 to-transparent"></div>
           <div className="container relative z-10 py-16">
             <motion.div 
               className="text-center"
@@ -107,7 +107,7 @@ const Partenaires = () => {
         <div className="container py-12">
           {isLoading ? (
             <div className="text-center py-12">
-              <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-[#FF6B35]"></div>
+              <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-[#FEEB09]"></div>
               <p className="text-[#6C757D] mt-4">Chargement des partenaires...</p>
             </div>
           ) : error ? (

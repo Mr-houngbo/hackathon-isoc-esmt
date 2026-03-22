@@ -6,8 +6,8 @@ const CTASection = () => (
   <section className="py-24 bg-gradient-to-br from-white to-[#F8F9FA] relative overflow-hidden hidden lg:block">
     {/* Animated background */}
     <div className="absolute inset-0 overflow-hidden">
-      <div className="absolute top-0 left-1/4 w-96 h-96 bg-[#FF6B35]/5 rounded-full blur-3xl animate-float-elegant"></div>
-      <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-[#1E3A5F]/5 rounded-full blur-3xl animate-float-elegant" style={{ animationDelay: '2s' }}></div>
+      <div className="absolute top-0 left-1/4 w-96 h-96 bg-[#FEEB09]/5 rounded-full blur-3xl animate-float-elegant"></div>
+      <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-[#24366E]/5 rounded-full blur-3xl animate-float-elegant" style={{ animationDelay: '2s' }}></div>
     </div>
     
     <div className="container relative z-10">
@@ -16,7 +16,7 @@ const CTASection = () => (
         whileInView={{ opacity: 1, scale: 1 }}
         viewport={{ once: true }}
         transition={{ duration: 0.6 }}
-        className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-[#FF6B35] via-[#1E3A5F] to-[#FF8C42] p-12 sm:p-20 text-center shadow-2xl"
+        className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-[#FEEB09] via-[#24366E] to-[#FEEB09] p-12 sm:p-20 text-center shadow-2xl"
       >
         {/* Floating icons */}
         <motion.div

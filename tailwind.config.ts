@@ -19,13 +19,13 @@ export default {
         mono: ["Space Mono", "monospace"],
       },
       colors: {
-        // Élégance Orange & Bleu Foncé
-        'orange-chic': '#FF6B35',
-        'orange-vibrant': '#FF8C42',
-        'orange-soft': '#FFA947',
-        'bleu-profond': '#1E3A5F',
-        'bleu-saphir': '#2C5282',
-        'bleu-midnight': '#0F2027',
+        // Palette: Depth Blue & Accent Yellow
+        'depth-blue': '#24366E',
+        'depth-blue-light': '#2E4A8C',
+        'depth-blue-dark': '#1A264A',
+        'accent-yellow': '#FEEB09',
+        'accent-yellow-light': '#FFF04D',
+        'accent-yellow-soft': '#FFF599',
         'blanc-pure': '#FFFFFF',
         'gris-clair': '#F8F9FA',
         'gris-medium': '#6C757D',
@@ -47,17 +47,17 @@ export default {
           to: { height: "0" },
         },
         "chic-gradient": {
-          "0%": "rgba(255, 107, 53, 1)",
-          "50%": "rgba(30, 58, 95, 1)",
-          "100%": "rgba(255, 140, 66, 1)"
+          "0%": "rgba(254, 235, 9, 1)",
+          "50%": "rgba(36, 54, 110, 1)",
+          "100%": "rgba(254, 235, 9, 1)"
         },
         "float-elegant": {
           "0%, 100%": { transform: "translateY(0px) rotateX(0deg)" },
           "50%": { transform: "translateY(-8px) rotateX(2deg)" },
         },
-        "glow-orange": {
-          "0%, 100%": { boxShadow: "0 0 20px rgba(255, 107, 53, 0.3)" },
-          "50%": { boxShadow: "0 0 40px rgba(255, 107, 53, 0.6)" },
+        "glow-yellow": {
+          "0%, 100%": { boxShadow: "0 0 20px rgba(254, 235, 9, 0.3)" },
+          "50%": { boxShadow: "0 0 40px rgba(254, 235, 9, 0.6)" },
         },
       },
     },
@@ -65,7 +65,7 @@ export default {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
         "chic-gradient": "chic-gradient 3s ease-in-out infinite",
-        "glow-orange": "glow-orange 2s ease-in-out infinite",
+        "glow-yellow": "glow-yellow 2s ease-in-out infinite",
         "float-elegant": "float-elegant 4s ease-in-out infinite",
       },
     },

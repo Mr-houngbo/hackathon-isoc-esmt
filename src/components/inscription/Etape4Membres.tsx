@@ -45,7 +45,7 @@ const Etape4Membres = ({ data, onChange, errors = {} }: Props) => {
   const getBlockBorderColor = (membre: any, index: number) => {
     const hasBlockingError = membre.disponible_2_jours === false;
     if (hasBlockingError) return 'border-[#DC2626]';
-    if (isBlockValid(membre)) return 'border-[#FF6B35]';
+    if (isBlockValid(membre)) return 'border-[#FEEB09]';
     return 'border-[#E9ECEF]';
   };
 
@@ -59,7 +59,7 @@ const Etape4Membres = ({ data, onChange, errors = {} }: Props) => {
         transition={{ duration: 0.5 }}
       >
         <div className="flex items-center justify-center gap-3 mb-4">
-          <div className="w-12 h-12 rounded-full bg-gradient-to-r from-[#FF6B35] to-[#1E3A5F] flex items-center justify-center">
+          <div className="w-12 h-12 rounded-full bg-gradient-to-r from-[#FEEB09] to-[#24366E] flex items-center justify-center">
             <Users size={24} className="text-white" />
           </div>
           <h3 
@@ -75,7 +75,7 @@ const Etape4Membres = ({ data, onChange, errors = {} }: Props) => {
         >
           Informations des autres membres (3 membres obligatoires)
         </p>
-        <div className="w-16 h-1 bg-gradient-to-r from-[#FF6B35] to-[#1E3A5F] mx-auto rounded-full mt-4"></div>
+        <div className="w-16 h-1 bg-gradient-to-r from-[#FEEB09] to-[#24366E] mx-auto rounded-full mt-4"></div>
       </motion.div>
 
       {/* Membres Blocks */}
@@ -96,7 +96,7 @@ const Etape4Membres = ({ data, onChange, errors = {} }: Props) => {
             >
               <div className="flex items-center gap-3">
                 <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
-                  isBlockValid(membre) ? 'bg-[#FF6B35]' : 'bg-[#E9ECEF]'
+                  isBlockValid(membre) ? 'bg-[#FEEB09]' : 'bg-[#E9ECEF]'
                 }`}>
                   <Users size={16} className={isBlockValid(membre) ? 'text-white' : 'text-[#6C757D]'} />
                 </div>
@@ -150,7 +150,7 @@ const Etape4Membres = ({ data, onChange, errors = {} }: Props) => {
                           value={membre.nom_prenom || ''}
                           onChange={(e) => updateMembre(index, 'nom_prenom', e.target.value)}
                           placeholder="Nom complet"
-                          className="w-full px-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FF6B35]/20 focus:border-[#FF6B35]/50 transition-all"
+                          className="w-full px-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FEEB09]/20 focus:border-[#FEEB09]/50 transition-all"
                           style={{ fontFamily: 'DM Sans, sans-serif' }}
                         />
                         {errors[`m${index}_nom`] && (
@@ -178,8 +178,8 @@ const Etape4Membres = ({ data, onChange, errors = {} }: Props) => {
                               onClick={() => updateMembre(index, 'genre', genre)}
                               className={`px-2 py-1 rounded-lg text-xs font-semibold transition-all ${
                                 membre.genre === genre
-                                  ? 'bg-[#FF6B35] text-white'
-                                  : 'bg-[#E9ECEF] border border-[#E9ECEF] text-[#6C757D] hover:border-[#FF6B35]/30'
+                                  ? 'bg-[#FEEB09] text-white'
+                                  : 'bg-[#E9ECEF] border border-[#E9ECEF] text-[#6C757D] hover:border-[#FEEB09]/30'
                               }`}
                               style={{ fontFamily: 'DM Sans, sans-serif' }}
                             >
@@ -207,7 +207,7 @@ const Etape4Membres = ({ data, onChange, errors = {} }: Props) => {
                         <select
                           value={membre.filiere || ''}
                           onChange={(e) => updateMembre(index, 'filiere', e.target.value)}
-                          className="w-full px-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] focus:outline-none focus:ring-2 focus:ring-[#FF6B35]/20 focus:border-[#FF6B35]/50 transition-all"
+                          className="w-full px-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] focus:outline-none focus:ring-2 focus:ring-[#FEEB09]/20 focus:border-[#FEEB09]/50 transition-all"
                           style={{ fontFamily: 'DM Sans, sans-serif' }}
                         >
                           <option value="">Sélectionnez votre filière</option>
@@ -235,7 +235,7 @@ const Etape4Membres = ({ data, onChange, errors = {} }: Props) => {
                         <select
                           value={membre.niveau_etudes || ''}
                           onChange={(e) => updateMembre(index, 'niveau_etudes', e.target.value)}
-                          className="w-full px-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] focus:outline-none focus:ring-2 focus:ring-[#FF6B35]/20 focus:border-[#FF6B35]/50 transition-all"
+                          className="w-full px-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] focus:outline-none focus:ring-2 focus:ring-[#FEEB09]/20 focus:border-[#FEEB09]/50 transition-all"
                           style={{ fontFamily: 'DM Sans, sans-serif' }}
                         >
                           <option value="">Niveau</option>
@@ -263,7 +263,7 @@ const Etape4Membres = ({ data, onChange, errors = {} }: Props) => {
                         <select
                           value={membre.role_equipe || ''}
                           onChange={(e) => updateMembre(index, 'role_equipe', e.target.value)}
-                          className="w-full px-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] focus:outline-none focus:ring-2 focus:ring-[#FF6B35]/20 focus:border-[#FF6B35]/50 transition-all"
+                          className="w-full px-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] focus:outline-none focus:ring-2 focus:ring-[#FEEB09]/20 focus:border-[#FEEB09]/50 transition-all"
                           style={{ fontFamily: 'DM Sans, sans-serif' }}
                         >
                           <option value="">Rôle</option>
@@ -299,7 +299,7 @@ const Etape4Membres = ({ data, onChange, errors = {} }: Props) => {
                             value={(membre as any).role_autre || ''}
                             onChange={(e) => updateMembre(index, 'role_autre', e.target.value)}
                             placeholder="Décrivez votre rôle dans l'équipe"
-                            className="w-full px-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FF6B35]/20 focus:border-[#FF6B35]/50 transition-all"
+                            className="w-full px-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FEEB09]/20 focus:border-[#FEEB09]/50 transition-all"
                             style={{ fontFamily: 'DM Sans, sans-serif' }}
                             required
                           />
@@ -330,7 +330,7 @@ const Etape4Membres = ({ data, onChange, errors = {} }: Props) => {
                           }}
                           placeholder="77 000 00 00"
                           maxLength={9}
-                          className="w-full px-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FF6B35]/20 focus:border-[#FF6B35]/50 transition-all"
+                          className="w-full px-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FEEB09]/20 focus:border-[#FEEB09]/50 transition-all"
                           style={{ fontFamily: 'DM Sans, sans-serif' }}
                         />
                         {errors[`m${index}_tel`] && (
@@ -355,7 +355,7 @@ const Etape4Membres = ({ data, onChange, errors = {} }: Props) => {
                           value={membre.email || ''}
                           onChange={(e) => updateMembre(index, 'email', e.target.value)}
                           placeholder="email@exemple.com"
-                          className="w-full px-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FF6B35]/20 focus:border-[#FF6B35]/50 transition-all"
+                          className="w-full px-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FEEB09]/20 focus:border-[#FEEB09]/50 transition-all"
                           style={{ fontFamily: 'DM Sans, sans-serif' }}
                         />
                         {errors[`m${index}_email`] && (
@@ -380,7 +380,7 @@ const Etape4Membres = ({ data, onChange, errors = {} }: Props) => {
                           value={membre.etablissement || ''}
                           onChange={(e) => updateMembre(index, 'etablissement', e.target.value)}
                           placeholder="Établissement"
-                          className="w-full px-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FF6B35]/20 focus:border-[#FF6B35]/50 transition-all"
+                          className="w-full px-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FEEB09]/20 focus:border-[#FEEB09]/50 transition-all"
                           style={{ fontFamily: 'DM Sans, sans-serif' }}
                         />
                         {errors[`m${index}_etablissement`] && (
@@ -406,8 +406,8 @@ const Etape4Membres = ({ data, onChange, errors = {} }: Props) => {
                         onClick={() => updateMembre(index, 'disponible_2_jours', true)}
                         className={`px-4 py-2 rounded-lg text-sm font-semibold transition-all ${
                           membre.disponible_2_jours === true
-                            ? 'bg-[#FF6B35] text-white'
-                            : 'bg-[#E9ECEF] border border-[#E9ECEF] text-[#6C757D] hover:border-[#FF6B35]/30'
+                            ? 'bg-[#FEEB09] text-white'
+                            : 'bg-[#E9ECEF] border border-[#E9ECEF] text-[#6C757D] hover:border-[#FEEB09]/30'
                         }`}
                         style={{ fontFamily: 'DM Sans, sans-serif' }}
                       >
@@ -455,7 +455,7 @@ const Etape4Membres = ({ data, onChange, errors = {} }: Props) => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.4 }}
-        className="bg-gradient-to-r from-[#FF6B35]/10 to-[#1E3A5F]/10 rounded-2xl border border-[#E9ECEF] p-4"
+        className="bg-gradient-to-r from-[#FEEB09]/10 to-[#24366E]/10 rounded-2xl border border-[#E9ECEF] p-4"
       >
         <p 
           className="text-center text-sm"

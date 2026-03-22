@@ -47,8 +47,8 @@ const PrizeCard = ({ prize, index }: { prize: typeof prizes[0]; index: number })
       {/* Glow effect */}
       <div className={`absolute -inset-1 bg-gradient-to-r ${
         prize.color === 'orange' 
-          ? 'from-[#FF6B35] to-[#FF8C42]' 
-          : 'from-[#1E3A5F] to-[#2C5282]'
+          ? 'from-[#FEEB09] to-[#FEEB09]' 
+          : 'from-[#24366E] to-[#2E4A8C]'
       } rounded-2xl opacity-0 group-hover:opacity-20 blur-xl transition-all duration-300`}></div>
       
       {/* 3D Card Container */}
@@ -66,8 +66,8 @@ const PrizeCard = ({ prize, index }: { prize: typeof prizes[0]; index: number })
           {/* Top gradient bar */}
           <div className={`h-2 w-full bg-gradient-to-r ${
             prize.color === 'orange' 
-              ? 'from-[#FF6B35] to-[#FF8C42]' 
-              : 'from-[#1E3A5F] to-[#2C5282]'
+              ? 'from-[#FEEB09] to-[#FEEB09]' 
+              : 'from-[#24366E] to-[#2E4A8C]'
           }`}></div>
           
           {/* Content */}
@@ -77,20 +77,20 @@ const PrizeCard = ({ prize, index }: { prize: typeof prizes[0]; index: number })
               <div className="relative mb-6 inline-flex">
                 <div className={`absolute inset-0 bg-gradient-to-r ${
                   prize.color === 'orange' 
-                    ? 'from-[#FF6B35] to-[#FF8C42]' 
-                    : 'from-[#1E3A5F] to-[#2C5282]'
+                    ? 'from-[#FEEB09] to-[#FEEB09]' 
+                    : 'from-[#24366E] to-[#2E4A8C]'
                 } rounded-full blur-lg opacity-20 animate-pulse`}></div>
                 <div className={`relative h-16 w-16 rounded-full bg-gradient-to-br ${
                   prize.color === 'orange' 
-                    ? 'from-[#FF6B35]/10 to-[#FF8C42]/10' 
-                    : 'from-[#1E3A5F]/10 to-[#2C5282]/10'
+                    ? 'from-[#FEEB09]/10 to-[#FEEB09]/10' 
+                    : 'from-[#24366E]/10 to-[#2E4A8C]/10'
                 } border-2 ${
                   prize.color === 'orange' 
-                    ? 'border-[#FF6B35]/30' 
-                    : 'border-[#1E3A5F]/30'
+                    ? 'border-[#FEEB09]/30' 
+                    : 'border-[#24366E]/30'
                 } flex items-center justify-center`}>
                   <prize.icon className={`h-8 w-8 ${
-                    prize.color === 'orange' ? 'text-[#FF6B35]' : 'text-[#1E3A5F]'
+                    prize.color === 'orange' ? 'text-[#FEEB09]' : 'text-[#24366E]'
                   }`} />
                 </div>
               </div>
@@ -125,8 +125,8 @@ const PrizeCard = ({ prize, index }: { prize: typeof prizes[0]; index: number })
           {/* Decorative corner */}
           <div className={`absolute top-2 right-2 w-8 h-8 bg-gradient-to-br ${
             prize.color === 'orange' 
-              ? 'from-[#FF6B35] to-[#FF8C42]' 
-              : 'from-[#1E3A5F] to-[#2C5282]'
+              ? 'from-[#FEEB09] to-[#FEEB09]' 
+              : 'from-[#24366E] to-[#2E4A8C]'
           } opacity-10 rounded-full blur-xl`}></div>
         </div>
 
@@ -137,8 +137,8 @@ const PrizeCard = ({ prize, index }: { prize: typeof prizes[0]; index: number })
             backfaceVisibility: "hidden",
             transform: "rotateY(180deg)",
             background: prize.color === 'orange' 
-              ? 'linear-gradient(135deg, #FF6B35 0%, #FF8C42 50%, #FFA947 100%)'
-              : 'linear-gradient(135deg, #1E3A5F 0%, #2C5282 50%, #0F2027 100%)'
+              ? 'linear-gradient(135deg, #FEEB09 0%, #FEEB09 50%, #FFF04D 100%)'
+              : 'linear-gradient(135deg, #24366E 0%, #2E4A8C 50%, #1A264A 100%)'
           }}
         >
           {/* Content */}
@@ -197,8 +197,8 @@ const PrizesSection = () => (
   <section className="py-24 bg-gradient-to-br from-white to-[#F8F9FA] relative overflow-hidden">
     {/* Background decorative elements */}
     <div className="absolute inset-0 overflow-hidden">
-      <div className="absolute top-32 right-1/4 w-72 h-72 bg-[#FF6B35]/3 rounded-full blur-3xl animate-float-elegant"></div>
-      <div className="absolute bottom-32 left-1/4 w-72 h-72 bg-[#1E3A5F]/3 rounded-full blur-3xl animate-float-elegant" style={{ animationDelay: '2s' }}></div>
+      <div className="absolute top-32 right-1/4 w-72 h-72 bg-[#FEEB09]/3 rounded-full blur-3xl animate-float-elegant"></div>
+      <div className="absolute bottom-32 left-1/4 w-72 h-72 bg-[#24366E]/3 rounded-full blur-3xl animate-float-elegant" style={{ animationDelay: '2s' }}></div>
     </div>
     
     <div className="container relative z-10">
@@ -214,7 +214,7 @@ const PrizesSection = () => (
         >
           Des prix pour <span className="text-gradient">récompenser</span> l'innovation
         </h2>
-        <div className="w-24 h-1 bg-gradient-to-r from-[#FF6B35] to-[#1E3A5F] mx-auto rounded-full mb-6"></div>
+        <div className="w-24 h-1 bg-gradient-to-r from-[#FEEB09] to-[#24366E] mx-auto rounded-full mb-6"></div>
         <p 
           className="text-[#6C757D] max-w-2xl mx-auto text-lg leading-relaxed"
           style={{ fontFamily: 'DM Sans, sans-serif' }}
@@ -230,7 +230,7 @@ const PrizesSection = () => (
       </div>
 
     {/* Decorative bottom gradient */}
-    <div className="absolute bottom-0 left-0 right-0 h-2 bg-gradient-to-r from-[#FF6B35] via-[#1E3A5F] to-[#FF6B35]"></div>
+    <div className="absolute bottom-0 left-0 right-0 h-2 bg-gradient-to-r from-[#FEEB09] via-[#24366E] to-[#FEEB09]"></div>
   </section>
 );
 );

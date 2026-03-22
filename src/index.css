@@ -6,13 +6,13 @@
 
 @layer base {
   :root {
-    /* Élégance Orange & Bleu Foncé */
-    --orange-chic: 255 107 53;
-    --orange-vibrant: 255 140 66;
-    --orange-soft: 255 169 71;
-    --bleu-profond: 30 58 95;
-    --bleu-saphir: 44 82 130;
-    --bleu-midnight: 15 32 39;
+    /* Palette: Depth Blue & Accent Yellow */
+    --depth-blue: 36 54 110;
+    --depth-blue-light: 46 74 140;
+    --depth-blue-dark: 26 38 74;
+    --accent-yellow: 254 235 9;
+    --accent-yellow-light: 255 240 77;
+    --accent-yellow-soft: 255 245 153;
     --blanc-pure: 255 255 255;
     --gris-clair: 248 249 250;
     --gris-medium: 108 117 125;
@@ -20,11 +20,11 @@
     --noir-subtil: 33 37 41;
 
     /* Custom tokens */
-    --chic-gradient: linear-gradient(135deg, #FF6B35 0%, #1E3A5F 50%, #FF8C42 100%);
-    --orange-glow: 0 0 20px rgba(255, 107, 53, 0.3);
-    --bleu-glow: 0 0 20px rgba(30, 58, 95, 0.3);
-    --card-shadow: 0 4px 24px -4px rgba(255, 107, 53, 0.08);
-    --card-hover-shadow: 0 12px 32px -8px rgba(255, 107, 53, 0.15);
+    --chic-gradient: linear-gradient(135deg, #FEEB09 0%, #24366E 50%, #FEEB09 100%);
+    --yellow-glow: 0 0 20px rgba(254, 235, 9, 0.3);
+    --blue-glow: 0 0 20px rgba(36, 54, 110, 0.3);
+    --card-shadow: 0 4px 24px -4px rgba(36, 54, 110, 0.08);
+    --card-hover-shadow: 0 12px 32px -8px rgba(254, 235, 9, 0.15);
     --radius: 0.75rem;
   }
 }
@@ -43,13 +43,13 @@
 
 @layer utilities {
   .text-gradient {
-    background: linear-gradient(135deg, #FF6B35 0%, #1E3A5F 50%, #FF8C42 100%);
+    background: linear-gradient(135deg, #FEEB09 0%, #24366E 50%, #FEEB09 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
   .bg-hero-gradient {
-    background: radial-gradient(circle at center, rgba(255, 107, 53, 0.05) 0%, transparent 70%), #FFFFFF;
+    background: radial-gradient(circle at center, rgba(36, 54, 110, 0.05) 0%, transparent 70%), #FFFFFF;
   }
   .glassmorphism {
     backdrop-filter: blur(12px);
@@ -57,16 +57,16 @@
     border: 1px solid rgba(233, 236, 239, 0.3);
   }
   .card-premium {
-    @apply bg-[#FFFFFF] border border-[#E9ECEF] hover:border-[#FF6B35]/50 hover:-translate-y-1 transition-all duration-300;
+    @apply bg-[#FFFFFF] border border-[#E9ECEF] hover:border-[#FEEB09]/50 hover:-translate-y-1 transition-all duration-300;
   }
   .btn-premium {
-    @apply bg-gradient-to-r from-[#FF6B35] to-[#FF8C42] hover:from-[#FF8C42] hover:to-[#FF6B35] hover:shadow-xl hover:shadow-[#FF6B35]/30 hover:scale-105 transition-all duration-300 text-white;
+    @apply bg-gradient-to-r from-[#24366E] to-[#2E4A8C] hover:from-[#2E4A8C] hover:to-[#24366E] hover:shadow-xl hover:shadow-[#24366E]/30 hover:scale-105 transition-all duration-300 text-white;
   }
-  .btn-orange {
-    @apply bg-[#FF6B35] hover:bg-[#FF8C42] hover:shadow-lg hover:shadow-[#FF6B35]/25 hover:scale-105 transition-all duration-300 text-white;
+  .btn-yellow {
+    @apply bg-[#FEEB09] hover:bg-[#FFF04D] hover:shadow-lg hover:shadow-[#FEEB09]/25 hover:scale-105 transition-all duration-300 text-[#24366E];
   }
   .badge-premium {
-    @apply bg-[#FF6B35]/10 text-[#FF6B35] border border-[#FF6B35]/30;
+    @apply bg-[#FEEB09]/10 text-[#24366E] border border-[#FEEB09]/30;
   }
   .shadow-card {
     box-shadow: var(--card-shadow);
@@ -74,10 +74,10 @@
   .shadow-card-hover {
     box-shadow: var(--card-hover-shadow);
   }
-  .glow-orange {
-    box-shadow: var(--orange-glow);
+  .glow-yellow {
+    box-shadow: var(--yellow-glow);
   }
-  .glow-bleu {
-    box-shadow: var(--bleu-glow);
+  .glow-blue {
+    box-shadow: var(--blue-glow);
   }
 }

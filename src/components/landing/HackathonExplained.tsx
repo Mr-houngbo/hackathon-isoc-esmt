@@ -13,10 +13,10 @@ const HackathonExplained = () => {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#FF6B35]/10 rounded-full mb-4">
-            <Lightbulb className="text-[#FF6B35]" size={20} />
+          <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#FEEB09]/10 rounded-full mb-4">
+            <Lightbulb className="text-[#FEEB09]" size={20} />
             <span 
-              className="text-[#FF6B35] font-semibold text-sm"
+              className="text-[#FEEB09] font-semibold text-sm"
               style={{ fontFamily: 'DM Sans, sans-serif' }}
             >
               Comprendre le concept
@@ -46,7 +46,7 @@ const HackathonExplained = () => {
             className="bg-white rounded-lg sm:rounded-xl border border-[#E9ECEF] p-2 sm:p-3 lg:p-6 shadow-lg hover:shadow-xl transition-all duration-300"
           >
             <div className="flex items-center gap-1 sm:gap-3 mb-2 sm:mb-4">
-              <div className="w-8 h-8 sm:w-12 sm:h-12 lg:w-16 lg:h-16 rounded-lg sm:rounded-xl lg:rounded-2xl bg-gradient-to-r from-[#FF6B35] to-[#1E3A5F] flex items-center justify-center">
+              <div className="w-8 h-8 sm:w-12 sm:h-12 lg:w-16 lg:h-16 rounded-lg sm:rounded-xl lg:rounded-2xl bg-gradient-to-r from-[#FEEB09] to-[#24366E] flex items-center justify-center">
                 <Code className="text-white" size={16} />
               </div>
               <div>
@@ -57,7 +57,7 @@ const HackathonExplained = () => {
                   Définition
                 </h3>
                 <p 
-                  className="text-[#FF6B35] font-semibold text-xs sm:text-sm"
+                  className="text-[#FEEB09] font-semibold text-xs sm:text-sm"
                   style={{ fontFamily: 'DM Sans, sans-serif' }}
                 >
                   Innovation en temps limité
@@ -80,7 +80,7 @@ const HackathonExplained = () => {
             className="bg-white rounded-lg sm:rounded-xl border border-[#E9ECEF] p-2 sm:p-3 lg:p-6 shadow-lg hover:shadow-xl transition-all duration-300"
           >
             <div className="flex items-center gap-1 sm:gap-3 mb-2 sm:mb-4">
-              <div className="w-8 h-8 sm:w-12 sm:h-12 lg:w-16 lg:h-16 rounded-lg sm:rounded-xl lg:rounded-2xl bg-gradient-to-r from-[#FF6B35] to-[#1E3A5F] flex items-center justify-center">
+              <div className="w-8 h-8 sm:w-12 sm:h-12 lg:w-16 lg:h-16 rounded-lg sm:rounded-xl lg:rounded-2xl bg-gradient-to-r from-[#FEEB09] to-[#24366E] flex items-center justify-center">
                 <Target className="text-white" size={16} />
               </div>
               <div>
@@ -91,7 +91,7 @@ const HackathonExplained = () => {
                   Objectif
                 </h3>
                 <p 
-                  className="text-[#FF6B35] font-semibold text-xs sm:text-sm"
+                  className="text-[#FEEB09] font-semibold text-xs sm:text-sm"
                   style={{ fontFamily: 'DM Sans, sans-serif' }}
                 >
               Résoudre des problèmes réels
@@ -114,7 +114,7 @@ const HackathonExplained = () => {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.4 }}
           viewport={{ once: true }}
-          className="bg-gradient-to-r from-[#FF6B35]/10 to-[#1E3A5F]/10 rounded-2xl p-4 sm:p-6 lg:p-8 border border-[#E9ECEF]"
+          className="bg-gradient-to-r from-[#FEEB09]/10 to-[#24366E]/10 rounded-2xl p-4 sm:p-6 lg:p-8 border border-[#E9ECEF]"
         >
           <div className="text-center mb-6 sm:mb-8">
             <h3 
@@ -140,7 +140,7 @@ const HackathonExplained = () => {
               className="text-center"
             >
               <div className="w-12 h-12 sm:w-16 sm:h-16 lg:w-20 lg:h-20 rounded-xl bg-white mx-auto mb-2 sm:mb-4 flex items-center justify-center shadow-lg">
-                <Users className="text-[#FF6B35]" size={24} />
+                <Users className="text-[#FEEB09]" size={24} />
               </div>
               <h4 
                 className="font-display text-sm sm:text-base lg:text-xl font-bold text-[#212529] mb-2"
@@ -164,7 +164,7 @@ const HackathonExplained = () => {
               className="text-center"
             >
               <div className="w-12 h-12 sm:w-16 sm:h-16 lg:w-20 lg:h-20 rounded-xl bg-white mx-auto mb-2 sm:mb-4 flex items-center justify-center shadow-lg">
-                <Zap className="text-[#1E3A5F]" size={24} />
+                <Zap className="text-[#24366E]" size={24} />
               </div>
               <h4 
                 className="font-display text-sm sm:text-base lg:text-xl font-bold text-[#212529] mb-2"
@@ -188,7 +188,7 @@ const HackathonExplained = () => {
               className="text-center"
             >
               <div className="w-12 h-12 sm:w-16 sm:h-16 lg:w-20 lg:h-20 rounded-xl bg-white mx-auto mb-2 sm:mb-4 flex items-center justify-center shadow-lg">
-                <Clock className="text-[#FF6B35]" size={24} />
+                <Clock className="text-[#FEEB09]" size={24} />
               </div>
               <h4 
                 className="font-display text-sm sm:text-base lg:text-xl font-bold text-[#212529] mb-2"

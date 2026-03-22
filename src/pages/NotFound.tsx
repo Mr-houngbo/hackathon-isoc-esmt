@@ -27,7 +27,7 @@ const NotFound = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#FF6B35]/5 via-white to-[#1E3A5F]/5 flex items-center justify-center px-4 py-12">
+    <div className="min-h-screen bg-gradient-to-br from-[#FEEB09]/5 via-white to-[#24366E]/5 flex items-center justify-center px-4 py-12">
       <div className="max-w-4xl w-full">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -49,9 +49,9 @@ const NotFound = () => {
             className="relative mb-8"
           >
             <div className="relative inline-block">
-              <div className="absolute inset-0 bg-gradient-to-r from-[#FF6B35] to-[#1E3A5F] rounded-full blur-3xl opacity-20 animate-pulse"></div>
+              <div className="absolute inset-0 bg-gradient-to-r from-[#FEEB09] to-[#24366E] rounded-full blur-3xl opacity-20 animate-pulse"></div>
               <div className="relative">
-                <div className="text-[180px] sm:text-[220px] font-black leading-none bg-gradient-to-r from-[#FF6B35] to-[#1E3A5F] bg-clip-text text-transparent"
+                <div className="text-[180px] sm:text-[220px] font-black leading-none bg-gradient-to-r from-[#FEEB09] to-[#24366E] bg-clip-text text-transparent"
                      style={{ fontFamily: 'Sora, sans-serif' }}>
                   404
                 </div>
@@ -72,7 +72,7 @@ const NotFound = () => {
             </h1>
             
             <div className="flex items-center justify-center gap-2 mb-4">
-              <AlertCircle className="text-[#FF6B35]" size={24} />
+              <AlertCircle className="text-[#FEEB09]" size={24} />
               <p className="text-lg sm:text-xl text-[#6C757D]"
                  style={{ fontFamily: 'DM Sans, sans-serif' }}>
                 La page que vous cherchez semble avoir disparu dans le cyber-espace
@@ -100,12 +100,12 @@ const NotFound = () => {
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 placeholder="Rechercher sur le site..."
-                className="w-full px-6 py-4 pr-12 rounded-2xl border-2 border-[#E9ECEF] bg-white text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FF6B35]/20 focus:border-[#FF6B35] transition-all shadow-lg"
+                className="w-full px-6 py-4 pr-12 rounded-2xl border-2 border-[#E9ECEF] bg-white text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FEEB09]/20 focus:border-[#FEEB09] transition-all shadow-lg"
                 style={{ fontFamily: 'DM Sans, sans-serif' }}
               />
               <button
                 type="submit"
-                className="absolute right-3 top-1/2 -translate-y-1/2 p-2 bg-gradient-to-r from-[#FF6B35] to-[#1E3A5F] text-white rounded-xl hover:from-[#FF6B35]/90 hover:to-[#1E3A5F]/90 transition-all"
+                className="absolute right-3 top-1/2 -translate-y-1/2 p-2 bg-gradient-to-r from-[#FEEB09] to-[#24366E] text-white rounded-xl hover:from-[#FEEB09]/90 hover:to-[#24366E]/90 transition-all"
               >
                 <Search size={18} />
               </button>
@@ -133,12 +133,12 @@ const NotFound = () => {
                 >
                   <Link
                     to={link.href}
-                    className="flex flex-col items-center gap-2 p-4 bg-white rounded-2xl border-2 border-[#E9ECEF] hover:border-[#FF6B35]/30 hover:shadow-lg transition-all group"
+                    className="flex flex-col items-center gap-2 p-4 bg-white rounded-2xl border-2 border-[#E9ECEF] hover:border-[#FEEB09]/30 hover:shadow-lg transition-all group"
                   >
-                    <div className="w-12 h-12 rounded-full bg-gradient-to-r from-[#FF6B35]/10 to-[#1E3A5F]/10 flex items-center justify-center group-hover:from-[#FF6B35]/20 group-hover:to-[#1E3A5F]/20 transition-all">
+                    <div className="w-12 h-12 rounded-full bg-gradient-to-r from-[#FEEB09]/10 to-[#24366E]/10 flex items-center justify-center group-hover:from-[#FEEB09]/20 group-hover:to-[#24366E]/20 transition-all">
                       <link.icon 
                         size={20} 
-                        className="text-[#FF6B35] group-hover:scale-110 transition-transform" 
+                        className="text-[#FEEB09] group-hover:scale-110 transition-transform" 
                       />
                     </div>
                     <span className="text-sm font-medium text-[#212529]"
@@ -168,7 +168,7 @@ const NotFound = () => {
             
             <button
               onClick={() => window.history.back()}
-              className="flex items-center justify-center gap-2 px-8 py-4 bg-white border-2 border-[#E9ECEF] text-[#212529] rounded-xl hover:border-[#FF6B35]/30 hover:shadow-lg transition-all font-semibold"
+              className="flex items-center justify-center gap-2 px-8 py-4 bg-white border-2 border-[#E9ECEF] text-[#212529] rounded-xl hover:border-[#FEEB09]/30 hover:shadow-lg transition-all font-semibold"
               style={{ fontFamily: 'DM Sans, sans-serif' }}
             >
               <ArrowLeft size={20} />
@@ -185,7 +185,7 @@ const NotFound = () => {
             style={{ fontFamily: 'DM Sans, sans-serif' }}
           >
             <p className="flex items-center justify-center gap-2">
-              <Zap size={16} className="text-[#FF6B35]" />
+              <Zap size={16} className="text-[#FEEB09]" />
               Même les meilleurs hackathons ont parfois des bugs... 😉
             </p>
           </motion.div>

@@ -22,7 +22,7 @@ const AdminLayout = ({ children }: { children: ReactNode }) => {
   return (
     <div className="flex min-h-screen bg-gradient-to-br from-[#F8F9FA] to-white">
       <aside className="hidden lg:flex w-60 flex-col border-r border-[#E9ECEF] bg-white p-4 shadow-lg">
-        <Link to="/admin/dashboard" className="font-display text-lg font-bold text-[#1E3A5F] mb-6 px-2 hover:text-[#FF6B35] transition-colors">
+        <Link to="/admin/dashboard" className="font-display text-lg font-bold text-[#24366E] mb-6 px-2 hover:text-[#FEEB09] transition-colors">
           Admin Panel
         </Link>
         <nav className="flex flex-col gap-1 flex-1">
@@ -34,10 +34,10 @@ const AdminLayout = ({ children }: { children: ReactNode }) => {
                     ? 'bg-gradient-to-r from-red-600 to-orange-600 text-white shadow-lg shadow-red-500/25 border border-red-600/30' 
                     : 'text-red-600 hover:text-red-700 hover:bg-red-50 border border-red-200/50'
                   : location.pathname === l.path 
-                    ? 'bg-gradient-to-r from-[#1E3A5F] to-[#1E3A5F] text-white shadow-lg shadow-[#1E3A5F]/25 border border-[#1E3A5F]/20' 
+                    ? 'bg-gradient-to-r from-[#24366E] to-[#24366E] text-white shadow-lg shadow-[#24366E]/25 border border-[#24366E]/20' 
                     : 'text-[#6C757D] hover:text-[#212529] hover:bg-[#F8F9FA] hover:border hover:border-[#E9ECEF]/50'
               }`}>
-              <l.icon size={16} className={location.pathname === l.path ? 'text-white' : l.sensitive ? 'text-red-600' : 'text-[#1E3A5F]'} /> {l.label}
+              <l.icon size={16} className={location.pathname === l.path ? 'text-white' : l.sensitive ? 'text-red-600' : 'text-[#24366E]'} /> {l.label}
               {l.sensitive && (
                 <span className="ml-auto">
                   <Shield size={12} className={location.pathname === l.path ? 'text-white' : 'text-red-500'} />
@@ -58,10 +58,10 @@ const AdminLayout = ({ children }: { children: ReactNode }) => {
           <Link key={l.path} to={l.path}
             className={`flex flex-col items-center gap-0.5 px-3 py-2 text-[10px] min-w-[64px] transition-all duration-300 ${
               location.pathname === l.path 
-                ? 'text-[#1E3A5F] bg-[#1E3A5F]/10 border-t-2 border-t-[#1E3A5F]' 
+                ? 'text-[#24366E] bg-[#24366E]/10 border-t-2 border-t-[#24366E]' 
                 : 'text-[#6C757D] hover:text-[#212529] hover:bg-[#F8F9FA]'
             }`}>
-            <l.icon size={18} className={location.pathname === l.path ? 'text-[#1E3A5F]' : 'text-[#6C757D]'} /> {l.label}
+            <l.icon size={18} className={location.pathname === l.path ? 'text-[#24366E]' : 'text-[#6C757D]'} /> {l.label}
           </Link>
         ))}
       </div>

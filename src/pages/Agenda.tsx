@@ -49,13 +49,13 @@ const Agenda = () => {
 
   const getEventTypeColor = (type?: string) => {
     switch (type) {
-      case 'keynote': return 'from-[#FF6B35] to-[#FF8C42]';
-      case 'workshop': return 'from-[#1E3A5F] to-[#2C5282]';
-      case 'development': return 'from-[#FF8C42] to-[#FFA947]';
-      case 'presentation': return 'from-[#FF6B35] to-[#1E3A5F]';
-      case 'jury': return 'from-[#1E3A5F] to-[#FF6B35]';
+      case 'keynote': return 'from-[#FEEB09] to-[#FEEB09]';
+      case 'workshop': return 'from-[#24366E] to-[#2E4A8C]';
+      case 'development': return 'from-[#FEEB09] to-[#FFF04D]';
+      case 'presentation': return 'from-[#FEEB09] to-[#24366E]';
+      case 'jury': return 'from-[#24366E] to-[#FEEB09]';
       case 'meal': return 'from-[#6C757D] to-[#8B4513]';
-      default: return 'from-[#FF6B35] to-[#1E3A5F]';
+      default: return 'from-[#FEEB09] to-[#24366E]';
     }
   };
 
@@ -64,7 +64,7 @@ const Agenda = () => {
       <div className="min-h-screen bg-gradient-to-br from-[#F8F9FA] to-white">
         {/* Hero Section */}
         <div className="relative overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-br from-[#FF6B35]/5 via-[#1E3A5F]/5 to-transparent"></div>
+          <div className="absolute inset-0 bg-gradient-to-br from-[#FEEB09]/5 via-[#24366E]/5 to-transparent"></div>
           <div className="container relative z-10 py-16">
             <motion.div 
               className="text-center"
@@ -73,7 +73,7 @@ const Agenda = () => {
               transition={{ duration: 0.8 }}
             >
               <div className="flex items-center justify-center gap-4 mb-6">
-                <div className="w-16 h-16 rounded-full bg-gradient-to-r from-[#FF6B35] to-[#1E3A5F] flex items-center justify-center">
+                <div className="w-16 h-16 rounded-full bg-gradient-to-r from-[#FEEB09] to-[#24366E] flex items-center justify-center">
                   <Calendar size={32} className="text-white" />
                 </div>
                 <h1 
@@ -89,7 +89,7 @@ const Agenda = () => {
               >
                 Programme détaillé du Hackathon ISOC-ESMT 2026 — 17 & 18 Avril
               </p>
-              <div className="w-24 h-1 bg-gradient-to-r from-[#FF6B35] to-[#1E3A5F] mx-auto rounded-full"></div>
+              <div className="w-24 h-1 bg-gradient-to-r from-[#FEEB09] to-[#24366E] mx-auto rounded-full"></div>
             </motion.div>
           </div>
         </div>
@@ -106,7 +106,7 @@ const Agenda = () => {
             >
               <div className="bg-white rounded-3xl border border-[#E9ECEF] shadow-xl overflow-hidden">
                 {/* Header */}
-                <div className="bg-gradient-to-r from-[#FF6B35] to-[#FF8C42] p-6 text-white">
+                <div className="bg-gradient-to-r from-[#FEEB09] to-[#FEEB09] p-6 text-white">
                   <div className="flex items-center justify-between">
                     <div>
                       <h2 
@@ -144,7 +144,7 @@ const Agenda = () => {
                       </div>
                       
                       {/* Content */}
-                      <div className="flex-1 bg-[#F8F9FA] rounded-xl p-4 border border-[#E9ECEF] group-hover:border-[#FF6B35]/30 transition-colors">
+                      <div className="flex-1 bg-[#F8F9FA] rounded-xl p-4 border border-[#E9ECEF] group-hover:border-[#FEEB09]/30 transition-colors">
                         <h3 
                           className="font-semibold text-[#212529]"
                           style={{ fontFamily: 'DM Sans, sans-serif' }}
@@ -166,7 +166,7 @@ const Agenda = () => {
             >
               <div className="bg-white rounded-3xl border border-[#E9ECEF] shadow-xl overflow-hidden">
                 {/* Header */}
-                <div className="bg-gradient-to-r from-[#1E3A5F] to-[#2C5282] p-6 text-white">
+                <div className="bg-gradient-to-r from-[#24366E] to-[#2E4A8C] p-6 text-white">
                   <div className="flex items-center justify-between">
                     <div>
                       <h2 
@@ -204,7 +204,7 @@ const Agenda = () => {
                       </div>
                       
                       {/* Content */}
-                      <div className="flex-1 bg-[#F8F9FA] rounded-xl p-4 border border-[#E9ECEF] group-hover:border-[#1E3A5F]/30 transition-colors">
+                      <div className="flex-1 bg-[#F8F9FA] rounded-xl p-4 border border-[#E9ECEF] group-hover:border-[#24366E]/30 transition-colors">
                         <h3 
                           className="font-semibold text-[#212529]"
                           style={{ fontFamily: 'DM Sans, sans-serif' }}
@@ -226,7 +226,7 @@ const Agenda = () => {
             >
               <div className="bg-white rounded-3xl border border-[#E9ECEF] shadow-xl overflow-hidden">
                 {/* Header */}
-                <div className="bg-gradient-to-r from-[#FF8C42] to-[#FFA947] p-6 text-white">
+                <div className="bg-gradient-to-r from-[#FEEB09] to-[#FFF04D] p-6 text-white">
                   <div className="flex items-center justify-between">
                     <div>
                       <h2 
@@ -252,9 +252,9 @@ const Agenda = () => {
                         initial={{ opacity: 0, scale: 0.9 }}
                         animate={{ opacity: 1, scale: 1 }}
                         transition={{ duration: 0.6, delay: 0.1 * index }}
-                        className="flex gap-4 bg-[#F8F9FA] rounded-xl p-4 border border-[#E9ECEF] hover:border-[#FF8C42]/30 transition-colors"
+                        className="flex gap-4 bg-[#F8F9FA] rounded-xl p-4 border border-[#E9ECEF] hover:border-[#FEEB09]/30 transition-colors"
                       >
-                        <div className="w-12 h-12 rounded-full bg-gradient-to-r from-[#FF8C42] to-[#FFA947] flex items-center justify-center flex-shrink-0">
+                        <div className="w-12 h-12 rounded-full bg-gradient-to-r from-[#FEEB09] to-[#FFF04D] flex items-center justify-center flex-shrink-0">
                           <event.icone size={20} className="text-white" />
                         </div>
                         <h3 

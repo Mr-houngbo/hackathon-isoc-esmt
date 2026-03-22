@@ -28,7 +28,7 @@ const AdminLogin = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#F8F9FA] to-white flex items-center justify-center">
       {/* Background Pattern */}
-      <div className="absolute inset-0 bg-gradient-to-br from-[#1E3A5F]/10 via-[#FF6B35]/5 to-white"></div>
+      <div className="absolute inset-0 bg-gradient-to-br from-[#24366E]/10 via-[#FEEB09]/5 to-white"></div>
       <div className="absolute inset-0 opacity-20">
         <div className="absolute inset-0" style={{
           backgroundImage: `radial-gradient(circle at 20% 50%, rgba(30, 58, 95, 0.1) 0%, transparent 50%)`,
@@ -41,11 +41,11 @@ const AdminLogin = () => {
         transition={{ duration: 0.6 }}
         className="relative z-10 w-full max-w-md mx-auto p-6"
       >
-        <div className="relative overflow-hidden rounded-2xl border border-[#E9ECEF] bg-white shadow-2xl shadow-[#1E3A5F]/10">
+        <div className="relative overflow-hidden rounded-2xl border border-[#E9ECEF] bg-white shadow-2xl shadow-[#24366E]/10">
           {/* Header */}
-          <div className="text-center mb-8 p-8 bg-gradient-to-r from-[#1E3A5F]/10 to-[#FF6B35]/10">
+          <div className="text-center mb-8 p-8 bg-gradient-to-r from-[#24366E]/10 to-[#FEEB09]/10">
             <div className="flex items-center justify-center gap-4 mb-4">
-              <div className="w-16 h-16 rounded-full bg-gradient-to-r from-[#1E3A5F] to-[#FF6B35] flex items-center justify-center">
+              <div className="w-16 h-16 rounded-full bg-gradient-to-r from-[#24366E] to-[#FEEB09] flex items-center justify-center">
                 <Shield size={32} className="text-white" />
               </div>
               <h1 
@@ -61,7 +61,7 @@ const AdminLogin = () => {
             >
               Hackathon ISOC-ESMT 2026
             </p>
-            <div className="w-16 h-1 bg-gradient-to-r from-[#1E3A5F] to-[#FF6B35] mx-auto rounded-full"></div>
+            <div className="w-16 h-1 bg-gradient-to-r from-[#24366E] to-[#FEEB09] mx-auto rounded-full"></div>
           </div>
 
           {/* Form */}
@@ -83,7 +83,7 @@ const AdminLogin = () => {
                     onChange={(e) => setEmail(e.target.value)} 
                     required
                     placeholder="admin@hackathon.sn"
-                    className="w-full pl-12 pr-4 py-3 rounded-xl border-[#E9ECEF] bg-white px-4 py-3 text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FF6B35] focus:border-transparent transition-all duration-300"
+                    className="w-full pl-12 pr-4 py-3 rounded-xl border-[#E9ECEF] bg-white px-4 py-3 text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FEEB09] focus:border-transparent transition-all duration-300"
                     style={{ fontFamily: 'DM Sans, sans-serif' }}
                   />
                 </div>
@@ -105,13 +105,13 @@ const AdminLogin = () => {
                     onChange={(e) => setPassword(e.target.value)} 
                     required
                     placeholder="••••••••••"
-                    className="w-full pl-12 pr-12 py-3 rounded-xl border-[#E9ECEF] bg-white text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FF6B35] focus:border-transparent transition-all duration-300"
+                    className="w-full pl-12 pr-12 py-3 rounded-xl border-[#E9ECEF] bg-white text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FEEB09] focus:border-transparent transition-all duration-300"
                     style={{ fontFamily: 'DM Sans, sans-serif' }}
                   />
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-[#6C757D] hover:text-[#FF6B35] transition-colors"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-[#6C757D] hover:text-[#FEEB09] transition-colors"
                   >
                     {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
                   </button>
@@ -124,7 +124,7 @@ const AdminLogin = () => {
                 disabled={loading}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                className="w-full py-4 rounded-xl bg-gradient-to-r from-[#1E3A5F] to-[#FF6B35] text-white font-bold shadow-lg shadow-[#1E3A5F]/25 transition-all duration-300 hover:shadow-xl hover:shadow-[#1E3A5F]/40 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full py-4 rounded-xl bg-gradient-to-r from-[#24366E] to-[#FEEB09] text-white font-bold shadow-lg shadow-[#24366E]/25 transition-all duration-300 hover:shadow-xl hover:shadow-[#24366E]/40 disabled:opacity-50 disabled:cursor-not-allowed"
                 style={{ fontFamily: 'Sora, sans-serif' }}
               >
                 {loading ? (
@@ -144,7 +144,7 @@ const AdminLogin = () => {
             {/* Security Note */}
             <div className="mt-8 p-4 rounded-xl bg-[#F8F9FA]/50 border border-[#E9ECEF]/50">
               <div className="flex items-start gap-3">
-                <Shield size={16} className="text-[#FF6B35] mt-0.5" />
+                <Shield size={16} className="text-[#FEEB09] mt-0.5" />
                 <div>
                   <p 
                     className="text-xs text-[#6C757D] font-medium"

@@ -148,7 +148,7 @@ const GestionEquipes = () => {
     <AdminLayout>
       <div className="min-h-screen bg-gradient-to-br from-[#F8F9FA] to-white">
         {/* Header */}
-        <div className="bg-gradient-to-r from-[#1E3A5F]/10 to-[#FF6B35]/10 backdrop-blur-sm border-b border-[#E9ECEF]/20">
+        <div className="bg-gradient-to-r from-[#24366E]/10 to-[#FEEB09]/10 backdrop-blur-sm border-b border-[#E9ECEF]/20">
           <div className="container py-6">
             <div className="flex items-center justify-between">
               <motion.div
@@ -173,7 +173,7 @@ const GestionEquipes = () => {
               <div className="flex gap-2">
                 <button
                   onClick={() => setShowAdd(!showAdd)}
-                  className="px-4 py-2 rounded-lg bg-[#1E3A5F] text-white hover:bg-[#006450] transition-colors"
+                  className="px-4 py-2 rounded-lg bg-[#24366E] text-white hover:bg-[#006450] transition-colors"
                   style={{ fontFamily: 'DM Sans, sans-serif' }}
                 >
                   <Plus size={16} className="mr-2" />
@@ -204,14 +204,14 @@ const GestionEquipes = () => {
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.5, delay: 0.1 }}
-                className="relative overflow-hidden rounded-2xl border border-[#E9ECEF] bg-[white] p-6 hover:border-[#FF6B35]/50 hover:shadow-xl hover:shadow-[#FF6B35]/10 transition-all duration-300"
+                className="relative overflow-hidden rounded-2xl border border-[#E9ECEF] bg-[white] p-6 hover:border-[#FEEB09]/50 hover:shadow-xl hover:shadow-[#FEEB09]/10 transition-all duration-300"
               >
-                <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-[#FF6B35]/5 opacity-0"></div>
+                <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-[#FEEB09]/5 opacity-0"></div>
                 
                 <div className="relative z-10">
                   <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center gap-3">
-                      <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-[#1E3A5F]/20 to-[#FF6B35]/20 flex items-center justify-center">
+                      <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-[#24366E]/20 to-[#FEEB09]/20 flex items-center justify-center">
                         <Users size={24} className="text-[#212529]" />
                       </div>
                       <div>
@@ -325,7 +325,7 @@ const GestionEquipes = () => {
                     <select 
                       value={form.type_candidature}
                       onChange={(e) => setForm({ ...form, type_candidature: e.target.value })}
-                      className="w-full px-4 py-2 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] focus:outline-none focus:ring-2 focus:ring-[#FF6B35] focus:border-transparent"
+                      className="w-full px-4 py-2 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] focus:outline-none focus:ring-2 focus:ring-[#FEEB09] focus:border-transparent"
                     >
                       <option value="individuel">Individuel</option>
                       <option value="equipe">Équipe</option>
@@ -338,7 +338,7 @@ const GestionEquipes = () => {
                       placeholder="Nom de l'équipe" 
                       value={form.nom_equipe} 
                       onChange={(e) => setForm({ ...form, nom_equipe: e.target.value })}
-                      className="w-full px-4 py-2 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FF6B35] focus:border-transparent"
+                      className="w-full px-4 py-2 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FEEB09] focus:border-transparent"
                     />
                   </div>
                   
@@ -349,7 +349,7 @@ const GestionEquipes = () => {
                       placeholder="Nombre de membres" 
                       value={form.nombre_membres} 
                       onChange={(e) => setForm({ ...form, nombre_membres: parseInt(e.target.value) || 1 })}
-                      className="w-full px-4 py-2 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FF6B35] focus:border-transparent"
+                      className="w-full px-4 py-2 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FEEB09] focus:border-transparent"
                     />
                   </div>
                   
@@ -358,7 +358,7 @@ const GestionEquipes = () => {
                     <select 
                       value={form.a_projet}
                       onChange={(e) => setForm({ ...form, a_projet: e.target.value })}
-                      className="w-full px-4 py-2 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] focus:outline-none focus:ring-2 focus:ring-[#FF6B35] focus:border-transparent"
+                      className="w-full px-4 py-2 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] focus:outline-none focus:ring-2 focus:ring-[#FEEB09] focus:border-transparent"
                     >
                       <option value="oui">Oui</option>
                       <option value="non">Non</option>
@@ -373,7 +373,7 @@ const GestionEquipes = () => {
                       placeholder="Nom du projet" 
                       value={form.nom_projet} 
                       onChange={(e) => setForm({ ...form, nom_projet: e.target.value })}
-                      className="w-full px-4 py-2 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FF6B35] focus:border-transparent"
+                      className="w-full px-4 py-2 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FEEB09] focus:border-transparent"
                     />
                   </div>
                   
@@ -383,7 +383,7 @@ const GestionEquipes = () => {
                       placeholder="Domaine du projet" 
                       value={form.domaine_projet} 
                       onChange={(e) => setForm({ ...form, domaine_projet: e.target.value })}
-                      className="w-full px-4 py-2 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FF6B35] focus:border-transparent"
+                      className="w-full px-4 py-2 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FEEB09] focus:border-transparent"
                     />
                   </div>
                   
@@ -393,7 +393,7 @@ const GestionEquipes = () => {
                       placeholder="Autre domaine" 
                       value={form.domaine_projet_autre} 
                       onChange={(e) => setForm({ ...form, domaine_projet_autre: e.target.value })}
-                      className="w-full px-4 py-2 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FF6B35] focus:border-transparent"
+                      className="w-full px-4 py-2 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FEEB09] focus:border-transparent"
                     />
                   </div>
                   
@@ -402,7 +402,7 @@ const GestionEquipes = () => {
                     <select 
                       value={form.statut}
                       onChange={(e) => setForm({ ...form, statut: e.target.value })}
-                      className="w-full px-4 py-2 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] focus:outline-none focus:ring-2 focus:ring-[#FF6B35] focus:border-transparent"
+                      className="w-full px-4 py-2 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] focus:outline-none focus:ring-2 focus:ring-[#FEEB09] focus:border-transparent"
                     >
                       <option value="en_attente">En attente</option>
                       <option value="selectionne">Sélectionné</option>
@@ -420,7 +420,7 @@ const GestionEquipes = () => {
                     value={form.problematique} 
                     onChange={(e) => setForm({ ...form, problematique: e.target.value })}
                     rows={3}
-                    className="w-full px-4 py-2 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FF6B35] focus:border-transparent"
+                    className="w-full px-4 py-2 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FEEB09] focus:border-transparent"
                   />
                 </div>
                 
@@ -431,7 +431,7 @@ const GestionEquipes = () => {
                     value={form.solution} 
                     onChange={(e) => setForm({ ...form, solution: e.target.value })}
                     rows={3}
-                    className="w-full px-4 py-2 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FF6B35] focus:border-transparent"
+                    className="w-full px-4 py-2 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FEEB09] focus:border-transparent"
                   />
                 </div>
               </div>
@@ -445,7 +445,7 @@ const GestionEquipes = () => {
                 </button>
                 <button
                   onClick={() => addEquipe.mutate()}
-                  className="px-6 py-2 rounded-xl bg-[#1E3A5F] text-white hover:bg-[#006450] transition-colors flex items-center gap-2"
+                  className="px-6 py-2 rounded-xl bg-[#24366E] text-white hover:bg-[#006450] transition-colors flex items-center gap-2"
                 >
                   <Save size={16} />
                   Enregistrer
@@ -471,7 +471,7 @@ const GestionEquipes = () => {
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                     placeholder="Rechercher une équipe..."
-                    className="flex-1 px-4 py-2 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FF6B35] focus:border-transparent"
+                    className="flex-1 px-4 py-2 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FEEB09] focus:border-transparent"
                   />
                 </div>
               </div>
@@ -480,7 +480,7 @@ const GestionEquipes = () => {
                 <button
                   onClick={() => setFilterType('toutes')}
                   className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
-                    filterType === 'toutes' ? 'bg-[#1E3A5F] text-white' : 'bg-white text-[#6C757D] hover:bg-[#E9ECEF]'
+                    filterType === 'toutes' ? 'bg-[#24366E] text-white' : 'bg-white text-[#6C757D] hover:bg-[#E9ECEF]'
                   }`}
                 >
                   Toutes
@@ -515,9 +515,9 @@ const GestionEquipes = () => {
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.5 }}
-                className="relative overflow-hidden rounded-2xl border border-[#E9ECEF] bg-white hover:border-[#FF6B35]/50 hover:shadow-xl hover:shadow-[#FF6B35]/10 transition-all duration-300"
+                className="relative overflow-hidden rounded-2xl border border-[#E9ECEF] bg-white hover:border-[#FEEB09]/50 hover:shadow-xl hover:shadow-[#FEEB09]/10 transition-all duration-300"
               >
-                <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-[#FF6B35]/5 opacity-0"></div>
+                <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-[#FEEB09]/5 opacity-0"></div>
                 
                 <div className="relative z-10 p-6">
                   <div className="flex items-start justify-between mb-4">
@@ -549,7 +549,7 @@ const GestionEquipes = () => {
                     <div className="flex gap-2">
                       <button
                         onClick={() => toggleSelection.mutate(equipe.id)}
-                        className="p-2 rounded-lg bg-[#1E3A5F] text-white hover:bg-[#006450] transition-colors"
+                        className="p-2 rounded-lg bg-[#24366E] text-white hover:bg-[#006450] transition-colors"
                         title="Changer le statut"
                       >
                         <Trophy size={16} />

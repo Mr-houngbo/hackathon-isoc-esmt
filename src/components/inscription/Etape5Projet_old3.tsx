@@ -8,10 +8,10 @@ interface Props {
 }
 
 const domaines = [
-  { value: 'Vie étudiante', label: 'Vie étudiante', icon: Code, color: 'text-[#FF6B35]' },
-  { value: 'Administration', label: 'Administration', icon: Code, color: 'text-[#1E3A5F]' },
-  { value: 'Pédagogie', label: 'Pédagogie', icon: Code, color: 'text-[#FF6B35]' },
-  { value: 'Campus', label: 'Campus', icon: Code, color: 'text-[#1E3A5F]' },
+  { value: 'Vie étudiante', label: 'Vie étudiante', icon: Code, color: 'text-[#FEEB09]' },
+  { value: 'Administration', label: 'Administration', icon: Code, color: 'text-[#24366E]' },
+  { value: 'Pédagogie', label: 'Pédagogie', icon: Code, color: 'text-[#FEEB09]' },
+  { value: 'Campus', label: 'Campus', icon: Code, color: 'text-[#24366E]' },
   { value: 'Autre', label: 'Autre', icon: Code, color: 'text-[#6C757D]' }
 ];
 
@@ -34,7 +34,7 @@ const Etape5Projet = ({ data, onChange }: Props) => {
         transition={{ duration: 0.5 }}
       >
         <div className="flex items-center justify-center gap-3 mb-4">
-          <div className="w-12 h-12 rounded-full bg-gradient-to-r from-[#FF6B35] to-[#1E3A5F] flex items-center justify-center">
+          <div className="w-12 h-12 rounded-full bg-gradient-to-r from-[#FEEB09] to-[#24366E] flex items-center justify-center">
             <Lightbulb size={24} className="text-white" />
           </div>
           <h3 
@@ -50,7 +50,7 @@ const Etape5Projet = ({ data, onChange }: Props) => {
         >
           Décrivez votre projet innovant
         </p>
-        <div className="w-16 h-1 bg-gradient-to-r from-[#FF6B35] to-[#1E3A5F] mx-auto rounded-full mt-4"></div>
+        <div className="w-16 h-1 bg-gradient-to-r from-[#FEEB09] to-[#24366E] mx-auto rounded-full mt-4"></div>
       </motion.div>
 
       {/* Form Grid */}
@@ -74,7 +74,7 @@ const Etape5Projet = ({ data, onChange }: Props) => {
               value={data.projet_nom}
               onChange={(e) => onChange({ projet_nom: e.target.value })}
               placeholder="Nom de votre projet"
-              className="w-full px-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FF6B35]/20 focus:border-[#FF6B35]/50 transition-all"
+              className="w-full px-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FEEB09]/20 focus:border-[#FEEB09]/50 transition-all"
               style={{ fontFamily: 'DM Sans, sans-serif' }}
             />
           </label>
@@ -97,7 +97,7 @@ const Etape5Projet = ({ data, onChange }: Props) => {
             <select
               value={data.projet_domaine}
               onChange={(e) => onChange({ projet_domaine: e.target.value })}
-              className="w-full px-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] focus:outline-none focus:ring-2 focus:ring-[#FF6B35]/20 focus:border-[#FF6B35]/50 transition-all"
+              className="w-full px-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] focus:outline-none focus:ring-2 focus:ring-[#FEEB09]/20 focus:border-[#FEEB09]/50 transition-all"
               style={{ fontFamily: 'DM Sans, sans-serif' }}
             >
               <option value="">Sélectionnez un domaine</option>
@@ -127,7 +127,7 @@ const Etape5Projet = ({ data, onChange }: Props) => {
             <select
               value={data.projet_niveau_avancement}
               onChange={(e) => onChange({ projet_niveau_avancement: e.target.value })}
-              className="w-full px-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] focus:outline-none focus:ring-2 focus:ring-[#FF6B35]/20 focus:border-[#FF6B35]/50 transition-all"
+              className="w-full px-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] focus:outline-none focus:ring-2 focus:ring-[#FEEB09]/20 focus:border-[#FEEB09]/50 transition-all"
               style={{ fontFamily: 'DM Sans, sans-serif' }}
             >
               <option value="">Sélectionnez un niveau</option>
@@ -159,7 +159,7 @@ const Etape5Projet = ({ data, onChange }: Props) => {
               value={data.projet_technologies}
               onChange={(e) => onChange({ projet_technologies: e.target.value })}
               placeholder="Ex: React, Node.js, MongoDB..."
-              className="w-full px-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FF6B35]/20 focus:border-[#FF6B35]/50 transition-all"
+              className="w-full px-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FEEB09]/20 focus:border-[#FEEB09]/50 transition-all"
               style={{ fontFamily: 'DM Sans, sans-serif' }}
             />
           </label>
@@ -185,7 +185,7 @@ const Etape5Projet = ({ data, onChange }: Props) => {
             onChange={(e) => onChange({ projet_description: e.target.value })}
             placeholder="Décrivez votre projet en détail..."
             rows={6}
-            className="w-full px-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FF6B35]/20 focus:border-[#FF6B35]/50 transition-all resize-none"
+            className="w-full px-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FEEB09]/20 focus:border-[#FEEB09]/50 transition-all resize-none"
             style={{ fontFamily: 'DM Sans, sans-serif' }}
           />
           <div className="flex justify-between items-center mt-2">
@@ -224,7 +224,7 @@ const Etape5Projet = ({ data, onChange }: Props) => {
             onChange={(e) => onChange({ projet_probleme_resolu: e.target.value })}
             placeholder="Quel problème votre projet résout-il ?"
             rows={4}
-            className="w-full px-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FF6B35]/20 focus:border-[#FF6B35]/50 transition-all resize-none"
+            className="w-full px-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FEEB09]/20 focus:border-[#FEEB09]/50 transition-all resize-none"
             style={{ fontFamily: 'DM Sans, sans-serif' }}
           />
         </label>
@@ -249,7 +249,7 @@ const Etape5Projet = ({ data, onChange }: Props) => {
             onChange={(e) => onChange({ projet_innovation: e.target.value })}
             placeholder="Qu'est-ce qui rend votre projet unique ?"
             rows={4}
-            className="w-full px-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FF6B35]/20 focus:border-[#FF6B35]/50 transition-all resize-none"
+            className="w-full px-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FEEB09]/20 focus:border-[#FEEB09]/50 transition-all resize-none"
             style={{ fontFamily: 'DM Sans, sans-serif' }}
           />
         </label>

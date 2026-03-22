@@ -46,7 +46,7 @@ const Etape3Chef = ({ data, onChange, errors = {} }: Props) => {
         transition={{ duration: 0.5 }}
       >
         <div className="flex items-center justify-center gap-3 mb-4">
-          <div className="w-12 h-12 rounded-full bg-gradient-to-r from-[#FF6B35] to-[#1E3A5F] flex items-center justify-center">
+          <div className="w-12 h-12 rounded-full bg-gradient-to-r from-[#FEEB09] to-[#24366E] flex items-center justify-center">
             <Code size={24} className="text-white" />
           </div>
           <h3 
@@ -71,7 +71,7 @@ const Etape3Chef = ({ data, onChange, errors = {} }: Props) => {
               Informations du responsable de l'équipe
             </p>
           )}
-        <div className="w-16 h-1 bg-gradient-to-r from-[#FF6B35] to-[#1E3A5F] mx-auto rounded-full mt-4"></div>
+        <div className="w-16 h-1 bg-gradient-to-r from-[#FEEB09] to-[#24366E] mx-auto rounded-full mt-4"></div>
       </motion.div>
 
       {/* Form Grid */}
@@ -95,7 +95,7 @@ const Etape3Chef = ({ data, onChange, errors = {} }: Props) => {
               value={data.chef.nom_prenom || ''}
               onChange={(e) => updateChef('nom_prenom', e.target.value)}
               placeholder="Ex: Aminata Diallo"
-              className="w-full px-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FF6B35]/20 focus:border-[#FF6B35]/50 transition-all"
+              className="w-full px-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FEEB09]/20 focus:border-[#FEEB09]/50 transition-all"
               style={{ fontFamily: 'DM Sans, sans-serif' }}
             />
             {errors.nom_prenom && (
@@ -128,8 +128,8 @@ const Etape3Chef = ({ data, onChange, errors = {} }: Props) => {
                   onClick={() => updateChef('genre', genre)}
                   className={`px-2 py-1 rounded-lg text-xs font-semibold transition-all ${
                     data.chef.genre === genre
-                      ? 'bg-[#FF6B35] text-white'
-                      : 'bg-[#E9ECEF] border border-[#E9ECEF] text-[#6C757D] hover:border-[#FF6B35]/30'
+                      ? 'bg-[#FEEB09] text-white'
+                      : 'bg-[#E9ECEF] border border-[#E9ECEF] text-[#6C757D] hover:border-[#FEEB09]/30'
                   }`}
                   style={{ fontFamily: 'DM Sans, sans-serif' }}
                 >
@@ -162,7 +162,7 @@ const Etape3Chef = ({ data, onChange, errors = {} }: Props) => {
             <select
               value={data.chef.filiere || ''}
               onChange={(e) => updateChef('filiere', e.target.value)}
-              className="w-full px-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] focus:outline-none focus:ring-2 focus:ring-[#FF6B35]/20 focus:border-[#FF6B35]/50 transition-all"
+              className="w-full px-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] focus:outline-none focus:ring-2 focus:ring-[#FEEB09]/20 focus:border-[#FEEB09]/50 transition-all"
               style={{ fontFamily: 'DM Sans, sans-serif' }}
             >
               <option value="">Sélectionnez votre filière</option>
@@ -195,7 +195,7 @@ const Etape3Chef = ({ data, onChange, errors = {} }: Props) => {
             <select
               value={data.chef.niveau_etudes || ''}
               onChange={(e) => updateChef('niveau_etudes', e.target.value)}
-              className="w-full px-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] focus:outline-none focus:ring-2 focus:ring-[#FF6B35]/20 focus:border-[#FF6B35]/50 transition-all"
+              className="w-full px-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] focus:outline-none focus:ring-2 focus:ring-[#FEEB09]/20 focus:border-[#FEEB09]/50 transition-all"
               style={{ fontFamily: 'DM Sans, sans-serif' }}
             >
               <option value="">Sélectionnez votre niveau</option>
@@ -234,7 +234,7 @@ const Etape3Chef = ({ data, onChange, errors = {} }: Props) => {
               }}
               placeholder="77 000 00 00"
               maxLength={9}
-              className="w-full px-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FF6B35]/20 focus:border-[#FF6B35]/50 transition-all"
+              className="w-full px-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FEEB09]/20 focus:border-[#FEEB09]/50 transition-all"
               style={{ fontFamily: 'DM Sans, sans-serif' }}
             />
             {errors.telephone && (
@@ -264,7 +264,7 @@ const Etape3Chef = ({ data, onChange, errors = {} }: Props) => {
               value={data.chef.email || ''}
               onChange={(e) => updateChef('email', e.target.value)}
               placeholder="votre.email@exemple.com"
-              className="w-full px-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FF6B35]/20 focus:border-[#FF6B35]/50 transition-all"
+              className="w-full px-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FEEB09]/20 focus:border-[#FEEB09]/50 transition-all"
               style={{ fontFamily: 'DM Sans, sans-serif' }}
             />
             {errors.email && (
@@ -294,7 +294,7 @@ const Etape3Chef = ({ data, onChange, errors = {} }: Props) => {
               value={data.chef.etablissement || ''}
               onChange={(e) => updateChef('etablissement', e.target.value)}
               placeholder="Nom de votre établissement"
-              className="w-full px-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FF6B35]/20 focus:border-[#FF6B35]/50 transition-all"
+              className="w-full px-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FEEB09]/20 focus:border-[#FEEB09]/50 transition-all"
               style={{ fontFamily: 'DM Sans, sans-serif' }}
             />
             {errors.etablissement && (
@@ -327,15 +327,15 @@ const Etape3Chef = ({ data, onChange, errors = {} }: Props) => {
               onClick={() => selectCompetence(competence)}
               className={`p-3 rounded-xl border-2 transition-all duration-300 hover:scale-105 min-h-[3.5rem] flex items-center justify-center ${
                 data.chef.competences.includes(competence)
-                  ? 'border-[#FF6B35] bg-[#FF6B35]/10'
-                  : 'border-[#E9ECEF] bg-white hover:border-[#FF6B35]/30'
+                  ? 'border-[#FEEB09] bg-[#FEEB09]/10'
+                  : 'border-[#E9ECEF] bg-white hover:border-[#FEEB09]/30'
               }`}
             >
               <span 
                 className="text-sm font-medium text-center leading-tight"
                 style={{ fontFamily: 'DM Sans, sans-serif' }}
               >
-                <span className={data.chef.competences.includes(competence) ? 'text-[#FF6B35]' : 'text-[#6C757D]'}>
+                <span className={data.chef.competences.includes(competence) ? 'text-[#FEEB09]' : 'text-[#6C757D]'}>
                   {competence}
                 </span>
               </span>
@@ -361,7 +361,7 @@ const Etape3Chef = ({ data, onChange, errors = {} }: Props) => {
               value={data.chef.competence_autre || ''}
               onChange={(e) => updateChef('competence_autre', e.target.value)}
               placeholder="Précisez votre compétence"
-              className="w-full px-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FF6B35]/20 focus:border-[#FF6B35]/50 transition-all"
+              className="w-full px-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FEEB09]/20 focus:border-[#FEEB09]/50 transition-all"
               style={{ fontFamily: 'DM Sans, sans-serif' }}
               required
             />
@@ -393,8 +393,8 @@ const Etape3Chef = ({ data, onChange, errors = {} }: Props) => {
             onClick={() => updateChef('disponible_2_jours', true)}
             className={`px-6 py-3 rounded-lg font-semibold transition-all ${
               data.chef.disponible_2_jours === true
-                ? 'bg-[#FF6B35] text-white'
-                : 'bg-[#E9ECEF] border border-[#E9ECEF] text-[#6C757D] hover:border-[#FF6B35]/30'
+                ? 'bg-[#FEEB09] text-white'
+                : 'bg-[#E9ECEF] border border-[#E9ECEF] text-[#6C757D] hover:border-[#FEEB09]/30'
             }`}
             style={{ fontFamily: 'DM Sans, sans-serif' }}
           >

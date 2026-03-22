@@ -217,7 +217,7 @@ const GestionComite = () => {
                 <button
                   onClick={assignerAutomatiquement}
                   disabled={loadingAssignments || stats.unassignedDossiers === 0}
-                  className="flex items-center gap-2 px-4 py-2 rounded-xl bg-[#1E3A5F] text-white hover:bg-[#2C5282] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="flex items-center gap-2 px-4 py-2 rounded-xl bg-[#24366E] text-white hover:bg-[#2E4A8C] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                   style={{ fontFamily: 'DM Sans, sans-serif' }}
                 >
                   <Shuffle size={16} />
@@ -225,7 +225,7 @@ const GestionComite = () => {
                 </button>
                 <button
                   onClick={() => setShowAddMember(true)}
-                  className="flex items-center gap-2 px-4 py-2 rounded-xl bg-[#FF6B35] text-white hover:bg-[#FF8C42] transition-colors"
+                  className="flex items-center gap-2 px-4 py-2 rounded-xl bg-[#FEEB09] text-white hover:bg-[#FEEB09] transition-colors"
                   style={{ fontFamily: 'DM Sans, sans-serif' }}
                 >
                   <Plus size={16} />
@@ -238,8 +238,8 @@ const GestionComite = () => {
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
               <div className="bg-white rounded-xl p-4 border border-[#E9ECEF]">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-lg bg-[#FF6B35]/10 flex items-center justify-center">
-                    <Users className="text-[#FF6B35]" size={20} />
+                  <div className="w-10 h-10 rounded-lg bg-[#FEEB09]/10 flex items-center justify-center">
+                    <Users className="text-[#FEEB09]" size={20} />
                   </div>
                   <div>
                     <p className="text-2xl font-bold text-[#212529]" style={{ fontFamily: 'Sora, sans-serif' }}>
@@ -254,8 +254,8 @@ const GestionComite = () => {
 
               <div className="bg-white rounded-xl p-4 border border-[#E9ECEF]">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-lg bg-[#1E3A5F]/10 flex items-center justify-center">
-                    <Mail className="text-[#1E3A5F]" size={20} />
+                  <div className="w-10 h-10 rounded-lg bg-[#24366E]/10 flex items-center justify-center">
+                    <Mail className="text-[#24366E]" size={20} />
                   </div>
                   <div>
                     <p className="text-2xl font-bold text-[#212529]" style={{ fontFamily: 'Sora, sans-serif' }}>
@@ -339,7 +339,7 @@ const GestionComite = () => {
                     <tr key={member.id} className="border-b border-[#E9ECEF] hover:bg-[#F8F9FA]">
                       <td className="py-3 px-4">
                         <div className="flex items-center gap-2">
-                          <UserCheck size={16} className="text-[#1E3A5F]" />
+                          <UserCheck size={16} className="text-[#24366E]" />
                           <span className="font-medium text-[#212529]" style={{ fontFamily: 'DM Sans, sans-serif' }}>
                             {member.nom_prenom}
                           </span>
@@ -351,7 +351,7 @@ const GestionComite = () => {
                         </span>
                       </td>
                       <td className="py-3 px-4">
-                        <span className="inline-flex items-center gap-1 px-2 py-1 bg-[#1E3A5F]/10 rounded-lg text-sm font-medium text-[#1E3A5F]" style={{ fontFamily: 'DM Sans, sans-serif' }}>
+                        <span className="inline-flex items-center gap-1 px-2 py-1 bg-[#24366E]/10 rounded-lg text-sm font-medium text-[#24366E]" style={{ fontFamily: 'DM Sans, sans-serif' }}>
                           {assignments?.filter(a => a.comite_id === member.id).length || 0}
                         </span>
                       </td>
@@ -404,8 +404,8 @@ const GestionComite = () => {
                         key={equipe.id}
                         className={`p-3 rounded-lg border cursor-pointer transition-all ${
                           selectedDossiers.includes(equipe.id)
-                            ? 'border-[#FF6B35] bg-[#FF6B35]/10'
-                            : 'border-[#E9ECEF] hover:border-[#FF6B35]/30'
+                            ? 'border-[#FEEB09] bg-[#FEEB09]/10'
+                            : 'border-[#E9ECEF] hover:border-[#FEEB09]/30'
                         }`}
                         onClick={() => {
                           if (selectedDossiers.includes(equipe.id)) {
@@ -433,7 +433,7 @@ const GestionComite = () => {
                               {nbEvaluateurs}/2 évaluateurs
                             </span>
                             {selectedDossiers.includes(equipe.id) && (
-                              <CheckCircle size={16} className="text-[#FF6B35]" />
+                              <CheckCircle size={16} className="text-[#FEEB09]" />
                             )}
                           </div>
                         </div>
@@ -476,7 +476,7 @@ const GestionComite = () => {
                             }
                           }}
                           disabled={selectedDossiers.length === 0}
-                          className="px-3 py-1 rounded-lg bg-[#FF6B35] text-white text-sm hover:bg-[#FF8C42] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                          className="px-3 py-1 rounded-lg bg-[#FEEB09] text-white text-sm hover:bg-[#FEEB09] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                           style={{ fontFamily: 'DM Sans, sans-serif' }}
                         >
                           Assigner ({selectedDossiers.length})
@@ -514,7 +514,7 @@ const GestionComite = () => {
                     type="text"
                     value={newMember.nom_prenom}
                     onChange={(e) => setNewMember({ ...newMember, nom_prenom: e.target.value })}
-                    className="w-full px-4 py-2 rounded-xl border border-[#E9ECEF] text-[#212529] focus:outline-none focus:ring-2 focus:ring-[#FF6B35]/20 focus:border-[#FF6B35]/50"
+                    className="w-full px-4 py-2 rounded-xl border border-[#E9ECEF] text-[#212529] focus:outline-none focus:ring-2 focus:ring-[#FEEB09]/20 focus:border-[#FEEB09]/50"
                     style={{ fontFamily: 'DM Sans, sans-serif' }}
                   />
                 </div>
@@ -527,7 +527,7 @@ const GestionComite = () => {
                     type="email"
                     value={newMember.email}
                     onChange={(e) => setNewMember({ ...newMember, email: e.target.value })}
-                    className="w-full px-4 py-2 rounded-xl border border-[#E9ECEF] text-[#212529] focus:outline-none focus:ring-2 focus:ring-[#FF6B35]/20 focus:border-[#FF6B35]/50"
+                    className="w-full px-4 py-2 rounded-xl border border-[#E9ECEF] text-[#212529] focus:outline-none focus:ring-2 focus:ring-[#FEEB09]/20 focus:border-[#FEEB09]/50"
                     style={{ fontFamily: 'DM Sans, sans-serif' }}
                   />
                 </div>
@@ -547,7 +547,7 @@ const GestionComite = () => {
                 <button
                   onClick={() => addMemberMutation.mutate()}
                   disabled={!newMember.nom_prenom.trim() || !newMember.email.trim()}
-                  className="px-4 py-2 rounded-xl bg-[#FF6B35] text-white hover:bg-[#FF8C42] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="px-4 py-2 rounded-xl bg-[#FEEB09] text-white hover:bg-[#FEEB09] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                   style={{ fontFamily: 'DM Sans, sans-serif' }}
                 >
                   Ajouter

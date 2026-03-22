@@ -31,7 +31,7 @@ const Etape7Motivation = ({ data, onChange, errors = {} }: Props) => {
         transition={{ duration: 0.5 }}
       >
         <div className="flex items-center justify-center gap-3 mb-4">
-          <div className="w-12 h-12 rounded-full bg-gradient-to-r from-[#FF6B35] to-[#1E3A5F] flex items-center justify-center">
+          <div className="w-12 h-12 rounded-full bg-gradient-to-r from-[#FEEB09] to-[#24366E] flex items-center justify-center">
             <Heart size={24} className="text-white" />
           </div>
           <h3 
@@ -47,7 +47,7 @@ const Etape7Motivation = ({ data, onChange, errors = {} }: Props) => {
         >
           Dites-nous pourquoi vous souhaitez participer
         </p>
-        <div className="w-16 h-1 bg-gradient-to-r from-[#FF6B35] to-[#1E3A5F] mx-auto rounded-full mt-4"></div>
+        <div className="w-16 h-1 bg-gradient-to-r from-[#FEEB09] to-[#24366E] mx-auto rounded-full mt-4"></div>
       </motion.div>
 
       {/* Motivation */}
@@ -69,7 +69,7 @@ const Etape7Motivation = ({ data, onChange, errors = {} }: Props) => {
             onChange={(e) => onChange({ motivation: e.target.value })}
             placeholder="Exprimez votre motivation en quelques mots..."
             rows={6}
-            className="w-full px-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FF6B35]/20 focus:border-[#FF6B35]/50 transition-all resize-none"
+            className="w-full px-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FEEB09]/20 focus:border-[#FEEB09]/50 transition-all resize-none"
             style={{ fontFamily: 'DM Sans, sans-serif' }}
           />
           <div className="flex justify-between items-center mt-2">
@@ -113,7 +113,7 @@ const Etape7Motivation = ({ data, onChange, errors = {} }: Props) => {
             onChange={(e) => onChange({ esperances: e.target.value })}
             placeholder="Décrivez vos attentes et objectifs..."
             rows={4}
-            className="w-full px-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FF6B35]/20 focus:border-[#FF6B35]/50 transition-all resize-none"
+            className="w-full px-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FEEB09]/20 focus:border-[#FEEB09]/50 transition-all resize-none"
             style={{ fontFamily: 'DM Sans, sans-serif' }}
           />
           <div className="flex justify-between items-center mt-2">
@@ -155,7 +155,7 @@ const Etape7Motivation = ({ data, onChange, errors = {} }: Props) => {
           <select
             value={data.source_info || ''}
             onChange={(e) => onChange({ source_info: e.target.value })}
-            className="w-full px-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] focus:outline-none focus:ring-2 focus:ring-[#FF6B35]/20 focus:border-[#FF6B35]/50 transition-all"
+            className="w-full px-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] focus:outline-none focus:ring-2 focus:ring-[#FEEB09]/20 focus:border-[#FEEB09]/50 transition-all"
             style={{ fontFamily: 'DM Sans, sans-serif' }}
           >
             <option value="">Comment avez-vous entendu parler du hackathon ?</option>
@@ -176,7 +176,7 @@ const Etape7Motivation = ({ data, onChange, errors = {} }: Props) => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.4 }}
-        className="bg-gradient-to-r from-[#FF6B35]/10 to-[#1E3A5F]/10 rounded-2xl border border-[#E9ECEF] p-4"
+        className="bg-gradient-to-r from-[#FEEB09]/10 to-[#24366E]/10 rounded-2xl border border-[#E9ECEF] p-4"
       >
         <p 
           className="text-center text-sm"

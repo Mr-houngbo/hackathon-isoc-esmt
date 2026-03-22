@@ -50,7 +50,7 @@ const CritereNote = ({
           {label}
         </label>
         <div className="flex items-center gap-2">
-          <span className="text-sm font-medium text-[#1E3A5F]" style={{ fontFamily: 'DM Sans, sans-serif' }}>
+          <span className="text-sm font-medium text-[#24366E]" style={{ fontFamily: 'DM Sans, sans-serif' }}>
             {localValue}/{max}
           </span>
           <span className="text-sm text-[#6C757D]" style={{ fontFamily: 'DM Sans, sans-serif' }}>
@@ -96,7 +96,7 @@ const CritereNote = ({
             value={localValue}
             onChange={handleInputChange}
             disabled={disabled}
-            className="flex-1 px-3 py-2 rounded-lg border border-[#E9ECEF] bg-white text-[#212529] focus:outline-none focus:ring-2 focus:ring-[#FF6B35]/20 focus:border-[#FF6B35]/50 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="flex-1 px-3 py-2 rounded-lg border border-[#E9ECEF] bg-white text-[#212529] focus:outline-none focus:ring-2 focus:ring-[#FEEB09]/20 focus:border-[#FEEB09]/50 disabled:opacity-50 disabled:cursor-not-allowed"
             style={{ fontFamily: 'DM Sans, sans-serif' }}
           />
           
