@@ -3,6 +3,7 @@ import { supabase } from "@/integrations/supabase/client";
 import Layout from "@/components/layout/Layout";
 import { ExternalLink, Globe, Building, Star, Crown, Award } from "lucide-react";
 import { motion } from "framer-motion";
+import { GlobeISoc } from "@/components/ui/GlobeISoc";
 
 // Fonction pour valider et normaliser les URLs
 const normalizeUrl = (url: string) => {
@@ -80,6 +81,30 @@ const Partenaires = () => {
         {/* Hero Section */}
         <div className="relative overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-br from-[#FEEB09]/5 via-[#24366E]/5 to-transparent"></div>
+          
+          {/* Globe decorations */}
+          <motion.div 
+            className="absolute top-10 right-16"
+            animate={{ y: [0, -10, 0], rotate: [0, 6, 0] }}
+            transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+          >
+            <GlobeISoc size={70} opacity={0.2} />
+          </motion.div>
+          <motion.div 
+            className="absolute bottom-10 left-16"
+            animate={{ y: [0, -8, 0], rotate: [0, -5, 0] }}
+            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+          >
+            <GlobeISoc size={55} opacity={0.15} />
+          </motion.div>
+          <motion.div 
+            className="absolute top-1/2 right-1/4"
+            animate={{ y: [0, -6, 0] }}
+            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+          >
+            <GlobeISoc size={35} opacity={0.1} />
+          </motion.div>
+          
           <div className="container relative z-10 py-16">
             <motion.div 
               className="text-center"
@@ -104,7 +129,16 @@ const Partenaires = () => {
         </div>
 
         {/* Content */}
-        <div className="container py-12">
+        <div className="container py-12 relative">
+          {/* Globe decoration in content area */}
+          <motion.div 
+            className="absolute top-40 right-5 z-0"
+            animate={{ y: [0, -6, 0], rotate: [0, 4, 0] }}
+            transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
+          >
+            <GlobeISoc size={40} opacity={0.1} />
+          </motion.div>
+          
           {isLoading ? (
             <div className="text-center py-12">
               <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-[#FEEB09]"></div>

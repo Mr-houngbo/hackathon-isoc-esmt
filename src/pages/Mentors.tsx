@@ -3,6 +3,7 @@ import { supabase } from "@/integrations/supabase/client";
 import Layout from "@/components/layout/Layout";
 import { User, Briefcase, Award, Globe, Building } from "lucide-react";
 import { motion } from "framer-motion";
+import { GlobeISoc } from "@/components/ui/GlobeISoc";
 
 const Mentors = () => {
   const { data: mentors, isLoading, error } = useQuery({
@@ -34,6 +35,23 @@ const Mentors = () => {
         {/* Hero Section */}
         <div className="relative overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-br from-[#FEEB09]/5 via-[#24366E]/5 to-transparent"></div>
+          
+          {/* Globe decorations */}
+          <motion.div 
+            className="absolute top-10 right-10"
+            animate={{ y: [0, -10, 0], rotate: [0, 6, 0] }}
+            transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+          >
+            <GlobeISoc size={60} opacity={0.2} />
+          </motion.div>
+          <motion.div 
+            className="absolute bottom-10 left-10"
+            animate={{ y: [0, -8, 0], rotate: [0, -5, 0] }}
+            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+          >
+            <GlobeISoc size={50} opacity={0.15} />
+          </motion.div>
+          
           <div className="container relative z-10 py-16">
             <motion.div 
               className="text-center"
@@ -63,7 +81,16 @@ const Mentors = () => {
           </div>
         </div>
 
-        <div className="container py-16">
+        <div className="container py-16 relative">
+          {/* Globe decoration in content area */}
+          <motion.div 
+            className="absolute top-20 right-5 z-0"
+            animate={{ y: [0, -6, 0], rotate: [0, 4, 0] }}
+            transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
+          >
+            <GlobeISoc size={40} opacity={0.1} />
+          </motion.div>
+          
           {/* Mentors Section */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}

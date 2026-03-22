@@ -1,10 +1,34 @@
 import { motion } from "framer-motion";
 import { Code, Clock, Users, Lightbulb, Target, Zap } from "lucide-react";
+import { GlobeISoc } from "@/components/ui/GlobeISoc";
 
 const HackathonExplained = () => {
   return (
-    <section className="py-20 bg-gradient-to-br from-[#F8F9FA] to-white">
-      <div className="container max-w-6xl mx-auto px-4">
+    <section className="py-20 bg-gradient-to-br from-[#F8F9FA] to-white relative overflow-hidden">
+      {/* Globe decorations */}
+      <motion.div 
+        className="absolute top-10 right-10"
+        animate={{ y: [0, -8, 0], rotate: [0, 8, 0] }}
+        transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+      >
+        <GlobeISoc size={50} opacity={0.25} />
+      </motion.div>
+      <motion.div 
+        className="absolute bottom-20 left-5"
+        animate={{ y: [0, -6, 0], rotate: [0, -6, 0] }}
+        transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+      >
+        <GlobeISoc size={70} opacity={0.2} />
+      </motion.div>
+      <motion.div 
+        className="absolute top-1/3 right-1/4"
+        animate={{ y: [0, -4, 0] }}
+        transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+      >
+        <GlobeISoc size={35} opacity={0.15} />
+      </motion.div>
+
+      <div className="container max-w-6xl mx-auto px-4 relative z-10">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}

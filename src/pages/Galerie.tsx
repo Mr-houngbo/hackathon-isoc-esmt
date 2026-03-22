@@ -5,6 +5,7 @@ import { Image, Camera, Calendar, Trophy, Filter, Search, Tag, Clock, Users, Awa
 import { motion, AnimatePresence, PanInfo, useScroll, useTransform } from "framer-motion";
 import { useState, useCallback, useEffect, useRef } from "react";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { GlobeISoc } from "@/components/ui/GlobeISoc";
 
 const TYPE_CATEGORIES = [
   { value: 'team_isoc_esmt', label: 'TEAM ISOC ESMT', icon: Star, color: '#FEEB09' },
@@ -216,6 +217,32 @@ const Galerie = () => {
             }}
             style={{ bottom: '10%', left: '30%' }}
           />
+          
+          {/* Globe decorations */}
+          <motion.div
+            className="absolute"
+            animate={{ y: [0, -10, 0], rotate: [0, 5, 0] }}
+            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+            style={{ top: '25%', right: '5%' }}
+          >
+            <GlobeISoc size={50} opacity={0.2} />
+          </motion.div>
+          <motion.div
+            className="absolute"
+            animate={{ y: [0, -8, 0], rotate: [0, -6, 0] }}
+            transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+            style={{ top: '45%', left: '3%' }}
+          >
+            <GlobeISoc size={65} opacity={0.15} />
+          </motion.div>
+          <motion.div
+            className="absolute"
+            animate={{ y: [0, -6, 0] }}
+            transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+            style={{ bottom: '20%', right: '8%' }}
+          >
+            <GlobeISoc size={45} opacity={0.12} />
+          </motion.div>
         </div>
 
         {/* Hero Section - Futuriste */}

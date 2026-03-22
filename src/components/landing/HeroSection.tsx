@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowRight, Calendar, MapPin, Users, Code2 } from "lucide-react";
 import CountdownTimer from "./CountdownTimer";
+import { GlobeISoc, GlobeBackground } from "@/components/ui/GlobeISoc";
 
 const HeroSection = () => (
   <section className="relative overflow-hidden bg-gradient-to-br from-white via-[#F8F9FA] to-white min-h-screen">
@@ -9,6 +10,29 @@ const HeroSection = () => (
     <div className="absolute inset-0 overflow-hidden">
       <div className="absolute top-0 left-1/4 w-96 h-96 bg-[#FEEB09]/3 rounded-full blur-3xl animate-float-elegant"></div>
       <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-[#24366E]/3 rounded-full blur-3xl animate-float-elegant" style={{ animationDelay: '2s' }}></div>
+      
+      {/* Globe decorations */}
+      <motion.div 
+        className="absolute top-20 right-10 opacity-30"
+        animate={{ y: [0, -10, 0], rotate: [0, 5, 0] }}
+        transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+      >
+        <GlobeISoc size={60} opacity={0.3} />
+      </motion.div>
+      <motion.div 
+        className="absolute bottom-40 left-10 opacity-20"
+        animate={{ y: [0, -8, 0], rotate: [0, -5, 0] }}
+        transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+      >
+        <GlobeISoc size={80} opacity={0.2} />
+      </motion.div>
+      <motion.div 
+        className="absolute top-1/2 right-1/4 opacity-15"
+        animate={{ y: [0, -6, 0] }}
+        transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+      >
+        <GlobeISoc size={40} opacity={0.15} />
+      </motion.div>
     </div>
 
     <div className="container relative z-10 py-20 sm:py-24 lg:py-32">
@@ -123,6 +147,15 @@ const HeroSection = () => (
                     </div>
                   </div>
                 </div>
+                
+                {/* Globe decoration near video */}
+                <motion.div 
+                  className="absolute -top-4 -left-4 z-10"
+                  animate={{ y: [0, -5, 0], rotate: [0, 10, 0] }}
+                  transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                >
+                  <GlobeISoc size={32} opacity={0.5} />
+                </motion.div>
                 
                 {/* Bordure premium */}
                 <div className="absolute inset-0 rounded-3xl border-2 border-[#FEEB09]/20 pointer-events-none"></div>

@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Clock, ArrowRight, Calendar, Users } from "lucide-react";
+import { GlobeISoc } from "@/components/ui/GlobeISoc";
 
 const programmeItems = [
   { time: "08h00", title: "Accueil & Petit-déjeuner", day: 1, type: "social" },
@@ -30,6 +31,22 @@ const ProgrammePreview = () => (
     <div className="absolute inset-0 overflow-hidden">
       <div className="absolute top-20 left-1/4 w-64 h-64 bg-[#FEEB09]/3 rounded-full blur-3xl animate-float-elegant"></div>
       <div className="absolute bottom-20 right-1/4 w-64 h-64 bg-[#24366E]/3 rounded-full blur-3xl animate-float-elegant" style={{ animationDelay: '2s' }}></div>
+      
+      {/* Globe decorations */}
+      <motion.div 
+        className="absolute top-32 left-10"
+        animate={{ y: [0, -8, 0], rotate: [0, 6, 0] }}
+        transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+      >
+        <GlobeISoc size={50} opacity={0.2} />
+      </motion.div>
+      <motion.div 
+        className="absolute bottom-32 right-10"
+        animate={{ y: [0, -10, 0], rotate: [0, -5, 0] }}
+        transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+      >
+        <GlobeISoc size={70} opacity={0.15} />
+      </motion.div>
     </div>
     
     <div className="container relative z-10">

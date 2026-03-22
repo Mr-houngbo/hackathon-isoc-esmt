@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Trophy, Medal, Award, Crown } from "lucide-react";
+import { GlobeISoc } from "@/components/ui/GlobeISoc";
 
 const prizes = [
   { 
@@ -107,6 +108,29 @@ const PrizesSection = () => (
     <div className="absolute inset-0 overflow-hidden">
       <div className="absolute top-32 right-1/4 w-72 h-72 bg-[#FEEB09]/3 rounded-full blur-3xl animate-float-elegant"></div>
       <div className="absolute bottom-32 left-1/4 w-72 h-72 bg-[#24366E]/3 rounded-full blur-3xl animate-float-elegant" style={{ animationDelay: '2s' }}></div>
+      
+      {/* Globe decorations */}
+      <motion.div 
+        className="absolute top-20 left-20"
+        animate={{ y: [0, -8, 0], rotate: [0, 5, 0] }}
+        transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+      >
+        <GlobeISoc size={60} opacity={0.2} />
+      </motion.div>
+      <motion.div 
+        className="absolute bottom-20 right-20"
+        animate={{ y: [0, -10, 0], rotate: [0, -6, 0] }}
+        transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+      >
+        <GlobeISoc size={75} opacity={0.15} />
+      </motion.div>
+      <motion.div 
+        className="absolute top-1/2 right-10"
+        animate={{ y: [0, -6, 0] }}
+        transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+      >
+        <GlobeISoc size={45} opacity={0.1} />
+      </motion.div>
     </div>
     
     <div className="container relative z-10">

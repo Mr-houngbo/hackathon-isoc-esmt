@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowRight, Rocket, Sparkles, Timer } from "lucide-react";
+import { GlobeISoc } from "@/components/ui/GlobeISoc";
 
 const CTASection = () => (
   <section className="py-24 bg-gradient-to-br from-white to-[#F8F9FA] relative overflow-hidden hidden lg:block">
@@ -39,6 +40,15 @@ const CTASection = () => (
           className="absolute bottom-8 left-16 text-white/20"
         >
           <Timer size={28} />
+        </motion.div>
+        
+        {/* Globe decoration */}
+        <motion.div
+          animate={{ y: [-8, 8, -8], rotate: [0, 10, 0] }}
+          transition={{ duration: 6, repeat: Infinity }}
+          className="absolute bottom-12 right-20"
+        >
+          <GlobeISoc size={40} opacity={0.3} className="text-white" />
         </motion.div>
         
         <div className="relative z-10">
