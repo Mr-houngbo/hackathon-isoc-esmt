@@ -417,14 +417,14 @@ const GestionBadges = () => {
 
   // Couleurs par rôle staff
   const ROLE_COLORS = {
-    'Staff': { border: '#FBBF24', accent: '#FBBF24', pill: 'STAFF' },
-    'Organisateur': { border: '#00873E', accent: '#00873E', pill: 'ORGANISATEUR' },
-    'Mentor': { border: '#3B82F6', accent: '#3B82F6', pill: 'MENTOR' },
-    'Jury': { border: '#8B5CF6', accent: '#8B5CF6', pill: 'JURY' },
-    'Partenaire': { border: '#F97316', accent: '#F97316', pill: 'PARTENAIRE' },
-    'Intervenant': { border: '#EC4899', accent: '#EC4899', pill: 'INTERVENANT' },
-    'Invité': { border: '#9CA3AF', accent: '#9CA3AF', pill: 'INVITÉ' },
-    'Presse': { border: '#EF4444', accent: '#EF4444', pill: 'PRESSE' },
+    'Staff': { border: '#40B2A4', accent: '#40B2A4', pill: 'STAFF' },
+    'Organisateur': { border: '#40B2A4', accent: '#40B2A4', pill: 'ORGANISATEUR' },
+    'Mentor': { border: '#24366E', accent: '#24366E', pill: 'MENTOR' },
+    'Jury': { border: '#7E245C', accent: '#7E245C', pill: 'JURY' },
+    'Partenaire': { border: '#D25238', accent: '#D25238', pill: 'PARTENAIRE' },
+    'Intervenant': { border: '#7E245C', accent: '#7E245C', pill: 'INTERVENANT' },
+    'Invité': { border: '#6C757D', accent: '#6C757D', pill: 'INVITÉ' },
+    'Presse': { border: '#D25238', accent: '#D25238', pill: 'PRESSE' },
   };
 
   // Filtrer les badges pour l'historique
@@ -479,7 +479,7 @@ const GestionBadges = () => {
             onClick={() => setActiveSection('participants')}
             className={`flex-1 px-4 py-2 rounded-md font-medium transition-colors ${
               activeSection === 'participants'
-                ? 'bg-white text-[#FEEB09] shadow-sm'
+                ? 'bg-white text-[#40B2A4] shadow-sm'
                 : 'text-gray-600 hover:text-gray-900'
             }`}
           >
@@ -490,7 +490,7 @@ const GestionBadges = () => {
             onClick={() => setActiveSection('staff')}
             className={`flex-1 px-4 py-2 rounded-md font-medium transition-colors ${
               activeSection === 'staff'
-                ? 'bg-white text-[#FEEB09] shadow-sm'
+                ? 'bg-white text-[#40B2A4] shadow-sm'
                 : 'text-gray-600 hover:text-gray-900'
             }`}
           >
@@ -501,7 +501,7 @@ const GestionBadges = () => {
             onClick={() => setActiveSection('historique')}
             className={`flex-1 px-4 py-2 rounded-md font-medium transition-colors ${
               activeSection === 'historique'
-                ? 'bg-white text-[#FEEB09] shadow-sm'
+                ? 'bg-white text-[#40B2A4] shadow-sm'
                 : 'text-gray-600 hover:text-gray-900'
             }`}
           >
@@ -530,7 +530,7 @@ const GestionBadges = () => {
                     });
                   }}
                   disabled={genererBadgesMutation.isPending}
-                  className="px-4 py-2 bg-[#FEEB09] text-white rounded-lg hover:bg-[#FEEB09]/90 transition-colors disabled:opacity-50"
+                  className="px-4 py-2 bg-[#40B2A4] text-white rounded-lg hover:bg-[#40B2A4]/90 transition-colors disabled:opacity-50"
                 >
                   <RefreshCw className={`w-4 h-4 inline mr-2 ${genererBadgesMutation.isPending ? 'animate-spin' : ''}`} />
                   Générer tous les badges
@@ -574,7 +574,7 @@ const GestionBadges = () => {
                     envoyerSuivant(0);
                   }}
                   disabled={envoyerBadgesMutation.isPending}
-                  className="px-4 py-2 bg-[#00873E] text-white rounded-lg hover:bg-[#00873E]/90 transition-colors disabled:opacity-50"
+                  className="px-4 py-2 bg-[#40B2A4] text-white rounded-lg hover:bg-[#40B2A4]/90 transition-colors disabled:opacity-50"
                 >
                   <Send className={`w-4 h-4 inline mr-2 ${envoyerBadgesMutation.isPending ? 'animate-pulse' : ''}`} />
                   {envoyerBadgesMutation.isPending ? 'Envoi en cours...' : 'Envoyer tous les badges'}
@@ -584,7 +584,7 @@ const GestionBadges = () => {
 
             {isLoadingEquipes ? (
               <div className="text-center py-12">
-                <RefreshCw className="w-8 h-8 animate-spin mx-auto text-[#FEEB09]" />
+                <RefreshCw className="w-8 h-8 animate-spin mx-auto text-[#40B2A4]" />
                 <p className="text-gray-600 mt-2">Chargement des équipes...</p>
               </div>
             ) : (
@@ -630,7 +630,7 @@ const GestionBadges = () => {
                             <button
                               onClick={() => genererBadgesMutation.mutate({ equipeId: equipe.id })}
                               disabled={genererBadgesMutation.isPending}
-                              className="px-3 py-1 bg-[#FEEB09] text-white rounded-lg hover:bg-[#FEEB09]/90 transition-colors text-sm disabled:opacity-50"
+                              className="px-3 py-1 bg-[#40B2A4] text-white rounded-lg hover:bg-[#40B2A4]/90 transition-colors text-sm disabled:opacity-50"
                             >
                               Générer
                             </button>
@@ -643,7 +643,7 @@ const GestionBadges = () => {
                                 envoyerBadgesMutation.mutate({ equipeId: equipe.id });
                               }}
                               disabled={status.status !== 'genere' || envoyerBadgesMutation.isPending}
-                              className="px-3 py-1 bg-[#00873E] text-white rounded-lg hover:bg-[#00873E]/90 transition-colors text-sm disabled:opacity-50"
+                              className="px-3 py-1 bg-[#40B2A4] text-white rounded-lg hover:bg-[#40B2A4]/90 transition-colors text-sm disabled:opacity-50"
                             >
                               <Send className={`w-3 h-3 inline mr-1 ${envoyerBadgesMutation.isPending ? 'animate-pulse' : ''}`} />
                               {envoyerBadgesMutation.isPending ? 'Envoi...' : 'Envoyer'}
@@ -715,7 +715,7 @@ const GestionBadges = () => {
                     type="text"
                     value={staffForm.nom_prenom}
                     onChange={(e) => setStaffForm({ ...staffForm, nom_prenom: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#FEEB09] focus:border-transparent"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#40B2A4] focus:border-transparent"
                     placeholder="Jean Dupont"
                   />
                 </div>
@@ -726,7 +726,7 @@ const GestionBadges = () => {
                   <select
                     value={staffForm.role}
                     onChange={(e) => setStaffForm({ ...staffForm, role: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#FEEB09] focus:border-transparent"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#40B2A4] focus:border-transparent"
                   >
                     <option value="">Sélectionner un rôle</option>
                     {Object.keys(ROLE_COLORS).map(role => (
@@ -742,7 +742,7 @@ const GestionBadges = () => {
                     type="text"
                     value={staffForm.organisation}
                     onChange={(e) => setStaffForm({ ...staffForm, organisation: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#FEEB09] focus:border-transparent"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#40B2A4] focus:border-transparent"
                     placeholder="ISOC ESMT"
                   />
                 </div>
@@ -750,7 +750,7 @@ const GestionBadges = () => {
               <button
                 onClick={() => genererStaffBadgeMutation.mutate(staffForm)}
                 disabled={!staffForm.nom_prenom || !staffForm.role || genererStaffBadgeMutation.isPending}
-                className="mt-4 px-4 py-2 bg-[#FEEB09] text-white rounded-lg hover:bg-[#FEEB09]/90 transition-colors disabled:opacity-50"
+                className="mt-4 px-4 py-2 bg-[#40B2A4] text-white rounded-lg hover:bg-[#40B2A4]/90 transition-colors disabled:opacity-50"
               >
                 <RefreshCw className={`w-4 h-4 inline mr-2 ${genererStaffBadgeMutation.isPending ? 'animate-spin' : ''}`} />
                 Générer le badge
@@ -782,7 +782,7 @@ const GestionBadges = () => {
                       value={searchTerm}
                       onChange={(e) => setSearchTerm(e.target.value)}
                       placeholder="Rechercher par nom, équipe..."
-                      className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#FEEB09] focus:border-transparent"
+                      className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#40B2A4] focus:border-transparent"
                     />
                   </div>
                 </div>
@@ -790,7 +790,7 @@ const GestionBadges = () => {
                   <select
                     value={filterType}
                     onChange={(e) => setFilterType(e.target.value as any)}
-                    className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#FEEB09] focus:border-transparent"
+                    className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#40B2A4] focus:border-transparent"
                   >
                     <option value="tous">Tous les types</option>
                     <option value="participants">Participants</option>
@@ -799,7 +799,7 @@ const GestionBadges = () => {
                   <select
                     value={filterStatus}
                     onChange={(e) => setFilterStatus(e.target.value as any)}
-                    className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#FEEB09] focus:border-transparent"
+                    className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#40B2A4] focus:border-transparent"
                   >
                     <option value="tous">Tous les statuts</option>
                     <option value="envoyes">Envoyés</option>
@@ -873,14 +873,14 @@ const GestionBadges = () => {
                           <div className="flex space-x-2">
                             <button
                               onClick={() => telechargerBadge(badge)}
-                              className="p-1 text-gray-600 hover:text-[#FEEB09] transition-colors"
+                              className="p-1 text-gray-600 hover:text-[#40B2A4] transition-colors"
                               title="Télécharger"
                             >
                               <Download className="w-4 h-4" />
                             </button>
                             <button
                               onClick={() => window.open(`/verification/${badge.id}`, '_blank')}
-                              className="p-1 text-gray-600 hover:text-[#FEEB09] transition-colors"
+                              className="p-1 text-gray-600 hover:text-[#40B2A4] transition-colors"
                               title="Vérifier"
                             >
                               <Eye className="w-4 h-4" />
@@ -908,7 +908,7 @@ const GestionBadges = () => {
                   width: '400px',
                   height: '250px',
                   background: '#0A0A0A',
-                  border: '2px solid #00873E',
+                  border: '2px solid #40B2A4',
                   borderRadius: '16px',
                   padding: '24px',
                   position: 'relative',
@@ -924,7 +924,7 @@ const GestionBadges = () => {
                     left: 0,
                     right: 0,
                     height: '4px',
-                    backgroundColor: '#00873E'
+                    backgroundColor: '#40B2A4'
                   }}
                 />
 
@@ -934,7 +934,7 @@ const GestionBadges = () => {
                     style={{
                       width: '36px',
                       height: '36px',
-                      background: '#00873E',
+                      background: '#40B2A4',
                       borderRadius: '8px',
                       display: 'flex',
                       alignItems: 'center',
@@ -950,7 +950,7 @@ const GestionBadges = () => {
                     <p style={{ color: '#F9FAFB', fontSize: '12px', fontWeight: 700 }}>
                       Hackathon ISOC-ESMT
                     </p>
-                    <p style={{ color: '#9CA3AF', fontSize: '10px' }}>
+                    <p style={{ color: '#6C757D', fontSize: '10px' }}>
                       2ème Édition · 17 & 18 Avril 2026
                     </p>
                   </div>
@@ -961,10 +961,10 @@ const GestionBadges = () => {
                   <p style={{ color: '#F9FAFB', fontSize: '20px', fontWeight: 800, marginBottom: '4px' }}>
                     {membre.nom_prenom}
                   </p>
-                  <p style={{ color: '#00873E', fontSize: '13px', fontWeight: 600, marginBottom: '2px' }}>
+                  <p style={{ color: '#40B2A4', fontSize: '13px', fontWeight: 600, marginBottom: '2px' }}>
                     {membre.est_chef ? 'Chef de projet' : membre.role_equipe}
                   </p>
-                  <p style={{ color: '#9CA3AF', fontSize: '12px' }}>
+                  <p style={{ color: '#6C757D', fontSize: '12px' }}>
                     {equipe.nom_equipe || 'Candidature individuelle'}
                   </p>
                 </div>
@@ -975,7 +975,7 @@ const GestionBadges = () => {
                     value={`${window.location.origin}/verification/${membre.badges?.[0]?.id}`}
                     size={70}
                     bgColor="#0A0A0A"
-                    fgColor="#00873E"
+                    fgColor="#40B2A4"
                   />
                 </div>
 
@@ -985,9 +985,9 @@ const GestionBadges = () => {
                     position: 'absolute',
                     bottom: '24px',
                     left: '24px',
-                    backgroundColor: '#00873E',
-                    border: '1px solid #00873E',
-                    color: '#FFFFFF',
+                    backgroundColor: '#40B2A4',
+                    border: '1px solid #40B2A4',
+                    color: '#40B2A4FFF',
                     fontSize: '10px',
                     fontWeight: 600,
                     padding: '4px 12px',

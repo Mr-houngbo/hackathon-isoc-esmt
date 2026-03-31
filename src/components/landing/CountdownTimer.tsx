@@ -45,7 +45,7 @@ const CountdownTimer = () => {
             {/* Card container */}
             <div className="card-premium flex h-20 w-20 sm:h-24 sm:w-24 items-center justify-center rounded-2xl p-1 shadow-lg">
               {/* Inner gradient background */}
-              <div className="absolute inset-0 bg-gradient-to-br from-[#FEEB09]/5 to-[#24366E]/5 rounded-2xl"></div>
+              <div className="absolute inset-0 bg-gradient-to-br from-[#40B2A4]/5 to-[#24366E]/5 rounded-2xl"></div>
               
               {/* Number display */}
               <div className="relative z-10">
@@ -62,7 +62,7 @@ const CountdownTimer = () => {
             </div>
             
             {/* Decorative dots */}
-            <div className="absolute -top-1 -right-1 w-2 h-2 bg-[#FEEB09] rounded-full animate-pulse"></div>
+            <div className="absolute -top-1 -right-1 w-2 h-2 bg-[#40B2A4] rounded-full animate-pulse"></div>
           </div>
           
           {/* Label */}

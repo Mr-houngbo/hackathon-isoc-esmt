@@ -8,13 +8,13 @@ interface Props {
 }
 
 const competencesList = [
-  { value: 'Dev Web', icon: Code, color: 'text-[#FEEB09]' },
+  { value: 'Dev Web', icon: Code, color: 'text-[#40B2A4]' },
   { value: 'Dev Mobile', icon: Phone, color: 'text-[#24366E]' },
-  { value: 'Design UI-UX', icon: User, color: 'text-[#FEEB09]' },
+  { value: 'Design UI-UX', icon: User, color: 'text-[#40B2A4]' },
   { value: 'Data', icon: Code, color: 'text-[#24366E]' },
-  { value: 'IA', icon: Code, color: 'text-[#FEEB09]' },
+  { value: 'IA', icon: Code, color: 'text-[#40B2A4]' },
   { value: 'Business', icon: Briefcase, color: 'text-[#24366E]' },
-  { value: 'Communication', icon: User, color: 'text-[#FEEB09]' },
+  { value: 'Communication', icon: User, color: 'text-[#40B2A4]' },
   { value: 'Autre', icon: Code, color: 'text-[#6C757D]' }
 ];
 
@@ -44,7 +44,7 @@ const Etape3Chef = ({ data, onChange }: Props) => {
         transition={{ duration: 0.5 }}
       >
         <div className="flex items-center justify-center gap-3 mb-4">
-          <div className="w-12 h-12 rounded-full bg-gradient-to-r from-[#FEEB09] to-[#24366E] flex items-center justify-center">
+          <div className="w-12 h-12 rounded-full bg-gradient-to-r from-[#40B2A4] to-[#24366E] flex items-center justify-center">
             <User size={24} className="text-white" />
           </div>
           <h3 
@@ -60,7 +60,7 @@ const Etape3Chef = ({ data, onChange }: Props) => {
         >
           Informations du responsable de l'équipe
         </p>
-        <div className="w-16 h-1 bg-gradient-to-r from-[#FEEB09] to-[#24366E] mx-auto rounded-full mt-4"></div>
+        <div className="w-16 h-1 bg-gradient-to-r from-[#40B2A4] to-[#24366E] mx-auto rounded-full mt-4"></div>
       </motion.div>
 
       {/* Form Grid */}
@@ -84,7 +84,7 @@ const Etape3Chef = ({ data, onChange }: Props) => {
               value={data.chef_nom_prenom || ''}
               onChange={(e) => onChange({ chef_nom_prenom: e.target.value })}
               placeholder="Votre nom complet"
-              className="w-full px-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FEEB09]/20 focus:border-[#FEEB09]/50 transition-all"
+              className="w-full px-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#40B2A4]/20 focus:border-[#40B2A4]/50 transition-all"
               style={{ fontFamily: 'DM Sans, sans-serif' }}
             />
           </label>
@@ -107,7 +107,7 @@ const Etape3Chef = ({ data, onChange }: Props) => {
             <select
               value={data.chef_filiere || ''}
               onChange={(e) => onChange({ chef_filiere: e.target.value })}
-              className="w-full px-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] focus:outline-none focus:ring-2 focus:ring-[#FEEB09]/20 focus:border-[#FEEB09]/50 transition-all"
+              className="w-full px-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] focus:outline-none focus:ring-2 focus:ring-[#40B2A4]/20 focus:border-[#40B2A4]/50 transition-all"
               style={{ fontFamily: 'DM Sans, sans-serif' }}
             >
               <option value="">Sélectionnez votre genre</option>
@@ -137,7 +137,7 @@ const Etape3Chef = ({ data, onChange }: Props) => {
               value={data.chef_telephone || ''}
               onChange={(e) => onChange({ chef_telephone: e.target.value })}
               placeholder="+221 XX XX XX XX"
-              className="w-full px-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FEEB09]/20 focus:border-[#FEEB09]/50 transition-all"
+              className="w-full px-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#40B2A4]/20 focus:border-[#40B2A4]/50 transition-all"
               style={{ fontFamily: 'DM Sans, sans-serif' }}
             />
           </label>
@@ -162,7 +162,7 @@ const Etape3Chef = ({ data, onChange }: Props) => {
               value={data.chef_email || ''}
               onChange={(e) => onChange({ chef_email: e.target.value })}
               placeholder="votre.email@exemple.com"
-              className="w-full px-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FEEB09]/20 focus:border-[#FEEB09]/50 transition-all"
+              className="w-full px-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#40B2A4]/20 focus:border-[#40B2A4]/50 transition-all"
               style={{ fontFamily: 'DM Sans, sans-serif' }}
             />
           </label>
@@ -187,7 +187,7 @@ const Etape3Chef = ({ data, onChange }: Props) => {
               value={data.chef_etablissement || ''}
               onChange={(e) => onChange({ chef_etablissement: e.target.value })}
               placeholder="Nom de votre établissement"
-              className="w-full px-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FEEB09]/20 focus:border-[#FEEB09]/50 transition-all"
+              className="w-full px-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#40B2A4]/20 focus:border-[#40B2A4]/50 transition-all"
               style={{ fontFamily: 'DM Sans, sans-serif' }}
             />
           </label>
@@ -210,7 +210,7 @@ const Etape3Chef = ({ data, onChange }: Props) => {
             <select
               value={data.chef_niveau_etudes || ''}
               onChange={(e) => onChange({ chef_niveau_etudes: e.target.value })}
-              className="w-full px-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] focus:outline-none focus:ring-2 focus:ring-[#FEEB09]/20 focus:border-[#FEEB09]/50 transition-all"
+              className="w-full px-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] focus:outline-none focus:ring-2 focus:ring-[#40B2A4]/20 focus:border-[#40B2A4]/50 transition-all"
               style={{ fontFamily: 'DM Sans, sans-serif' }}
             >
               <option value="">Sélectionnez votre niveau</option>
@@ -245,8 +245,8 @@ const Etape3Chef = ({ data, onChange }: Props) => {
               onClick={() => toggleCompetence(competence.value)}
               className={`p-3 rounded-xl border-2 transition-all duration-300 hover:scale-105 ${
                 data.chef_competences.includes(competence.value)
-                  ? 'border-[#FEEB09] bg-[#FEEB09]/10'
-                  : 'border-[#E9ECEF] bg-white hover:border-[#FEEB09]/30'
+                  ? 'border-[#40B2A4] bg-[#40B2A4]/10'
+                  : 'border-[#E9ECEF] bg-white hover:border-[#40B2A4]/30'
               }`}
             >
               <competence.icon 
@@ -278,7 +278,7 @@ const Etape3Chef = ({ data, onChange }: Props) => {
             type="checkbox"
             checked={data.chef_disponible}
             onChange={(e) => onChange({ chef_disponible: e.target.checked })}
-            className="h-5 w-5 rounded border border-[#E9ECEF] bg-white text-[#FEEB09] focus:ring-2 focus:ring-[#FEEB09]/20 focus:ring-offset-0"
+            className="h-5 w-5 rounded border border-[#E9ECEF] bg-white text-[#40B2A4] focus:ring-2 focus:ring-[#40B2A4]/20 focus:ring-offset-0"
           />
           <div>
             <span 

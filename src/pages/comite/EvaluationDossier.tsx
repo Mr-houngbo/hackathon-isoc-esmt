@@ -21,7 +21,10 @@ import {
   Lightbulb,
   Settings,
   Award,
-  Star
+  Star,
+  Briefcase,
+  Building,
+  Layers
 } from "lucide-react";
 
 interface Equipe {
@@ -50,9 +53,11 @@ interface NoteData {
   qualite_projet: number;
   motivation: number;
   clarte_problematique: number;
-  faisabilite: number;
   competences_techniques: number;
-  coherence_profil: number;
+  competence_manageriale: number;
+  appartenance_esmt: number;
+  presence_feminine: number;
+  pluridisciplinarite: number;
 }
 
 const EvaluationDossier = () => {
@@ -65,9 +70,11 @@ const EvaluationDossier = () => {
     qualite_projet: 0,
     motivation: 0,
     clarte_problematique: 0,
-    faisabilite: 0,
     competences_techniques: 0,
-    coherence_profil: 0
+    competence_manageriale: 0,
+    appartenance_esmt: 0,
+    presence_feminine: 0,
+    pluridisciplinarite: 0
   });
   const [commentaire, setCommentaire] = useState("");
   const [loading, setLoading] = useState(true);
@@ -96,15 +103,8 @@ const EvaluationDossier = () => {
       key: "clarte_problematique",
       label: "Clarté de la problématique",
       description: "Définition précise du problème à résoudre",
-      max: 20,
-      icon: Target
-    },
-    {
-      key: "faisabilite",
-      label: "Faisabilité technique",
-      description: "Réalisme de la solution proposée",
       max: 15,
-      icon: Settings
+      icon: Target
     },
     {
       key: "competences_techniques",
@@ -114,11 +114,32 @@ const EvaluationDossier = () => {
       icon: Award
     },
     {
-      key: "coherence_profil",
-      label: "Cohérence du profil",
-      description: "Alignement équipe-projet-objectifs",
+      key: "competence_manageriale",
+      label: "Compétence managériale",
+      description: "Capacité de gestion et leadership de l'équipe",
       max: 10,
+      icon: Briefcase
+    },
+    {
+      key: "appartenance_esmt",
+      label: "Appartenance ESMT",
+      description: "Présence d'un membre de l'ESMT dans l'équipe",
+      max: 5,
+      icon: Building
+    },
+    {
+      key: "presence_feminine",
+      label: "Présence féminine",
+      description: "Présence d'au moins une femme dans l'équipe",
+      max: 5,
       icon: Users
+    },
+    {
+      key: "pluridisciplinarite",
+      label: "Pluridisciplinarité de l'équipe",
+      description: "Diversité des profils et compétences (3+ rôles différents)",
+      max: 10,
+      icon: Layers
     }
   ];
 
@@ -166,7 +187,7 @@ const EvaluationDossier = () => {
       // Utiliser maybeSingle() au lieu de single() pour éviter l'erreur si aucune note n'existe
       const { data: note, error } = await supabase
         .from('notes')
-        .select('id, qualite_projet, motivation, clarte_problematique, faisabilite, competences_techniques, coherence_profil, score_total, soumis, created_at, updated_at')
+        .select('id, qualite_projet, motivation, clarte_problematique, competences_techniques, competence_manageriale, appartenance_esmt, presence_feminine, pluridisciplinarite, score_total, soumis, created_at, updated_at')
         .eq('comite_id', comiteMember?.id)
         .eq('equipe_id', equipeId)
         .maybeSingle();
@@ -184,13 +205,16 @@ const EvaluationDossier = () => {
 
       if (note) {
         setExistingNote(note);
+        const n = note as any;
         setNotes({
-          qualite_projet: note.qualite_projet || 0,
-          motivation: note.motivation || 0,
-          clarte_problematique: note.clarte_problematique || 0,
-          faisabilite: note.faisabilite || 0,
-          competences_techniques: note.competences_techniques || 0,
-          coherence_profil: note.coherence_profil || 0
+          qualite_projet: n.qualite_projet || 0,
+          motivation: n.motivation || 0,
+          clarte_problematique: n.clarte_problematique || 0,
+          competences_techniques: n.competences_techniques || 0,
+          competence_manageriale: n.competence_manageriale || 0,
+          appartenance_esmt: n.appartenance_esmt || 0,
+          presence_feminine: n.presence_feminine || 0,
+          pluridisciplinarite: n.pluridisciplinarite || 0
         });
         console.log('Notes existantes chargées:', note);
       } else {
@@ -215,7 +239,7 @@ const EvaluationDossier = () => {
 
   const calculateProgress = () => {
     const filledNotes = Object.values(notes).filter(note => note > 0).length;
-    return (filledNotes / 6) * 100;
+    return (filledNotes / 8) * 100;
   };
 
   const saveDraft = async () => {

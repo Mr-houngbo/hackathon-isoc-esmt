@@ -50,7 +50,7 @@ const Etape2TypeCandidature = ({ data, onChange }: Props) => {
         transition={{ duration: 0.5 }}
       >
         <div className="flex items-center justify-center gap-3 mb-4">
-          <div className="w-12 h-12 rounded-full bg-gradient-to-r from-[#FEEB09] to-[#24366E] flex items-center justify-center">
+          <div className="w-12 h-12 rounded-full bg-gradient-to-r from-[#40B2A4] to-[#24366E] flex items-center justify-center">
             <Users size={24} className="text-white" />
           </div>
           <h3 
@@ -66,7 +66,7 @@ const Etape2TypeCandidature = ({ data, onChange }: Props) => {
         >
           Comment souhaitez-vous participer ?
         </p>
-        <div className="w-16 h-1 bg-gradient-to-r from-[#FEEB09] to-[#24366E] mx-auto rounded-full mt-4"></div>
+        <div className="w-16 h-1 bg-gradient-to-r from-[#40B2A4] to-[#24366E] mx-auto rounded-full mt-4"></div>
       </motion.div>
 
       {/* Type Selection Cards */}
@@ -82,13 +82,13 @@ const Etape2TypeCandidature = ({ data, onChange }: Props) => {
             onClick={() => handleTypeSelection('individuel')}
             className={`w-full p-6 rounded-2xl border-2 transition-all duration-300 hover:scale-105 ${
               data.type_candidature === 'individuel'
-                ? 'border-[#FEEB09] bg-[#FEEB09]/10'
-                : 'border-[#E9ECEF] bg-white hover:border-[#FEEB09]/30'
+                ? 'border-[#40B2A4] bg-[#40B2A4]/10'
+                : 'border-[#E9ECEF] bg-white hover:border-[#40B2A4]/30'
             }`}
           >
             <div className="flex flex-col items-center gap-4 text-center">
               <div className={`w-16 h-16 rounded-full flex items-center justify-center ${
-                data.type_candidature === 'individuel' ? 'bg-[#FEEB09]' : 'bg-[#E9ECEF]'
+                data.type_candidature === 'individuel' ? 'bg-[#40B2A4]' : 'bg-[#E9ECEF]'
               }`}>
                 <User size={32} className={data.type_candidature === 'individuel' ? 'text-white' : 'text-[#6C757D]'} />
               </div>
@@ -97,7 +97,7 @@ const Etape2TypeCandidature = ({ data, onChange }: Props) => {
                   className="font-display text-lg font-bold mb-2"
                   style={{ fontFamily: 'Sora, sans-serif' }}
                 >
-                  <span className={data.type_candidature === 'individuel' ? 'text-[#FEEB09]' : 'text-[#212529]'}>
+                  <span className={data.type_candidature === 'individuel' ? 'text-[#40B2A4]' : 'text-[#212529]'}>
                     Individuel
                   </span>
                 </h4>
@@ -105,7 +105,7 @@ const Etape2TypeCandidature = ({ data, onChange }: Props) => {
                   className="text-sm"
                   style={{ fontFamily: 'DM Sans, sans-serif' }}
                 >
-                  <span className={data.type_candidature === 'individuel' ? 'text-[#FEEB09]' : 'text-[#6C757D]'}>
+                  <span className={data.type_candidature === 'individuel' ? 'text-[#40B2A4]' : 'text-[#6C757D]'}>
                     Vous participez seul
                   </span>
                 </p>
@@ -125,13 +125,13 @@ const Etape2TypeCandidature = ({ data, onChange }: Props) => {
             onClick={() => handleTypeSelection('equipe')}
             className={`w-full p-6 rounded-2xl border-2 transition-all duration-300 hover:scale-105 ${
               data.type_candidature === 'equipe'
-                ? 'border-[#FEEB09] bg-[#FEEB09]/10'
-                : 'border-[#E9ECEF] bg-white hover:border-[#FEEB09]/30'
+                ? 'border-[#40B2A4] bg-[#40B2A4]/10'
+                : 'border-[#E9ECEF] bg-white hover:border-[#40B2A4]/30'
             }`}
           >
             <div className="flex flex-col items-center gap-4 text-center">
               <div className={`w-16 h-16 rounded-full flex items-center justify-center ${
-                data.type_candidature === 'equipe' ? 'bg-[#FEEB09]' : 'bg-[#E9ECEF]'
+                data.type_candidature === 'equipe' ? 'bg-[#40B2A4]' : 'bg-[#E9ECEF]'
               }`}>
                 <Users size={32} className={data.type_candidature === 'equipe' ? 'text-white' : 'text-[#6C757D]'} />
               </div>
@@ -140,7 +140,7 @@ const Etape2TypeCandidature = ({ data, onChange }: Props) => {
                   className="font-display text-lg font-bold mb-2"
                   style={{ fontFamily: 'Sora, sans-serif' }}
                 >
-                  <span className={data.type_candidature === 'equipe' ? 'text-[#FEEB09]' : 'text-[#212529]'}>
+                  <span className={data.type_candidature === 'equipe' ? 'text-[#40B2A4]' : 'text-[#212529]'}>
                     En équipe
                   </span>
                 </h4>
@@ -148,7 +148,7 @@ const Etape2TypeCandidature = ({ data, onChange }: Props) => {
                   className="text-sm"
                   style={{ fontFamily: 'DM Sans, sans-serif' }}
                 >
-                  <span className={data.type_candidature === 'equipe' ? 'text-[#FEEB09]' : 'text-[#6C757D]'}>
+                  <span className={data.type_candidature === 'equipe' ? 'text-[#40B2A4]' : 'text-[#6C757D]'}>
                     4 membres obligatoirement
                   </span>
                 </p>
@@ -178,7 +178,7 @@ const Etape2TypeCandidature = ({ data, onChange }: Props) => {
               value={data.nom_equipe || ''}
               onChange={(e) => onChange({ nom_equipe: e.target.value })}
               placeholder="Nom de votre équipe"
-              className="w-full px-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FEEB09]/20 focus:border-[#FEEB09]/50 transition-all"
+              className="w-full px-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#40B2A4]/20 focus:border-[#40B2A4]/50 transition-all"
               style={{ fontFamily: 'DM Sans, sans-serif' }}
             />
           </label>

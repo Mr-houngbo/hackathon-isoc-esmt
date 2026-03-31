@@ -27,11 +27,7 @@ const Navbar = () => {
   }, []);
 
   return (
-    <nav className={`fixed top-0 z-50 w-full transition-all duration-300 ${
-      scrolled 
-        ? "glassmorphism border-b border-[#E9ECEF]/50 shadow-lg" 
-        : "bg-transparent"
-    }`}>
+    <nav className={`fixed top-0 z-50 w-full transition-all duration-300 bg-white/95 backdrop-blur-sm border-b border-[#E9ECEF]/50 shadow-sm`}>
       <div className="container h-16 md:h-28 flex items-center justify-between">
         <Link to="/" className="flex items-center gap-3 overflow-visible min-w-fit">
           <img
@@ -59,7 +55,7 @@ const Navbar = () => {
           ))}
           <Link
             to="/inscription"
-            className="bg-[#FEEB09] hover:bg-[#FFF04D] text-[#24366E] font-semibold ml-3 inline-flex items-center gap-2 rounded-lg px-5 py-2 text-sm transition-all duration-300 hover:shadow-lg hover:shadow-[#FEEB09]/25 hover:scale-105"
+            className="bg-[#40B2A4] hover:bg-[#40B2A4] text-white font-semibold ml-3 inline-flex items-center gap-2 rounded-lg px-5 py-2 text-sm transition-all duration-300 hover:shadow-lg hover:shadow-[#40B2A4]/25 hover:scale-105"
             style={{ fontFamily: 'Sora, sans-serif' }}
           >
             S'inscrire

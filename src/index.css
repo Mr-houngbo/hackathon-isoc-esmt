@@ -10,9 +10,9 @@
     --depth-blue: 36 54 110;
     --depth-blue-light: 46 74 140;
     --depth-blue-dark: 26 38 74;
-    --accent-yellow: 254 235 9;
-    --accent-yellow-light: 255 240 77;
-    --accent-yellow-soft: 255 245 153;
+    --accent-green: #40B2A4;
+    --accent-green-light: #40B2A4;
+    --accent-green-soft: #40B2A4;
     --blanc-pure: 255 255 255;
     --gris-clair: 248 249 250;
     --gris-medium: 108 117 125;
@@ -20,11 +20,11 @@
     --noir-subtil: 33 37 41;
 
     /* Custom tokens */
-    --chic-gradient: linear-gradient(135deg, #FEEB09 0%, #24366E 50%, #FEEB09 100%);
-    --yellow-glow: 0 0 20px rgba(254, 235, 9, 0.3);
+    --chic-gradient: linear-gradient(135deg, #40B2A4 0%, #40B2A4 50%, #40B2A4 100%);
+    --green-glow: 0 0 20px rgba(64, 178, 164, 0.3);
     --blue-glow: 0 0 20px rgba(36, 54, 110, 0.3);
     --card-shadow: 0 4px 24px -4px rgba(36, 54, 110, 0.08);
-    --card-hover-shadow: 0 12px 32px -8px rgba(254, 235, 9, 0.15);
+    --card-hover-shadow: 0 12px 32px -8px rgba(64, 178, 164, 0.15);
     --radius: 0.75rem;
   }
 }
@@ -43,7 +43,7 @@
 
 @layer utilities {
   .text-gradient {
-    background: linear-gradient(135deg, #FEEB09 0%, #24366E 50%, #FEEB09 100%);
+    background: linear-gradient(135deg, #40B2A4 0%, #40B2A4 50%, #40B2A4 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -57,16 +57,16 @@
     border: 1px solid rgba(233, 236, 239, 0.3);
   }
   .card-premium {
-    @apply bg-[#FFFFFF] border border-[#E9ECEF] hover:border-[#FEEB09]/50 hover:-translate-y-1 transition-all duration-300;
+    @apply bg-[#FFFFFF] border border-[#E9ECEF] hover:border-[#40B2A4]/50 hover:-translate-y-1 transition-all duration-300;
   }
   .btn-premium {
-    @apply bg-gradient-to-r from-[#24366E] to-[#2E4A8C] hover:from-[#2E4A8C] hover:to-[#24366E] hover:shadow-xl hover:shadow-[#24366E]/30 hover:scale-105 transition-all duration-300 text-white;
+    @apply bg-gradient-to-r from-[#40B2A4] to-[#2E4A8C] hover:from-[#2E4A8C] hover:to-[#40B2A4] hover:shadow-xl hover:shadow-[#40B2A4]/30 hover:scale-105 transition-all duration-300 text-white;
   }
   .btn-yellow {
-    @apply bg-[#FEEB09] hover:bg-[#FFF04D] hover:shadow-lg hover:shadow-[#FEEB09]/25 hover:scale-105 transition-all duration-300 text-[#24366E];
+    @apply bg-[#40B2A4] hover:bg-[#40B2A4] hover:shadow-lg hover:shadow-[#40B2A4]/25 hover:scale-105 transition-all duration-300 text-white;
   }
   .badge-premium {
-    @apply bg-[#FEEB09]/10 text-[#24366E] border border-[#FEEB09]/30;
+    @apply bg-[#40B2A4]/10 text-[#40B2A4] border border-[#40B2A4]/30;
   }
   .shadow-card {
     box-shadow: var(--card-shadow);
@@ -74,8 +74,8 @@
   .shadow-card-hover {
     box-shadow: var(--card-hover-shadow);
   }
-  .glow-yellow {
-    box-shadow: var(--yellow-glow);
+  .glow-green {
+    box-shadow: var(--green-glow);
   }
   .glow-blue {
     box-shadow: var(--blue-glow);

@@ -114,7 +114,7 @@ const GestionPartenaires = () => {
       <AdminLayout>
         <div className="flex items-center justify-center min-h-screen">
           <div className="text-center">
-            <p className="text-[#DC2626] text-lg font-bold mb-4">Erreur de chargement</p>
+            <p className="text-[#D25238] text-lg font-bold mb-4">Erreur de chargement</p>
             <p className="text-[#6C757D]">{error.message}</p>
           </div>
         </div>
@@ -126,7 +126,7 @@ const GestionPartenaires = () => {
     <AdminLayout>
       <div className="min-h-screen bg-gradient-to-br from-[#F8F9FA] to-white">
         {/* Header */}
-        <div className="bg-gradient-to-r from-[#24366E]/10 to-[#FEEB09]/10 backdrop-blur-sm border-b border-[#E9ECEF]/20">
+        <div className="bg-gradient-to-r from-[#24366E]/10 to-[#40B2A4]/10 backdrop-blur-sm border-b border-[#E9ECEF]/20">
           <div className="container py-6">
             <div className="flex items-center justify-between">
               <motion.div
@@ -151,7 +151,7 @@ const GestionPartenaires = () => {
               <div className="flex gap-2">
                 <button
                   onClick={() => setShowAdd(!showAdd)}
-                  className="px-4 py-2 rounded-lg bg-[#24366E] text-white hover:bg-[#006450] transition-colors"
+                  className="px-4 py-2 rounded-lg bg-[#24366E] text-white hover:bg-[#40B2A46450] transition-colors"
                   style={{ fontFamily: 'DM Sans, sans-serif' }}
                 >
                   <Plus size={16} className="mr-2" />
@@ -182,14 +182,14 @@ const GestionPartenaires = () => {
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.5, delay: 0.1 }}
-                className="relative overflow-hidden rounded-2xl border border-[#E9ECEF] bg-[white] p-6 hover:border-[#FEEB09]/50 hover:shadow-xl hover:shadow-[#FEEB09]/10 transition-all duration-300"
+                className="relative overflow-hidden rounded-2xl border border-[#E9ECEF] bg-[white] p-6 hover:border-[#40B2A4]/50 hover:shadow-xl hover:shadow-[#40B2A4]/10 transition-all duration-300"
               >
-                <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-[#FEEB09]/5 opacity-0"></div>
+                <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-[#40B2A4]/5 opacity-0"></div>
                 
                 <div className="relative z-10">
                   <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center gap-3">
-                      <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-[#24366E]/20 to-[#FEEB09]/20 flex items-center justify-center">
+                      <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-[#24366E]/20 to-[#40B2A4]/20 flex items-center justify-center">
                         <Building2 size={24} className="text-[#212529]" />
                       </div>
                       <div>
@@ -215,14 +215,14 @@ const GestionPartenaires = () => {
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.5, delay: 0.2 }}
-                className="relative overflow-hidden rounded-2xl border border-[#E9ECEF] bg-[white] p-6 hover:border-[#D4AF37]/50 hover:shadow-xl hover:shadow-[#D4AF37]/10 transition-all duration-300"
+                className="relative overflow-hidden rounded-2xl border border-[#E9ECEF] bg-[white] p-6 hover:border-[#40B2A4]/50 hover:shadow-xl hover:shadow-[#40B2A4]/10 transition-all duration-300"
               >
-                <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-[#D4AF37]/5 opacity-0"></div>
+                <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-[#40B2A4]/5 opacity-0"></div>
                 
                 <div className="relative z-10">
                   <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center gap-3">
-                      <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-[#D4AF37]/20 to-[#D4AF37]/20 flex items-center justify-center">
+                      <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-[#40B2A4]/20 to-[#40B2A4]/20 flex items-center justify-center">
                         <Award size={24} className="text-[#212529]" />
                       </div>
                       <div>
@@ -248,14 +248,14 @@ const GestionPartenaires = () => {
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.5, delay: 0.3 }}
-                className="relative overflow-hidden rounded-2xl border border-[#E9ECEF] bg-[white] p-6 hover:border-[#10B981]/50 hover:shadow-xl hover:shadow-[#10B981]/10 transition-all duration-300"
+                className="relative overflow-hidden rounded-2xl border border-[#E9ECEF] bg-[white] p-6 hover:border-[#40B2A4]/50 hover:shadow-xl hover:shadow-[#40B2A4]/10 transition-all duration-300"
               >
-                <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-[#10B981]/5 opacity-0"></div>
+                <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-[#40B2A4]/5 opacity-0"></div>
                 
                 <div className="relative z-10">
                   <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center gap-3">
-                      <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-[#10B981]/20 to-[#10B981]/20 flex items-center justify-center">
+                      <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-[#40B2A4]/20 to-[#40B2A4]/20 flex items-center justify-center">
                         <Award size={24} className="text-[#212529]" />
                       </div>
                       <div>
@@ -281,14 +281,14 @@ const GestionPartenaires = () => {
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.5, delay: 0.4 }}
-                className="relative overflow-hidden rounded-2xl border border-[#E9ECEF] bg-[white] p-6 hover:border-[#CD7F32]/50 hover:shadow-xl hover:shadow-[#CD7F32]/10 transition-all duration-300"
+                className="relative overflow-hidden rounded-2xl border border-[#E9ECEF] bg-[white] p-6 hover:border-[#7E245C]/50 hover:shadow-xl hover:shadow-[#7E245C]/10 transition-all duration-300"
               >
-                <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-[#CD7F32]/5 opacity-0"></div>
+                <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-[#7E245C]/5 opacity-0"></div>
                 
                 <div className="relative z-10">
                   <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center gap-3">
-                      <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-[#CD7F32]/20 to-[#CD7F32]/20 flex items-center justify-center">
+                      <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-[#7E245C]/20 to-[#7E245C]/20 flex items-center justify-center">
                         <Award size={24} className="text-[#212529]" />
                       </div>
                       <div>
@@ -337,7 +337,7 @@ const GestionPartenaires = () => {
                       placeholder="Nom du partenaire" 
                       value={form.nom} 
                       onChange={(e) => setForm({ ...form, nom: e.target.value })}
-                      className="w-full px-4 py-2 rounded-xl border border-[#E9ECEF] bg-[bg-white] text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FEEB09] focus:border-transparent transition-all duration-300"
+                      className="w-full px-4 py-2 rounded-xl border border-[#E9ECEF] bg-[bg-white] text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#40B2A4] focus:border-transparent transition-all duration-300"
                       style={{ fontFamily: 'DM Sans, sans-serif' }}
                     />
                   </div>
@@ -347,7 +347,7 @@ const GestionPartenaires = () => {
                     <select 
                       value={form.niveau} 
                       onChange={(e) => setForm({ ...form, niveau: e.target.value })}
-                      className="w-full px-4 py-2 rounded-xl border border-[#E9ECEF] bg-[bg-white] text-[#212529] focus:outline-none focus:ring-2 focus:ring-[#FEEB09] focus:border-transparent transition-all duration-300"
+                      className="w-full px-4 py-2 rounded-xl border border-[#E9ECEF] bg-[bg-white] text-[#212529] focus:outline-none focus:ring-2 focus:ring-[#40B2A4] focus:border-transparent transition-all duration-300"
                       style={{ fontFamily: 'DM Sans, sans-serif' }}
                     >
                       <option value="or">Or</option>
@@ -375,12 +375,12 @@ const GestionPartenaires = () => {
                       placeholder="ex: www.exemple.com" 
                       value={form.site_url} 
                       onChange={(e) => setForm({ ...form, site_url: e.target.value })}
-                      className="w-full px-4 py-2 rounded-xl border border-[#E9ECEF] bg-[bg-white] text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FEEB09] focus:border-transparent transition-all duration-300"
+                      className="w-full px-4 py-2 rounded-xl border border-[#E9ECEF] bg-[bg-white] text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#40B2A4] focus:border-transparent transition-all duration-300"
                       style={{ fontFamily: 'DM Sans, sans-serif' }}
                     />
                     {form.site_url && (
                       <p className="text-xs text-[#6C757D] mt-1" style={{ fontFamily: 'DM Sans, sans-serif' }}>
-                        {normalizeUrl(form.site_url) ? `✅ Deviendra: ${normalizeUrl(form.site_url)}` : '❌ URL invalide (localhost non autorisé)'}
+                        {normalizeUrl(form.site_url) ? ` Deviendra: ${normalizeUrl(form.site_url)}` : ' URL invalide (localhost non autorisé)'}
                       </p>
                     )}
                   </div>
@@ -397,7 +397,7 @@ const GestionPartenaires = () => {
                 </button>
                 <button
                   onClick={() => addPartenaire.mutate()}
-                  className="px-6 py-2 rounded-xl bg-[#24366E] text-white hover:bg-[#006450] transition-colors flex items-center gap-2"
+                  className="px-6 py-2 rounded-xl bg-[#24366E] text-white hover:bg-[#40B2A46450] transition-colors flex items-center gap-2"
                   style={{ fontFamily: 'DM Sans, sans-serif' }}
                 >
                   <Save size={16} />
@@ -424,7 +424,7 @@ const GestionPartenaires = () => {
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                     placeholder="Rechercher un partenaire..."
-                    className="flex-1 px-4 py-2 rounded-xl border border-[#E9ECEF] bg-[white] text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FEEB09] focus:border-transparent"
+                    className="flex-1 px-4 py-2 rounded-xl border border-[#E9ECEF] bg-[white] text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#40B2A4] focus:border-transparent"
                     style={{ fontFamily: 'DM Sans, sans-serif' }}
                   />
                 </div>
@@ -443,7 +443,7 @@ const GestionPartenaires = () => {
                 <button
                   onClick={() => setFilterType('or')}
                   className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
-                    filterType === 'or' ? 'bg-[#D4AF37] text-[#212529]' : 'bg-white text-[#6C757D] hover:bg-[#E9ECEF]'
+                    filterType === 'or' ? 'bg-[#40B2A4] text-[#212529]' : 'bg-white text-[#6C757D] hover:bg-[#E9ECEF]'
                   }`}
                   style={{ fontFamily: 'DM Sans, sans-serif' }}
                 >
@@ -452,7 +452,7 @@ const GestionPartenaires = () => {
                 <button
                   onClick={() => setFilterType('argent')}
                   className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
-                    filterType === 'argent' ? 'bg-[#10B981] text-[#212529]' : 'bg-white text-[#6C757D] hover:bg-[#E9ECEF]'
+                    filterType === 'argent' ? 'bg-[#40B2A4] text-[#212529]' : 'bg-white text-[#6C757D] hover:bg-[#E9ECEF]'
                   }`}
                   style={{ fontFamily: 'DM Sans, sans-serif' }}
                 >
@@ -461,7 +461,7 @@ const GestionPartenaires = () => {
                 <button
                   onClick={() => setFilterType('bronze')}
                   className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
-                    filterType === 'bronze' ? 'bg-[#CD7F32] text-[#212529]' : 'bg-white text-[#6C757D] hover:bg-[#E9ECEF]'
+                    filterType === 'bronze' ? 'bg-[#7E245C] text-[#212529]' : 'bg-white text-[#6C757D] hover:bg-[#E9ECEF]'
                   }`}
                   style={{ fontFamily: 'DM Sans, sans-serif' }}
                 >
@@ -481,9 +481,9 @@ const GestionPartenaires = () => {
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.5 }}
-                className="relative overflow-hidden rounded-2xl border border-[#E9ECEF] bg-[white] hover:border-[#FEEB09]/50 hover:shadow-xl hover:shadow-[#FEEB09]/10 transition-all duration-300"
+                className="relative overflow-hidden rounded-2xl border border-[#E9ECEF] bg-[white] hover:border-[#40B2A4]/50 hover:shadow-xl hover:shadow-[#40B2A4]/10 transition-all duration-300"
               >
-                <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-[#FEEB09]/5 opacity-0"></div>
+                <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-[#40B2A4]/5 opacity-0"></div>
                 
                 <div className="relative z-10 p-6">
                   <div className="flex items-start justify-between mb-4">
@@ -496,7 +496,7 @@ const GestionPartenaires = () => {
                             className="w-12 h-12 rounded-lg object-contain border border-[#E9ECEF]"
                           />
                         ) : (
-                          <div className="w-12 h-12 rounded-lg bg-gradient-to-r from-[#24366E] to-[#FEEB09] flex items-center justify-center">
+                          <div className="w-12 h-12 rounded-lg bg-gradient-to-r from-[#24366E] to-[#40B2A4] flex items-center justify-center">
                             <Building2 size={24} className="text-white" />
                           </div>
                         )}
@@ -508,9 +508,9 @@ const GestionPartenaires = () => {
                             {partenaire.nom}
                           </h3>
                           <span className={`inline-block px-3 py-1 rounded-full text-xs font-bold ${
-                            partenaire.niveau === 'or' ? 'bg-[#D4AF37]/20 text-[#D4AF37]' : 
-                            partenaire.niveau === 'argent' ? 'bg-[#10B981]/20 text-[#10B981]' : 
-                            'bg-[#CD7F32]/20 text-[#CD7F32]'
+                            partenaire.niveau === 'or' ? 'bg-[#40B2A4]/20 text-[#40B2A4]' : 
+                            partenaire.niveau === 'argent' ? 'bg-[#40B2A4]/20 text-[#40B2A4]' : 
+                            'bg-[#7E245C]/20 text-[#7E245C]'
                           }`}>
                             {partenaire.niveau === 'or' ? '🏆 Or' : 
                              partenaire.niveau === 'argent' ? '🥈 Argent' : 
@@ -522,7 +522,7 @@ const GestionPartenaires = () => {
                     
                     <button
                       onClick={() => deletePartenaire.mutate(partenaire.id)}
-                      className="p-2 rounded-lg bg-[#DC2626] text-[#212529] hover:bg-[#B91C1C] transition-colors"
+                      className="p-2 rounded-lg bg-[#D25238] text-[#212529] hover:bg-[#D25238] transition-colors"
                       style={{ fontFamily: 'DM Sans, sans-serif' }}
                     >
                       <Trash2 size={16} />
@@ -538,7 +538,7 @@ const GestionPartenaires = () => {
                             href={normalizedUrl}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-xs text-[#24366E] hover:text-[#FEEB09] transition-colors flex items-center gap-1"
+                            className="text-xs text-[#24366E] hover:text-[#40B2A4] transition-colors flex items-center gap-1"
                             style={{ fontFamily: 'DM Sans, sans-serif' }}
                           >
                             <Globe size={12} />

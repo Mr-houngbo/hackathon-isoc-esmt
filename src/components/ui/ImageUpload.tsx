@@ -141,8 +141,8 @@ const ImageUpload = ({
           className={`
             relative border-2 border-dashed rounded-xl p-8 text-center cursor-pointer transition-all duration-200
             ${dragActive 
-              ? 'border-[#FEEB09] bg-[#FEEB09]/5' 
-              : 'border-[#E9ECEF] bg-[#F8F9FA] hover:border-[#FEEB09]/50 hover:bg-[#FEEB09]/5'
+              ? 'border-[#40B2A4] bg-[#40B2A4]/5' 
+              : 'border-[#E9ECEF] bg-[#F8F9FA] hover:border-[#40B2A4]/50 hover:bg-[#40B2A4]/5'
             }
             ${uploading ? 'pointer-events-none opacity-60' : ''}
           `}
@@ -160,12 +160,12 @@ const ImageUpload = ({
         >
           {uploading ? (
             <div className="flex flex-col items-center gap-3">
-              <Loader2 className="w-8 h-8 text-[#FEEB09] animate-spin" />
+              <Loader2 className="w-8 h-8 text-[#40B2A4] animate-spin" />
               <p className="text-sm text-[#6C757D]">Upload en cours...</p>
             </div>
           ) : (
             <div className="flex flex-col items-center gap-3">
-              <div className="w-12 h-12 rounded-full bg-gradient-to-r from-[#FEEB09]/20 to-[#24366E]/20 flex items-center justify-center">
+              <div className="w-12 h-12 rounded-full bg-gradient-to-r from-[#40B2A4]/20 to-[#24366E]/20 flex items-center justify-center">
                 <ImageIcon size={24} className="text-[#6C757D]" />
               </div>
               <div>

@@ -15,12 +15,12 @@ const programmeItems = [
 
 const getTypeColor = (type: string) => {
   switch (type) {
-    case "social": return "bg-[#FEEB09]/10 text-[#FEEB09] border-[#FEEB09]/30";
+    case "social": return "bg-[#40B2A4]/10 text-[#40B2A4] border-[#40B2A4]/30";
     case "keynote": return "bg-[#24366E]/10 text-[#24366E] border-[#24366E]/30";
     case "workshop": return "bg-[#F8F9FA] text-[#6C757D] border-[#E9ECEF]";
-    case "coding": return "bg-[#FEEB09]/10 text-[#FEEB09] border-[#FEEB09]/30";
+    case "coding": return "bg-[#40B2A4]/10 text-[#40B2A4] border-[#40B2A4]/30";
     case "presentation": return "bg-[#24366E]/10 text-[#24366E] border-[#24366E]/30";
-    case "ceremony": return "bg-gradient-to-r from-[#FEEB09]/10 to-[#24366E]/10 text-[#212529] border-[#E9ECEF]";
+    case "ceremony": return "bg-gradient-to-r from-[#40B2A4]/10 to-[#24366E]/10 text-[#212529] border-[#E9ECEF]";
     default: return "bg-[#F8F9FA] text-[#6C757D] border-[#E9ECEF]";
   }
 };
@@ -29,7 +29,7 @@ const ProgrammePreview = () => (
   <section id="programme" className="py-24 bg-gradient-to-br from-[#F8F9FA] to-white relative overflow-hidden">
     {/* Background decorative elements */}
     <div className="absolute inset-0 overflow-hidden">
-      <div className="absolute top-20 left-1/4 w-64 h-64 bg-[#FEEB09]/3 rounded-full blur-3xl animate-float-elegant"></div>
+      <div className="absolute top-20 left-1/4 w-64 h-64 bg-[#40B2A4]/3 rounded-full blur-3xl animate-float-elegant"></div>
       <div className="absolute bottom-20 right-1/4 w-64 h-64 bg-[#24366E]/3 rounded-full blur-3xl animate-float-elegant" style={{ animationDelay: '2s' }}></div>
       
       {/* Globe decorations */}
@@ -62,7 +62,7 @@ const ProgrammePreview = () => (
         >
           Programme en <span className="text-gradient">un coup d'œil</span>
         </h2>
-        <div className="w-24 h-1 bg-gradient-to-r from-[#FEEB09] to-[#24366E] mx-auto rounded-full mb-6"></div>
+        <div className="w-24 h-1 bg-gradient-to-r from-[#40B2A4] to-[#24366E] mx-auto rounded-full mb-6"></div>
         <p 
           className="text-[#6C757D] max-w-2xl mx-auto text-lg leading-relaxed"
           style={{ fontFamily: 'DM Sans, sans-serif' }}
@@ -86,7 +86,7 @@ const ProgrammePreview = () => (
               <div className="flex items-center gap-4 mb-4">
                 <div className={`flex h-12 w-12 items-center justify-center rounded-xl text-white font-bold text-lg shadow-lg ${
                   day === 1 
-                    ? 'bg-gradient-to-br from-[#FEEB09] to-[#FEEB09]' 
+                    ? 'bg-gradient-to-br from-[#40B2A4] to-[#40B2A4]' 
                     : 'bg-gradient-to-br from-[#24366E] to-[#2E4A8C]'
                 }`}>
                   J{day}
@@ -123,9 +123,9 @@ const ProgrammePreview = () => (
                   >
                     {/* Time */}
                     <div className="flex items-center gap-2 min-w-[80px]">
-                      <Clock size={14} className="text-[#FEEB09]" />
+                      <Clock size={14} className="text-[#40B2A4]" />
                       <span 
-                        className="text-sm font-semibold text-[#FEEB09]"
+                        className="text-sm font-semibold text-[#40B2A4]"
                         style={{ fontFamily: 'Space Mono, monospace' }}
                       >
                         {item.time}
@@ -146,14 +146,14 @@ const ProgrammePreview = () => (
                     </div>
                     
                     {/* Decorative line */}
-                    <div className="absolute left-0 top-0 bottom-0 w-px bg-gradient-to-b from-[#FEEB09] to-transparent opacity-20"></div>
+                    <div className="absolute left-0 top-0 bottom-0 w-px bg-gradient-to-b from-[#40B2A4] to-transparent opacity-20"></div>
                   </motion.div>
                 ))}
             </div>
             
             {/* Decorative elements */}
             <div className={`absolute top-4 right-4 w-2 h-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 ${
-              day === 1 ? 'bg-[#FEEB09]' : 'bg-[#24366E]'
+              day === 1 ? 'bg-[#40B2A4]' : 'bg-[#24366E]'
             }`}></div>
           </motion.div>
         ))}
@@ -170,11 +170,11 @@ const ProgrammePreview = () => (
         <div className="bg-white rounded-2xl border border-[#E9ECEF] shadow-lg p-8 max-w-2xl mx-auto">
           <div className="flex flex-col sm:flex-row items-center justify-center gap-6 mb-8">
             <div className="flex items-center gap-2 text-[#6C757D]">
-              <Calendar size={16} className="text-[#FEEB09]" />
+              <Calendar size={16} className="text-[#40B2A4]" />
               <span style={{ fontFamily: 'DM Sans, sans-serif' }}>17-18 Avril 2026</span>
             </div>
             <div className="flex items-center gap-2 text-[#6C757D]">
-              <Users size={16} className="text-[#FEEB09]" />
+              <Users size={16} className="text-[#40B2A4]" />
               <span style={{ fontFamily: 'DM Sans, sans-serif' }}>40 participants maximum</span>
             </div>
           </div>
@@ -192,7 +192,7 @@ const ProgrammePreview = () => (
     </div>
 
     {/* Decorative bottom gradient */}
-    <div className="absolute bottom-0 left-0 right-0 h-2 bg-gradient-to-r from-[#FEEB09] via-[#24366E] to-[#FEEB09]"></div>
+    <div className="absolute bottom-0 left-0 right-0 h-2 bg-gradient-to-r from-[#40B2A4] via-[#24366E] to-[#40B2A4]"></div>
   </section>
 );
 

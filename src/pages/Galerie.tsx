@@ -8,11 +8,11 @@ import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { GlobeISoc } from "@/components/ui/GlobeISoc";
 
 const TYPE_CATEGORIES = [
-  { value: 'team_isoc_esmt', label: 'TEAM ISOC ESMT', icon: Star, color: '#FEEB09' },
-  { value: 'mentors', label: 'Mentors', icon: Award, color: '#8B5CF6' },
-  { value: 'jury', label: 'Jury', icon: Trophy, color: '#DC2626' },
-  { value: 'equipes', label: 'Équipes', icon: Users, color: '#00873E' },
-  { value: 'partenaires', label: 'Partenaires', icon: Building, color: '#F59E0B' },
+  { value: 'team_isoc_esmt', label: 'TEAM ISOC ESMT', icon: Star, color: '#40B2A4' },
+  { value: 'mentors', label: 'Mentors', icon: Award, color: '#D25238' },
+  { value: 'jury', label: 'Jury', icon: Trophy, color: '#D25238' },
+  { value: 'equipes', label: 'Équipes', icon: Users, color: '#40B2A4' },
+  { value: 'partenaires', label: 'Partenaires', icon: Building, color: '#D25238' },
   { value: 'general', label: 'Général', icon: Image, color: '#6C757D' },
 ];
 
@@ -245,79 +245,63 @@ const Galerie = () => {
           </motion.div>
         </div>
 
-        {/* Hero Section - Futuriste */}
-        <div className="relative overflow-hidden">
+        {/* Hero Section - Compact */}
+        <div className="relative overflow-hidden pt-8 pb-4">
           <div className="absolute inset-0 bg-gradient-to-r from-transparent via-blue-500/5 to-transparent"></div>
-          <div className="container relative z-10 py-20">
+          <div className="container relative z-10">
             <motion.div 
               className="text-center"
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
+              transition={{ duration: 0.6 }}
             >
-              <div className="flex items-center justify-center gap-6 mb-8">
+              <div className="flex items-center justify-center gap-4 mb-4">
                 <motion.div
                   className="relative"
                   animate={{ rotate: 360 }}
                   transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
                 >
-                  <div className="w-20 h-20 rounded-full bg-gradient-to-r from-blue-600 to-cyan-600 flex items-center justify-center shadow-2xl shadow-blue-500/50">
-                    <Sparkles size={40} className="text-white" />
+                  <div className="w-12 h-12 rounded-full bg-gradient-to-r from-[#40B2A4] to-[#24366E] flex items-center justify-center shadow-lg">
+                    <Sparkles size={24} className="text-white" />
                   </div>
-                  <div className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-600 to-cyan-600 animate-ping opacity-20"></div>
                 </motion.div>
                 <div>
                   <h1 
-                    className="font-display text-5xl sm:text-7xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-cyan-600 to-blue-600 mb-2"
-                    style={{ fontFamily: 'Sora, sans-serif', fontWeight: 900 }}
+                    className="font-display text-3xl sm:text-4xl font-bold text-[#24366E] mb-1"
+                    style={{ fontFamily: 'Sora, sans-serif', fontWeight: 700 }}
                   >
                     Galerie
                   </h1>
-                  <div className="flex items-center justify-center gap-2">
-                    <motion.div
-                      className="h-1 bg-gradient-to-r from-blue-600 to-cyan-600 rounded-full"
-                      initial={{ width: 0 }}
-                      animate={{ width: 100 }}
-                      transition={{ duration: 1, delay: 0.5 }}
-                    />
-                    <Zap className="w-4 h-4 text-cyan-600" />
-                    <motion.div
-                      className="h-1 bg-gradient-to-r from-cyan-600 to-blue-600 rounded-full"
-                      initial={{ width: 0 }}
-                      animate={{ width: 100 }}
-                      transition={{ duration: 1, delay: 0.7 }}
-                    />
-                  </div>
                 </div>
               </div>
               <motion.p 
-                className="text-xl sm:text-2xl text-gray-600 mb-8 max-w-2xl mx-auto"
+                className="text-base sm:text-lg text-gray-600 mb-4 max-w-xl mx-auto"
                 style={{ fontFamily: 'DM Sans, sans-serif' }}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                transition={{ duration: 1, delay: 0.3 }}
+                transition={{ duration: 0.8, delay: 0.2 }}
               >
-                Découvrez les moments inoubliables des éditions précédentes
+                Moments inoubliables des éditions précédentes
               </motion.p>
               
-              {/* Stats Animées */}
+              {/* Stats Compacts */}
               <motion.div 
-                className="flex justify-center gap-8 mb-8"
-                initial={{ opacity: 0, y: 20 }}
+                className="flex justify-center gap-6"
+                initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.5 }}
+                transition={{ duration: 0.6, delay: 0.3 }}
               >
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-blue-600">{items?.length || 0}</div>
-                  <div className="text-sm text-gray-500">Photos</div>
+                <div className="text-center px-3 py-2 bg-white/80 backdrop-blur rounded-xl shadow-sm">
+                  <div className="text-xl font-bold text-[#40B2A4]">{items?.length || 0}</div>
+                  <div className="text-xs text-gray-500">Photos</div>
                 </div>
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-cyan-600">{TYPE_CATEGORIES.length}</div>
-                  <div className="text-sm text-gray-500">Catégories</div>
+                <div className="text-center px-3 py-2 bg-white/80 backdrop-blur rounded-xl shadow-sm">
+                  <div className="text-xl font-bold text-[#24366E]">{TYPE_CATEGORIES.length}</div>
+                  <div className="text-xs text-gray-500">Catégories</div>
                 </div>
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-blue-600">{selectedAnnee}</div>
-                  <div className="text-sm text-gray-500">Édition</div>
+                <div className="text-center px-3 py-2 bg-white/80 backdrop-blur rounded-xl shadow-sm">
+                  <div className="text-xl font-bold text-[#40B2A4]">{selectedAnnee}</div>
+                  <div className="text-xs text-gray-500">Édition</div>
                 </div>
               </motion.div>
             </motion.div>
@@ -400,7 +384,7 @@ const Galerie = () => {
                 }`}
               >
                 <Zap size={12} className={showMostLiked ? 'animate-pulse' : ''} />
-                🔥 Plus aimées
+                Plus aimées
               </button>
 
               {/* View Mode Toggle */}
@@ -711,7 +695,7 @@ const Galerie = () => {
                           const categorieColor = categorie?.color || '#6C757D';
                           return (
                             <div
-                              className="flex items-center gap-2 px-4 py-2 rounded-full text-sm font-bold text-white"
+                              className="flex items-center gap-2 px-4 py-1.5 rounded-full text-sm font-bold text-white"
                               style={{ backgroundColor: categorieColor }}
                             >
                               <Icon size={14} />
@@ -808,19 +792,19 @@ const TimelineView = ({ items, openModal, handleLike, likedItems, selectedAnnee,
 
   // Organiser les items par phases du hackathon
   const getPhaseForIndex = (index: number, total: number) => {
-    if (index === 0) return { label: "🚀 Lancement", color: "#FEEB09" };
-    if (index === Math.floor(total / 3)) return { label: "⚡ En cours", color: "#3B82F6" };
-    if (index === Math.floor(total * 2 / 3)) return { label: "🏁 Final", color: "#8B5CF6" };
-    if (index === total - 1) return { label: "🏆 Awards", color: "#F59E0B" };
+    if (index === 0) return { label: "🚀 Lancement", color: "#40B2A4" };
+    if (index === Math.floor(total / 3)) return { label: "⚡ En cours", color: "#24366E" };
+    if (index === Math.floor(total * 2 / 3)) return { label: "🏁 Final", color: "#D25238" };
+    if (index === total - 1) return { label: "🏆 Awards", color: "#D25238" };
     return null;
   };
 
   return (
     <div ref={containerRef} className="relative max-w-5xl mx-auto py-12">
       {/* Ligne de timeline centrale avec animation */}
-      <div className="absolute left-1/2 top-0 bottom-0 w-1 -translate-x-1/2 bg-gradient-to-b from-[#FEEB09]/20 via-[#3B82F6]/20 to-[#F59E0B]/20 rounded-full overflow-hidden">
+      <div className="absolute left-1/2 top-0 bottom-0 w-1 -translate-x-1/2 bg-gradient-to-b from-[#40B2A4]/20 via-[#24366E]/20 to-[#D25238]/20 rounded-full overflow-hidden">
         <motion.div 
-          className="w-full bg-gradient-to-b from-[#FEEB09] via-[#3B82F6] to-[#F59E0B]"
+          className="w-full bg-gradient-to-b from-[#40B2A4] via-[#24366E] to-[#D25238]"
           style={{ height: lineHeight }}
         />
       </div>
@@ -966,7 +950,7 @@ const TimelineView = ({ items, openModal, handleLike, likedItems, selectedAnnee,
         viewport={{ once: true }}
         className="flex justify-center mt-16"
       >
-        <div className="w-4 h-4 rounded-full bg-gradient-to-r from-[#FEEB09] via-[#3B82F6] to-[#F59E0B] animate-pulse" />
+        <div className="w-4 h-4 rounded-full bg-gradient-to-r from-[#40B2A4] via-[#24366E] to-[#D25238] animate-pulse" />
       </motion.div>
     </div>
   );

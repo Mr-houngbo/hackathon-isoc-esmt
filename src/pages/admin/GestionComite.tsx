@@ -225,7 +225,7 @@ const GestionComite = () => {
                 </button>
                 <button
                   onClick={() => setShowAddMember(true)}
-                  className="flex items-center gap-2 px-4 py-2 rounded-xl bg-[#FEEB09] text-white hover:bg-[#FEEB09] transition-colors"
+                  className="flex items-center gap-2 px-4 py-2 rounded-xl bg-[#40B2A4] text-white hover:bg-[#40B2A4] transition-colors"
                   style={{ fontFamily: 'DM Sans, sans-serif' }}
                 >
                   <Plus size={16} />
@@ -238,8 +238,8 @@ const GestionComite = () => {
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
               <div className="bg-white rounded-xl p-4 border border-[#E9ECEF]">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-lg bg-[#FEEB09]/10 flex items-center justify-center">
-                    <Users className="text-[#FEEB09]" size={20} />
+                  <div className="w-10 h-10 rounded-lg bg-[#40B2A4]/10 flex items-center justify-center">
+                    <Users className="text-[#40B2A4]" size={20} />
                   </div>
                   <div>
                     <p className="text-2xl font-bold text-[#212529]" style={{ fontFamily: 'Sora, sans-serif' }}>
@@ -270,8 +270,8 @@ const GestionComite = () => {
 
               <div className="bg-white rounded-xl p-4 border border-[#E9ECEF]">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-lg bg-[#10B981]/10 flex items-center justify-center">
-                    <CheckCircle className="text-[#10B981]" size={20} />
+                  <div className="w-10 h-10 rounded-lg bg-[#40B2A4]/10 flex items-center justify-center">
+                    <CheckCircle className="text-[#40B2A4]" size={20} />
                   </div>
                   <div>
                     <p className="text-2xl font-bold text-[#212529]" style={{ fontFamily: 'Sora, sans-serif' }}>
@@ -358,7 +358,7 @@ const GestionComite = () => {
                       <td className="py-3 px-4 text-center">
                         <button
                           onClick={() => deleteMemberMutation.mutate(member.id)}
-                          className="p-2 rounded-lg bg-[#DC2626] text-white hover:bg-[#B91C1C] transition-colors"
+                          className="p-2 rounded-lg bg-[#D25238] text-white hover:bg-[#D25238] transition-colors"
                           title="Supprimer"
                         >
                           <Trash2 size={14} />
@@ -404,8 +404,8 @@ const GestionComite = () => {
                         key={equipe.id}
                         className={`p-3 rounded-lg border cursor-pointer transition-all ${
                           selectedDossiers.includes(equipe.id)
-                            ? 'border-[#FEEB09] bg-[#FEEB09]/10'
-                            : 'border-[#E9ECEF] hover:border-[#FEEB09]/30'
+                            ? 'border-[#40B2A4] bg-[#40B2A4]/10'
+                            : 'border-[#E9ECEF] hover:border-[#40B2A4]/30'
                         }`}
                         onClick={() => {
                           if (selectedDossiers.includes(equipe.id)) {
@@ -427,13 +427,13 @@ const GestionComite = () => {
                           <div className="flex items-center gap-2">
                             <span className={`inline-flex items-center gap-1 px-2 py-1 rounded-lg text-xs font-medium ${
                               hasEnough
-                                ? 'bg-[#10B981]/10 text-[#10B981]'
+                                ? 'bg-[#40B2A4]/10 text-[#40B2A4]'
                                 : 'bg-[#F59E0B]/10 text-[#F59E0B]'
                             }`} style={{ fontFamily: 'DM Sans, sans-serif' }}>
                               {nbEvaluateurs}/2 évaluateurs
                             </span>
                             {selectedDossiers.includes(equipe.id) && (
-                              <CheckCircle size={16} className="text-[#FEEB09]" />
+                              <CheckCircle size={16} className="text-[#40B2A4]" />
                             )}
                           </div>
                         </div>
@@ -476,7 +476,7 @@ const GestionComite = () => {
                             }
                           }}
                           disabled={selectedDossiers.length === 0}
-                          className="px-3 py-1 rounded-lg bg-[#FEEB09] text-white text-sm hover:bg-[#FEEB09] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                          className="px-3 py-1 rounded-lg bg-[#40B2A4] text-white text-sm hover:bg-[#40B2A4] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                           style={{ fontFamily: 'DM Sans, sans-serif' }}
                         >
                           Assigner ({selectedDossiers.length})
@@ -514,7 +514,7 @@ const GestionComite = () => {
                     type="text"
                     value={newMember.nom_prenom}
                     onChange={(e) => setNewMember({ ...newMember, nom_prenom: e.target.value })}
-                    className="w-full px-4 py-2 rounded-xl border border-[#E9ECEF] text-[#212529] focus:outline-none focus:ring-2 focus:ring-[#FEEB09]/20 focus:border-[#FEEB09]/50"
+                    className="w-full px-4 py-2 rounded-xl border border-[#E9ECEF] text-[#212529] focus:outline-none focus:ring-2 focus:ring-[#40B2A4]/20 focus:border-[#40B2A4]/50"
                     style={{ fontFamily: 'DM Sans, sans-serif' }}
                   />
                 </div>
@@ -527,7 +527,7 @@ const GestionComite = () => {
                     type="email"
                     value={newMember.email}
                     onChange={(e) => setNewMember({ ...newMember, email: e.target.value })}
-                    className="w-full px-4 py-2 rounded-xl border border-[#E9ECEF] text-[#212529] focus:outline-none focus:ring-2 focus:ring-[#FEEB09]/20 focus:border-[#FEEB09]/50"
+                    className="w-full px-4 py-2 rounded-xl border border-[#E9ECEF] text-[#212529] focus:outline-none focus:ring-2 focus:ring-[#40B2A4]/20 focus:border-[#40B2A4]/50"
                     style={{ fontFamily: 'DM Sans, sans-serif' }}
                   />
                 </div>
@@ -547,7 +547,7 @@ const GestionComite = () => {
                 <button
                   onClick={() => addMemberMutation.mutate()}
                   disabled={!newMember.nom_prenom.trim() || !newMember.email.trim()}
-                  className="px-4 py-2 rounded-xl bg-[#FEEB09] text-white hover:bg-[#FEEB09] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="px-4 py-2 rounded-xl bg-[#40B2A4] text-white hover:bg-[#40B2A4] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                   style={{ fontFamily: 'DM Sans, sans-serif' }}
                 >
                   Ajouter

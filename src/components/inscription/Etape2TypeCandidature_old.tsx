@@ -28,7 +28,7 @@ const Etape2TypeCandidature = ({ data, onChange }: Props) => (
       >
         Participez-vous seul ou en équipe ?
       </p>
-      <div className="w-16 h-1 bg-gradient-to-r from-[#FEEB09] to-[#24366E] mx-auto rounded-full mt-4"></div>
+      <div className="w-16 h-1 bg-gradient-to-r from-[#40B2A4] to-[#24366E] mx-auto rounded-full mt-4"></div>
     </motion.div>
 
     {/* Type Selection Cards */}
@@ -67,8 +67,8 @@ const Etape2TypeCandidature = ({ data, onChange }: Props) => (
             />
             <div className={`relative overflow-hidden rounded-2xl border-2 p-6 transition-all duration-300 ${
               data.type_candidature === type.value
-                ? 'border-[#FEEB09] bg-[#FEEB09]/5 shadow-lg shadow-[#FEEB09]/20'
-                : 'border-[#E9ECEF] bg-white hover:border-[#FEEB09]/30 hover:shadow-md'
+                ? 'border-[#40B2A4] bg-[#40B2A4]/5 shadow-lg shadow-[#40B2A4]/20'
+                : 'border-[#E9ECEF] bg-white hover:border-[#40B2A4]/30 hover:shadow-md'
             }`}>
               {/* Selection indicator */}
               {data.type_candidature === type.value && (
@@ -76,7 +76,7 @@ const Etape2TypeCandidature = ({ data, onChange }: Props) => (
                   initial={{ scale: 0 }}
                   animate={{ scale: 1 }}
                   transition={{ duration: 0.2 }}
-                  className="absolute top-4 right-4 w-6 h-6 rounded-full bg-[#FEEB09] flex items-center justify-center"
+                  className="absolute top-4 right-4 w-6 h-6 rounded-full bg-[#40B2A4] flex items-center justify-center"
                 >
                   <motion.div
                     initial={{ pathLength: 0 }}
@@ -100,12 +100,12 @@ const Etape2TypeCandidature = ({ data, onChange }: Props) => (
               <div className="flex items-center justify-center mb-4">
                 <div className={`w-16 h-16 rounded-xl flex items-center justify-center ${
                   data.type_candidature === type.value
-                    ? 'bg-gradient-to-r from-[#FEEB09] to-[#24366E]'
-                    : 'bg-gradient-to-r from-[#FEEB09]/10 to-[#24366E]/10'
+                    ? 'bg-gradient-to-r from-[#40B2A4] to-[#24366E]'
+                    : 'bg-gradient-to-r from-[#40B2A4]/10 to-[#24366E]/10'
                 }`}>
                   <type.icon 
                     size={32} 
-                    className={data.type_candidature === type.value ? 'text-white' : 'text-[#FEEB09]'} 
+                    className={data.type_candidature === type.value ? 'text-white' : 'text-[#40B2A4]'} 
                   />
                 </div>
               </div>
@@ -116,7 +116,7 @@ const Etape2TypeCandidature = ({ data, onChange }: Props) => (
                   className="font-display text-lg font-bold mb-2"
                   style={{ fontFamily: 'Sora, sans-serif' }}
                 >
-                  <span className={data.type_candidature === type.value ? 'text-[#FEEB09]' : 'text-[#212529]'}>
+                  <span className={data.type_candidature === type.value ? 'text-[#40B2A4]' : 'text-[#212529]'}>
                     {type.title}
                   </span>
                 </h4>
@@ -135,7 +135,7 @@ const Etape2TypeCandidature = ({ data, onChange }: Props) => (
                     <div key={idx} className="flex items-center gap-2">
                       <Sparkles 
                         size={14} 
-                        className={data.type_candidature === type.value ? 'text-[#FEEB09]' : 'text-[#6C757D]'} 
+                        className={data.type_candidature === type.value ? 'text-[#40B2A4]' : 'text-[#6C757D]'} 
                       />
                       <span 
                         className="text-xs"
@@ -151,7 +151,7 @@ const Etape2TypeCandidature = ({ data, onChange }: Props) => (
               </div>
 
               {/* Hover effect */}
-              <div className="absolute inset-0 bg-gradient-to-r from-[#FEEB09]/5 via-transparent to-[#24366E]/5 opacity-0 hover:opacity-100 transition-opacity duration-300 rounded-2xl"></div>
+              <div className="absolute inset-0 bg-gradient-to-r from-[#40B2A4]/5 via-transparent to-[#24366E]/5 opacity-0 hover:opacity-100 transition-opacity duration-300 rounded-2xl"></div>
             </div>
           </label>
         </motion.div>
@@ -178,7 +178,7 @@ const Etape2TypeCandidature = ({ data, onChange }: Props) => (
             value={data.nom_equipe}
             onChange={(e) => onChange({ nom_equipe: e.target.value })}
             placeholder="Nom de votre équipe"
-            className="w-full px-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FEEB09]/20 focus:border-[#FEEB09]/50 transition-all"
+            className="w-full px-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#40B2A4]/20 focus:border-[#40B2A4]/50 transition-all"
             style={{ fontFamily: 'DM Sans, sans-serif' }}
           />
         </label>

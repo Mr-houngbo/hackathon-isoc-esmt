@@ -16,7 +16,7 @@ const TermesConditions = () => {
             className="text-center mb-12"
           >
             <div className="flex items-center justify-center gap-3 mb-4">
-              <div className="w-16 h-16 rounded-full bg-gradient-to-r from-[#FEEB09] to-[#24366E] flex items-center justify-center">
+              <div className="w-16 h-16 rounded-full bg-gradient-to-r from-[#40B2A4] to-[#40B2A4] flex items-center justify-center">
                 <FileText size={32} className="text-white" />
               </div>
               <h1 
@@ -32,7 +32,7 @@ const TermesConditions = () => {
             >
               2ème Hackathon ISOC-ESMT - 17 & 18 Avril 2026
             </p>
-            <div className="w-24 h-1 bg-gradient-to-r from-[#FEEB09] to-[#24366E] mx-auto rounded-full mt-4"></div>
+            <div className="w-24 h-1 bg-gradient-to-r from-[#40B2A4] to-[#40B2A4] mx-auto rounded-full mt-4"></div>
           </motion.div>
 
           {/* Content */}
@@ -48,7 +48,7 @@ const TermesConditions = () => {
                 className="font-display text-2xl font-bold text-[#212529] mb-4 flex items-center gap-3"
                 style={{ fontFamily: 'Sora, sans-serif' }}
               >
-                <Shield className="text-[#FEEB09]" />
+                <Shield className="text-[#40B2A4]" />
                 Préambule
               </h2>
               <p 
@@ -66,12 +66,12 @@ const TermesConditions = () => {
                 className="font-display text-2xl font-bold text-[#212529] mb-6 flex items-center gap-3"
                 style={{ fontFamily: 'Sora, sans-serif' }}
               >
-                <Users className="text-[#FEEB09]" />
+                <Users className="text-[#40B2A4]" />
                 Composition des Équipes
               </h2>
               <div className="space-y-4">
                 <div className="flex items-start gap-3">
-                  <div className="w-2 h-2 bg-[#FEEB09] rounded-full mt-2 flex-shrink-0"></div>
+                  <div className="w-2 h-2 bg-[#40B2A4] rounded-full mt-2 flex-shrink-0"></div>
                   <p 
                     className="text-[#6C757D] leading-relaxed"
                     style={{ fontFamily: 'DM Sans, sans-serif' }}
@@ -80,7 +80,7 @@ const TermesConditions = () => {
                   </p>
                 </div>
                 <div className="flex items-start gap-3">
-                  <div className="w-2 h-2 bg-[#FEEB09] rounded-full mt-2 flex-shrink-0"></div>
+                  <div className="w-2 h-2 bg-[#40B2A4] rounded-full mt-2 flex-shrink-0"></div>
                   <p 
                     className="text-[#6C757D] leading-relaxed"
                     style={{ fontFamily: 'DM Sans, sans-serif' }}
@@ -90,7 +90,7 @@ const TermesConditions = () => {
                   </p>
                 </div>
                 <div className="flex items-start gap-3">
-                  <div className="w-2 h-2 bg-[#FEEB09] rounded-full mt-2 flex-shrink-0"></div>
+                  <div className="w-2 h-2 bg-[#40B2A4] rounded-full mt-2 flex-shrink-0"></div>
                   <p 
                     className="text-[#6C757D] leading-relaxed"
                     style={{ fontFamily: 'DM Sans, sans-serif' }}
@@ -99,7 +99,7 @@ const TermesConditions = () => {
                   </p>
                 </div>
                 <div className="flex items-start gap-3">
-                  <div className="w-2 h-2 bg-[#FEEB09] rounded-full mt-2 flex-shrink-0"></div>
+                  <div className="w-2 h-2 bg-[#40B2A4] rounded-full mt-2 flex-shrink-0"></div>
                   <p 
                     className="text-[#6C757D] leading-relaxed"
                     style={{ fontFamily: 'DM Sans, sans-serif' }}
@@ -116,12 +116,12 @@ const TermesConditions = () => {
                 className="font-display text-2xl font-bold text-[#212529] mb-6 flex items-center gap-3"
                 style={{ fontFamily: 'Sora, sans-serif' }}
               >
-                <Award className="text-[#FEEB09]" />
+                <Award className="text-[#40B2A4]" />
                 Thématiques et Projets
               </h2>
               <div className="space-y-4">
                 <div className="flex items-start gap-3">
-                  <div className="w-2 h-2 bg-[#FEEB09] rounded-full mt-2 flex-shrink-0"></div>
+                  <div className="w-2 h-2 bg-[#40B2A4] rounded-full mt-2 flex-shrink-0"></div>
                   <p 
                     className="text-[#6C757D] leading-relaxed"
                     style={{ fontFamily: 'DM Sans, sans-serif' }}
@@ -138,25 +138,25 @@ const TermesConditions = () => {
                   </h3>
                   <ul className="space-y-2">
                     <li className="flex items-start gap-2">
-                      <span className="text-[#FEEB09] mt-1">▪</span>
+                      <span className="text-[#40B2A4] mt-1">▪</span>
                       <span className="text-[#6C757D]" style={{ fontFamily: 'DM Sans, sans-serif' }}>
                         Innovation sociale et inclusion numérique
                       </span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <span className="text-[#FEEB09] mt-1">▪</span>
+                      <span className="text-[#40B2A4] mt-1">▪</span>
                       <span className="text-[#6C757D]" style={{ fontFamily: 'DM Sans, sans-serif' }}>
                         Smart City et développement durable
                       </span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <span className="text-[#FEEB09] mt-1">▪</span>
+                      <span className="text-[#40B2A4] mt-1">▪</span>
                       <span className="text-[#6C757D]" style={{ fontFamily: 'DM Sans, sans-serif' }}>
                         Services publics et Intelligence Artificielle
                       </span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <span className="text-[#FEEB09] mt-1">▪</span>
+                      <span className="text-[#40B2A4] mt-1">▪</span>
                       <span className="text-[#6C757D]" style={{ fontFamily: 'DM Sans, sans-serif' }}>
                         Digitalisation des processus (pointage, réservation, restauration, plateformes numériques)
                       </span>
@@ -164,7 +164,7 @@ const TermesConditions = () => {
                   </ul>
                 </div>
                 <div className="flex items-start gap-3">
-                  <div className="w-2 h-2 bg-[#FEEB09] rounded-full mt-2 flex-shrink-0"></div>
+                  <div className="w-2 h-2 bg-[#40B2A4] rounded-full mt-2 flex-shrink-0"></div>
                   <p 
                     className="text-[#6C757D] leading-relaxed"
                     style={{ fontFamily: 'DM Sans, sans-serif' }}
@@ -173,7 +173,7 @@ const TermesConditions = () => {
                   </p>
                 </div>
                 <div className="flex items-start gap-3">
-                  <div className="w-2 h-2 bg-[#FEEB09] rounded-full mt-2 flex-shrink-0"></div>
+                  <div className="w-2 h-2 bg-[#40B2A4] rounded-full mt-2 flex-shrink-0"></div>
                   <p 
                     className="text-[#6C757D] leading-relaxed"
                     style={{ fontFamily: 'DM Sans, sans-serif' }}
@@ -182,7 +182,7 @@ const TermesConditions = () => {
                   </p>
                 </div>
                 <div className="flex items-start gap-3">
-                  <div className="w-2 h-2 bg-[#FEEB09] rounded-full mt-2 flex-shrink-0"></div>
+                  <div className="w-2 h-2 bg-[#40B2A4] rounded-full mt-2 flex-shrink-0"></div>
                   <p 
                     className="text-[#6C757D] leading-relaxed"
                     style={{ fontFamily: 'DM Sans, sans-serif' }}
@@ -191,7 +191,7 @@ const TermesConditions = () => {
                   </p>
                 </div>
                 <div className="flex items-start gap-3">
-                  <div className="w-2 h-2 bg-[#FEEB09] rounded-full mt-2 flex-shrink-0"></div>
+                  <div className="w-2 h-2 bg-[#40B2A4] rounded-full mt-2 flex-shrink-0"></div>
                   <p 
                     className="text-[#6C757D] leading-relaxed"
                     style={{ fontFamily: 'DM Sans, sans-serif' }}
@@ -208,12 +208,12 @@ const TermesConditions = () => {
                 className="font-display text-2xl font-bold text-[#212529] mb-6 flex items-center gap-3"
                 style={{ fontFamily: 'Sora, sans-serif' }}
               >
-                <Users className="text-[#FEEB09]" />
+                <Users className="text-[#40B2A4]" />
                 Conditions de Participation
               </h2>
               <div className="space-y-4">
                 <div className="flex items-start gap-3">
-                  <div className="w-2 h-2 bg-[#FEEB09] rounded-full mt-2 flex-shrink-0"></div>
+                  <div className="w-2 h-2 bg-[#40B2A4] rounded-full mt-2 flex-shrink-0"></div>
                   <p 
                     className="text-[#6C757D] leading-relaxed"
                     style={{ fontFamily: 'DM Sans, sans-serif' }}
@@ -222,7 +222,7 @@ const TermesConditions = () => {
                   </p>
                 </div>
                 <div className="flex items-start gap-3">
-                  <div className="w-2 h-2 bg-[#FEEB09] rounded-full mt-2 flex-shrink-0"></div>
+                  <div className="w-2 h-2 bg-[#40B2A4] rounded-full mt-2 flex-shrink-0"></div>
                   <p 
                     className="text-[#6C757D] leading-relaxed"
                     style={{ fontFamily: 'DM Sans, sans-serif' }}
@@ -231,7 +231,7 @@ const TermesConditions = () => {
                   </p>
                 </div>
                 <div className="flex items-start gap-3">
-                  <div className="w-2 h-2 bg-[#FEEB09] rounded-full mt-2 flex-shrink-0"></div>
+                  <div className="w-2 h-2 bg-[#40B2A4] rounded-full mt-2 flex-shrink-0"></div>
                   <p 
                     className="text-[#6C757D] leading-relaxed"
                     style={{ fontFamily: 'DM Sans, sans-serif' }}
@@ -248,12 +248,12 @@ const TermesConditions = () => {
                 className="font-display text-2xl font-bold text-[#212529] mb-6 flex items-center gap-3"
                 style={{ fontFamily: 'Sora, sans-serif' }}
               >
-                <Shield className="text-[#FEEB09]" />
+                <Shield className="text-[#40B2A4]" />
                 Éthique et Fair-Play
               </h2>
               <div className="space-y-4">
                 <div className="flex items-start gap-3">
-                  <div className="w-2 h-2 bg-[#FEEB09] rounded-full mt-2 flex-shrink-0"></div>
+                  <div className="w-2 h-2 bg-[#40B2A4] rounded-full mt-2 flex-shrink-0"></div>
                   <p 
                     className="text-[#6C757D] leading-relaxed"
                     style={{ fontFamily: 'DM Sans, sans-serif' }}
@@ -262,7 +262,7 @@ const TermesConditions = () => {
                   </p>
                 </div>
                 <div className="flex items-start gap-3">
-                  <div className="w-2 h-2 bg-[#FEEB09] rounded-full mt-2 flex-shrink-0"></div>
+                  <div className="w-2 h-2 bg-[#40B2A4] rounded-full mt-2 flex-shrink-0"></div>
                   <p 
                     className="text-[#6C757D] leading-relaxed"
                     style={{ fontFamily: 'DM Sans, sans-serif' }}
@@ -271,7 +271,7 @@ const TermesConditions = () => {
                   </p>
                 </div>
                 <div className="flex items-start gap-3">
-                  <div className="w-2 h-2 bg-[#FEEB09] rounded-full mt-2 flex-shrink-0"></div>
+                  <div className="w-2 h-2 bg-[#40B2A4] rounded-full mt-2 flex-shrink-0"></div>
                   <p 
                     className="text-[#6C757D] leading-relaxed"
                     style={{ fontFamily: 'DM Sans, sans-serif' }}
@@ -288,12 +288,12 @@ const TermesConditions = () => {
                 className="font-display text-2xl font-bold text-[#212529] mb-6 flex items-center gap-3"
                 style={{ fontFamily: 'Sora, sans-serif' }}
               >
-                <Shield className="text-[#FEEB09]" />
+                <Shield className="text-[#40B2A4]" />
                 Propriété Intellectuelle et Droits à l'Image
               </h2>
               <div className="space-y-4">
                 <div className="flex items-start gap-3">
-                  <div className="w-2 h-2 bg-[#FEEB09] rounded-full mt-2 flex-shrink-0"></div>
+                  <div className="w-2 h-2 bg-[#40B2A4] rounded-full mt-2 flex-shrink-0"></div>
                   <p 
                     className="text-[#6C757D] leading-relaxed"
                     style={{ fontFamily: 'DM Sans, sans-serif' }}
@@ -302,7 +302,7 @@ const TermesConditions = () => {
                   </p>
                 </div>
                 <div className="flex items-start gap-3">
-                  <div className="w-2 h-2 bg-[#FEEB09] rounded-full mt-2 flex-shrink-0"></div>
+                  <div className="w-2 h-2 bg-[#40B2A4] rounded-full mt-2 flex-shrink-0"></div>
                   <p 
                     className="text-[#6C757D] leading-relaxed"
                     style={{ fontFamily: 'DM Sans, sans-serif' }}
@@ -311,7 +311,7 @@ const TermesConditions = () => {
                   </p>
                 </div>
                 <div className="flex items-start gap-3">
-                  <div className="w-2 h-2 bg-[#FEEB09] rounded-full mt-2 flex-shrink-0"></div>
+                  <div className="w-2 h-2 bg-[#40B2A4] rounded-full mt-2 flex-shrink-0"></div>
                   <p 
                     className="text-[#6C757D] leading-relaxed"
                     style={{ fontFamily: 'DM Sans, sans-serif' }}
@@ -328,12 +328,12 @@ const TermesConditions = () => {
                 className="font-display text-2xl font-bold text-[#212529] mb-6 flex items-center gap-3"
                 style={{ fontFamily: 'Sora, sans-serif' }}
               >
-                <Award className="text-[#FEEB09]" />
+                <Award className="text-[#40B2A4]" />
                 Processus de Sélection
               </h2>
               <div className="space-y-4">
                 <div className="flex items-start gap-3">
-                  <div className="w-2 h-2 bg-[#FEEB09] rounded-full mt-2 flex-shrink-0"></div>
+                  <div className="w-2 h-2 bg-[#40B2A4] rounded-full mt-2 flex-shrink-0"></div>
                   <p 
                     className="text-[#6C757D] leading-relaxed"
                     style={{ fontFamily: 'DM Sans, sans-serif' }}
@@ -342,7 +342,7 @@ const TermesConditions = () => {
                   </p>
                 </div>
                 <div className="flex items-start gap-3">
-                  <div className="w-2 h-2 bg-[#FEEB09] rounded-full mt-2 flex-shrink-0"></div>
+                  <div className="w-2 h-2 bg-[#40B2A4] rounded-full mt-2 flex-shrink-0"></div>
                   <p 
                     className="text-[#6C757D] leading-relaxed"
                     style={{ fontFamily: 'DM Sans, sans-serif' }}
@@ -353,25 +353,25 @@ const TermesConditions = () => {
                 <div className="bg-[#F8F9FA] rounded-xl p-4 mt-4">
                   <ol className="space-y-2">
                     <li className="flex items-start gap-2">
-                      <span className="text-[#FEEB09] font-bold">1.</span>
+                      <span className="text-[#40B2A4] font-bold">1.</span>
                       <span className="text-[#6C757D]" style={{ fontFamily: 'DM Sans, sans-serif' }}>
                         Équipes complètes (4 membres)
                       </span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <span className="text-[#FEEB09] font-bold">2.</span>
+                      <span className="text-[#40B2A4] font-bold">2.</span>
                       <span className="text-[#6C757D]" style={{ fontFamily: 'DM Sans, sans-serif' }}>
                         Projets déjà définis et pertinents
                       </span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <span className="text-[#FEEB09] font-bold">3.</span>
+                      <span className="text-[#40B2A4] font-bold">3.</span>
                       <span className="text-[#6C757D]" style={{ fontFamily: 'DM Sans, sans-serif' }}>
                         Diversité des profils au sein de l'équipe
                       </span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <span className="text-[#FEEB09] font-bold">4.</span>
+                      <span className="text-[#40B2A4] font-bold">4.</span>
                       <span className="text-[#6C757D]" style={{ fontFamily: 'DM Sans, sans-serif' }}>
                         Candidatures individuelles exceptionnelles
                       </span>
@@ -379,7 +379,7 @@ const TermesConditions = () => {
                   </ol>
                 </div>
                 <div className="flex items-start gap-3">
-                  <div className="w-2 h-2 bg-[#FEEB09] rounded-full mt-2 flex-shrink-0"></div>
+                  <div className="w-2 h-2 bg-[#40B2A4] rounded-full mt-2 flex-shrink-0"></div>
                   <p 
                     className="text-[#6C757D] leading-relaxed"
                     style={{ fontFamily: 'DM Sans, sans-serif' }}
@@ -388,7 +388,7 @@ const TermesConditions = () => {
                   </p>
                 </div>
                 <div className="flex items-start gap-3">
-                  <div className="w-2 h-2 bg-[#FEEB09] rounded-full mt-2 flex-shrink-0"></div>
+                  <div className="w-2 h-2 bg-[#40B2A4] rounded-full mt-2 flex-shrink-0"></div>
                   <p 
                     className="text-[#6C757D] leading-relaxed"
                     style={{ fontFamily: 'DM Sans, sans-serif' }}
@@ -400,7 +400,7 @@ const TermesConditions = () => {
             </div>
 
             {/* Contact */}
-            <div className="bg-gradient-to-r from-[#FEEB09]/10 to-[#24366E]/10 rounded-2xl border border-[#E9ECEF] p-8">
+            <div className="bg-gradient-to-r from-[#40B2A4]/10 to-[#40B2A4]/10 rounded-2xl border border-[#E9ECEF] p-8">
               <h2 
                 className="font-display text-2xl font-bold text-[#212529] mb-6"
                 style={{ fontFamily: 'Sora, sans-serif' }}
@@ -409,7 +409,7 @@ const TermesConditions = () => {
               </h2>
               <div className="grid md:grid-cols-3 gap-6">
                 <div className="flex items-center gap-3">
-                  <Mail className="text-[#FEEB09]" size={20} />
+                  <Mail className="text-[#40B2A4]" size={20} />
                   <div>
                     <p 
                       className="font-semibold text-[#212529]"
@@ -426,7 +426,7 @@ const TermesConditions = () => {
                   </div>
                 </div>
                 <div className="flex items-center gap-3">
-                  <Mail className="text-[#FEEB09]" size={20} />
+                  <Mail className="text-[#40B2A4]" size={20} />
                   <div>
                     <p 
                       className="font-semibold text-[#212529]"
@@ -443,7 +443,7 @@ const TermesConditions = () => {
                   </div>
                 </div>
                 <div className="flex items-center gap-3">
-                  <MapPin className="text-[#FEEB09]" size={20} />
+                  <MapPin className="text-[#40B2A4]" size={20} />
                   <div>
                     <p 
                       className="font-semibold text-[#212529]"
@@ -473,7 +473,7 @@ const TermesConditions = () => {
               <div className="mt-6">
                 <Link 
                   to="/"
-                  className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-[#FEEB09] to-[#24366E] text-white rounded-xl font-semibold transition-all hover:scale-105"
+                  className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-[#40B2A4] to-[#40B2A4] text-white rounded-xl font-semibold transition-all hover:scale-105"
                   style={{ fontFamily: 'DM Sans, sans-serif' }}
                 >
                   Retour à l'accueil

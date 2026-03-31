@@ -8,10 +8,10 @@ interface Props {
 }
 
 const domaines = [
-  { value: 'Vie étudiante', label: 'Vie étudiante', icon: Code, color: 'text-[#FEEB09]' },
-  { value: 'Administration', label: 'Administration', icon: Code, color: 'text-[#24366E]' },
-  { value: 'Pédagogie', label: 'Pédagogie', icon: Code, color: 'text-[#FEEB09]' },
-  { value: 'Campus', label: 'Campus', icon: Code, color: 'text-[#24366E]' },
+  { value: 'Vie étudiante', label: 'Vie étudiante', icon: Code, color: 'text-[#40B2A4]' },
+  { value: 'Administration', label: 'Administration', icon: Code, color: 'text-[#40B2A4]' },
+  { value: 'Pédagogie', label: 'Pédagogie', icon: Code, color: 'text-[#40B2A4]' },
+  { value: 'Campus', label: 'Campus', icon: Code, color: 'text-[#40B2A4]' },
   { value: 'Autre', label: 'Autre', icon: Code, color: 'text-[#6C757D]' }
 ];
 
@@ -34,7 +34,7 @@ const Etape5Projet = ({ data, onChange }: Props) => {
         transition={{ duration: 0.5 }}
       >
         <div className="flex items-center justify-center gap-3 mb-4">
-          <div className="w-12 h-12 rounded-full bg-gradient-to-r from-[#FEEB09] to-[#24366E] flex items-center justify-center">
+          <div className="w-12 h-12 rounded-full bg-gradient-to-r from-[#40B2A4] to-[#40B2A4] flex items-center justify-center">
             <Lightbulb size={24} className="text-white" />
           </div>
           <h3 
@@ -50,7 +50,7 @@ const Etape5Projet = ({ data, onChange }: Props) => {
         >
           Décrivez votre projet innovant
         </p>
-        <div className="w-16 h-1 bg-gradient-to-r from-[#FEEB09] to-[#24366E] mx-auto rounded-full mt-4"></div>
+        <div className="w-16 h-1 bg-gradient-to-r from-[#40B2A4] to-[#40B2A4] mx-auto rounded-full mt-4"></div>
       </motion.div>
 
       {/* Question projet */}
@@ -72,20 +72,20 @@ const Etape5Projet = ({ data, onChange }: Props) => {
             onClick={() => onChange({ a_projet: 'oui' })}
             className={`p-4 rounded-xl border-2 transition-all duration-300 hover:scale-105 ${
               data.a_projet === 'oui'
-                ? 'border-[#FEEB09] bg-[#FEEB09]/10'
-                : 'border-[#E9ECEF] bg-white hover:border-[#FEEB09]/30'
+                ? 'border-[#40B2A4] bg-[#40B2A4]/10'
+                : 'border-[#E9ECEF] bg-white hover:border-[#40B2A4]/30'
             }`}
           >
             <div className="flex flex-col items-center gap-2">
               <CheckCircle 
                 size={24} 
-                className={data.a_projet === 'oui' ? 'text-[#FEEB09]' : 'text-[#6C757D]'}
+                className={data.a_projet === 'oui' ? 'text-[#40B2A4]' : 'text-[#6C757D]'}
               />
               <span 
                 className="font-display text-sm font-bold"
                 style={{ fontFamily: 'Sora, sans-serif' }}
               >
-                <span className={data.a_projet === 'oui' ? 'text-[#FEEB09]' : 'text-[#212529]'}>
+                <span className={data.a_projet === 'oui' ? 'text-[#40B2A4]' : 'text-[#212529]'}>
                   Oui
                 </span>
               </span>
@@ -96,20 +96,20 @@ const Etape5Projet = ({ data, onChange }: Props) => {
             onClick={() => onChange({ a_projet: 'non' })}
             className={`p-4 rounded-xl border-2 transition-all duration-300 hover:scale-105 ${
               data.a_projet === 'non'
-                ? 'border-[#FEEB09] bg-[#FEEB09]/10'
-                : 'border-[#E9ECEF] bg-white hover:border-[#FEEB09]/30'
+                ? 'border-[#40B2A4] bg-[#40B2A4]/10'
+                : 'border-[#E9ECEF] bg-white hover:border-[#40B2A4]/30'
             }`}
           >
             <div className="flex flex-col items-center gap-2">
               <CheckCircle 
                 size={24} 
-                className={data.a_projet === 'non' ? 'text-[#FEEB09]' : 'text-[#6C757D]'}
+                className={data.a_projet === 'non' ? 'text-[#40B2A4]' : 'text-[#6C757D]'}
               />
               <span 
                 className="font-display text-sm font-bold"
                 style={{ fontFamily: 'Sora, sans-serif' }}
               >
-                <span className={data.a_projet === 'non' ? 'text-[#FEEB09]' : 'text-[#212529]'}>
+                <span className={data.a_projet === 'non' ? 'text-[#40B2A4]' : 'text-[#212529]'}>
                   Non
                 </span>
               </span>
@@ -142,7 +142,7 @@ const Etape5Projet = ({ data, onChange }: Props) => {
               value={data.nom_projet || ''}
               onChange={(e) => onChange({ nom_projet: e.target.value })}
               placeholder="Nom de votre projet"
-              className="w-full px-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FEEB09]/20 focus:border-[#FEEB09]/50 transition-all"
+              className="w-full px-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#40B2A4]/20 focus:border-[#40B2A4]/50 transition-all"
               style={{ fontFamily: 'DM Sans, sans-serif' }}
             />
           </label>
@@ -165,7 +165,7 @@ const Etape5Projet = ({ data, onChange }: Props) => {
             <select
               value={data.domaine_projet || ''}
               onChange={(e) => onChange({ domaine_projet: e.target.value })}
-              className="w-full px-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] focus:outline-none focus:ring-2 focus:ring-[#FEEB09]/20 focus:border-[#FEEB09]/50 transition-all"
+              className="w-full px-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] focus:outline-none focus:ring-2 focus:ring-[#40B2A4]/20 focus:border-[#40B2A4]/50 transition-all"
               style={{ fontFamily: 'DM Sans, sans-serif' }}
             >
               <option value="">Sélectionnez un domaine</option>
@@ -195,7 +195,7 @@ const Etape5Projet = ({ data, onChange }: Props) => {
             <select
               value={data.niveau_avancement || ''}
               onChange={(e) => onChange({ niveau_avancement: e.target.value })}
-              className="w-full px-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] focus:outline-none focus:ring-2 focus:ring-[#FEEB09]/20 focus:border-[#FEEB09]/50 transition-all"
+              className="w-full px-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] focus:outline-none focus:ring-2 focus:ring-[#40B2A4]/20 focus:border-[#40B2A4]/50 transition-all"
               style={{ fontFamily: 'DM Sans, sans-serif' }}
             >
               <option value="">Sélectionnez un niveau</option>
@@ -227,7 +227,7 @@ const Etape5Projet = ({ data, onChange }: Props) => {
               value={data.technologies || ''}
               onChange={(e) => onChange({ technologies: e.target.value })}
               placeholder="Ex: React, Node.js, MongoDB..."
-              className="w-full px-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FEEB09]/20 focus:border-[#FEEB09]/50 transition-all"
+              className="w-full px-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#40B2A4]/20 focus:border-[#40B2A4]/50 transition-all"
               style={{ fontFamily: 'DM Sans, sans-serif' }}
             />
           </label>
@@ -253,7 +253,7 @@ const Etape5Projet = ({ data, onChange }: Props) => {
             onChange={(e) => onChange({ problematique: e.target.value })}
             placeholder="Quel problème votre projet résout-il ?"
             rows={4}
-            className="w-full px-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FEEB09]/20 focus:border-[#FEEB09]/50 transition-all resize-none"
+            className="w-full px-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#40B2A4]/20 focus:border-[#40B2A4]/50 transition-all resize-none"
             style={{ fontFamily: 'DM Sans, sans-serif' }}
           />
         </label>
@@ -278,7 +278,7 @@ const Etape5Projet = ({ data, onChange }: Props) => {
             onChange={(e) => onChange({ solution: e.target.value })}
             placeholder="Quelle solution votre projet apporte-t-il ?"
             rows={4}
-            className="w-full px-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FEEB09]/20 focus:border-[#FEEB09]/50 transition-all resize-none"
+            className="w-full px-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#40B2A4]/20 focus:border-[#40B2A4]/50 transition-all resize-none"
             style={{ fontFamily: 'DM Sans, sans-serif' }}
           />
         </label>

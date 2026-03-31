@@ -24,15 +24,15 @@ const Etape8Confirmation = ({ data }: Props) => {
         transition={{ type: "spring", stiffness: 200, damping: 15, duration: 0.6 }}
       >
         <div className="relative mx-auto w-24 h-24">
-          <div className="absolute inset-0 bg-gradient-to-r from-[#FEEB09] to-[#24366E] rounded-full animate-pulse opacity-20"></div>
-          <div className="relative w-full h-full bg-gradient-to-r from-[#FEEB09] to-[#24366E] rounded-full flex items-center justify-center shadow-lg shadow-[#FEEB09]/25">
+          <div className="absolute inset-0 bg-gradient-to-r from-[#40B2A4] to-[#40B2A4] rounded-full animate-pulse opacity-20"></div>
+          <div className="relative w-full h-full bg-gradient-to-r from-[#40B2A4] to-[#40B2A4] rounded-full flex items-center justify-center shadow-lg shadow-[#40B2A4]/25">
             <CheckCircle size={48} className="text-white" strokeWidth={2} />
           </div>
           <motion.div
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             transition={{ delay: 0.3, type: "spring", stiffness: 200 }}
-            className="absolute -top-2 -right-2 w-8 h-8 bg-[#FEEB09] rounded-full flex items-center justify-center shadow-lg"
+            className="absolute -top-2 -right-2 w-8 h-8 bg-[#40B2A4] rounded-full flex items-center justify-center shadow-lg"
           >
             <CheckCircle size={16} className="text-white" />
           </motion.div>
@@ -71,7 +71,7 @@ const Etape8Confirmation = ({ data }: Props) => {
         className="max-w-2xl mx-auto bg-white rounded-2xl border border-[#E9ECEF] p-6 shadow-lg"
       >
         <div className="flex items-center justify-center gap-2 mb-3">
-          <Mail size={20} className="text-[#FEEB09]" />
+          <Mail size={20} className="text-[#40B2A4]" />
           <h3 
             className="font-display text-lg font-semibold text-[#212529]"
             style={{ fontFamily: 'Sora, sans-serif' }}
@@ -108,11 +108,11 @@ const Etape8Confirmation = ({ data }: Props) => {
               href={lien.href}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-3 px-4 py-3 bg-gradient-to-r from-[#FEEB09] to-[#24366E] rounded-xl hover:from-[#FEEB09]/90 hover:to-[#24366E]/90 transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-[#FEEB09]/30 border-2 border-transparent hover:border-[#FEEB09]/20"
+              className="flex items-center gap-3 px-4 py-3 bg-gradient-to-r from-[#40B2A4] to-[#40B2A4] rounded-xl hover:from-[#40B2A4]/90 hover:to-[#40B2A4]/90 transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-[#40B2A4]/30 border-2 border-transparent hover:border-[#40B2A4]/20"
             >
               <lien.icon 
                 size={18} 
-                className={lien.label.includes('WhatsApp') ? 'text-[#25D366]' : lien.label.includes('LinkedIn') ? 'text-[#0077B5]' : 'text-[#FEEB09]'} 
+                className={lien.label.includes('WhatsApp') ? 'text-[#40B2A4]' : lien.label.includes('LinkedIn') ? 'text-[#0077B5]' : 'text-[#40B2A4]'} 
               />
               <span 
                 className="text-sm font-bold text-white"

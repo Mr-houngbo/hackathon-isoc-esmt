@@ -294,11 +294,11 @@ const GestionInscriptions = () => {
                   <div className="text-sm text-[#6C757D]">Total</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-2xl font-bold text-[#FEEB09]">{stats.individuelles}</div>
+                  <div className="text-2xl font-bold text-[#40B2A4]">{stats.individuelles}</div>
                   <div className="text-sm text-[#6C757D]">Individus</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-2xl font-bold text-[#10B981]">{stats.equipes}</div>
+                  <div className="text-2xl font-bold text-[#40B2A4]">{stats.equipes}</div>
                   <div className="text-sm text-[#6C757D]">Équipes</div>
                 </div>
               </div>
@@ -358,7 +358,7 @@ const GestionInscriptions = () => {
                 onClick={() => setFilterType('individuelles')}
                 className={`px-4 py-2 rounded-lg font-medium transition-colors ${
                   filterType === 'individuelles' 
-                    ? 'bg-[#FEEB09] text-white' 
+                    ? 'bg-[#40B2A4] text-white' 
                     : 'bg-white text-[#6C757D] border border-[#E9ECEF] hover:bg-[#F8F9FA]'
                 }`}
                 style={{ fontFamily: 'DM Sans, sans-serif' }}
@@ -369,7 +369,7 @@ const GestionInscriptions = () => {
                 onClick={() => setFilterType('equipes')}
                 className={`px-4 py-2 rounded-lg font-medium transition-colors ${
                   filterType === 'equipes' 
-                    ? 'bg-[#10B981] text-white' 
+                    ? 'bg-[#40B2A4] text-white' 
                     : 'bg-white text-[#6C757D] border border-[#E9ECEF] hover:bg-[#F8F9FA]'
                 }`}
                 style={{ fontFamily: 'DM Sans, sans-serif' }}

@@ -20,7 +20,7 @@ const niveauxTechniques = [
     label: 'Intermédiaire', 
     desc: 'Projets académiques réalisés', 
     icon: Code, 
-    color: 'text-[#FEEB09]'
+    color: 'text-[#40B2A4]'
   },
   { 
     value: 'avance', 
@@ -32,13 +32,13 @@ const niveauxTechniques = [
 ];
 
 const competencesEquipe = [
-  { value: 'Dev Web', icon: Code, color: 'text-[#FEEB09]' },
+  { value: 'Dev Web', icon: Code, color: 'text-[#40B2A4]' },
   { value: 'Dev Mobile', icon: Zap, color: 'text-[#24366E]' },
-  { value: 'Design UI-UX', icon: Code, color: 'text-[#FEEB09]' },
+  { value: 'Design UI-UX', icon: Code, color: 'text-[#40B2A4]' },
   { value: 'Data Science', icon: Code, color: 'text-[#24366E]' },
-  { value: 'IA / Machine Learning', icon: Zap, color: 'text-[#FEEB09]' },
+  { value: 'IA / Machine Learning', icon: Zap, color: 'text-[#40B2A4]' },
   { value: 'Business / Gestion', icon: Code, color: 'text-[#24366E]' },
-  { value: 'Communication', icon: Code, color: 'text-[#FEEB09]' },
+  { value: 'Communication', icon: Code, color: 'text-[#40B2A4]' },
   { value: 'Hardware / IoT', icon: Zap, color: 'text-[#24366E]' }
 ];
 
@@ -60,7 +60,7 @@ const Etape6Profil = ({ data, onChange }: Props) => {
         transition={{ duration: 0.5 }}
       >
         <div className="flex items-center justify-center gap-3 mb-4">
-          <div className="w-12 h-12 rounded-full bg-gradient-to-r from-[#FEEB09] to-[#24366E] flex items-center justify-center">
+          <div className="w-12 h-12 rounded-full bg-gradient-to-r from-[#40B2A4] to-[#24366E] flex items-center justify-center">
             <Code size={24} className="text-white" />
           </div>
           <h3 
@@ -76,7 +76,7 @@ const Etape6Profil = ({ data, onChange }: Props) => {
         >
           Compétences et expérience de l'équipe
         </p>
-        <div className="w-16 h-1 bg-gradient-to-r from-[#FEEB09] to-[#24366E] mx-auto rounded-full mt-4"></div>
+        <div className="w-16 h-1 bg-gradient-to-r from-[#40B2A4] to-[#24366E] mx-auto rounded-full mt-4"></div>
       </motion.div>
 
       {/* Niveau technique */}
@@ -100,8 +100,8 @@ const Etape6Profil = ({ data, onChange }: Props) => {
               onClick={() => onChange({ niveau_technique: niveau.value })}
               className={`p-4 rounded-xl border-2 transition-all duration-300 hover:scale-105 ${
                 data.niveau_technique === niveau.value
-                  ? 'border-[#FEEB09] bg-[#FEEB09]/10'
-                  : 'border-[#E9ECEF] bg-white hover:border-[#FEEB09]/30'
+                  ? 'border-[#40B2A4] bg-[#40B2A4]/10'
+                  : 'border-[#E9ECEF] bg-white hover:border-[#40B2A4]/30'
               }`}
             >
               <div className="flex flex-col items-center gap-2">
@@ -152,8 +152,8 @@ const Etape6Profil = ({ data, onChange }: Props) => {
               onClick={() => toggleCompetence(competence.value)}
               className={`p-3 rounded-xl border-2 transition-all duration-300 hover:scale-105 ${
                 data.competences_equipe.includes(competence.value)
-                  ? 'border-[#FEEB09] bg-[#FEEB09]/10'
-                  : 'border-[#E9ECEF] bg-white hover:border-[#FEEB09]/30'
+                  ? 'border-[#40B2A4] bg-[#40B2A4]/10'
+                  : 'border-[#E9ECEF] bg-white hover:border-[#40B2A4]/30'
               }`}
             >
               <competence.icon 

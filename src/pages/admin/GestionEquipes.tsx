@@ -136,7 +136,7 @@ const GestionEquipes = () => {
       <AdminLayout>
         <div className="flex items-center justify-center min-h-screen">
           <div className="text-center">
-            <p className="text-[#DC2626] text-lg font-bold mb-4">Erreur de chargement</p>
+            <p className="text-[#D25238] text-lg font-bold mb-4">Erreur de chargement</p>
             <p className="text-[#6C757D]">{error.message}</p>
           </div>
         </div>
@@ -148,7 +148,7 @@ const GestionEquipes = () => {
     <AdminLayout>
       <div className="min-h-screen bg-gradient-to-br from-[#F8F9FA] to-white">
         {/* Header */}
-        <div className="bg-gradient-to-r from-[#24366E]/10 to-[#FEEB09]/10 backdrop-blur-sm border-b border-[#E9ECEF]/20">
+        <div className="bg-gradient-to-r from-[#40B2A4]/10 to-[#40B2A4]/10 backdrop-blur-sm border-b border-[#D25238]/20">
           <div className="container py-6">
             <div className="flex items-center justify-between">
               <motion.div
@@ -173,7 +173,7 @@ const GestionEquipes = () => {
               <div className="flex gap-2">
                 <button
                   onClick={() => setShowAdd(!showAdd)}
-                  className="px-4 py-2 rounded-lg bg-[#24366E] text-white hover:bg-[#006450] transition-colors"
+                  className="px-4 py-2 rounded-lg bg-[#40B2A4] text-white hover:bg-[#006450] transition-colors"
                   style={{ fontFamily: 'DM Sans, sans-serif' }}
                 >
                   <Plus size={16} className="mr-2" />
@@ -181,7 +181,7 @@ const GestionEquipes = () => {
                 </button>
                 <button
                   onClick={() => window.print()}
-                  className="px-4 py-2 rounded-lg bg-[bg-white] text-[#6C757D] hover:bg-[#E9ECEF] transition-colors"
+                  className="px-4 py-2 rounded-lg bg-[bg-white] text-[#6C757D] hover:bg-[#D25238] transition-colors"
                   style={{ fontFamily: 'DM Sans, sans-serif' }}
                 >
                   <Download size={16} className="mr-2" />
@@ -204,14 +204,14 @@ const GestionEquipes = () => {
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.5, delay: 0.1 }}
-                className="relative overflow-hidden rounded-2xl border border-[#E9ECEF] bg-[white] p-6 hover:border-[#FEEB09]/50 hover:shadow-xl hover:shadow-[#FEEB09]/10 transition-all duration-300"
+                className="relative overflow-hidden rounded-2xl border border-[#D25238] bg-[white] p-6 hover:border-[#40B2A4]/50 hover:shadow-xl hover:shadow-[#40B2A4]/10 transition-all duration-300"
               >
-                <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-[#FEEB09]/5 opacity-0"></div>
+                <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-[#40B2A4]/5 opacity-0"></div>
                 
                 <div className="relative z-10">
                   <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center gap-3">
-                      <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-[#24366E]/20 to-[#FEEB09]/20 flex items-center justify-center">
+                      <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-[#40B2A4]/20 to-[#40B2A4]/20 flex items-center justify-center">
                         <Users size={24} className="text-[#212529]" />
                       </div>
                       <div>
@@ -237,14 +237,14 @@ const GestionEquipes = () => {
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.5, delay: 0.2 }}
-                className="relative overflow-hidden rounded-2xl border border-[#E9ECEF] bg-[white] p-6 hover:border-[#10B981]/50 hover:shadow-xl hover:shadow-[#10B981]/10 transition-all duration-300"
+                className="relative overflow-hidden rounded-2xl border border-[#D25238] bg-[white] p-6 hover:border-[#40B2A4]/50 hover:shadow-xl hover:shadow-[#40B2A4]/10 transition-all duration-300"
               >
-                <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-[#10B981]/5 opacity-0"></div>
+                <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-[#40B2A4]/5 opacity-0"></div>
                 
                 <div className="relative z-10">
                   <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center gap-3">
-                      <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-[#10B981]/20 to-[#10B981]/20 flex items-center justify-center">
+                      <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-[#40B2A4]/20 to-[#40B2A4]/20 flex items-center justify-center">
                         <Trophy size={24} className="text-[#212529]" />
                       </div>
                       <div>
@@ -270,14 +270,14 @@ const GestionEquipes = () => {
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.5, delay: 0.3 }}
-                className="relative overflow-hidden rounded-2xl border border-[#E9ECEF] bg-[white] p-6 hover:border-[#F59E0B]/50 hover:shadow-xl hover:shadow-[#F59E0B]/10 transition-all duration-300"
+                className="relative overflow-hidden rounded-2xl border border-[#D25238] bg-[white] p-6 hover:border-[#D25238]/50 hover:shadow-xl hover:shadow-[#D25238]/10 transition-all duration-300"
               >
-                <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-[#F59E0B]/5 opacity-0"></div>
+                <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-[#D25238]/5 opacity-0"></div>
                 
                 <div className="relative z-10">
                   <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center gap-3">
-                      <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-[#F59E0B]/20 to-[#F59E0B]/20 flex items-center justify-center">
+                      <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-[#D25238]/20 to-[#D25238]/20 flex items-center justify-center">
                         <Award size={24} className="text-[#212529]" />
                       </div>
                       <div>
@@ -310,7 +310,7 @@ const GestionEquipes = () => {
             transition={{ duration: 0.5 }}
             className="container py-6"
           >
-            <div className="rounded-2xl border border-[#E9ECEF] bg-[white] p-6">
+            <div className="rounded-2xl border border-[#D25238] bg-[white] p-6">
               <h2 
                 className="font-display text-xl font-bold text-[#212529] mb-6"
                 style={{ fontFamily: 'Sora, sans-serif' }}
@@ -325,7 +325,7 @@ const GestionEquipes = () => {
                     <select 
                       value={form.type_candidature}
                       onChange={(e) => setForm({ ...form, type_candidature: e.target.value })}
-                      className="w-full px-4 py-2 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] focus:outline-none focus:ring-2 focus:ring-[#FEEB09] focus:border-transparent"
+                      className="w-full px-4 py-2 rounded-xl border border-[#D25238] bg-white text-[#212529] focus:outline-none focus:ring-2 focus:ring-[#40B2A4] focus:border-transparent"
                     >
                       <option value="individuel">Individuel</option>
                       <option value="equipe">Équipe</option>
@@ -338,7 +338,7 @@ const GestionEquipes = () => {
                       placeholder="Nom de l'équipe" 
                       value={form.nom_equipe} 
                       onChange={(e) => setForm({ ...form, nom_equipe: e.target.value })}
-                      className="w-full px-4 py-2 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FEEB09] focus:border-transparent"
+                      className="w-full px-4 py-2 rounded-xl border border-[#D25238] bg-white text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#40B2A4] focus:border-transparent"
                     />
                   </div>
                   
@@ -349,7 +349,7 @@ const GestionEquipes = () => {
                       placeholder="Nombre de membres" 
                       value={form.nombre_membres} 
                       onChange={(e) => setForm({ ...form, nombre_membres: parseInt(e.target.value) || 1 })}
-                      className="w-full px-4 py-2 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FEEB09] focus:border-transparent"
+                      className="w-full px-4 py-2 rounded-xl border border-[#D25238] bg-white text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#40B2A4] focus:border-transparent"
                     />
                   </div>
                   
@@ -358,7 +358,7 @@ const GestionEquipes = () => {
                     <select 
                       value={form.a_projet}
                       onChange={(e) => setForm({ ...form, a_projet: e.target.value })}
-                      className="w-full px-4 py-2 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] focus:outline-none focus:ring-2 focus:ring-[#FEEB09] focus:border-transparent"
+                      className="w-full px-4 py-2 rounded-xl border border-[#D25238] bg-white text-[#212529] focus:outline-none focus:ring-2 focus:ring-[#40B2A4] focus:border-transparent"
                     >
                       <option value="oui">Oui</option>
                       <option value="non">Non</option>
@@ -373,7 +373,7 @@ const GestionEquipes = () => {
                       placeholder="Nom du projet" 
                       value={form.nom_projet} 
                       onChange={(e) => setForm({ ...form, nom_projet: e.target.value })}
-                      className="w-full px-4 py-2 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FEEB09] focus:border-transparent"
+                      className="w-full px-4 py-2 rounded-xl border border-[#D25238] bg-white text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#40B2A4] focus:border-transparent"
                     />
                   </div>
                   
@@ -383,7 +383,7 @@ const GestionEquipes = () => {
                       placeholder="Domaine du projet" 
                       value={form.domaine_projet} 
                       onChange={(e) => setForm({ ...form, domaine_projet: e.target.value })}
-                      className="w-full px-4 py-2 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FEEB09] focus:border-transparent"
+                      className="w-full px-4 py-2 rounded-xl border border-[#D25238] bg-white text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#40B2A4] focus:border-transparent"
                     />
                   </div>
                   
@@ -393,7 +393,7 @@ const GestionEquipes = () => {
                       placeholder="Autre domaine" 
                       value={form.domaine_projet_autre} 
                       onChange={(e) => setForm({ ...form, domaine_projet_autre: e.target.value })}
-                      className="w-full px-4 py-2 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FEEB09] focus:border-transparent"
+                      className="w-full px-4 py-2 rounded-xl border border-[#D25238] bg-white text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#40B2A4] focus:border-transparent"
                     />
                   </div>
                   
@@ -402,7 +402,7 @@ const GestionEquipes = () => {
                     <select 
                       value={form.statut}
                       onChange={(e) => setForm({ ...form, statut: e.target.value })}
-                      className="w-full px-4 py-2 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] focus:outline-none focus:ring-2 focus:ring-[#FEEB09] focus:border-transparent"
+                      className="w-full px-4 py-2 rounded-xl border border-[#D25238] bg-white text-[#212529] focus:outline-none focus:ring-2 focus:ring-[#40B2A4] focus:border-transparent"
                     >
                       <option value="en_attente">En attente</option>
                       <option value="selectionne">Sélectionné</option>
@@ -420,7 +420,7 @@ const GestionEquipes = () => {
                     value={form.problematique} 
                     onChange={(e) => setForm({ ...form, problematique: e.target.value })}
                     rows={3}
-                    className="w-full px-4 py-2 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FEEB09] focus:border-transparent"
+                    className="w-full px-4 py-2 rounded-xl border border-[#D25238] bg-white text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#40B2A4] focus:border-transparent"
                   />
                 </div>
                 
@@ -431,7 +431,7 @@ const GestionEquipes = () => {
                     value={form.solution} 
                     onChange={(e) => setForm({ ...form, solution: e.target.value })}
                     rows={3}
-                    className="w-full px-4 py-2 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FEEB09] focus:border-transparent"
+                    className="w-full px-4 py-2 rounded-xl border border-[#D25238] bg-white text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#40B2A4] focus:border-transparent"
                   />
                 </div>
               </div>
@@ -439,13 +439,13 @@ const GestionEquipes = () => {
               <div className="flex justify-end gap-3 mt-6">
                 <button
                   onClick={() => setShowAdd(false)}
-                  className="px-6 py-2 rounded-xl border border-[#E9ECEF] text-[#6C757D] hover:bg-[#E9ECEF] transition-colors"
+                  className="px-6 py-2 rounded-xl border border-[#D25238] text-[#6C757D] hover:bg-[#D25238] transition-colors"
                 >
                   Annuler
                 </button>
                 <button
                   onClick={() => addEquipe.mutate()}
-                  className="px-6 py-2 rounded-xl bg-[#24366E] text-white hover:bg-[#006450] transition-colors flex items-center gap-2"
+                  className="px-6 py-2 rounded-xl bg-[#40B2A4] text-white hover:bg-[#006450] transition-colors flex items-center gap-2"
                 >
                   <Save size={16} />
                   Enregistrer
@@ -471,7 +471,7 @@ const GestionEquipes = () => {
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                     placeholder="Rechercher une équipe..."
-                    className="flex-1 px-4 py-2 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FEEB09] focus:border-transparent"
+                    className="flex-1 px-4 py-2 rounded-xl border border-[#D25238] bg-white text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#40B2A4] focus:border-transparent"
                   />
                 </div>
               </div>
@@ -480,7 +480,7 @@ const GestionEquipes = () => {
                 <button
                   onClick={() => setFilterType('toutes')}
                   className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
-                    filterType === 'toutes' ? 'bg-[#24366E] text-white' : 'bg-white text-[#6C757D] hover:bg-[#E9ECEF]'
+                    filterType === 'toutes' ? 'bg-[#40B2A4] text-white' : 'bg-white text-[#6C757D] hover:bg-[#D25238]'
                   }`}
                 >
                   Toutes
@@ -488,7 +488,7 @@ const GestionEquipes = () => {
                 <button
                   onClick={() => setFilterType('selectionnees')}
                   className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
-                    filterType === 'selectionnees' ? 'bg-[#10B981] text-[#212529]' : 'bg-white text-[#6C757D] hover:bg-[#E9ECEF]'
+                    filterType === 'selectionnees' ? 'bg-[#40B2A4] text-[#212529]' : 'bg-white text-[#6C757D] hover:bg-[#D25238]'
                   }`}
                 >
                   Sélectionnées
@@ -496,7 +496,7 @@ const GestionEquipes = () => {
                 <button
                   onClick={() => setFilterType('en_attente')}
                   className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
-                    filterType === 'en_attente' ? 'bg-[#F59E0B] text-[#212529]' : 'bg-white text-[#6C757D] hover:bg-[#E9ECEF]'
+                    filterType === 'en_attente' ? 'bg-[#D25238] text-[#212529]' : 'bg-white text-[#6C757D] hover:bg-[#D25238]'
                   }`}
                 >
                   En attente
@@ -515,9 +515,9 @@ const GestionEquipes = () => {
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.5 }}
-                className="relative overflow-hidden rounded-2xl border border-[#E9ECEF] bg-white hover:border-[#FEEB09]/50 hover:shadow-xl hover:shadow-[#FEEB09]/10 transition-all duration-300"
+                className="relative overflow-hidden rounded-2xl border border-[#D25238] bg-white hover:border-[#40B2A4]/50 hover:shadow-xl hover:shadow-[#40B2A4]/10 transition-all duration-300"
               >
-                <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-[#FEEB09]/5 opacity-0"></div>
+                <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-[#40B2A4]/5 opacity-0"></div>
                 
                 <div className="relative z-10 p-6">
                   <div className="flex items-start justify-between mb-4">
@@ -530,9 +530,9 @@ const GestionEquipes = () => {
                       </h3>
                       
                       <span className={`inline-block px-3 py-1 rounded-full text-xs font-bold mb-2 ${
-                        equipe.statut === 'selectionne' ? 'bg-[#10B981]/20 text-[#10B981]' : 
-                        equipe.statut === 'non_selectionne' ? 'bg-[#DC2626]/20 text-[#DC2626]' : 
-                        'bg-[#F59E0B]/20 text-[#F59E0B]'
+                        equipe.statut === 'selectionne' ? 'bg-[#40B2A4]/20 text-[#40B2A4]' : 
+                        equipe.statut === 'non_selectionne' ? 'bg-[#D25238]/20 text-[#D25238]' : 
+                        'bg-[#D25238]/20 text-[#D25238]'
                       }`}>
                         {equipe.statut === 'selectionne' ? '✅ Sélectionnée' : 
                          equipe.statut === 'non_selectionne' ? '❌ Non sélectionnée' : 
@@ -549,7 +549,7 @@ const GestionEquipes = () => {
                     <div className="flex gap-2">
                       <button
                         onClick={() => toggleSelection.mutate(equipe.id)}
-                        className="p-2 rounded-lg bg-[#24366E] text-white hover:bg-[#006450] transition-colors"
+                        className="p-2 rounded-lg bg-[#40B2A4] text-white hover:bg-[#006450] transition-colors"
                         title="Changer le statut"
                       >
                         <Trophy size={16} />
@@ -557,7 +557,7 @@ const GestionEquipes = () => {
                       
                       <button
                         onClick={() => deleteEquipe.mutate(equipe.id)}
-                        className="p-2 rounded-lg bg-[#DC2626] text-[#212529] hover:bg-[#B91C1C] transition-colors"
+                        className="p-2 rounded-lg bg-[#D25238] text-[#212529] hover:bg-[#40B2A4C1C] transition-colors"
                       >
                         <Trash2 size={16} />
                       </button>

@@ -21,7 +21,6 @@ interface ClassementItem {
   statut: string;
   nb_evaluateurs: number;
   score_moyen: number;
-  bonus_equipe: number;
   score_final: number;
 }
 
@@ -36,6 +35,8 @@ interface NoteDetail {
     faisabilite: number;
     competences_techniques: number;
     coherence_profil: number;
+    competence_manageriale: number;
+    appartenance_esmt: number;
   };
   soumis: boolean;
   date_soumission: string;
@@ -421,9 +422,6 @@ const Attribution = () => {
                       Score moyen /100
                     </th>
                     <th className="text-center py-3 px-4 font-semibold text-[#212529]" style={{ fontFamily: 'DM Sans, sans-serif' }}>
-                      Bonus équipe
-                    </th>
-                    <th className="text-center py-3 px-4 font-semibold text-[#212529]" style={{ fontFamily: 'DM Sans, sans-serif' }}>
                       Score final
                     </th>
                     <th className="text-center py-3 px-4 font-semibold text-[#212529]" style={{ fontFamily: 'DM Sans, sans-serif' }}>
@@ -483,31 +481,26 @@ const Attribution = () => {
                           </span>
                         </td>
                         <td className="py-3 px-4 text-center">
-                          <span className="font-medium text-[#10B981]" style={{ fontFamily: 'DM Sans, sans-serif' }}>
-                            +{item.bonus_equipe}
-                          </span>
-                        </td>
-                        <td className="py-3 px-4 text-center">
                           <span className="font-bold text-lg text-[#24366E]" style={{ fontFamily: 'Sora, sans-serif' }}>
-                            {(item as any).score_final}
+                            {item.score_final}
                           </span>
                         </td>
                         <td className="py-3 px-4 text-center">
                           <Dialog>
                             <DialogTrigger asChild>
                               <button
-                                onClick={() => setSelectedEquipeForNotes((item as any).id)}
+                                onClick={() => setSelectedEquipeForNotes(item.id)}
                                 className="inline-flex items-center gap-1 px-3 py-1 rounded-lg text-xs font-medium bg-blue-100 text-blue-700 hover:bg-blue-200 transition-colors"
                                 style={{ fontFamily: 'DM Sans, sans-serif' }}
                               >
                                 <Eye size={12} />
-                                Voir ({(item as any).nb_evaluateurs})
+                                Voir ({item.nb_evaluateurs})
                               </button>
                             </DialogTrigger>
                             <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto bg-gradient-to-br from-slate-50 to-blue-50 border-0 shadow-2xl">
                               <DialogHeader className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white p-6 -m-6 mb-6 rounded-t-xl">
                                 <DialogTitle className="text-xl font-bold text-white">
-                                  📊 Détails des notes - {(item as any).nom_equipe}
+                                  📊 Détails des notes - {item.nom_equipe}
                                 </DialogTitle>
                                 <DialogDescription className="text-blue-100">
                                   Notes détaillées attribuées par les membres du comité de sélection
@@ -537,7 +530,7 @@ const Attribution = () => {
                                         </div>
                                         <div className="text-right">
                                           <div className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
-                                            {note.score_total}/100
+                                            {note.score_total}/115
                                           </div>
                                           <div className="text-xs text-gray-500 mt-1">
                                             {new Date(note.created_at).toLocaleDateString('fr-FR', { 
@@ -549,7 +542,7 @@ const Attribution = () => {
                                         </div>
                                       </div>
                                       
-                                      <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                                      <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                                         <div className="bg-gradient-to-br from-blue-50 to-indigo-50 p-3 rounded-lg border border-blue-200">
                                           <div className="text-xs text-blue-600 font-medium mb-1">🎯 Qualité du projet</div>
                                           <div className="font-bold text-blue-800 text-lg">{note.qualite_projet || 0}/25</div>
@@ -573,6 +566,14 @@ const Attribution = () => {
                                         <div className="bg-gradient-to-br from-teal-50 to-cyan-50 p-3 rounded-lg border border-teal-200">
                                           <div className="text-xs text-teal-600 font-medium mb-1">🎨 Cohérence du profil</div>
                                           <div className="font-bold text-teal-800 text-lg">{note.coherence_profil || 0}/10</div>
+                                        </div>
+                                        <div className="bg-gradient-to-br from-amber-50 to-yellow-50 p-3 rounded-lg border border-amber-200">
+                                          <div className="text-xs text-amber-600 font-medium mb-1">💼 Compétence managériale</div>
+                                          <div className="font-bold text-amber-800 text-lg">{note.competence_manageriale || 0}/10</div>
+                                        </div>
+                                        <div className="bg-gradient-to-br from-slate-50 to-gray-50 p-3 rounded-lg border border-slate-200">
+                                          <div className="text-xs text-slate-600 font-medium mb-1">🏢 Appartenance ESMT</div>
+                                          <div className="font-bold text-slate-800 text-lg">{note.appartenance_esmt || 0}/5</div>
                                         </div>
                                       </div>
                                     </div>
@@ -638,8 +639,8 @@ const Attribution = () => {
                       key={individu.id}
                       className={`p-3 rounded-lg border cursor-pointer transition-all ${
                         selectedIndividus.includes(individu.id)
-                          ? 'border-[#FEEB09] bg-[#FEEB09]/10'
-                          : 'border-[#E9ECEF] hover:border-[#FEEB09]/30'
+                          ? 'border-[#40B2A4] bg-[#40B2A4]/10'
+                          : 'border-[#E9ECEF] hover:border-[#40B2A4]/30'
                       }`}
                       onClick={() => {
                         if (selectedIndividus.includes(individu.id)) {
@@ -657,12 +658,12 @@ const Attribution = () => {
                           <p className="text-sm text-[#6C757D]" style={{ fontFamily: 'DM Sans, sans-serif' }}>
                             {individu.chef?.filiere} • {individu.chef?.niveau_etudes}
                           </p>
-                          <p className="text-xs text-[#10B981] font-medium">
+                          <p className="text-xs text-[#40B2A4] font-medium">
                             Score: {individu.score_final}
                           </p>
                         </div>
                         {selectedIndividus.includes(individu.id) && (
-                          <CheckCircle size={16} className="text-[#FEEB09]" />
+                          <CheckCircle size={16} className="text-[#40B2A4]" />
                         )}
                       </div>
                     </div>
@@ -688,7 +689,7 @@ const Attribution = () => {
                       value={nomEquipe}
                       onChange={(e) => setNomEquipe(e.target.value)}
                       placeholder="Nom de l'équipe"
-                      className="w-full px-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] focus:outline-none focus:ring-2 focus:ring-[#FEEB09]/20 focus:border-[#FEEB09]/50"
+                      className="w-full px-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] focus:outline-none focus:ring-2 focus:ring-[#40B2A4]/20 focus:border-[#40B2A4]/50"
                       style={{ fontFamily: 'DM Sans, sans-serif' }}
                     />
                   </div>
@@ -707,7 +708,7 @@ const Attribution = () => {
                   <button
                     onClick={() => regrouperMutation.mutate()}
                     disabled={selectedIndividus.length !== 4 || !nomEquipe.trim()}
-                    className="w-full px-4 py-3 rounded-xl bg-[#FEEB09] text-white hover:bg-[#FEEB09] transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                    className="w-full px-4 py-3 rounded-xl bg-[#40B2A4] text-white hover:bg-[#40B2A4] transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                     style={{ fontFamily: 'DM Sans, sans-serif' }}
                   >
                     <UserPlus size={16} />

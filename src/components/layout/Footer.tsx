@@ -45,7 +45,7 @@ const Footer = () => {
     </div>
 
     {/* Top Gradient Border */}
-    <div className="h-1 bg-gradient-to-r from-[#FEEB09] via-[#24366E] to-[#FEEB09] shadow-lg shadow-[#24366E]/20"></div>
+    <div className="h-1 bg-gradient-to-r from-[#40B2A4] via-[#40B2A4] to-[#40B2A4] shadow-lg shadow-[#40B2A4]/20"></div>
 
     <div className="container relative z-10 py-16">
       {/* Main Footer Content */}
@@ -65,7 +65,7 @@ const Footer = () => {
               style={{ height: '88px', width: 'auto', opacity: 1 }}
             />
           </div>
-          <div className="flex items-center gap-2 text-xs text-[#FEEB09]/70">
+          <div className="flex items-center gap-2 text-xs text-[#40B2A4]/70">
             <Sparkles className="w-3 h-3" />
             <span>Premium Experience 2026 by enverse</span>
           </div>
@@ -79,7 +79,7 @@ const Footer = () => {
           transition={{ duration: 0.5, delay: 0.1 }}
         >
           <h4 
-            className="font-semibold text-sm uppercase tracking-wider text-[#FEEB09] flex items-center gap-2"
+            className="font-semibold text-sm uppercase tracking-wider text-[#40B2A4] flex items-center gap-2"
             style={{ fontFamily: 'DM Sans, sans-serif' }}
           >
             <Globe className="w-4 h-4" />
@@ -88,28 +88,28 @@ const Footer = () => {
           <nav className="space-y-2">
             <Link 
               to="/inscription" 
-              className="block text-sm text-slate-300 hover:text-[#FEEB09] transition-all duration-300 hover:translate-x-1"
+              className="block text-sm text-slate-300 hover:text-[#40B2A4] transition-all duration-300 hover:translate-x-1"
               style={{ fontFamily: 'DM Sans, sans-serif' }}
             >
               Inscription
             </Link>
             <Link 
               to="/equipes-selectionnees" 
-              className="block text-sm text-slate-300 hover:text-[#FEEB09] transition-all duration-300 hover:translate-x-1"
+              className="block text-sm text-slate-300 hover:text-[#40B2A4] transition-all duration-300 hover:translate-x-1"
               style={{ fontFamily: 'DM Sans, sans-serif' }}
             >
               Équipes Sélectionnées
             </Link>
             <Link 
               to="/galerie" 
-              className="block text-sm text-slate-300 hover:text-[#FEEB09] transition-all duration-300 hover:translate-x-1"
+              className="block text-sm text-slate-300 hover:text-[#40B2A4] transition-all duration-300 hover:translate-x-1"
               style={{ fontFamily: 'DM Sans, sans-serif' }}
             >
               Galerie
             </Link>
             <Link 
               to="/contact" 
-              className="block text-sm text-slate-300 hover:text-[#FEEB09] transition-all duration-300 hover:translate-x-1"
+              className="block text-sm text-slate-300 hover:text-[#40B2A4] transition-all duration-300 hover:translate-x-1"
               style={{ fontFamily: 'DM Sans, sans-serif' }}
             >
               Contact
@@ -125,7 +125,7 @@ const Footer = () => {
           transition={{ duration: 0.5, delay: 0.2 }}
         >
           <h4 
-            className="font-semibold text-sm uppercase tracking-wider text-[#FEEB09] flex items-center gap-2"
+            className="font-semibold text-sm uppercase tracking-wider text-[#40B2A4] flex items-center gap-2"
             style={{ fontFamily: 'DM Sans, sans-serif' }}
           >
             <MapPin className="w-4 h-4" />
@@ -133,17 +133,17 @@ const Footer = () => {
           </h4>
           <div className="space-y-3">
             <div className="flex items-start gap-3">
-              <MapPin className="w-4 h-4 text-[#FEEB09] mt-0.5 flex-shrink-0" />
+              <MapPin className="w-4 h-4 text-[#40B2A4] mt-0.5 flex-shrink-0" />
               <span className="text-sm text-slate-300">ESMT Dakar, Sénégal</span>
             </div>
             <div className="flex items-center gap-3">
-              <Mail className="w-4 h-4 text-[#FEEB09] flex-shrink-0" />
-              <a href="mailto:club_esmt@isoc.sn" className="text-sm text-slate-300 hover:text-[#FEEB09] transition-colors">
+              <Mail className="w-4 h-4 text-[#40B2A4] flex-shrink-0" />
+              <a href="mailto:club_esmt@isoc.sn" className="text-sm text-slate-300 hover:text-[#40B2A4] transition-colors">
                 club_esmt@isoc.sn
               </a>
             </div>
             <div className="flex items-center gap-3">
-              <Phone className="w-4 h-4 text-[#FEEB09] flex-shrink-0" />
+              <Phone className="w-4 h-4 text-[#40B2A4] flex-shrink-0" />
               <span className="text-sm text-slate-300">+221 33 000 00 00</span>
             </div>
           </div>
@@ -157,7 +157,7 @@ const Footer = () => {
           transition={{ duration: 0.5, delay: 0.3 }}
         >
           <h4 
-            className="font-semibold text-sm uppercase tracking-wider text-[#FEEB09]"
+            className="font-semibold text-sm uppercase tracking-wider text-[#40B2A4]"
             style={{ fontFamily: 'DM Sans, sans-serif' }}
           >
             Suivez-nous
@@ -165,7 +165,7 @@ const Footer = () => {
           <div className="flex gap-3">
             <a 
               href="https://instagram.com" 
-              className="w-10 h-10 bg-gradient-to-br from-[#FEEB09]/20 to-[#24366E]/20 border border-[#FEEB09]/30 rounded-lg flex items-center justify-center text-[#FEEB09] hover:from-[#FEEB09] hover:to-[#24366E] hover:text-white transition-all duration-300 hover:shadow-lg hover:shadow-[#FEEB09]/25"
+              className="w-10 h-10 bg-gradient-to-br from-[#40B2A4]/20 to-[#40B2A4]/20 border border-[#40B2A4]/30 rounded-lg flex items-center justify-center text-[#40B2A4] hover:from-[#40B2A4] hover:to-[#40B2A4] hover:text-white transition-all duration-300 hover:shadow-lg hover:shadow-[#40B2A4]/25"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -173,7 +173,7 @@ const Footer = () => {
             </a>
             <a 
               href="https://www.linkedin.com/company/club-isoc-esmt/" 
-              className="w-10 h-10 bg-gradient-to-br from-[#FEEB09]/20 to-[#24366E]/20 border border-[#FEEB09]/30 rounded-lg flex items-center justify-center text-[#FEEB09] hover:from-[#FEEB09] hover:to-[#24366E] hover:text-white transition-all duration-300 hover:shadow-lg hover:shadow-[#FEEB09]/25"
+              className="w-10 h-10 bg-gradient-to-br from-[#40B2A4]/20 to-[#40B2A4]/20 border border-[#40B2A4]/30 rounded-lg flex items-center justify-center text-[#40B2A4] hover:from-[#40B2A4] hover:to-[#40B2A4] hover:text-white transition-all duration-300 hover:shadow-lg hover:shadow-[#40B2A4]/25"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -181,26 +181,26 @@ const Footer = () => {
             </a>
             <a 
               href="mailto:club_esmt@isoc.sn" 
-              className="w-10 h-10 bg-gradient-to-br from-[#FEEB09]/20 to-[#24366E]/20 border border-[#FEEB09]/30 rounded-lg flex items-center justify-center text-[#FEEB09] hover:from-[#FEEB09] hover:to-[#24366E] hover:text-white transition-all duration-300 hover:shadow-lg hover:shadow-[#FEEB09]/25"
+              className="w-10 h-10 bg-gradient-to-br from-[#40B2A4]/20 to-[#40B2A4]/20 border border-[#40B2A4]/30 rounded-lg flex items-center justify-center text-[#40B2A4] hover:from-[#40B2A4] hover:to-[#40B2A4] hover:text-white transition-all duration-300 hover:shadow-lg hover:shadow-[#40B2A4]/25"
             >
               <Mail size={18} />
             </a>
           </div>
           <div className="text-xs text-slate-400">
             <p>Rejoignez notre communauté</p>
-            <p className="text-[#FEEB09] font-semibold mt-1">500+ membres actifs</p>
+            <p className="text-[#40B2A4] font-semibold mt-1">500+ membres actifs</p>
           </div>
         </motion.div>
       </div>
 
       {/* Divider */}
-      <div className="h-px bg-gradient-to-r from-transparent via-[#FEEB09]/50 to-transparent mb-8"></div>
+      <div className="h-px bg-gradient-to-r from-transparent via-[#40B2A4]/50 to-transparent mb-8"></div>
 
       {/* Bottom Section */}
       <div className="flex flex-col md:flex-row items-center justify-between gap-4">
         <div className="flex items-center gap-2 text-sm text-slate-400">
-          <span>© 2026 Club ISOC — ESMT Dakar</span>
-          <span className="text-[#FEEB09]">•</span>
+          <span> 2026 Club ISOC — ESMT Dakar</span>
+          <span className="text-[#40B2A4]">•</span>
           <span className="text-slate-600 mx-1">•</span>
           <Link 
             to="/admin/dashboard" 
@@ -223,19 +223,19 @@ const Footer = () => {
         <div className="flex items-center gap-6 text-xs text-slate-400">
           <button 
             onClick={() => openPopup('privacy')} 
-            className="hover:text-[#FEEB09] transition-colors"
+            className="hover:text-[#40B2A4] transition-colors"
           >
             Privacy
           </button>
           <button 
             onClick={() => openPopup('terms')} 
-            className="hover:text-[#FEEB09] transition-colors"
+            className="hover:text-[#40B2A4] transition-colors"
           >
             Terms
           </button>
           <button 
             onClick={() => openPopup('cookies')} 
-            className="hover:text-[#FEEB09] transition-colors"
+            className="hover:text-[#40B2A4] transition-colors"
           >
             Cookies
           </button>
@@ -244,7 +244,7 @@ const Footer = () => {
     </div>
 
     {/* Bottom Gradient Line */}
-    <div className="h-1 bg-gradient-to-r from-[#24366E] via-[#FEEB09] to-[#24366E] shadow-lg shadow-[#FEEB09]/30"></div>
+    <div className="h-1 bg-gradient-to-r from-[#40B2A4] via-[#40B2A4] to-[#40B2A4] shadow-lg shadow-[#40B2A4]/30"></div>
   </footer>
 
   {/* Legal Popup */}

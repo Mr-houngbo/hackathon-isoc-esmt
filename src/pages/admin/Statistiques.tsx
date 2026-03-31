@@ -217,7 +217,7 @@ const Statistiques = () => {
     <AdminLayout>
       <div className="min-h-screen bg-gradient-to-br from-[#F8F9FA] to-white">
         {/* Header */}
-        <div className="bg-gradient-to-r from-[#24366E]/10 to-[#FEEB09]/10 backdrop-blur-sm border-b border-[#E9ECEF]/20">
+        <div className="bg-gradient-to-r from-[#24366E]/10 to-[#FFC107]/10 backdrop-blur-sm border-b border-[#FFC107]/20">
           <div className="container py-6">
             <div className="flex items-center justify-between">
               <motion.div
@@ -240,7 +240,7 @@ const Statistiques = () => {
               </motion.div>
               
               <div className="flex items-center gap-2">
-                <BarChart3 className="text-[#FEEB09]" size={24} />
+                <BarChart3 className="text-[#FFC107]" size={24} />
                 <span className="text-sm text-[#6C757D]" style={{ fontFamily: 'DM Sans, sans-serif' }}>
                   {new Date().toLocaleDateString('fr-FR', { month: 'long', year: 'numeric' })}
                 </span>
@@ -262,7 +262,7 @@ const Statistiques = () => {
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.5, delay: 0.1 }}
-                className="relative overflow-hidden rounded-2xl border border-[#E9ECEF] bg-white p-6 hover:border-[#24366E]/50 hover:shadow-xl hover:shadow-[#24366E]/10 transition-all duration-300"
+                className="relative overflow-hidden rounded-2xl border border-[#FFC107] bg-white p-6 hover:border-[#24366E]/50 hover:shadow-xl hover:shadow-[#24366E]/10 transition-all duration-300"
               >
                 <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-[#24366E]/5 opacity-0"></div>
                 
@@ -273,8 +273,8 @@ const Statistiques = () => {
                         <Users className="text-[#24366E]" size={24} />
                       </div>
                       <div className="flex items-center gap-1">
-                        <ArrowUp className="text-[#00873E]" size={16} />
-                        <span className="text-xs text-[#00873E] font-medium">+12%</span>
+                        <ArrowUp className="text-[#FFC107]" size={16} />
+                        <span className="text-xs text-[#FFC107] font-medium">+12%</span>
                       </div>
                     </div>
                   </div>
@@ -298,19 +298,19 @@ const Statistiques = () => {
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.5, delay: 0.2 }}
-                className="relative overflow-hidden rounded-2xl border border-[#E9ECEF] bg-white p-6 hover:border-[#FEEB09]/50 hover:shadow-xl hover:shadow-[#FEEB09]/10 transition-all duration-300"
+                className="relative overflow-hidden rounded-2xl border border-[#FFC107] bg-white p-6 hover:border-[#40B2A4]/50 hover:shadow-xl hover:shadow-[#40B2A4]/10 transition-all duration-300"
               >
-                <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-[#FEEB09]/5 opacity-0"></div>
+                <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-[#40B2A4]/5 opacity-0"></div>
                 
                 <div className="relative z-10">
                   <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center gap-3">
-                      <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-[#FEEB09]/10 to-[#FEEB09]/10 flex items-center justify-center">
-                        <Users className="text-[#FEEB09]" size={24} />
+                      <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-[#40B2A4]/10 to-[#40B2A4]/10 flex items-center justify-center">
+                        <Users className="text-[#40B2A4]" size={24} />
                       </div>
                       <div className="flex items-center gap-1">
-                        <ArrowUp className="text-[#00873E]" size={16} />
-                        <span className="text-xs text-[#00873E] font-medium">+8%</span>
+                        <ArrowUp className="text-[#FFC107]" size={16} />
+                        <span className="text-xs text-[#FFC107] font-medium">+8%</span>
                       </div>
                     </div>
                   </div>
@@ -334,19 +334,19 @@ const Statistiques = () => {
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.5, delay: 0.3 }}
-                className="relative overflow-hidden rounded-2xl border border-[#E9ECEF] bg-white p-6 hover:border-[#00873E]/50 hover:shadow-xl hover:shadow-[#00873E]/10 transition-all duration-300"
+                className="relative overflow-hidden rounded-2xl border border-[#FFC107] bg-white p-6 hover:border-[#40B2A4]/50 hover:shadow-xl hover:shadow-[#40B2A4]/10 transition-all duration-300"
               >
-                <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-[#00873E]/5 opacity-0"></div>
+                <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-[#40B2A4]/5 opacity-0"></div>
                 
                 <div className="relative z-10">
                   <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center gap-3">
-                      <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-[#00873E]/10 to-[#00873E]/10 flex items-center justify-center">
-                        <Target className="text-[#00873E]" size={24} />
+                      <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-[#40B2A4]/10 to-[#40B2A4]/10 flex items-center justify-center">
+                        <Target className="text-[#40B2A4]" size={24} />
                       </div>
                       <div className="flex items-center gap-1">
-                        <ArrowUp className="text-[#00873E]" size={16} />
-                        <span className="text-xs text-[#00873E] font-medium">+2%</span>
+                        <ArrowUp className="text-[#FFC107]" size={16} />
+                        <span className="text-xs text-[#FFC107] font-medium">+2%</span>
                       </div>
                     </div>
                   </div>
@@ -370,7 +370,7 @@ const Statistiques = () => {
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.5, delay: 0.4 }}
-                className="relative overflow-hidden rounded-2xl border border-[#E9ECEF] bg-white p-6 hover:border-[#6C757D]/50 hover:shadow-xl hover:shadow-[#6C757D]/10 transition-all duration-300"
+                className="relative overflow-hidden rounded-2xl border border-[#FFC107] bg-white p-6 hover:border-[#6C757D]/50 hover:shadow-xl hover:shadow-[#6C757D]/10 transition-all duration-300"
               >
                 <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-[#6C757D]/5 opacity-0"></div>
                 
@@ -381,8 +381,8 @@ const Statistiques = () => {
                         <Award className="text-[#6C757D]" size={24} />
                       </div>
                       <div className="flex items-center gap-1">
-                        <ArrowUp className="text-[#00873E]" size={16} />
-                        <span className="text-xs text-[#00873E] font-medium">+5%</span>
+                        <ArrowUp className="text-[#FFC107]" size={16} />
+                        <span className="text-xs text-[#FFC107] font-medium">+5%</span>
                       </div>
                     </div>
                   </div>
@@ -412,7 +412,7 @@ const Statistiques = () => {
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6, delay: 0.5 }}
-              className="rounded-2xl border border-[#E9ECEF] bg-white p-6"
+              className="rounded-2xl border border-[#FFC107] bg-white p-6"
             >
               <div className="flex items-center gap-3 mb-6">
                 <div className="w-10 h-10 rounded-xl bg-gradient-to-r from-[#24366E]/10 to-[#24366E]/10 flex items-center justify-center">
@@ -431,11 +431,11 @@ const Statistiques = () => {
                   const pourcentage = totalCanaux > 0 ? (nombre / totalCanaux * 100).toFixed(1) : '0';
                   const isMeilleur = source === meilleurCanal[0];
                   const couleurs = {
-                    'Réseaux sociaux': 'bg-gradient-to-r from-[#F97316] to-[#FB923C]',
-                    'Bouche à oreille': 'bg-gradient-to-r from-[#25D366] to-[#128C7E]',
-                    'Affiche ESMT': 'bg-gradient-to-r from-[#3B82F6] to-[#60A5FA]',
-                    'Passage en salle': 'bg-gradient-to-r from-[#8B5CF6] to-[#A78BFA]',
-                    'Autre': 'bg-gradient-to-r from-[#64748B] to-[#94A3B8]',
+                    'Réseaux sociaux': 'bg-gradient-to-r from-[#FFC107] to-[#FFC107]',
+                    'Bouche à oreille': 'bg-gradient-to-r from-[#FFC107] to-[#24366E]',
+                    'Affiche ESMT': 'bg-gradient-to-r from-[#24366E] to-[#24366E]',
+                    'Passage en salle': 'bg-gradient-to-r from-[#7E245C] to-[#7E245C]',
+                    'Autre': 'bg-gradient-to-r from-[#64748B] to-[#40B2A4]',
                     'Non spécifié': 'bg-gradient-to-r from-[#6C757D] to-[#9CA3AF]'
                   };
                   
@@ -462,7 +462,7 @@ const Statistiques = () => {
                               {nombre}
                             </span>
                             {isMeilleur && (
-                              <div className="px-2 py-1 rounded-full bg-[#FFD700]/20 text-[#FFD700] text-xs font-bold">
+                              <div className="px-2 py-1 rounded-full bg-[#FFC107]/20 text-[#FFC107] text-xs font-bold">
                                 🏆 Top
                               </div>
                             )}
@@ -489,11 +489,11 @@ const Statistiques = () => {
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6, delay: 0.6 }}
-              className="rounded-2xl border border-[#E9ECEF] bg-white p-6"
+              className="rounded-2xl border border-[#FFC107] bg-white p-6"
             >
               <div className="flex items-center gap-3 mb-6">
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-r from-[#FEEB09]/10 to-[#FEEB09]/10 flex items-center justify-center">
-                  <PieChart className="text-[#FEEB09]" size={20} />
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-r from-[#40B2A4]/10 to-[#40B2A4]/10 flex items-center justify-center">
+                  <PieChart className="text-[#40B2A4]" size={20} />
                 </div>
                 <h2 
                   className="font-display text-xl font-bold text-[#212529]"
@@ -528,10 +528,10 @@ const Statistiques = () => {
                   </div>
                 </div>
 
-                <div className="flex items-center justify-between p-4 rounded-xl bg-[#FEEB09]/5 border border-[#FEEB09]/10">
+                <div className="flex items-center justify-between p-4 rounded-xl bg-[#40B2A4]/5 border border-[#40B2A4]/10">
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-xl bg-gradient-to-r from-[#FEEB09]/10 to-[#FEEB09]/10 flex items-center justify-center">
-                      <Award className="text-[#FEEB09]" size={20} />
+                    <div className="w-10 h-10 rounded-xl bg-gradient-to-r from-[#40B2A4]/10 to-[#40B2A4]/10 flex items-center justify-center">
+                      <Award className="text-[#40B2A4]" size={20} />
                     </div>
                     <div>
                       <p className="font-medium text-[#212529]" style={{ fontFamily: 'DM Sans, sans-serif' }}>
@@ -543,7 +543,7 @@ const Statistiques = () => {
                     </div>
                   </div>
                   <div className="text-right">
-                    <p className="text-2xl font-bold text-[#FEEB09]" style={{ fontFamily: 'Sora, sans-serif' }}>
+                    <p className="text-2xl font-bold text-[#40B2A4]" style={{ fontFamily: 'Sora, sans-serif' }}>
                       {statsReelles.projetsIndividuels}
                     </p>
                     <p className="text-xs text-[#6C757D]" style={{ fontFamily: 'DM Sans, sans-serif' }}>
@@ -552,10 +552,10 @@ const Statistiques = () => {
                   </div>
                 </div>
 
-                <div className="flex items-center justify-between p-4 rounded-xl bg-[#00873E]/5 border border-[#00873E]/10">
+                <div className="flex items-center justify-between p-4 rounded-xl bg-[#40B2A4]/5 border border-[#40B2A4]/10">
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-xl bg-gradient-to-r from-[#00873E]/10 to-[#00873E]/10 flex items-center justify-center">
-                      <Target className="text-[#00873E]" size={20} />
+                    <div className="w-10 h-10 rounded-xl bg-gradient-to-r from-[#40B2A4]/10 to-[#40B2A4]/10 flex items-center justify-center">
+                      <Target className="text-[#40B2A4]" size={20} />
                     </div>
                     <div>
                       <p className="font-medium text-[#212529]" style={{ fontFamily: 'DM Sans, sans-serif' }}>
@@ -567,7 +567,7 @@ const Statistiques = () => {
                     </div>
                   </div>
                   <div className="text-right">
-                    <p className="text-2xl font-bold text-[#00873E]" style={{ fontFamily: 'Sora, sans-serif' }}>
+                    <p className="text-2xl font-bold text-[#40B2A4]" style={{ fontFamily: 'Sora, sans-serif' }}>
                       {statsReelles.projetsAvecProjet}
                     </p>
                     <p className="text-xs text-[#6C757D]" style={{ fontFamily: 'DM Sans, sans-serif' }}>
@@ -588,11 +588,11 @@ const Statistiques = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.7 }}
-              className="rounded-2xl border border-[#E9ECEF] bg-white p-6"
+              className="rounded-2xl border border-[#FFC107] bg-white p-6"
             >
               <div className="flex items-center gap-3 mb-6">
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-r from-[#00873E]/10 to-[#00873E]/10 flex items-center justify-center">
-                  <Users className="text-[#00873E]" size={20} />
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-r from-[#40B2A4]/10 to-[#40B2A4]/10 flex items-center justify-center">
+                  <Users className="text-[#40B2A4]" size={20} />
                 </div>
                 <h2 
                   className="font-display text-xl font-bold text-[#212529]"
@@ -616,7 +616,7 @@ const Statistiques = () => {
                       className="flex items-center justify-between p-3 rounded-xl bg-[#F8F9FA] hover:bg-[#F8F9FA]/80 transition-colors"
                     >
                       <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 rounded-full bg-gradient-to-r from-[#00873E]/10 to-[#00873E]/10 flex items-center justify-center text-sm font-bold text-[#00873E]">
+                        <div className="w-8 h-8 rounded-full bg-gradient-to-r from-[#40B2A4]/10 to-[#40B2A4]/10 flex items-center justify-center text-sm font-bold text-[#40B2A4]">
                           {genre === 'homme' ? '👨' : genre === 'femme' ? '👩' : '👤'}
                         </div>
                         <div>
@@ -629,7 +629,7 @@ const Statistiques = () => {
                         </div>
                       </div>
                       <div className="text-right">
-                        <span className="text-sm font-bold text-[#00873E]" style={{ fontFamily: 'Sora, sans-serif' }}>
+                        <span className="text-sm font-bold text-[#40B2A4]" style={{ fontFamily: 'Sora, sans-serif' }}>
                           {pourcentage}%
                         </span>
                       </div>
@@ -644,7 +644,7 @@ const Statistiques = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.8 }}
-              className="rounded-2xl border border-[#E9ECEF] bg-white p-6"
+              className="rounded-2xl border border-[#FFC107] bg-white p-6"
             >
               <div className="flex items-center gap-3 mb-6">
                 <div className="w-10 h-10 rounded-xl bg-gradient-to-r from-[#6C757D]/10 to-[#6C757D]/10 flex items-center justify-center">
@@ -709,11 +709,11 @@ const Statistiques = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 1.1 }}
-              className="rounded-2xl border border-[#E9ECEF] bg-white p-6"
+              className="rounded-2xl border border-[#FFC107] bg-white p-6"
             >
               <div className="flex items-center gap-3 mb-6">
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-r from-[#FFD700]/10 to-[#FFD700]/10 flex items-center justify-center">
-                  <Award className="text-[#FFD700]" size={20} />
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-r from-[#40B2A4]/10 to-[#40B2A4]/10 flex items-center justify-center">
+                  <Award className="text-[#40B2A4]" size={20} />
                 </div>
                 <h2 
                   className="font-display text-xl font-bold text-[#212529]"
@@ -724,10 +724,10 @@ const Statistiques = () => {
               </div>
               
               <div className="space-y-6">
-                <div className="flex items-center justify-between p-4 rounded-xl bg-[#FFD700]/5 border border-[#FFD700]/10">
+                <div className="flex items-center justify-between p-4 rounded-xl bg-[#40B2A4]/5 border border-[#40B2A4]/10">
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-xl bg-gradient-to-r from-[#FFD700]/10 to-[#FFD700]/10 flex items-center justify-center">
-                      <Award className="text-[#FFD700]" size={20} />
+                    <div className="w-10 h-10 rounded-xl bg-gradient-to-r from-[#40B2A4]/10 to-[#40B2A4]/10 flex items-center justify-center">
+                      <Award className="text-[#40B2A4]" size={20} />
                     </div>
                     <div>
                       <p className="font-medium text-[#212529]" style={{ fontFamily: 'DM Sans, sans-serif' }}>
@@ -739,7 +739,7 @@ const Statistiques = () => {
                     </div>
                   </div>
                   <div className="text-right">
-                    <p className="text-2xl font-bold text-[#FFD700]" style={{ fontFamily: 'Sora, sans-serif' }}>
+                    <p className="text-2xl font-bold text-[#40B2A4]" style={{ fontFamily: 'Sora, sans-serif' }}>
                       {statsReelles.badgesEnvoyes}
                     </p>
                     <p className="text-xs text-[#6C757D]" style={{ fontFamily: 'DM Sans, sans-serif' }}>
@@ -748,7 +748,7 @@ const Statistiques = () => {
                   </div>
                 </div>
 
-                <div className="p-4 rounded-xl bg-[#F8F9FA] border border-[#E9ECEF]">
+                <div className="p-4 rounded-xl bg-[#F8F9FA] border border-[#FFC107]">
                   <div className="flex items-center justify-between mb-2">
                     <span className="text-sm text-[#6C757D]" style={{ fontFamily: 'DM Sans, sans-serif' }}>
                       Total Badges à Distribuer
@@ -769,11 +769,11 @@ const Statistiques = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 1.2 }}
-              className="rounded-2xl border border-[#E9ECEF] bg-white p-6"
+              className="rounded-2xl border border-[#FFC107] bg-white p-6"
             >
               <div className="flex items-center gap-3 mb-6">
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-r from-[#00873E]/10 to-[#00873E]/10 flex items-center justify-center">
-                  <Target className="text-[#00873E]" size={20} />
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-r from-[#40B2A4]/10 to-[#40B2A4]/10 flex items-center justify-center">
+                  <Target className="text-[#40B2A4]" size={20} />
                 </div>
                 <h2 
                   className="font-display text-xl font-bold text-[#212529]"
@@ -784,10 +784,10 @@ const Statistiques = () => {
               </div>
               
               <div className="space-y-6">
-                <div className="flex items-center justify-between p-4 rounded-xl bg-[#00873E]/5 border border-[#00873E]/10">
+                <div className="flex items-center justify-between p-4 rounded-xl bg-[#40B2A4]/5 border border-[#40B2A4]/10">
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-xl bg-gradient-to-r from-[#00873E]/10 to-[#00873E]/10 flex items-center justify-center">
-                      <Target className="text-[#00873E]" size={20} />
+                    <div className="w-10 h-10 rounded-xl bg-gradient-to-r from-[#40B2A4]/10 to-[#40B2A4]/10 flex items-center justify-center">
+                      <Target className="text-[#40B2A4]" size={20} />
                     </div>
                     <div>
                       <p className="font-medium text-[#212529]" style={{ fontFamily: 'DM Sans, sans-serif' }}>
@@ -799,7 +799,7 @@ const Statistiques = () => {
                     </div>
                   </div>
                   <div className="text-right">
-                    <p className="text-2xl font-bold text-[#00873E]" style={{ fontFamily: 'Sora, sans-serif' }}>
+                    <p className="text-2xl font-bold text-[#40B2A4]" style={{ fontFamily: 'Sora, sans-serif' }}>
                       {statsReelles.certificatsParticipation}
                     </p>
                     <p className="text-xs text-[#6C757D]" style={{ fontFamily: 'DM Sans, sans-serif' }}>
@@ -808,10 +808,10 @@ const Statistiques = () => {
                   </div>
                 </div>
 
-                <div className="flex items-center justify-between p-4 rounded-xl bg-[#FEEB09]/5 border border-[#FEEB09]/10">
+                <div className="flex items-center justify-between p-4 rounded-xl bg-[#40B2A4]/5 border border-[#40B2A4]/10">
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-xl bg-gradient-to-r from-[#FEEB09]/10 to-[#FEEB09]/10 flex items-center justify-center">
-                      <Trophy className="text-[#FEEB09]" size={20} />
+                    <div className="w-10 h-10 rounded-xl bg-gradient-to-r from-[#40B2A4]/10 to-[#40B2A4]/10 flex items-center justify-center">
+                      <Trophy className="text-[#40B2A4]" size={20} />
                     </div>
                     <div>
                       <p className="font-medium text-[#212529]" style={{ fontFamily: 'DM Sans, sans-serif' }}>
@@ -823,7 +823,7 @@ const Statistiques = () => {
                     </div>
                   </div>
                   <div className="text-right">
-                    <p className="text-2xl font-bold text-[#FEEB09]" style={{ fontFamily: 'Sora, sans-serif' }}>
+                    <p className="text-2xl font-bold text-[#40B2A4]" style={{ fontFamily: 'Sora, sans-serif' }}>
                       {statsReelles.certificatsLaureats}
                     </p>
                     <p className="text-xs text-[#6C757D]" style={{ fontFamily: 'DM Sans, sans-serif' }}>
@@ -844,7 +844,7 @@ const Statistiques = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 1.3 }}
-              className="rounded-2xl border border-[#E9ECEF] bg-white p-6"
+              className="rounded-2xl border border-[#FFC107] bg-white p-6"
             >
               <div className="flex items-center gap-3 mb-6">
                 <div className="w-10 h-10 rounded-xl bg-gradient-to-r from-[#24366E]/10 to-[#24366E]/10 flex items-center justify-center">
@@ -900,7 +900,7 @@ const Statistiques = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 1.4 }}
-              className="rounded-2xl border border-[#E9ECEF] bg-white p-6"
+              className="rounded-2xl border border-[#FFC107] bg-white p-6"
             >
               <div className="flex items-center gap-3 mb-6">
                 <div className="w-10 h-10 rounded-xl bg-gradient-to-r from-[#6C757D]/10 to-[#6C757D]/10 flex items-center justify-center">
@@ -931,8 +931,8 @@ const Statistiques = () => {
                       <div className="flex items-center gap-3">
                         <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold ${
                           isDisponible 
-                            ? 'bg-gradient-to-r from-[#00873E]/10 to-[#00873E]/10 text-[#00873E]' 
-                            : 'bg-gradient-to-r from-[#DC2626]/10 to-[#DC2626]/10 text-[#DC2626]'
+                            ? 'bg-gradient-to-r from-[#40B2A4]/10 to-[#40B2A4]/10 text-[#40B2A4]' 
+                            : 'bg-gradient-to-r from-[#D25238]/10 to-[#D25238]/10 text-[#D25238]'
                         }`}>
                           {isDisponible ? '✓' : '✗'}
                         </div>
@@ -946,7 +946,7 @@ const Statistiques = () => {
                         </div>
                       </div>
                       <div className="text-right">
-                        <span className={`text-sm font-bold ${isDisponible ? 'text-[#00873E]' : 'text-[#DC2626]'}`} style={{ fontFamily: 'Sora, sans-serif' }}>
+                        <span className={`text-sm font-bold ${isDisponible ? 'text-[#40B2A4]' : 'text-[#D25238]'}`} style={{ fontFamily: 'Sora, sans-serif' }}>
                           {pourcentage}%
                         </span>
                       </div>

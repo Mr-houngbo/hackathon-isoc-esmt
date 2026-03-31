@@ -22,7 +22,7 @@ const StepIndicator = ({ currentStep, totalSteps, labels }: StepIndicatorProps) 
       </div>
       <div className="w-full h-3 bg-[#E9ECEF] rounded-full overflow-hidden">
         <motion.div
-          className="h-full bg-gradient-to-r from-[#FEEB09] to-[#24366E]"
+          className="h-full bg-gradient-to-r from-[#40B2A4] to-[#24366E]"
           initial={{ width: 0 }}
           animate={{ width: `${((currentStep + 1) / totalSteps) * 100}%` }}
           transition={{ duration: 0.5, ease: "easeInOut" }}
@@ -44,7 +44,7 @@ const StepIndicator = ({ currentStep, totalSteps, labels }: StepIndicatorProps) 
         
         {/* Progress line */}
         <motion.div
-          className="absolute left-0 top-5 h-1 bg-gradient-to-r from-[#FEEB09] to-[#24366E] z-0"
+          className="absolute left-0 top-5 h-1 bg-gradient-to-r from-[#40B2A4] to-[#24366E] z-0"
           initial={{ width: 0 }}
           animate={{ width: `${(currentStep / (totalSteps - 1)) * 100}%` }}
           transition={{ duration: 0.5, ease: "easeInOut" }}
@@ -64,7 +64,7 @@ const StepIndicator = ({ currentStep, totalSteps, labels }: StepIndicatorProps) 
               <div
                 className={`flex h-12 w-12 items-center justify-center rounded-full border-2 text-sm font-bold transition-all duration-300 ${
                   i < currentStep 
-                    ? 'bg-[#FEEB09] border-[#FEEB09] text-white' 
+                    ? 'bg-[#40B2A4] border-[#40B2A4] text-white' 
                     : i === currentStep 
                       ? 'bg-white border-[#24366E] text-[#24366E] shadow-lg shadow-[#24366E]/25' 
                       : 'bg-white border-[#E9ECEF] text-[#6C757D]'

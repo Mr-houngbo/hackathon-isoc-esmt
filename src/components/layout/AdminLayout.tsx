@@ -22,7 +22,7 @@ const AdminLayout = ({ children }: { children: ReactNode }) => {
   return (
     <div className="flex min-h-screen bg-gradient-to-br from-[#F8F9FA] to-white">
       <aside className="hidden lg:flex w-60 flex-col border-r border-[#E9ECEF] bg-white p-4 shadow-lg">
-        <Link to="/admin/dashboard" className="font-display text-lg font-bold text-[#24366E] mb-6 px-2 hover:text-[#FEEB09] transition-colors">
+        <Link to="/admin/dashboard" className="font-display text-lg font-bold text-[#24366E] mb-6 px-2 hover:text-[#40B2A4] transition-colors">
           Admin Panel
         </Link>
         <nav className="flex flex-col gap-1 flex-1">
@@ -47,7 +47,7 @@ const AdminLayout = ({ children }: { children: ReactNode }) => {
           ))}
         </nav>
         <button onClick={signOut}
-          className="flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium text-[#DC2626] hover:bg-[#DC2626]/10 hover:text-[#B91C1C] transition-colors mt-auto border border-[#DC2626]/20">
+          className="flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium text-[#D25238] hover:bg-[#D25238]/10 hover:text-[#D25238] transition-colors mt-auto border border-[#D25238]/20">
           <LogOut size={16} /> Déconnexion
         </button>
       </aside>

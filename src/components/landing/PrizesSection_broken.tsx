@@ -47,7 +47,7 @@ const PrizeCard = ({ prize, index }: { prize: typeof prizes[0]; index: number })
       {/* Glow effect */}
       <div className={`absolute -inset-1 bg-gradient-to-r ${
         prize.color === 'orange' 
-          ? 'from-[#FEEB09] to-[#FEEB09]' 
+          ? 'from-[#40B2A4] to-[#40B2A4]' 
           : 'from-[#24366E] to-[#2E4A8C]'
       } rounded-2xl opacity-0 group-hover:opacity-20 blur-xl transition-all duration-300`}></div>
       
@@ -66,7 +66,7 @@ const PrizeCard = ({ prize, index }: { prize: typeof prizes[0]; index: number })
           {/* Top gradient bar */}
           <div className={`h-2 w-full bg-gradient-to-r ${
             prize.color === 'orange' 
-              ? 'from-[#FEEB09] to-[#FEEB09]' 
+              ? 'from-[#40B2A4] to-[#40B2A4]' 
               : 'from-[#24366E] to-[#2E4A8C]'
           }`}></div>
           
@@ -77,20 +77,20 @@ const PrizeCard = ({ prize, index }: { prize: typeof prizes[0]; index: number })
               <div className="relative mb-6 inline-flex">
                 <div className={`absolute inset-0 bg-gradient-to-r ${
                   prize.color === 'orange' 
-                    ? 'from-[#FEEB09] to-[#FEEB09]' 
+                    ? 'from-[#40B2A4] to-[#40B2A4]' 
                     : 'from-[#24366E] to-[#2E4A8C]'
                 } rounded-full blur-lg opacity-20 animate-pulse`}></div>
                 <div className={`relative h-16 w-16 rounded-full bg-gradient-to-br ${
                   prize.color === 'orange' 
-                    ? 'from-[#FEEB09]/10 to-[#FEEB09]/10' 
+                    ? 'from-[#40B2A4]/10 to-[#40B2A4]/10' 
                     : 'from-[#24366E]/10 to-[#2E4A8C]/10'
                 } border-2 ${
                   prize.color === 'orange' 
-                    ? 'border-[#FEEB09]/30' 
+                    ? 'border-[#40B2A4]/30' 
                     : 'border-[#24366E]/30'
                 } flex items-center justify-center`}>
                   <prize.icon className={`h-8 w-8 ${
-                    prize.color === 'orange' ? 'text-[#FEEB09]' : 'text-[#24366E]'
+                    prize.color === 'orange' ? 'text-[#40B2A4]' : 'text-[#24366E]'
                   }`} />
                 </div>
               </div>
@@ -125,7 +125,7 @@ const PrizeCard = ({ prize, index }: { prize: typeof prizes[0]; index: number })
           {/* Decorative corner */}
           <div className={`absolute top-2 right-2 w-8 h-8 bg-gradient-to-br ${
             prize.color === 'orange' 
-              ? 'from-[#FEEB09] to-[#FEEB09]' 
+              ? 'from-[#40B2A4] to-[#40B2A4]' 
               : 'from-[#24366E] to-[#2E4A8C]'
           } opacity-10 rounded-full blur-xl`}></div>
         </div>
@@ -137,7 +137,7 @@ const PrizeCard = ({ prize, index }: { prize: typeof prizes[0]; index: number })
             backfaceVisibility: "hidden",
             transform: "rotateY(180deg)",
             background: prize.color === 'orange' 
-              ? 'linear-gradient(135deg, #FEEB09 0%, #FEEB09 50%, #FFF04D 100%)'
+              ? 'linear-gradient(135deg, #40B2A4 0%, #40B2A4 50%, #40B2A4 100%)'
               : 'linear-gradient(135deg, #24366E 0%, #2E4A8C 50%, #1A264A 100%)'
           }}
         >
@@ -197,7 +197,7 @@ const PrizesSection = () => (
   <section className="py-24 bg-gradient-to-br from-white to-[#F8F9FA] relative overflow-hidden">
     {/* Background decorative elements */}
     <div className="absolute inset-0 overflow-hidden">
-      <div className="absolute top-32 right-1/4 w-72 h-72 bg-[#FEEB09]/3 rounded-full blur-3xl animate-float-elegant"></div>
+      <div className="absolute top-32 right-1/4 w-72 h-72 bg-[#40B2A4]/3 rounded-full blur-3xl animate-float-elegant"></div>
       <div className="absolute bottom-32 left-1/4 w-72 h-72 bg-[#24366E]/3 rounded-full blur-3xl animate-float-elegant" style={{ animationDelay: '2s' }}></div>
     </div>
     
@@ -214,7 +214,7 @@ const PrizesSection = () => (
         >
           Des prix pour <span className="text-gradient">récompenser</span> l'innovation
         </h2>
-        <div className="w-24 h-1 bg-gradient-to-r from-[#FEEB09] to-[#24366E] mx-auto rounded-full mb-6"></div>
+        <div className="w-24 h-1 bg-gradient-to-r from-[#40B2A4] to-[#24366E] mx-auto rounded-full mb-6"></div>
         <p 
           className="text-[#6C757D] max-w-2xl mx-auto text-lg leading-relaxed"
           style={{ fontFamily: 'DM Sans, sans-serif' }}
@@ -230,7 +230,7 @@ const PrizesSection = () => (
       </div>
 
     {/* Decorative bottom gradient */}
-    <div className="absolute bottom-0 left-0 right-0 h-2 bg-gradient-to-r from-[#FEEB09] via-[#24366E] to-[#FEEB09]"></div>
+    <div className="absolute bottom-0 left-0 right-0 h-2 bg-gradient-to-r from-[#40B2A4] via-[#24366E] to-[#40B2A4]"></div>
   </section>
 );
 );

@@ -26,15 +26,15 @@ const normalizeUrl = (url: string) => {
 };
 
 const tierGradients: Record<string, string> = {
-  or: 'from-[#FFD700] to-[#FFA500]',
-  argent: 'from-[#C0C0C0] to-[#808080]',
-  bronze: 'from-[#CD7F32] to-[#8B4513]',
+  or: 'from-[#40B2A4] to-[#D25238]',
+  argent: 'from-[#24366E] to-[#24366E]',
+  bronze: 'from-[#7E245C] to-[#7E245C]',
 };
 
 const tierColors: Record<string, string> = {
-  or: 'border-[#FFD700] bg-[#FFD700]/5',
-  argent: 'border-[#C0C0C0] bg-[#C0C0C0]/5',
-  bronze: 'border-[#CD7F32] bg-[#CD7F32]/5',
+  or: 'border-[#40B2A4] bg-[#40B2A4]/5',
+  argent: 'border-[#24366E] bg-[#24366E]/5',
+  bronze: 'border-[#7E245C] bg-[#7E245C]/5',
 };
 
 const tierIcons: Record<string, any> = {
@@ -80,7 +80,7 @@ const Partenaires = () => {
       <div className="min-h-screen bg-gradient-to-br from-[#F8F9FA] to-white">
         {/* Hero Section */}
         <div className="relative overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-br from-[#FEEB09]/5 via-[#24366E]/5 to-transparent"></div>
+          <div className="absolute inset-0 bg-gradient-to-br from-[#40B2A4]/5 via-[#24366E]/5 to-transparent"></div>
           
           {/* Globe decorations */}
           <motion.div 
@@ -141,7 +141,7 @@ const Partenaires = () => {
           
           {isLoading ? (
             <div className="text-center py-12">
-              <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-[#FEEB09]"></div>
+              <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-[#40B2A4]"></div>
               <p className="text-[#6C757D] mt-4">Chargement des partenaires...</p>
             </div>
           ) : error ? (

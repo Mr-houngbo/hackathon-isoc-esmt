@@ -32,9 +32,9 @@ const Dashboard = () => {
 
   const stats = [
     { icon: Users, label: "Équipes inscrites", value: totalEquipes, color: "text-[#24366E]", change: `${((totalEquipes / 100) * 100).toFixed(1)}%` },
-    { icon: UserCheck, label: "Équipes sélectionnées", value: selectionnees, color: "text-[#FEEB09]", change: `${totalEquipes > 0 ? '+' : ''}${selectionnees}` },
+    { icon: UserCheck, label: "Équipes sélectionnées", value: selectionnees, color: "text-[#40B2A4]", change: `${totalEquipes > 0 ? '+' : ''}${selectionnees}` },
     { icon: BarChart3, label: "Total participants", value: totalMembres, color: "text-[#6C757D]", change: `${((totalMembres / 100) * 100).toFixed(1)}%` },
-    { icon: TrendingUp, label: "Ratio H/F", value: `${genreStats.hommes}/${genreStats.femmes}`, color: "text-[#FEEB09]", change: "N/A" },
+    { icon: TrendingUp, label: "Ratio H/F", value: `${genreStats.hommes}/${genreStats.femmes}`, color: "text-[#40B2A4]", change: "N/A" },
     { icon: Activity, label: "Taux de sélection", value: `${totalEquipes > 0 ? ((selectionnees / totalEquipes) * 100).toFixed(1) : 0}%`, color: "text-[#24366E]", change: "N/A" },
   ];
 
@@ -66,7 +66,7 @@ const Dashboard = () => {
       <AdminLayout>
         <div className="flex items-center justify-center min-h-screen">
           <div className="text-center">
-            <p className="text-[#DC2626] text-lg font-bold mb-4">Erreur de chargement</p>
+            <p className="text-[#D25238] text-lg font-bold mb-4">Erreur de chargement</p>
             <p className="text-[#6C757D]">{error.message}</p>
           </div>
         </div>
@@ -78,7 +78,7 @@ const Dashboard = () => {
     <AdminLayout>
       <div className="min-h-screen bg-gradient-to-br from-[#F8F9FA] to-white">
         {/* Header */}
-        <div className="bg-gradient-to-r from-[#24366E]/10 to-[#FEEB09]/10 backdrop-blur-sm border-b border-[#E9ECEF]/20">
+        <div className="bg-gradient-to-r from-[#24366E]/10 to-[#FFA07A]/10 backdrop-blur-sm border-b border-[#FFA07A]/20">
           <div className="container py-6">
             <div className="flex items-center justify-between">
               <motion.div
@@ -108,7 +108,7 @@ const Dashboard = () => {
                     className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
                       selectedPeriod === period 
                         ? 'bg-[#24366E] text-white' 
-                        : 'bg-white text-[#6C757D] border border-[#E9ECEF] hover:bg-[#F8F9FA]'
+                        : 'bg-white text-[#6C757D] border border-[#FFA07A] hover:bg-[#F8F9FA]'
                     }`}
                     style={{ fontFamily: 'DM Sans, sans-serif' }}
                   >
@@ -134,15 +134,15 @@ const Dashboard = () => {
                   initial={{ opacity: 0, scale: 0.8 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
-                  className="relative overflow-hidden rounded-2xl border border-[#E9ECEF] bg-white p-6 hover:border-[#FEEB09]/50 hover:shadow-xl hover:shadow-[#FEEB09]/10 transition-all duration-300"
+                  className="relative overflow-hidden rounded-2xl border border-[#FFA07A] bg-white p-6 hover:border-[#FFA07A]/50 hover:shadow-xl hover:shadow-[#FFA07A]/10 transition-all duration-300"
                 >
                   {/* Background decoration */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-[#FEEB09]/5 opacity-0"></div>
+                  <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-[#FFA07A]/5 opacity-0"></div>
                   
                   <div className="relative z-10">
                     <div className="flex items-center justify-between mb-4">
                       <div className="flex items-center gap-3">
-                        <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-[#24366E]/10 to-[#FEEB09]/10 flex items-center justify-center">
+                        <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-[#24366E]/10 to-[#FFA07A]/10 flex items-center justify-center">
                           <stat.icon size={24} className="text-[#24366E]" />
                         </div>
                         <div>
@@ -162,7 +162,7 @@ const Dashboard = () => {
                       </div>
                       {stat.change && stat.change !== 'N/A' && (
                         <div className={`px-2 py-1 rounded-full text-xs font-bold ${
-                          stat.change.startsWith('+') ? 'bg-[#24366E] text-white' : 'bg-[#FEEB09] text-white'
+                          stat.change.startsWith('+') ? 'bg-[#24366E] text-white' : 'bg-[#FFA07A] text-white'
                         }`}>
                           {stat.change}
                         </div>
@@ -182,7 +182,7 @@ const Dashboard = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
           >
-            <div className="rounded-2xl border border-[#E9ECEF] bg-white p-6">
+            <div className="rounded-2xl border border-[#FFA07A] bg-white p-6">
               <div className="flex items-center justify-between mb-6">
                 <h2 
                   className="font-display text-xl font-bold text-[#212529]"
@@ -191,7 +191,7 @@ const Dashboard = () => {
                   Activité Récente
                 </h2>
                 <div className="flex items-center gap-2">
-                  <Activity size={20} className="text-[#FEEB09]" />
+                  <Activity size={20} className="text-[#FFA07A]" />
                   <span className="text-sm text-[#6C757D]" style={{ fontFamily: 'DM Sans, sans-serif' }}>Dernières inscriptions</span>
                 </div>
               </div>
@@ -199,7 +199,7 @@ const Dashboard = () => {
               <div className="overflow-x-auto">
                 <table className="w-full">
                   <thead>
-                    <tr className="border-b border-[#E9ECEF]">
+                    <tr className="border-b border-[#FFA07A]">
                       <th className="text-left py-3 px-4 text-sm font-bold text-[#6C757D]" style={{ fontFamily: 'Sora, sans-serif' }}>Équipe</th>
                       <th className="text-left py-3 px-4 text-sm font-bold text-[#6C757D]" style={{ fontFamily: 'Sora, sans-serif' }}>Type</th>
                       <th className="text-left py-3 px-4 text-sm font-bold text-[#6C757D]" style={{ fontFamily: 'Sora, sans-serif' }}>Membres</th>
@@ -209,7 +209,7 @@ const Dashboard = () => {
                   </thead>
                   <tbody>
                     {recentActivity?.map((eq) => (
-                      <tr key={eq.id} className="border-b border-[#E9ECEF]/50 hover:bg-[#F8F9FA] transition-colors">
+                      <tr key={eq.id} className="border-b border-[#FFA07A]/50 hover:bg-[#F8F9FA] transition-colors">
                         <td className="py-3 px-4">
                           <span 
                             className="font-medium text-[#212529]"
@@ -220,7 +220,7 @@ const Dashboard = () => {
                         </td>
                         <td className="py-3 px-4">
                           <span className={`px-3 py-1 rounded-full text-xs font-bold ${
-                            eq.type === 'equipe' ? 'bg-[#FEEB09]/10 text-[#FEEB09]' : 'bg-[#24366E]/10 text-[#24366E]'
+                            eq.type === 'equipe' ? 'bg-[#40B2A4]/10 text-[#40B2A4]' : 'bg-[#24366E]/10 text-[#24366E]'
                           }`}>
                             {eq.type === 'equipe' ? 'Équipe' : 'Individuel'}
                           </span>
@@ -238,7 +238,7 @@ const Dashboard = () => {
                         </td>
                         <td className="py-3 px-4">
                           <span className={`px-3 py-1 rounded-full text-xs font-bold ${
-                            eq.status === 'Sélectionnée' ? 'bg-[#24366E]/10 text-[#24366E]' : 'bg-[#FEEB09]/10 text-[#FEEB09]'
+                            eq.status === 'Sélectionnée' ? 'bg-[#24366E]/10 text-[#24366E]' : 'bg-[#40B2A4]/10 text-[#40B2A4]'
                           }`}>
                             {eq.status}
                           </span>

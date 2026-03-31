@@ -14,7 +14,7 @@ const Etape1Couverture = ({ data, onChange, errors = {} }: Props) => (
     {/* Hero Section */}
     <div className="relative overflow-hidden rounded-2xl">
       <img src={heroBg} alt="Hackathon ISOC-ESMT" className="h-64 w-full object-cover" />
-      <div className="absolute inset-0 bg-gradient-to-b from-[#FEEB09]/90 via-[#24366E]/80 to-[#212529]/95 flex items-center justify-center">
+      <div className="absolute inset-0 bg-gradient-to-b from-[#40B2A4]/90 via-[#24366E]/80 to-[#212529]/95 flex items-center justify-center">
         <div className="text-center text-white p-8">
           <motion.h2 
             className="font-display text-3xl sm:text-4xl font-bold mb-4"
@@ -42,15 +42,15 @@ const Etape1Couverture = ({ data, onChange, errors = {} }: Props) => (
     {/* Key Info Cards */}
     <div className="grid sm:grid-cols-3 gap-6">
       <motion.div 
-        className="bg-white rounded-2xl border border-[#E9ECEF] p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:border-[#FEEB09]/50"
+        className="bg-white rounded-2xl border border-[#E9ECEF] p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:border-[#40B2A4]/50"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.1 }}
         whileHover={{ y: -4 }}
       >
         <div className="flex items-center gap-4 mb-4">
-          <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-[#FEEB09]/10 to-[#24366E]/10 flex items-center justify-center">
-            <Calendar size={20} className="text-[#FEEB09]" />
+          <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-[#40B2A4]/10 to-[#24366E]/10 flex items-center justify-center">
+            <Calendar size={20} className="text-[#40B2A4]" />
           </div>
           <div>
             <h3 className="font-display text-lg font-bold text-[#212529]" style={{ fontFamily: 'Sora, sans-serif' }}>
@@ -86,15 +86,15 @@ const Etape1Couverture = ({ data, onChange, errors = {} }: Props) => (
       </motion.div>
 
       <motion.div 
-        className="bg-white rounded-2xl border border-[#E9ECEF] p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:border-[#FEEB09]/50"
+        className="bg-white rounded-2xl border border-[#E9ECEF] p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:border-[#40B2A4]/50"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.3 }}
         whileHover={{ y: -4 }}
       >
         <div className="flex items-center gap-4 mb-4">
-          <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-[#FEEB09]/10 to-[#24366E]/10 flex items-center justify-center">
-            <Clock size={20} className="text-[#FEEB09]" />
+          <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-[#40B2A4]/10 to-[#24366E]/10 flex items-center justify-center">
+            <Clock size={20} className="text-[#40B2A4]" />
           </div>
           <div>
             <h3 className="font-display text-lg font-bold text-[#212529]" style={{ fontFamily: 'Sora, sans-serif' }}>
@@ -117,21 +117,21 @@ const Etape1Couverture = ({ data, onChange, errors = {} }: Props) => (
     >
       <div className="bg-white rounded-2xl border border-[#E9ECEF] p-6 shadow-lg">
         <h3 className="font-display text-lg font-semibold text-[#212529] mb-4 flex items-center gap-2" style={{ fontFamily: 'Sora, sans-serif' }}>
-          <CheckSquare size={20} className="text-[#FEEB09]" />
+          <CheckSquare size={20} className="text-[#40B2A4]" />
           Participation
         </h3>
         
-        <label className="flex items-start gap-4 cursor-pointer group p-4 rounded-xl hover:bg-[#FEEB09]/5 transition-colors">
+        <label className="flex items-start gap-4 cursor-pointer group p-4 rounded-xl hover:bg-[#40B2A4]/5 transition-colors">
           <input
             type="checkbox"
             checked={data.accepte_conditions}
             onChange={(e) => onChange({ accepte_conditions: e.target.checked })}
-            className="mt-1 h-5 w-5 rounded border border-[#E9ECEF] bg-white text-[#FEEB09] focus:ring-2 focus:ring-[#FEEB09]/20 focus:ring-offset-0"
+            className="mt-1 h-5 w-5 rounded border border-[#E9ECEF] bg-white text-[#40B2A4] focus:ring-2 focus:ring-[#40B2A4]/20 focus:ring-offset-0"
           />
           <div className="flex-1">
             <span className="text-sm text-[#6C757D] leading-relaxed" style={{ fontFamily: 'DM Sans, sans-serif' }}>
               J'ai lu et j'accepte les{" "}
-              <a href="/termes-conditions" className="text-[#24366E] hover:text-[#FEEB09] underline transition-colors font-medium" style={{ fontFamily: 'DM Sans, sans-serif' }} target="_blank" rel="noopener noreferrer">
+              <a href="/termes-conditions" className="text-[#24366E] hover:text-[#40B2A4] underline transition-colors font-medium" style={{ fontFamily: 'DM Sans, sans-serif' }} target="_blank" rel="noopener noreferrer">
                 termes et conditions
               </a>
               <span className="text-[#DC2626] ml-1">*</span>
@@ -146,12 +146,12 @@ const Etape1Couverture = ({ data, onChange, errors = {} }: Props) => (
       </div>
 
       <div className="bg-white rounded-2xl border border-[#E9ECEF] p-6 shadow-lg">
-        <label className="flex items-start gap-4 cursor-pointer group p-4 rounded-xl hover:bg-[#FEEB09]/5 transition-colors">
+        <label className="flex items-start gap-4 cursor-pointer group p-4 rounded-xl hover:bg-[#40B2A4]/5 transition-colors">
           <input
             type="checkbox"
             checked={data.autorise_photos}
             onChange={(e) => onChange({ autorise_photos: e.target.checked })}
-            className="mt-1 h-5 w-5 rounded border border-[#E9ECEF] bg-white text-[#FEEB09] focus:ring-2 focus:ring-[#FEEB09]/20 focus:ring-offset-0"
+            className="mt-1 h-5 w-5 rounded border border-[#E9ECEF] bg-white text-[#40B2A4] focus:ring-2 focus:ring-[#40B2A4]/20 focus:ring-offset-0"
           />
           <div className="flex-1">
             <span className="text-sm text-[#6C757D] leading-relaxed" style={{ fontFamily: 'DM Sans, sans-serif' }}>

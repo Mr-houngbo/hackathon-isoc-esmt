@@ -53,7 +53,7 @@ const Etape4Membres = ({ data, onChange }: Props) => {
         transition={{ duration: 0.5 }}
       >
         <div className="flex items-center justify-center gap-3 mb-4">
-          <div className="w-12 h-12 rounded-full bg-gradient-to-r from-[#FEEB09] to-[#24366E] flex items-center justify-center">
+          <div className="w-12 h-12 rounded-full bg-gradient-to-r from-[#40B2A4] to-[#24366E] flex items-center justify-center">
             <UserPlus size={24} className="text-white" />
           </div>
           <h3 
@@ -69,7 +69,7 @@ const Etape4Membres = ({ data, onChange }: Props) => {
         >
           Informations sur les autres membres
         </p>
-        <div className="w-16 h-1 bg-gradient-to-r from-[#FEEB09] to-[#24366E] mx-auto rounded-full mt-4"></div>
+        <div className="w-16 h-1 bg-gradient-to-r from-[#40B2A4] to-[#24366E] mx-auto rounded-full mt-4"></div>
       </motion.div>
 
       {/* Members Grid */}
@@ -89,8 +89,8 @@ const Etape4Membres = ({ data, onChange }: Props) => {
               >
                 Membre {idx + 2}
               </h4>
-              <div className="w-8 h-8 rounded-full bg-gradient-to-r from-[#FEEB09]/10 to-[#24366E]/10 flex items-center justify-center">
-                <UserIcon size={16} className="text-[#FEEB09]" />
+              <div className="w-8 h-8 rounded-full bg-gradient-to-r from-[#40B2A4]/10 to-[#24366E]/10 flex items-center justify-center">
+                <UserIcon size={16} className="text-[#40B2A4]" />
               </div>
             </div>
 
@@ -109,7 +109,7 @@ const Etape4Membres = ({ data, onChange }: Props) => {
                     value={membre.nom_prenom || ''}
                     onChange={(e) => updateMembre(idx, 'nom_prenom', e.target.value)}
                     placeholder="Nom complet"
-                    className="w-full px-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FEEB09]/20 focus:border-[#FEEB09]/50 transition-all"
+                    className="w-full px-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#40B2A4]/20 focus:border-[#40B2A4]/50 transition-all"
                     style={{ fontFamily: 'DM Sans, sans-serif' }}
                   />
                 </label>
@@ -127,7 +127,7 @@ const Etape4Membres = ({ data, onChange }: Props) => {
                   <select
                     value={membre.genre || ''}
                     onChange={(e) => updateMembre(idx, 'genre', e.target.value)}
-                    className="w-full px-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] focus:outline-none focus:ring-2 focus:ring-[#FEEB09]/20 focus:border-[#FEEB09]/50 transition-all"
+                    className="w-full px-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] focus:outline-none focus:ring-2 focus:ring-[#40B2A4]/20 focus:border-[#40B2A4]/50 transition-all"
                     style={{ fontFamily: 'DM Sans, sans-serif' }}
                   >
                     <option value="">Sélectionner</option>
@@ -150,7 +150,7 @@ const Etape4Membres = ({ data, onChange }: Props) => {
                   <select
                     value={membre.filiere || ''}
                     onChange={(e) => updateMembre(idx, 'filiere', e.target.value)}
-                    className="w-full px-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] focus:outline-none focus:ring-2 focus:ring-[#FEEB09]/20 focus:border-[#FEEB09]/50 transition-all"
+                    className="w-full px-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] focus:outline-none focus:ring-2 focus:ring-[#40B2A4]/20 focus:border-[#40B2A4]/50 transition-all"
                     style={{ fontFamily: 'DM Sans, sans-serif' }}
                   >
                     <option value="">Sélectionnez votre filière</option>
@@ -177,7 +177,7 @@ const Etape4Membres = ({ data, onChange }: Props) => {
                     value={membre.telephone || ''}
                     onChange={(e) => updateMembre(idx, 'telephone', e.target.value)}
                     placeholder="+221 XX XX XX XX"
-                    className="w-full px-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FEEB09]/20 focus:border-[#FEEB09]/50 transition-all"
+                    className="w-full px-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#40B2A4]/20 focus:border-[#40B2A4]/50 transition-all"
                     style={{ fontFamily: 'DM Sans, sans-serif' }}
                   />
                 </label>
@@ -197,7 +197,7 @@ const Etape4Membres = ({ data, onChange }: Props) => {
                     value={membre.email || ''}
                     onChange={(e) => updateMembre(idx, 'email', e.target.value)}
                     placeholder="votre.email@exemple.com"
-                    className="w-full px-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#FEEB09]/20 focus:border-[#FEEB09]/50 transition-all"
+                    className="w-full px-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#40B2A4]/20 focus:border-[#40B2A4]/50 transition-all"
                     style={{ fontFamily: 'DM Sans, sans-serif' }}
                   />
                 </label>
@@ -215,7 +215,7 @@ const Etape4Membres = ({ data, onChange }: Props) => {
                   <select
                     value={membre.niveau_etudes || ''}
                     onChange={(e) => updateMembre(idx, 'niveau_etudes', e.target.value)}
-                    className="w-full px-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] focus:outline-none focus:ring-2 focus:ring-[#FEEB09]/20 focus:border-[#FEEB09]/50 transition-all"
+                    className="w-full px-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] focus:outline-none focus:ring-2 focus:ring-[#40B2A4]/20 focus:border-[#40B2A4]/50 transition-all"
                     style={{ fontFamily: 'DM Sans, sans-serif' }}
                   >
                     <option value="">Sélectionnez votre niveau</option>
@@ -240,7 +240,7 @@ const Etape4Membres = ({ data, onChange }: Props) => {
                   <select
                     value={membre.role_equipe || ''}
                     onChange={(e) => updateMembre(idx, 'role_equipe', e.target.value)}
-                    className="w-full px-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] focus:outline-none focus:ring-2 focus:ring-[#FEEB09]/20 focus:border-[#FEEB09]/50 transition-all"
+                    className="w-full px-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] focus:outline-none focus:ring-2 focus:ring-[#40B2A4]/20 focus:border-[#40B2A4]/50 transition-all"
                     style={{ fontFamily: 'DM Sans, sans-serif' }}
                   >
                     <option value="">Sélectionnez un rôle</option>
@@ -260,7 +260,7 @@ const Etape4Membres = ({ data, onChange }: Props) => {
                     type="checkbox"
                     checked={membre.disponible === true}
                     onChange={(e) => updateMembre(idx, 'disponible', e.target.checked)}
-                    className="h-5 w-5 rounded border border-[#E9ECEF] bg-white text-[#FEEB09] focus:ring-2 focus:ring-[#FEEB09]/20 focus:ring-offset-0"
+                    className="h-5 w-5 rounded border border-[#E9ECEF] bg-white text-[#40B2A4] focus:ring-2 focus:ring-[#40B2A4]/20 focus:ring-offset-0"
                   />
                   <div>
                     <span 

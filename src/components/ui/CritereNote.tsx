@@ -96,7 +96,7 @@ const CritereNote = ({
             value={localValue}
             onChange={handleInputChange}
             disabled={disabled}
-            className="flex-1 px-3 py-2 rounded-lg border border-[#E9ECEF] bg-white text-[#212529] focus:outline-none focus:ring-2 focus:ring-[#FEEB09]/20 focus:border-[#FEEB09]/50 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="flex-1 px-3 py-2 rounded-lg border border-[#E9ECEF] bg-white text-[#212529] focus:outline-none focus:ring-2 focus:ring-[#40B2A4]/20 focus:border-[#40B2A4]/50 disabled:opacity-50 disabled:cursor-not-allowed"
             style={{ fontFamily: 'DM Sans, sans-serif' }}
           />
           
