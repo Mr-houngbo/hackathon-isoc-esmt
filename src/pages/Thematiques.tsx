@@ -7,17 +7,14 @@ import {
   Users,
   Leaf,
   Globe,
-  CalendarCheck,
   Utensils,
   QrCode,
   Monitor,
   FileCheck,
-  Code,
   Shield,
   Sparkles,
   Target,
-  Rocket,
-  Trophy
+  Rocket
 } from "lucide-react";
 
 interface Thematique {
@@ -153,97 +150,7 @@ const itemVariants = {
 const Thematiques = () => {
   return (
     <Layout>
-      <div className="min-h-screen bg-gradient-to-br from-[#F8F9FA] to-white">
-        {/* Hero Section */}
-        <div className="relative overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-br from-[#40B2A4]/10 via-[#24366E]/5 to-transparent"></div>
-          
-          {/* Globe decorations */}
-          <motion.div 
-            className="absolute top-20 right-20"
-            animate={{ y: [0, -15, 0], rotate: [0, 8, 0] }}
-            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-          >
-            <GlobeISoc size={80} opacity={0.15} />
-          </motion.div>
-          <motion.div 
-            className="absolute bottom-20 left-20"
-            animate={{ y: [0, -12, 0], rotate: [0, -6, 0] }}
-            transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-          >
-            <GlobeISoc size={60} opacity={0.12} />
-          </motion.div>
-          <motion.div 
-            className="absolute top-1/2 right-1/4"
-            animate={{ y: [0, -8, 0], rotate: [0, 5, 0] }}
-            transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-          >
-            <GlobeISoc size={40} opacity={0.1} />
-          </motion.div>
-
-          <div className="container relative z-10 py-20">
-            <motion.div 
-              className="text-center max-w-4xl mx-auto"
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-            >
-              <div className="inline-flex items-center gap-3 mb-6">
-                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#40B2A4] to-[#24366E] flex items-center justify-center shadow-lg shadow-[#40B2A4]/30">
-                  <Rocket size={32} className="text-white" />
-                </div>
-              </div>
-              
-              <h1 
-                className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold text-[#212529] mb-6"
-                style={{ fontFamily: 'Sora, sans-serif', fontWeight: 800 }}
-              >
-                Thématiques du Hackathon
-              </h1>
-              
-              <p 
-                className="text-xl text-[#6C757D] mb-4 leading-relaxed"
-                style={{ fontFamily: 'DM Sans, sans-serif' }}
-              >
-                Choisissez votre terrain d'innovation parmi nos 12 thématiques soigneusement sélectionnées
-              </p>
-              
-              <div className="flex items-center justify-center gap-2 text-[#40B2A4] font-medium">
-                <Code size={20} />
-                <span style={{ fontFamily: 'DM Sans, sans-serif' }}>
-                  Innovation • Technologie • Impact
-                </span>
-              </div>
-
-              <motion.div 
-                className="mt-8 flex flex-wrap justify-center gap-4"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.3 }}
-              >
-                <div className="flex items-center gap-2 bg-white px-4 py-2 rounded-full shadow-sm border border-[#E9ECEF]">
-                  <Users size={18} className="text-[#40B2A4]" />
-                  <span className="text-sm text-[#6C757D]" style={{ fontFamily: 'DM Sans, sans-serif' }}>
-                    Par équipes de 3-5 personnes
-                  </span>
-                </div>
-                <div className="flex items-center gap-2 bg-white px-4 py-2 rounded-full shadow-sm border border-[#E9ECEF]">
-                  <CalendarCheck size={18} className="text-[#24366E]" />
-                  <span className="text-sm text-[#6C757D]" style={{ fontFamily: 'DM Sans, sans-serif' }}>
-                    48h pour innover
-                  </span>
-                </div>
-                <div className="flex items-center gap-2 bg-white px-4 py-2 rounded-full shadow-sm border border-[#E9ECEF]">
-                  <Trophy size={18} className="text-[#D25238]" />
-                  <span className="text-sm text-[#6C757D]" style={{ fontFamily: 'DM Sans, sans-serif' }}>
-                    Prix à gagner
-                  </span>
-                </div>
-              </motion.div>
-            </motion.div>
-          </div>
-        </div>
-
+      <div className="min-h-screen bg-gradient-to-br from-[#F8F9FA] to-white pt-16">
         {/* Thematiques Grid */}
         <div className="container py-16 relative">
           {/* Decorative elements */}
