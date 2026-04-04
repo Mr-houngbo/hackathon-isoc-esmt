@@ -156,7 +156,7 @@ const CTASection = () => (
             style={{ fontFamily: 'DM Sans, sans-serif' }}
           >
             <Timer size={14} className="text-white" />
-            Les inscriptions ferment le 28 Mars 2026
+            Les inscriptions ferment le 10 Avril 2026 à 23h59
           </motion.p>
         </div>
         
