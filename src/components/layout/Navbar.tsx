@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 
 const navLinks = [
   { label: "Accueil", path: "/" },
+  { label: "Thématiques", path: "/thematiques" },
   { label: "Inscription", path: "/inscription" },
   { label: "Équipes", path: "/equipes-selectionnees" },
   { label: "Agenda", path: "/agenda" },
@@ -101,19 +102,24 @@ const Navbar = () => {
                 ))}
               </div>
               
-              {/* Lien restant + CTA */}
-              <Link
-                to="/galerie"
-                onClick={() => setOpen(false)}
-                className={`px-4 py-3 rounded-lg text-sm font-medium transition-all duration-300 mb-3 ${
-                  location.pathname === "/galerie"
-                    ? "bg-gradient-to-r from-[#24366E] to-[#24366E] text-white shadow-lg shadow-[#24366E]/25"
-                    : "text-[#6C757D] hover:text-[#212529] hover:bg-[#F8F9FA]"
-                }`}
-                style={{ fontFamily: 'DM Sans, sans-serif' }}
-              >
-                {navLinks[6].label}
-              </Link>
+              {/* Liens restants */}
+              <div className="grid grid-cols-2 gap-2 mb-4">
+                {navLinks.slice(6, 8).map((link) => (
+                  <Link
+                    key={link.path}
+                    to={link.path}
+                    onClick={() => setOpen(false)}
+                    className={`px-4 py-3 rounded-lg text-sm font-medium transition-all duration-300 text-center ${
+                      location.pathname === link.path
+                        ? "bg-gradient-to-r from-[#24366E] to-[#24366E] text-white shadow-lg shadow-[#24366E]/25"
+                        : "text-[#6C757D] hover:text-[#212529] hover:bg-[#F8F9FA]"
+                    }`}
+                    style={{ fontFamily: 'DM Sans, sans-serif' }}
+                  >
+                    {link.label}
+                  </Link>
+                ))}
+              </div>
               
               <Link
                 to="/inscription"

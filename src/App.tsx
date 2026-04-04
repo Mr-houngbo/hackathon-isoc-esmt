@@ -18,6 +18,7 @@ import Galerie from "./pages/Galerie";
 import TermesConditions from "./pages/TermesConditions";
 import Privacy from "./pages/Privacy";
 import Cookies from "./pages/Cookies";
+import Thematiques from "./pages/Thematiques";
 import VerificationBadge from "./pages/public/VerificationBadge";
 
 // Admin pages
@@ -63,6 +64,7 @@ const App = () => (
               <Route path="/galerie" element={<Galerie />} />
               <Route path="/termes-conditions" element={<TermesConditions />} />
               <Route path="/privacy" element={<Privacy />} />
+              <Route path="/thematiques" element={<Thematiques />} />
               <Route path="/cookies" element={<Cookies />} />
               <Route path="/verification/:badgeId" element={<VerificationBadge />} />
 
