@@ -3,7 +3,7 @@ import { supabase } from "@/integrations/supabase/client";
 import AdminLayout from "@/components/layout/AdminLayout";
 import { motion } from "framer-motion";
 import { useState } from "react";
-import { Search, Users, User, Mail, Phone, MapPin, GraduationCap, Briefcase, Calendar, Eye, FileText, Globe, Github, Linkedin, Twitter, Download, FileSpreadsheet } from "lucide-react";
+import { Search, Users, User, Mail, Phone, MapPin, GraduationCap, Briefcase, Calendar, Eye, FileText, Globe, Github, Linkedin, Twitter, Download, FileSpreadsheet, Instagram, CheckCircle, XCircle, Heart, Flag, Target, Lightbulb, Layers, TrendingUp, Award, BookOpen, Info, Crown, Tag } from "lucide-react";
 import { jsPDF } from "jspdf";
 import autoTable from "jspdf-autotable";
 
@@ -19,6 +19,13 @@ interface Membre {
   linkedin?: string;
   github?: string;
   twitter?: string;
+  est_chef?: boolean;
+  genre?: 'homme' | 'femme' | 'non_precise';
+  etablissement?: string;
+  competences?: string[];
+  disponible_2_jours?: boolean;
+  accepte_conditions?: boolean;
+  autorise_photos?: boolean;
 }
 
 interface Equipe {
@@ -31,6 +38,21 @@ interface Equipe {
   statut: string;
   created_at: string;
   membres?: Membre[];
+  // Champs projet
+  a_projet?: 'oui' | 'non' | 'en_reflexion';
+  domaine_projet?: string;
+  problematique?: string;
+  solution?: string;
+  technologies?: string;
+  niveau_avancement?: 'concept' | 'esquisse' | 'prototype';
+  contraintes_techniques?: string;
+  niveau_technique?: 'debutant' | 'intermediaire' | 'avance';
+  competences_equipe?: string[];
+  handle_instagram?: string;
+  handle_linkedin?: string;
+  motivation?: string;
+  esperances?: string;
+  source_info?: string;
 }
 
 const GestionInscriptions = () => {
@@ -586,66 +608,344 @@ const GestionInscriptions = () => {
               </div>
               
               <div className="p-6">
-                {/* Contenu détaillé similaire à la carte principale */}
-                {selectedEquipe.nom_projet && (
-                  <div className="mb-6">
-                    <h3 className="font-semibold text-[#212529] mb-2">Nom du projet</h3>
-                    <p className="text-[#6C757D] leading-relaxed">{selectedEquipe.nom_projet}</p>
-                  </div>
-                )}
-
-                {selectedEquipe.description_projet && (
-                  <div className="mb-6">
-                    <h3 className="font-semibold text-[#212529] mb-2">Description du projet</h3>
-                    <p className="text-[#6C757D] leading-relaxed">{selectedEquipe.description_projet}</p>
-                  </div>
-                )}
-
-                {selectedEquipe.technos && selectedEquipe.technos.length > 0 && (
-                  <div className="mb-6">
-                    <h3 className="font-semibold text-[#212529] mb-2">Technologies</h3>
-                    <div className="flex flex-wrap gap-2">
-                      {selectedEquipe.technos.map((techno, idx) => (
-                        <span key={idx} className="px-3 py-1 bg-[#24366E]/10 text-[#24366E] rounded-full text-sm font-medium">
-                          {techno}
-                        </span>
-                      ))}
+                {/* Section Équipe / Candidature */}
+                <div className="mb-8">
+                  <h3 className="font-semibold text-[#212529] mb-4 flex items-center gap-2 text-lg border-b pb-2">
+                    <Info className="w-5 h-5 text-[#24366E]" />
+                    Informations de la candidature
+                  </h3>
+                  
+                  {/* Type de candidature et projet */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                    <div>
+                      <span className="text-sm text-[#6C757D]">Type de candidature:</span>
+                      <p className="font-medium text-[#212529]">
+                        {selectedEquipe.type_candidature === 'individuel' ? 'Individuel' : 'Équipe'}
+                      </p>
+                    </div>
+                    <div>
+                      <span className="text-sm text-[#6C757D]">A un projet:</span>
+                      <p className="font-medium text-[#212529]">
+                        {selectedEquipe.a_projet === 'oui' ? 'Oui' : selectedEquipe.a_projet === 'non' ? 'Non' : 'En réflexion'}
+                      </p>
                     </div>
                   </div>
+
+                  {/* Réseaux sociaux de l'équipe */}
+                  {(selectedEquipe.handle_instagram || selectedEquipe.handle_linkedin) && (
+                    <div className="mb-4">
+                      <span className="text-sm text-[#6C757D]">Réseaux sociaux de l'équipe:</span>
+                      <div className="flex gap-4 mt-1">
+                        {selectedEquipe.handle_instagram && (
+                          <a 
+                            href={`https://instagram.com/${selectedEquipe.handle_instagram.replace('@', '')}`}
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            className="flex items-center gap-1 text-sm text-[#E4405F] hover:text-[#C13584]"
+                          >
+                            <Instagram className="w-4 h-4" />
+                            @{selectedEquipe.handle_instagram.replace('@', '')}
+                          </a>
+                        )}
+                        {selectedEquipe.handle_linkedin && (
+                          <a 
+                            href={selectedEquipe.handle_linkedin}
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            className="flex items-center gap-1 text-sm text-[#0A66C2] hover:text-[#0077B5]"
+                          >
+                            <Linkedin className="w-4 h-4" />
+                            LinkedIn
+                          </a>
+                        )}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Source d'information */}
+                  {selectedEquipe.source_info && (
+                    <div className="mb-4">
+                      <span className="text-sm text-[#6C757D]">Comment avez-vous connu le hackathon?</span>
+                      <p className="font-medium text-[#212529]">{selectedEquipe.source_info}</p>
+                    </div>
+                  )}
+                </div>
+
+                {/* Section Projet (si applicable) */}
+                {(selectedEquipe.a_projet === 'oui' || selectedEquipe.a_projet === 'en_reflexion') && (
+                  <div className="mb-8">
+                    <h3 className="font-semibold text-[#212529] mb-4 flex items-center gap-2 text-lg border-b pb-2">
+                      <Lightbulb className="w-5 h-5 text-[#40B2A4]" />
+                      Détails du projet
+                    </h3>
+                    
+                    {selectedEquipe.nom_projet && (
+                      <div className="mb-4">
+                        <span className="text-sm text-[#6C757D]">Nom du projet:</span>
+                        <p className="font-medium text-[#212529]">{selectedEquipe.nom_projet}</p>
+                      </div>
+                    )}
+
+                    {selectedEquipe.domaine_projet && (
+                      <div className="mb-4">
+                        <span className="text-sm text-[#6C757D]">Domaine du projet:</span>
+                        <p className="font-medium text-[#212529]">{selectedEquipe.domaine_projet}</p>
+                      </div>
+                    )}
+
+                    {selectedEquipe.problematique && (
+                      <div className="mb-4">
+                        <span className="text-sm text-[#6C757D]">Problématique:</span>
+                        <p className="text-[#6C757D] leading-relaxed bg-[#F8F9FA] p-3 rounded-lg mt-1">{selectedEquipe.problematique}</p>
+                      </div>
+                    )}
+
+                    {selectedEquipe.solution && (
+                      <div className="mb-4">
+                        <span className="text-sm text-[#6C757D]">Solution proposée:</span>
+                        <p className="text-[#6C757D] leading-relaxed bg-[#F8F9FA] p-3 rounded-lg mt-1">{selectedEquipe.solution}</p>
+                      </div>
+                    )}
+
+                    {/* Technologies */}
+                    {(selectedEquipe.technos?.length || selectedEquipe.technologies) && (
+                      <div className="mb-4">
+                        <span className="text-sm text-[#6C757D]">Technologies:</span>
+                        <div className="flex flex-wrap gap-2 mt-2">
+                          {selectedEquipe.technos?.map((techno, idx) => (
+                            <span key={idx} className="px-3 py-1 bg-[#24366E]/10 text-[#24366E] rounded-full text-sm font-medium">
+                              {techno}
+                            </span>
+                          ))}
+                          {selectedEquipe.technologies && (
+                            <span className="px-3 py-1 bg-[#40B2A4]/10 text-[#40B2A4] rounded-full text-sm font-medium">
+                              {selectedEquipe.technologies}
+                            </span>
+                          )}
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Niveau d'avancement */}
+                    {selectedEquipe.niveau_avancement && (
+                      <div className="mb-4">
+                        <span className="text-sm text-[#6C757D]">Niveau d'avancement:</span>
+                        <p className="font-medium text-[#212529] capitalize">
+                          {selectedEquipe.niveau_avancement === 'concept' ? 'Concept' : 
+                           selectedEquipe.niveau_avancement === 'esquisse' ? 'Esquisse' : 'Prototype'}
+                        </p>
+                      </div>
+                    )}
+
+                    {selectedEquipe.contraintes_techniques && (
+                      <div className="mb-4">
+                        <span className="text-sm text-[#6C757D]">Contraintes techniques:</span>
+                        <p className="text-[#6C757D] leading-relaxed bg-[#F8F9FA] p-3 rounded-lg mt-1">{selectedEquipe.contraintes_techniques}</p>
+                      </div>
+                    )}
+
+                    {/* Niveau technique et compétences */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                      {selectedEquipe.niveau_technique && (
+                        <div>
+                          <span className="text-sm text-[#6C757D]">Niveau technique:</span>
+                          <p className="font-medium text-[#212529] capitalize">
+                            {selectedEquipe.niveau_technique === 'debutant' ? 'Débutant' : 
+                             selectedEquipe.niveau_technique === 'intermediaire' ? 'Intermédiaire' : 'Avancé'}
+                          </p>
+                        </div>
+                      )}
+                    </div>
+
+                    {selectedEquipe.competences_equipe?.length > 0 && (
+                      <div className="mb-4">
+                        <span className="text-sm text-[#6C757D]">Compétences de l'équipe:</span>
+                        <div className="flex flex-wrap gap-2 mt-2">
+                          {selectedEquipe.competences_equipe.map((comp, idx) => (
+                            <span key={idx} className="px-3 py-1 bg-[#FFA07A]/10 text-[#D25238] rounded-full text-sm font-medium">
+                              {comp}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
                 )}
 
+                {/* Motivation et Espérances */}
+                {(selectedEquipe.motivation || selectedEquipe.esperances) && (
+                  <div className="mb-8">
+                    <h3 className="font-semibold text-[#212529] mb-4 flex items-center gap-2 text-lg border-b pb-2">
+                      <Heart className="w-5 h-5 text-[#D25238]" />
+                      Motivations et espérances
+                    </h3>
+                    
+                    {selectedEquipe.motivation && (
+                      <div className="mb-4">
+                        <span className="text-sm text-[#6C757D]">Motivation:</span>
+                        <p className="text-[#6C757D] leading-relaxed bg-[#F8F9FA] p-3 rounded-lg mt-1">{selectedEquipe.motivation}</p>
+                      </div>
+                    )}
+
+                    {selectedEquipe.esperances && (
+                      <div className="mb-4">
+                        <span className="text-sm text-[#6C757D]">Espérances:</span>
+                        <p className="text-[#6C757D] leading-relaxed bg-[#F8F9FA] p-3 rounded-lg mt-1">{selectedEquipe.esperances}</p>
+                      </div>
+                    )}
+                  </div>
+                )}
+
+                {/* Section Membres */}
                 {selectedEquipe.membres && selectedEquipe.membres.length > 0 && (
                   <div>
-                    <h3 className="font-semibold text-[#212529] mb-4">Membres ({selectedEquipe.membres.length})</h3>
-                    <div className="space-y-4">
+                    <h3 className="font-semibold text-[#212529] mb-4 flex items-center gap-2 text-lg border-b pb-2">
+                      <Users className="w-5 h-5 text-[#24366E]" />
+                      Membres ({selectedEquipe.membres.length})
+                    </h3>
+                    <div className="space-y-6">
                       {selectedEquipe.membres.map((membre) => (
-                        <div key={membre.id} className="bg-[#F8F9FA] rounded-lg p-4 border border-[#E9ECEF]">
-                          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                            <div className="space-y-1">
-                              <div className="font-medium text-[#212529]">{membre.nom_prenom}</div>
-                              <div className="text-sm text-[#6C757D]">{membre.role_equipe}</div>
+                        <div key={membre.id} className="bg-[#F8F9FA] rounded-xl p-5 border border-[#E9ECEF]">
+                          {/* Header membre avec badge chef */}
+                          <div className="flex items-center gap-2 mb-4">
+                            {membre.est_chef && (
+                              <span className="flex items-center gap-1 px-3 py-1 bg-[#24366E] text-white rounded-full text-xs font-medium">
+                                <Crown className="w-3 h-3" />
+                                Chef d'équipe
+                              </span>
+                            )}
+                            {membre.genre && (
+                              <span className={`px-3 py-1 rounded-full text-xs font-medium ${
+                                membre.genre === 'homme' ? 'bg-blue-100 text-blue-700' : 
+                                membre.genre === 'femme' ? 'bg-pink-100 text-pink-700' : 
+                                'bg-gray-100 text-gray-700'
+                              }`}>
+                              {membre.genre === 'homme' ? 'Homme' : membre.genre === 'femme' ? 'Femme' : 'Non précisé'}
+                            </span>
+                            )}
+                          </div>
+
+                          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                            {/* Nom et rôle */}
+                            <div className="space-y-2">
+                              <div>
+                                <span className="text-xs text-[#6C757D]">Nom complet</span>
+                                <p className="font-semibold text-[#212529]">{membre.nom_prenom}</p>
+                              </div>
+                              <div>
+                                <span className="text-xs text-[#6C757D]">Rôle</span>
+                                <p className="text-sm text-[#6C757D]">{membre.role_equipe}</p>
+                              </div>
                             </div>
-                            <div className="text-sm text-[#6C757D]">{membre.email}</div>
-                            <div className="text-sm text-[#6C757D]">{membre.telephone}</div>
-                            <div className="text-sm text-[#6C757D]">{membre.filiere}</div>
-                            <div className="text-sm text-[#6C757D]">{membre.niveau_etudes}</div>
-                            <div className="text-sm text-[#6C757D]">{membre.ecole}</div>
+                            
+                            {/* Contact */}
+                            <div className="space-y-2">
+                              <div>
+                                <span className="text-xs text-[#6C757D]">Email</span>
+                                <p className="text-sm text-[#212529]">{membre.email}</p>
+                              </div>
+                              {membre.telephone && (
+                                <div>
+                                  <span className="text-xs text-[#6C757D]">Téléphone</span>
+                                  <p className="text-sm text-[#6C757D]">{membre.telephone}</p>
+                                </div>
+                              )}
+                            </div>
+                            
+                            {/* Études */}
+                            <div className="space-y-2">
+                              <div>
+                                <span className="text-xs text-[#6C757D]">Filière</span>
+                                <p className="text-sm text-[#212529]">{membre.filiere}</p>
+                              </div>
+                              <div>
+                                <span className="text-xs text-[#6C757D]">Niveau</span>
+                                <p className="text-sm text-[#6C757D]">{membre.niveau_etudes}</p>
+                              </div>
+                            </div>
+
+                            {/* Établissement */}
+                            <div className="space-y-2">
+                              <div>
+                                <span className="text-xs text-[#6C757D]">Établissement</span>
+                                <p className="text-sm text-[#212529]">{membre.etablissement || membre.ecole || 'Non renseigné'}</p>
+                              </div>
+                            </div>
+
+                            {/* Compétences */}
+                            {membre.competences && membre.competences.length > 0 && (
+                              <div className="space-y-2 md:col-span-2">
+                                <span className="text-xs text-[#6C757D]">Compétences</span>
+                                <div className="flex flex-wrap gap-2">
+                                  {membre.competences.map((comp, idx) => (
+                                    <span key={idx} className="px-2 py-1 bg-[#40B2A4]/10 text-[#40B2A4] rounded text-xs font-medium">
+                                      {comp}
+                                    </span>
+                                  ))}
+                                </div>
+                              </div>
+                            )}
+                            
+                            {/* Réseaux sociaux */}
                             <div className="space-y-2">
                               {membre.linkedin && (
-                                <a href={membre.linkedin} target="_blank" rel="noopener noreferrer" className="text-[#0A66C2] hover:text-[#0077B5] text-sm">
+                                <a 
+                                  href={membre.linkedin} 
+                                  target="_blank" 
+                                  rel="noopener noreferrer"
+                                  className="flex items-center gap-2 text-sm text-[#0A66C2] hover:text-[#0077B5]"
+                                >
+                                  <Linkedin className="w-4 h-4" />
                                   LinkedIn
                                 </a>
                               )}
                               {membre.github && (
-                                <a href={membre.github} target="_blank" rel="noopener noreferrer" className="text-[#333] hover:text-[#000] text-sm">
+                                <a 
+                                  href={membre.github} 
+                                  target="_blank" 
+                                  rel="noopener noreferrer"
+                                  className="flex items-center gap-2 text-sm text-[#333] hover:text-[#000]"
+                                >
+                                  <Github className="w-4 h-4" />
                                   GitHub
                                 </a>
                               )}
                               {membre.twitter && (
-                                <a href={membre.twitter} target="_blank" rel="noopener noreferrer" className="text-[#1DA1F2] hover:text-[#0F1419] text-sm">
+                                <a 
+                                  href={membre.twitter} 
+                                  target="_blank" 
+                                  rel="noopener noreferrer"
+                                  className="flex items-center gap-2 text-sm text-[#1DA1F2] hover:text-[#0F1419]"
+                                >
+                                  <Twitter className="w-4 h-4" />
                                   Twitter
                                 </a>
                               )}
+                            </div>
+
+                            {/* Disponibilité et conditions */}
+                            <div className="space-y-2 md:col-span-3">
+                              <div className="flex flex-wrap gap-4 mt-2">
+                                <span className={`flex items-center gap-1 text-xs ${
+                                  membre.disponible_2_jours ? 'text-green-600' : 'text-red-600'
+                                }`}>
+                                  {membre.disponible_2_jours ? (
+                                    <><CheckCircle className="w-3 h-3" /> Disponible les 2 jours</>
+                                  ) : (
+                                    <><XCircle className="w-3 h-3" /> Non disponible les 2 jours</>
+                                  )}
+                                </span>
+                                {membre.accepte_conditions && (
+                                  <span className="flex items-center gap-1 text-xs text-green-600">
+                                    <CheckCircle className="w-3 h-3" /> Conditions acceptées
+                                  </span>
+                                )}
+                                {membre.autorise_photos && (
+                                  <span className="flex items-center gap-1 text-xs text-green-600">
+                                    <CheckCircle className="w-3 h-3" /> Photos autorisées
+                                  </span>
+                                )}
+                              </div>
                             </div>
                           </div>
                         </div>
