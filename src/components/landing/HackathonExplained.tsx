@@ -4,10 +4,10 @@ import { GlobeISoc } from "@/components/ui/GlobeISoc";
 
 const HackathonExplained = () => {
   return (
-    <section className="py-20 bg-gradient-to-br from-[#F8F9FA] to-white relative overflow-hidden">
-      {/* Globe decorations */}
+    <section className="py-8 sm:py-20 bg-gradient-to-br from-[#F8F9FA] to-white relative overflow-hidden">
+      {/* Globe decorations - hidden on mobile */}
       <motion.div 
-        className="absolute top-10 right-10"
+        className="absolute top-10 right-10 hidden sm:block"
         animate={{ y: [0, -8, 0], rotate: [0, 8, 0] }}
         transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
       >
@@ -28,16 +28,16 @@ const HackathonExplained = () => {
         <GlobeISoc size={35} opacity={0.15} />
       </motion.div>
 
-      <div className="container max-w-6xl mx-auto px-4 relative z-10">
-        {/* Header */}
+      <div className="container max-w-6xl mx-auto px-3 sm:px-4 relative z-10">
+        {/* Header - ultra compact sur mobile */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          className="text-center mb-6 sm:mb-16"
         >
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#40B2A4]/10 rounded-full mb-4">
+          <div className="hidden sm:inline-flex items-center gap-2 px-4 py-2 bg-[#40B2A4]/10 rounded-full mb-4">
             <Lightbulb className="text-[#40B2A4]" size={20} />
             <span 
               className="text-[#40B2A4] font-semibold text-sm"
@@ -47,41 +47,41 @@ const HackathonExplained = () => {
             </span>
           </div>
           <h2 
-            className="font-display text-4xl font-bold text-[#212529] mb-4"
+            className="font-display text-xl sm:text-4xl font-bold text-[#212529] mb-2 sm:mb-4"
             style={{ fontFamily: 'Sora, sans-serif', fontWeight: 800 }}
           >
             C'est quoi, un hackathon ?
           </h2>
           <p 
-            className="text-[#6C757D] text-lg max-w-3xl mx-auto text-justify"
+            className="text-[#6C757D] text-xs sm:text-lg max-w-3xl mx-auto hidden sm:block"
             style={{ fontFamily: 'DM Sans, sans-serif' }}
           >
             Plongez dans l'univers de l'innovation accélérée où la créativité rencontre la technologie
           </p>
         </motion.div>
 
-        {/* Definition Cards */}
-        <div className="grid grid-cols-2 gap-2 sm:gap-4 md:grid-cols-2 lg:gap-8 mb-16">
+        {/* Definition Cards - ultra compact sur mobile */}
+        <div className="grid grid-cols-2 gap-2 sm:gap-4 md:grid-cols-2 lg:gap-8 mb-6 sm:mb-16">
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
             viewport={{ once: true }}
-            className="bg-white rounded-lg sm:rounded-xl border border-[#E9ECEF] p-2 sm:p-3 lg:p-6 shadow-lg hover:shadow-xl transition-all duration-300"
+            className="bg-white rounded-lg sm:rounded-xl border border-[#E9ECEF] p-2 sm:p-3 lg:p-6 shadow-md sm:shadow-lg hover:shadow-xl transition-all duration-300"
           >
-            <div className="flex items-center gap-1 sm:gap-3 mb-2 sm:mb-4">
-              <div className="w-8 h-8 sm:w-12 sm:h-12 lg:w-16 lg:h-16 rounded-lg sm:rounded-xl lg:rounded-2xl bg-gradient-to-r from-[#40B2A4] to-[#24366E] flex items-center justify-center">
-                <Code className="text-white" size={16} />
+            <div className="flex items-center gap-1 sm:gap-3 mb-1 sm:mb-4">
+              <div className="w-6 h-6 sm:w-12 sm:h-12 lg:w-16 lg:h-16 rounded-lg sm:rounded-xl lg:rounded-2xl bg-gradient-to-r from-[#40B2A4] to-[#24366E] flex items-center justify-center">
+                <Code className="text-white" size={12} />
               </div>
               <div>
                 <h3 
-                  className="font-display text-sm sm:text-lg lg:text-2xl font-bold text-[#212529]"
+                  className="font-display text-xs sm:text-lg lg:text-2xl font-bold text-[#212529]"
                   style={{ fontFamily: 'Sora, sans-serif' }}
                 >
                   Définition
                 </h3>
                 <p 
-                  className="text-[#40B2A4] font-semibold text-xs sm:text-sm"
+                  className="text-[#40B2A4] font-semibold text-[10px] sm:text-sm hidden sm:block"
                   style={{ fontFamily: 'DM Sans, sans-serif' }}
                 >
                   Innovation en temps limité
@@ -89,10 +89,11 @@ const HackathonExplained = () => {
               </div>
             </div>
             <p 
-              className="text-[#6C757D] text-xs sm:text-sm lg:text-base leading-relaxed text-justify"
+              className="text-[#6C757D] text-[10px] sm:text-sm lg:text-base leading-relaxed"
               style={{ fontFamily: 'DM Sans, sans-serif' }}
             >
-              Un hackathon est un événement intensif où des équipes développent des solutions innovantes en peu de temps. "Hack" (solution créative) + "marathon" (endurance) = course contre la montre pour transformer des idées en prototypes !
+              <span className="hidden sm:inline">Un hackathon est un événement intensif où des équipes développent des solutions innovantes en peu de temps. "Hack" (solution créative) + "marathon" (endurance) = course contre la montre pour transformer des idées en prototypes !</span>
+              <span className="sm:hidden">Événement intensif où des équipes créent des solutions innovantes en peu de temps.</span>
             </p>
           </motion.div>
 
@@ -101,21 +102,21 @@ const HackathonExplained = () => {
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.3 }}
             viewport={{ once: true }}
-            className="bg-white rounded-lg sm:rounded-xl border border-[#E9ECEF] p-2 sm:p-3 lg:p-6 shadow-lg hover:shadow-xl transition-all duration-300"
+            className="bg-white rounded-lg sm:rounded-xl border border-[#E9ECEF] p-2 sm:p-3 lg:p-6 shadow-md sm:shadow-lg hover:shadow-xl transition-all duration-300"
           >
-            <div className="flex items-center gap-1 sm:gap-3 mb-2 sm:mb-4">
-              <div className="w-8 h-8 sm:w-12 sm:h-12 lg:w-16 lg:h-16 rounded-lg sm:rounded-xl lg:rounded-2xl bg-gradient-to-r from-[#40B2A4] to-[#24366E] flex items-center justify-center">
-                <Target className="text-white" size={16} />
+            <div className="flex items-center gap-1 sm:gap-3 mb-1 sm:mb-4">
+              <div className="w-6 h-6 sm:w-12 sm:h-12 lg:w-16 lg:h-16 rounded-lg sm:rounded-xl lg:rounded-2xl bg-gradient-to-r from-[#40B2A4] to-[#24366E] flex items-center justify-center">
+                <Target className="text-white" size={12} />
               </div>
               <div>
                 <h3 
-                  className="font-display text-sm sm:text-lg lg:text-2xl font-bold text-[#212529]"
+                  className="font-display text-xs sm:text-lg lg:text-2xl font-bold text-[#212529]"
                   style={{ fontFamily: 'Sora, sans-serif' }}
                 >
                   Objectif
                 </h3>
                 <p 
-                  className="text-[#40B2A4] font-semibold text-xs sm:text-sm"
+                  className="text-[#40B2A4] font-semibold text-[10px] sm:text-sm hidden sm:block"
                   style={{ fontFamily: 'DM Sans, sans-serif' }}
                 >
               Résoudre des problèmes réels
@@ -123,10 +124,11 @@ const HackathonExplained = () => {
               </div>
             </div>
             <p 
-              className="text-[#6C757D] text-xs sm:text-sm lg:text-base leading-relaxed text-justify"
+              className="text-[#6C757D] text-[10px] sm:text-sm lg:text-base leading-relaxed"
               style={{ fontFamily: 'DM Sans, sans-serif' }}
             >
-              L'objectif n'est pas juste de coder, mais de créer de la valeur. Les équipes reçoivent des défis concrets des partenaires et doivent imaginer, concevoir et développer des solutions qui répondent à de vrais besoins du marché.
+              <span className="hidden sm:inline">L'objectif n'est pas juste de coder, mais de créer de la valeur. Les équipes reçoivent des défis concrets des partenaires et doivent imaginer, concevoir et développer des solutions qui répondent à de vrais besoins du marché.</span>
+              <span className="sm:hidden">Créer de la valeur en résolvant des défis concrets proposés par les partenaires.</span>
             </p>
           </motion.div>
         </div>

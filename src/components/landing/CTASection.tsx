@@ -4,7 +4,9 @@ import { ArrowRight, Rocket, Sparkles, Timer } from "lucide-react";
 import { GlobeISoc } from "@/components/ui/GlobeISoc";
 
 const CTASection = () => (
-  <section className="py-24 bg-gradient-to-br from-white to-[#F8F9FA] relative overflow-hidden hidden lg:block">
+  <>
+    {/* Desktop version */}
+    <section className="py-24 bg-gradient-to-br from-white to-[#F8F9FA] relative overflow-hidden hidden lg:block">
     {/* Animated background */}
     <div className="absolute inset-0 overflow-hidden">
       <div className="absolute top-0 left-1/4 w-96 h-96 bg-[#40B2A4]/5 rounded-full blur-3xl animate-float-elegant"></div>
@@ -166,6 +168,29 @@ const CTASection = () => (
       </motion.div>
     </div>
   </section>
+
+    {/* Mobile version - ultra simplifiée */}
+    <section className="py-6 bg-gradient-to-br from-[#40B2A4] to-[#24366E] relative overflow-hidden lg:hidden">
+      <div className="container relative z-10 px-3">
+        <div className="text-center">
+          <p 
+            className="text-white/90 text-xs mb-3"
+            style={{ fontFamily: 'DM Sans, sans-serif' }}
+          >
+            48h de création intensive • 450K FCFA de prix
+          </p>
+          <Link
+            to="/inscription"
+            className="inline-flex items-center gap-2 rounded-lg px-4 py-2 text-xs font-semibold text-white bg-white/20 border border-white/30"
+            style={{ fontFamily: 'Sora, sans-serif' }}
+          >
+            S'inscrire maintenant 
+            <ArrowRight size={14} />
+          </Link>
+        </div>
+      </div>
+    </section>
+  </>
 );
 
 export default CTASection;

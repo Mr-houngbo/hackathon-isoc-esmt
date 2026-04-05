@@ -32,7 +32,7 @@ const CountdownTimer = () => {
   }, []);
 
   return (
-    <div className="flex gap-6 sm:gap-8">
+    <div className="flex gap-2 sm:gap-6 md:gap-8">
       {timeLeft.map((block, i) => (
         <motion.div
           key={block.label}
@@ -42,32 +42,32 @@ const CountdownTimer = () => {
           className="flex flex-col items-center"
         >
           <div className="relative group">
-            {/* Card container */}
-            <div className="card-premium flex h-20 w-20 sm:h-24 sm:w-24 items-center justify-center rounded-2xl p-1 shadow-lg">
+            {/* Card container - ultra compact sur mobile */}
+            <div className="card-premium flex h-10 w-10 sm:h-20 sm:w-20 md:h-24 md:w-24 items-center justify-center rounded-lg sm:rounded-2xl p-0.5 sm:p-1 shadow-md sm:shadow-lg">
               {/* Inner gradient background */}
-              <div className="absolute inset-0 bg-gradient-to-br from-[#40B2A4]/5 to-[#24366E]/5 rounded-2xl"></div>
+              <div className="absolute inset-0 bg-gradient-to-br from-[#40B2A4]/5 to-[#24366E]/5 rounded-lg sm:rounded-2xl"></div>
               
               {/* Number display */}
               <div className="relative z-10">
                 <span 
-                  className="font-display text-3xl sm:text-4xl font-bold text-[#212529] block text-center"
+                  className="font-display text-lg sm:text-3xl md:text-4xl font-bold text-[#212529] block text-center"
                   style={{ fontFamily: 'Sora, sans-serif', fontWeight: 800 }}
                 >
                   {String(block.value).padStart(2, "0")}
                 </span>
               </div>
               
-              {/* Glow effect on hover */}
-              <div className="absolute inset-0 rounded-2xl glow-orange opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              {/* Glow effect on hover - hidden on mobile */}
+              <div className="absolute inset-0 rounded-lg sm:rounded-2xl glow-orange opacity-0 group-hover:opacity-100 transition-opacity duration-300 hidden sm:block"></div>
             </div>
             
-            {/* Decorative dots */}
-            <div className="absolute -top-1 -right-1 w-2 h-2 bg-[#40B2A4] rounded-full animate-pulse"></div>
+            {/* Decorative dots - hidden on mobile */}
+            <div className="absolute -top-1 -right-1 w-1.5 h-1.5 sm:w-2 sm:h-2 bg-[#40B2A4] rounded-full animate-pulse hidden sm:block"></div>
           </div>
           
           {/* Label */}
           <span 
-            className="mt-3 text-xs sm:text-sm text-[#6C757D] font-medium uppercase tracking-wide"
+            className="mt-1 sm:mt-3 text-[10px] sm:text-xs md:text-sm text-[#6C757D] font-medium uppercase tracking-wide"
             style={{ fontFamily: 'DM Sans, sans-serif' }}
           >
             {block.label}

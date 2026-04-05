@@ -5,9 +5,9 @@ import CountdownTimer from "./CountdownTimer";
 import { GlobeISoc, GlobeBackground } from "@/components/ui/GlobeISoc";
 
 const HeroSection = () => (
-  <section className="relative overflow-hidden bg-gradient-to-br from-white via-[#F8F9FA] to-white min-h-screen">
-    {/* Background décoratif subtil */}
-    <div className="absolute inset-0 overflow-hidden">
+    <section className="relative overflow-hidden bg-gradient-to-br from-white via-[#F8F9FA] to-white min-h-[70vh] sm:min-h-screen">
+    {/* Background décoratif subtil - masqué sur mobile */}
+    <div className="absolute inset-0 overflow-hidden hidden sm:block">
       <div className="absolute top-0 left-1/4 w-96 h-96 bg-[#40B2A4]/3 rounded-full blur-3xl animate-float-elegant"></div>
       <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-[#24366E]/3 rounded-full blur-3xl animate-float-elegant" style={{ animationDelay: '2s' }}></div>
       
@@ -26,20 +26,13 @@ const HeroSection = () => (
       >
         <GlobeISoc size={80} opacity={0.2} />
       </motion.div>
-      <motion.div 
-        className="absolute top-1/2 right-1/4 opacity-15"
-        animate={{ y: [0, -6, 0] }}
-        transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-      >
-        <GlobeISoc size={40} opacity={0.15} />
-      </motion.div>
     </div>
 
-    <div className="container relative z-10 py-20 sm:py-24 lg:py-32">
+    <div className="container relative z-10 py-8 sm:py-16 lg:py-32">
       <div className="mx-auto max-w-7xl">
         
         {/* LAYOUT PRINCIPAL : Texte à gauche, Vidéo à droite */}
-        <div className="grid lg:grid-cols-2 gap-12 items-center min-h-[600px]">
+        <div className="grid lg:grid-cols-2 gap-6 sm:gap-12 items-center min-h-[400px] sm:min-h-[600px]">
           
           {/* GAUCHE : CONTENU TEXTE */}
           <motion.div 
@@ -50,49 +43,50 @@ const HeroSection = () => (
           >
             {/* Titre Principal */}
             <h1 
-              className="font-display text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight mb-6"
+              className="font-display text-2xl sm:text-5xl lg:text-6xl font-extrabold leading-tight mb-3 sm:mb-6"
               style={{ fontFamily: 'Sora, sans-serif', fontWeight: 900 }}
             >
-              <span className="text-[#212529] block mb-2">Hackathon</span>
-              <span className="text-gradient bg-gradient-to-r from-[#40B2A4] to-[#24366E] bg-clip-text text-transparent block">
+              <span className="text-[#212529] block mb-1 sm:mb-2 text-xl sm:text-5xl">Hackathon</span>
+              <span className="text-gradient bg-gradient-to-r from-[#40B2A4] to-[#24366E] bg-clip-text text-transparent block text-xl sm:text-5xl">
                 ISOC-ESMT 2026
               </span>
             </h1>
 
-            {/* Description */}
+            {/* Description - version mobile ultra compacte */}
             <p 
-              className="text-lg text-[#6C757D] leading-relaxed mb-8 max-w-lg"
+              className="text-xs sm:text-lg text-[#6C757D] leading-relaxed mb-4 sm:mb-8 max-w-lg px-2 sm:px-0"
               style={{ fontFamily: 'DM Sans, sans-serif' }}
             >
-              48h d'innovation pure pour transformer le campus. 
-              <span className="text-[#24366E] font-semibold"> Idéation, prototypage et pitch</span> 
-              {" "}devant un jury d'experts de l'industrie.
+              48h d'innovation pour transformer le campus. 
+              <span className="text-[#24366E] font-semibold hidden sm:inline"> Idéation, prototypage et pitch</span> 
+              <span className="hidden sm:inline">{" "}devant un jury d'experts.</span>
             </p>
 
             {/* Countdown Timer */}
-            <div className="mb-8">
-              <div className="bg-white rounded-2xl border border-[#E9ECEF] shadow-lg p-4 w-fit overflow-hidden mx-auto lg:mx-0">
+            <div className="mb-4 sm:mb-8">
+              <div className="bg-white rounded-xl sm:rounded-2xl border border-[#E9ECEF] shadow-lg p-2 sm:p-4 w-fit overflow-hidden mx-auto lg:mx-0">
                 <CountdownTimer />
               </div>
             </div>
 
             {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start w-full lg:w-auto">
+            <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 justify-center lg:justify-start w-full lg:w-auto px-4 sm:px-0">
               <Link
                 to="/inscription"
-                className="btn-orange group relative overflow-hidden rounded-xl px-8 py-4 font-display font-bold text-base shadow-lg hover:shadow-[#40B2A4]/30 text-center flex-1 sm:flex-initial"
+                className="btn-orange group relative overflow-hidden rounded-lg sm:rounded-xl px-4 sm:px-8 py-2 sm:py-4 font-display font-bold text-xs sm:text-base shadow-lg hover:shadow-[#40B2A4]/30 text-center flex-1 sm:flex-initial"
                 style={{ fontFamily: 'Sora, sans-serif' }}
               >
-                <span className="relative z-10 flex items-center justify-center gap-2">
-                  S'inscrire maintenant 
-                  <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
+                <span className="relative z-10 flex items-center justify-center gap-1 sm:gap-2">
+                  <span className="sm:hidden">S'inscrire</span>
+                  <span className="hidden sm:inline">S'inscrire maintenant</span> 
+                  <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
                 </span>
                 <div className="absolute inset-0 bg-gradient-to-r from-[#40B2A4] to-[#40B2A4] opacity-0 group-hover:opacity-100 transition-opacity"></div>
               </Link>
               
               <a
                 href="#programme"
-                className="group relative overflow-hidden rounded-xl border-2 border-[#24366E] bg-white px-8 py-4 font-display font-bold text-base text-[#24366E] shadow-lg hover:shadow-[#24366E]/20 transition-all duration-300 hover:scale-105 text-center flex-1 sm:flex-initial"
+                className="group relative overflow-hidden rounded-lg sm:rounded-xl border-2 border-[#24366E] bg-white px-4 sm:px-8 py-2 sm:py-4 font-display font-bold text-xs sm:text-base text-[#24366E] shadow-lg hover:shadow-[#24366E]/20 transition-all duration-300 hover:scale-105 text-center flex-1 sm:flex-initial hidden sm:inline-flex"
                 style={{ fontFamily: 'Sora, sans-serif' }}
               >
                 <span className="flex items-center justify-center gap-2">
@@ -105,23 +99,22 @@ const HeroSection = () => (
 
           {/* DROITE : VIDÉO 3D INCLINÉE */}
           <motion.div 
-            className="order-1 lg:order-2 relative"
+            className="order-1 lg:order-2 relative px-2 sm:px-0"
             initial={{ opacity: 0, x: 50, rotateY: 10 }}
             animate={{ opacity: 1, x: 0, rotateY: 0 }}
             transition={{ duration: 1.2, delay: 0.4 }}
             style={{ perspective: '1000px' }}
           >
-            {/* Container vidéo 3D */}
+            {/* Container vidéo 3D - sans rotation sur mobile */}
             <div 
               className="relative w-full max-w-4xl mx-auto lg:mx-0"
               style={{ 
-                transform: 'rotate(-4deg)',
-                transformStyle: 'preserve-3d',
-                animation: 'float 6s ease-in-out infinite'
+                transform: 'none',
+                transformStyle: 'preserve-3d'
               }}
             >
               {/* Vidéo */}
-              <div className="relative rounded-3xl overflow-hidden shadow-2xl bg-black">
+              <div className="relative rounded-xl sm:rounded-3xl overflow-hidden shadow-lg sm:shadow-2xl bg-black">
                 <div className="relative aspect-video">
                   <video
                     autoPlay
@@ -139,31 +132,31 @@ const HeroSection = () => (
                 </div>
                 
                 {/* Badge vidéo flottant */}
-                <div className="absolute top-6 right-6 z-20">
-                  <div className="bg-white/90 backdrop-blur-sm px-4 py-2 rounded-full shadow-lg border border-white/20">
-                    <div className="flex items-center gap-2">
-                      <div className="w-2 h-2 bg-[#40B2A4] rounded-full animate-pulse"></div>
-                      <span className="text-[#212529] text-sm font-semibold">🎬 Teaser</span>
+                <div className="absolute top-2 sm:top-6 right-2 sm:right-6 z-20">
+                  <div className="bg-white/90 backdrop-blur-sm px-2 sm:px-4 py-1 sm:py-2 rounded-full shadow-lg border border-white/20">
+                    <div className="flex items-center gap-1 sm:gap-2">
+                      <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-[#40B2A4] rounded-full animate-pulse"></div>
+                      <span className="text-[#212529] text-[10px] sm:text-sm font-semibold">Teaser</span>
                     </div>
                   </div>
                 </div>
                 
-                {/* Globe decoration near video */}
+                {/* Globe decoration near video - hidden on mobile */}
                 <motion.div 
-                  className="absolute -top-4 -left-4 z-10"
+                  className="absolute -top-2 -left-2 sm:-top-4 sm:-left-4 z-10 hidden sm:block"
                   animate={{ y: [0, -5, 0], rotate: [0, 10, 0] }}
                   transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
                 >
-                  <GlobeISoc size={32} opacity={0.5} />
+                  <GlobeISoc size={24} opacity={0.5} />
                 </motion.div>
                 
                 {/* Bordure premium */}
-                <div className="absolute inset-0 rounded-3xl border-2 border-[#40B2A4]/20 pointer-events-none"></div>
+                <div className="absolute inset-0 rounded-xl sm:rounded-3xl border-2 border-[#40B2A4]/20 pointer-events-none"></div>
               </div>
               
-              {/* Shadow 3D */}
+              {/* Shadow 3D - hidden on mobile */}
               <div 
-                className="absolute -bottom-8 left-1/2 -translate-x-1/2 w-3/4 h-8 bg-gradient-to-r from-[#40B2A4]/20 via-[#24366E]/20 to-[#40B2A4]/20 rounded-full blur-xl"
+                className="hidden sm:block absolute -bottom-8 left-1/2 -translate-x-1/2 w-3/4 h-8 bg-gradient-to-r from-[#40B2A4]/20 via-[#24366E]/20 to-[#40B2A4]/20 rounded-full blur-xl"
                 style={{ 
                   transform: 'rotate(4deg) translateX(-50%)',
                   filter: 'blur(12px)'
@@ -175,16 +168,21 @@ const HeroSection = () => (
       </div>
     </div>
 
-    {/* Animation CSS pour le flottement */}
+    {/* Animation CSS pour le flottement - desktop only */}
     <style>{`
       @keyframes float {
         0%, 100% { transform: rotate(-4deg) translateY(0px); }
         50% { transform: rotate(-4deg) translateY(-10px); }
       }
+      @media (max-width: 640px) {
+        .animate-float-elegant {
+          animation: none !important;
+        }
+      }
     `}</style>
 
     {/* Decorative bottom gradient */}
-    <div className="absolute bottom-0 left-0 right-0 h-2 bg-gradient-to-r from-[#40B2A4] via-[#24366E] to-[#40B2A4]"></div>
+    <div className="absolute bottom-0 left-0 right-0 h-1 sm:h-2 bg-gradient-to-r from-[#40B2A4] via-[#24366E] to-[#40B2A4]"></div>
   </section>
 );
 
