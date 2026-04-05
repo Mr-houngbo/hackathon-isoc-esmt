@@ -65,38 +65,38 @@ const Agenda = () => {
         {/* Hero Section */}
         <div className="relative overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-br from-[#40B2A4]/5 via-[#24366E]/5 to-transparent"></div>
-          <div className="container relative z-10 py-16">
+          <div className="container relative z-10 py-8 sm:py-16">
             <motion.div 
               className="text-center"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
             >
-              <div className="flex items-center justify-center gap-4 mb-6">
-                <div className="w-16 h-16 rounded-full bg-gradient-to-r from-[#40B2A4] to-[#24366E] flex items-center justify-center">
-                  <Calendar size={32} className="text-white" />
+              <div className="flex items-center justify-center gap-2 sm:gap-4 mb-3 sm:mb-6">
+                <div className="w-10 h-10 sm:w-16 sm:h-16 rounded-full bg-gradient-to-r from-[#40B2A4] to-[#24366E] flex items-center justify-center">
+                  <Calendar size={20} className="text-white sm:w-8 sm:h-8" />
                 </div>
                 <h1 
-                  className="font-display text-4xl sm:text-5xl font-bold text-[#212529]"
+                  className="font-display text-2xl sm:text-5xl font-bold text-[#212529]"
                   style={{ fontFamily: 'Sora, sans-serif', fontWeight: 800 }}
                 >
                   Agenda Complet
                 </h1>
               </div>
               <p 
-                className="text-xl text-[#6C757D] mb-8"
+                className="text-sm sm:text-xl text-[#6C757D] mb-4 sm:mb-8"
                 style={{ fontFamily: 'DM Sans, sans-serif' }}
               >
                 Programme détaillé du Hackathon ISOC-ESMT 2026 — 17 & 18 Avril
               </p>
-              <div className="w-24 h-1 bg-gradient-to-r from-[#40B2A4] to-[#24366E] mx-auto rounded-full"></div>
+              <div className="w-16 sm:w-24 h-1 bg-gradient-to-r from-[#40B2A4] to-[#24366E] mx-auto rounded-full"></div>
             </motion.div>
           </div>
         </div>
 
         {/* Content */}
-        <div className="container py-12">
-          <div className="max-w-6xl mx-auto space-y-16">
+        <div className="container py-6 sm:py-12 px-3 sm:px-4">
+          <div className="max-w-6xl mx-auto space-y-8 sm:space-y-16">
             
             {/* Jour 1 */}
             <motion.div
@@ -104,49 +104,49 @@ const Agenda = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
             >
-              <div className="bg-white rounded-3xl border border-[#E9ECEF] shadow-xl overflow-hidden">
+              <div className="bg-white rounded-xl sm:rounded-3xl border border-[#E9ECEF] shadow-lg sm:shadow-xl overflow-hidden">
                 {/* Header */}
-                <div className="bg-gradient-to-r from-[#40B2A4] to-[#40B2A4] p-6 text-white">
+                <div className="bg-gradient-to-r from-[#40B2A4] to-[#40B2A4] p-3 sm:p-6 text-white">
                   <div className="flex items-center justify-between">
                     <div>
                       <h2 
-                        className="font-display text-2xl font-bold mb-2"
+                        className="font-display text-lg sm:text-2xl font-bold mb-1 sm:mb-2"
                         style={{ fontFamily: 'Sora, sans-serif', fontWeight: 700 }}
                       >
                         {agendaData.jour1.titre}
                       </h2>
-                      <p className="text-white/90 font-medium">{agendaData.jour1.date}</p>
+                      <p className="text-white/90 text-xs sm:text-base font-medium">{agendaData.jour1.date}</p>
                     </div>
-                    <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center">
-                      <Calendar size={32} className="text-white" />
+                    <div className="w-10 h-10 sm:w-16 sm:h-16 bg-white/20 rounded-full flex items-center justify-center">
+                      <Calendar size={20} className="text-white sm:w-8 sm:h-8" />
                     </div>
                   </div>
                 </div>
 
                 {/* Events */}
-                <div className="p-6 space-y-4">
+                <div className="p-3 sm:p-6 space-y-2 sm:space-y-4">
                   {agendaData.jour1.evenements.map((event, index) => (
                     <motion.div
                       key={index}
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ duration: 0.6, delay: 0.1 * index }}
-                      className="flex gap-4 group"
+                      className="flex gap-2 sm:gap-4 group"
                     >
                       {/* Time */}
-                      <div className="flex-shrink-0 w-24 text-sm font-semibold text-[#6C757D] pt-2">
+                      <div className="flex-shrink-0 w-14 sm:w-24 text-xs sm:text-sm font-semibold text-[#6C757D] pt-1 sm:pt-2">
                         {event.heure}
                       </div>
                       
                       {/* Icon */}
-                      <div className={`w-12 h-12 rounded-full bg-gradient-to-r ${getEventTypeColor(event.type)} flex items-center justify-center flex-shrink-0`}>
-                        <event.icone size={20} className="text-white" />
+                      <div className={`w-8 h-8 sm:w-12 sm:h-12 rounded-full bg-gradient-to-r ${getEventTypeColor(event.type)} flex items-center justify-center flex-shrink-0`}>
+                        <event.icone size={14} className="text-white sm:w-5 sm:h-5" />
                       </div>
                       
                       {/* Content */}
-                      <div className="flex-1 bg-[#F8F9FA] rounded-xl p-4 border border-[#E9ECEF] group-hover:border-[#40B2A4]/30 transition-colors">
+                      <div className="flex-1 bg-[#F8F9FA] rounded-lg sm:rounded-xl p-2 sm:p-4 border border-[#E9ECEF] group-hover:border-[#40B2A4]/30 transition-colors">
                         <h3 
-                          className="font-semibold text-[#212529]"
+                          className="font-semibold text-xs sm:text-base text-[#212529]"
                           style={{ fontFamily: 'DM Sans, sans-serif' }}
                         >
                           {event.titre}
@@ -164,49 +164,49 @@ const Agenda = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}
             >
-              <div className="bg-white rounded-3xl border border-[#E9ECEF] shadow-xl overflow-hidden">
+              <div className="bg-white rounded-xl sm:rounded-3xl border border-[#E9ECEF] shadow-lg sm:shadow-xl overflow-hidden">
                 {/* Header */}
-                <div className="bg-gradient-to-r from-[#24366E] to-[#2E4A8C] p-6 text-white">
+                <div className="bg-gradient-to-r from-[#24366E] to-[#2E4A8C] p-3 sm:p-6 text-white">
                   <div className="flex items-center justify-between">
                     <div>
                       <h2 
-                        className="font-display text-2xl font-bold mb-2"
+                        className="font-display text-lg sm:text-2xl font-bold mb-1 sm:mb-2"
                         style={{ fontFamily: 'Sora, sans-serif', fontWeight: 700 }}
                       >
                         {agendaData.jour2.titre}
                       </h2>
-                      <p className="text-white/90 font-medium">{agendaData.jour2.date}</p>
+                      <p className="text-white/90 text-xs sm:text-base font-medium">{agendaData.jour2.date}</p>
                     </div>
-                    <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center">
-                      <Trophy size={32} className="text-white" />
+                    <div className="w-10 h-10 sm:w-16 sm:h-16 bg-white/20 rounded-full flex items-center justify-center">
+                      <Trophy size={20} className="text-white sm:w-8 sm:h-8" />
                     </div>
                   </div>
                 </div>
 
                 {/* Events */}
-                <div className="p-6 space-y-4">
+                <div className="p-3 sm:p-6 space-y-2 sm:space-y-4">
                   {agendaData.jour2.evenements.map((event, index) => (
                     <motion.div
                       key={index}
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ duration: 0.6, delay: 0.1 * index }}
-                      className="flex gap-4 group"
+                      className="flex gap-2 sm:gap-4 group"
                     >
                       {/* Time */}
-                      <div className="flex-shrink-0 w-24 text-sm font-semibold text-[#6C757D] pt-2">
+                      <div className="flex-shrink-0 w-14 sm:w-24 text-xs sm:text-sm font-semibold text-[#6C757D] pt-1 sm:pt-2">
                         {event.heure}
                       </div>
                       
                       {/* Icon */}
-                      <div className={`w-12 h-12 rounded-full bg-gradient-to-r ${getEventTypeColor(event.type)} flex items-center justify-center flex-shrink-0`}>
-                        <event.icone size={20} className="text-white" />
+                      <div className={`w-8 h-8 sm:w-12 sm:h-12 rounded-full bg-gradient-to-r ${getEventTypeColor(event.type)} flex items-center justify-center flex-shrink-0`}>
+                        <event.icone size={14} className="text-white sm:w-5 sm:h-5" />
                       </div>
                       
                       {/* Content */}
-                      <div className="flex-1 bg-[#F8F9FA] rounded-xl p-4 border border-[#E9ECEF] group-hover:border-[#24366E]/30 transition-colors">
+                      <div className="flex-1 bg-[#F8F9FA] rounded-lg sm:rounded-xl p-2 sm:p-4 border border-[#E9ECEF] group-hover:border-[#24366E]/30 transition-colors">
                         <h3 
-                          className="font-semibold text-[#212529]"
+                          className="font-semibold text-xs sm:text-base text-[#212529]"
                           style={{ fontFamily: 'DM Sans, sans-serif' }}
                         >
                           {event.titre}
@@ -224,41 +224,41 @@ const Agenda = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.6 }}
             >
-              <div className="bg-white rounded-3xl border border-[#E9ECEF] shadow-xl overflow-hidden">
+              <div className="bg-white rounded-xl sm:rounded-3xl border border-[#E9ECEF] shadow-lg sm:shadow-xl overflow-hidden">
                 {/* Header */}
-                <div className="bg-gradient-to-r from-[#40B2A4] to-[#40B2A4] p-6 text-white">
+                <div className="bg-gradient-to-r from-[#40B2A4] to-[#40B2A4] p-3 sm:p-6 text-white">
                   <div className="flex items-center justify-between">
                     <div>
                       <h2 
-                        className="font-display text-2xl font-bold mb-2"
+                        className="font-display text-lg sm:text-2xl font-bold mb-1 sm:mb-2"
                         style={{ fontFamily: 'Sora, sans-serif', fontWeight: 700 }}
                       >
                         {agendaData.apresHackathon.titre}
                       </h2>
-                      <p className="text-white/90 font-medium">{agendaData.apresHackathon.sousTitre}</p>
+                      <p className="text-white/90 text-xs sm:text-base font-medium">{agendaData.apresHackathon.sousTitre}</p>
                     </div>
-                    <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center">
-                      <Rocket size={32} className="text-white" />
+                    <div className="w-10 h-10 sm:w-16 sm:h-16 bg-white/20 rounded-full flex items-center justify-center">
+                      <Rocket size={20} className="text-white sm:w-8 sm:h-8" />
                     </div>
                   </div>
                 </div>
 
                 {/* Events */}
-                <div className="p-6">
-                  <div className="grid md:grid-cols-2 gap-4">
+                <div className="p-3 sm:p-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-2 sm:gap-4">
                     {agendaData.apresHackathon.evenements.map((event, index) => (
                       <motion.div
                         key={index}
                         initial={{ opacity: 0, scale: 0.9 }}
                         animate={{ opacity: 1, scale: 1 }}
                         transition={{ duration: 0.6, delay: 0.1 * index }}
-                        className="flex gap-4 bg-[#F8F9FA] rounded-xl p-4 border border-[#E9ECEF] hover:border-[#40B2A4]/30 transition-colors"
+                        className="flex gap-2 sm:gap-4 bg-[#F8F9FA] rounded-lg sm:rounded-xl p-2 sm:p-4 border border-[#E9ECEF] hover:border-[#40B2A4]/30 transition-colors"
                       >
-                        <div className="w-12 h-12 rounded-full bg-gradient-to-r from-[#40B2A4] to-[#40B2A4] flex items-center justify-center flex-shrink-0">
-                          <event.icone size={20} className="text-white" />
+                        <div className="w-8 h-8 sm:w-12 sm:h-12 rounded-full bg-gradient-to-r from-[#40B2A4] to-[#40B2A4] flex items-center justify-center flex-shrink-0">
+                          <event.icone size={14} className="text-white sm:w-5 sm:h-5" />
                         </div>
                         <h3 
-                          className="font-semibold text-[#212529]"
+                          className="font-semibold text-xs sm:text-base text-[#212529]"
                           style={{ fontFamily: 'DM Sans, sans-serif' }}
                         >
                           {event.titre}
