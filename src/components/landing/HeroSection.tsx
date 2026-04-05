@@ -73,7 +73,7 @@ const HeroSection = () => (
             <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 justify-center lg:justify-start w-full lg:w-auto px-4 sm:px-0">
               <Link
                 to="/inscription"
-                className="btn-orange group relative overflow-hidden rounded-lg sm:rounded-xl px-4 sm:px-8 py-2 sm:py-4 font-display font-bold text-xs sm:text-base shadow-lg hover:shadow-[#40B2A4]/30 text-center flex-1 sm:flex-initial"
+                className="group relative overflow-hidden rounded-lg sm:rounded-xl px-4 sm:px-8 py-2 sm:py-4 font-display font-bold text-xs sm:text-base shadow-lg hover:shadow-[#24366E]/30 text-center flex-1 sm:flex-initial bg-[#24366E] text-white"
                 style={{ fontFamily: 'Sora, sans-serif' }}
               >
                 <span className="relative z-10 flex items-center justify-center gap-1 sm:gap-2">
