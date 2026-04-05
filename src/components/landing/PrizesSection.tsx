@@ -103,7 +103,7 @@ const PrizeCard = ({ prize, index }: { prize: typeof prizes[0]; index: number })
 };
 
 const PrizesSection = () => (
-  <section className="py-12 sm:py-24 bg-gradient-to-br from-white to-[#F8F9FA] relative overflow-hidden">
+  <section className="py-8 sm:py-24 bg-gradient-to-br from-white to-[#F8F9FA] relative overflow-hidden">
     {/* Background decorative elements */}
     <div className="absolute inset-0 overflow-hidden">
       <div className="absolute top-32 right-1/4 w-72 h-72 bg-[#40B2A4]/3 rounded-full blur-3xl animate-float-elegant hidden sm:block"></div>
@@ -124,7 +124,7 @@ const PrizesSection = () => (
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        className="text-center mb-6 sm:mb-16"
+        className="text-center mb-5 sm:mb-16"
       >
         <h2 
           className="font-display text-xl sm:text-4xl sm:text-5xl font-bold text-[#212529] mb-2 sm:mb-4"

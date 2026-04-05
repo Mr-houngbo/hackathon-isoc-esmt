@@ -5,7 +5,7 @@ import CountdownTimer from "./CountdownTimer";
 import { GlobeISoc, GlobeBackground } from "@/components/ui/GlobeISoc";
 
 const HeroSection = () => (
-    <section className="relative overflow-hidden bg-gradient-to-br from-white via-[#F8F9FA] to-white min-h-[70vh] sm:min-h-screen">
+    <section className="relative overflow-hidden bg-gradient-to-br from-white via-[#F8F9FA] to-white sm:min-h-screen">
     {/* Background décoratif subtil - masqué sur mobile */}
     <div className="absolute inset-0 overflow-hidden hidden sm:block">
       <div className="absolute top-0 left-1/4 w-96 h-96 bg-[#40B2A4]/3 rounded-full blur-3xl animate-float-elegant"></div>
@@ -28,7 +28,7 @@ const HeroSection = () => (
       </motion.div>
     </div>
 
-    <div className="container relative z-10 py-8 sm:py-16 lg:py-32">
+    <div className="container relative z-10 py-6 sm:py-16 lg:py-32">
       <div className="mx-auto max-w-7xl">
         
         {/* LAYOUT PRINCIPAL : Texte à gauche, Vidéo à droite */}
@@ -43,7 +43,7 @@ const HeroSection = () => (
           >
             {/* Titre Principal */}
             <h1 
-              className="font-display text-2xl sm:text-5xl lg:text-6xl font-extrabold leading-tight mb-3 sm:mb-6"
+              className="font-display text-2xl sm:text-5xl lg:text-6xl font-extrabold leading-tight mb-2 sm:mb-6"
               style={{ fontFamily: 'Sora, sans-serif', fontWeight: 900 }}
             >
               <span className="text-[#212529] block mb-1 sm:mb-2 text-xl sm:text-5xl">Hackathon</span>
@@ -54,7 +54,7 @@ const HeroSection = () => (
 
             {/* Description - version mobile ultra compacte */}
             <p 
-              className="text-xs sm:text-lg text-[#6C757D] leading-relaxed mb-4 sm:mb-8 max-w-lg px-2 sm:px-0"
+              className="text-xs sm:text-lg text-[#6C757D] leading-relaxed mb-3 sm:mb-8 max-w-lg px-2 sm:px-0"
               style={{ fontFamily: 'DM Sans, sans-serif' }}
             >
               48h d'innovation pour transformer le campus. 
@@ -63,7 +63,7 @@ const HeroSection = () => (
             </p>
 
             {/* Countdown Timer */}
-            <div className="mb-4 sm:mb-8">
+            <div className="mb-3 sm:mb-8">
               <div className="bg-white rounded-xl sm:rounded-2xl border border-[#E9ECEF] shadow-lg p-2 sm:p-4 w-fit overflow-hidden mx-auto lg:mx-0">
                 <CountdownTimer />
               </div>

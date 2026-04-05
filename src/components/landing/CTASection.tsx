@@ -170,7 +170,7 @@ const CTASection = () => (
   </section>
 
     {/* Mobile version - ultra simplifiée */}
-    <section className="py-6 bg-gradient-to-br from-[#40B2A4] to-[#24366E] relative overflow-hidden lg:hidden">
+    <section className="py-4 bg-gradient-to-br from-[#40B2A4] to-[#24366E] relative overflow-hidden lg:hidden">
       <div className="container relative z-10 px-3">
         <div className="text-center">
           <p 

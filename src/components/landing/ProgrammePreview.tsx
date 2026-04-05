@@ -26,7 +26,7 @@ const getTypeColor = (type: string) => {
 };
 
 const ProgrammePreview = () => (
-  <section id="programme" className="py-12 sm:py-24 bg-gradient-to-br from-[#F8F9FA] to-white relative overflow-hidden">
+  <section id="programme" className="py-8 sm:py-24 bg-gradient-to-br from-[#F8F9FA] to-white relative overflow-hidden">
     {/* Background decorative elements */}
     <div className="absolute inset-0 overflow-hidden">
       <div className="absolute top-20 left-1/4 w-64 h-64 bg-[#40B2A4]/3 rounded-full blur-3xl animate-float-elegant hidden sm:block"></div>
@@ -47,7 +47,7 @@ const ProgrammePreview = () => (
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        className="text-center mb-6 sm:mb-16"
+        className="text-center mb-5 sm:mb-16"
       >
         <h2 
           className="font-display text-lg sm:text-4xl sm:text-5xl font-bold text-[#212529] mb-2 sm:mb-4"

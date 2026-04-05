@@ -29,12 +29,12 @@ const Navbar = () => {
 
   return (
     <nav className={`fixed top-0 z-50 w-full transition-all duration-300 bg-white/95 backdrop-blur-sm border-b border-[#E9ECEF]/50 shadow-sm`}>
-      <div className="container h-16 md:h-28 flex items-center justify-between">
-        <Link to="/" className="flex items-center gap-3 overflow-visible min-w-fit">
+      <div className="container h-12 sm:h-16 md:h-28 flex items-center justify-between px-2 sm:px-4">
+        <Link to="/" className="flex items-center gap-2 overflow-visible min-w-fit -ml-2 sm:ml-0">
           <img
             src="/logo-isoc-esmt.png"
             alt="Club ISOC ESMT"
-            className="!h-[250px] md:!h-[250px] !w-auto min-h-[200px] md:min-h-[250px] object-contain shrink-0"
+            className="!h-[120px] sm:!h-[180px] md:!h-[250px] !w-auto min-h-[100px] sm:min-h-[150px] md:min-h-[250px] object-contain shrink-0"
           />
         </Link>
 
@@ -66,9 +66,9 @@ const Navbar = () => {
         {/* Mobile & Tablet */}
         <button 
           onClick={() => setOpen(!open)} 
-          className="md:hidden p-2.5 text-[#6C757D] hover:text-[#212529] transition-colors rounded-lg hover:bg-[#F8F9FA]"
+          className="md:hidden p-1.5 sm:p-2.5 -mr-2 sm:mr-0 text-[#6C757D] hover:text-[#212529] transition-colors rounded-lg hover:bg-[#F8F9FA]"
         >
-          {open ? <X size={24} /> : <Menu size={24} />}
+          {open ? <X size={20} className="sm:w-6 sm:h-6" /> : <Menu size={20} className="sm:w-6 sm:h-6" />}
         </button>
       </div>
 
@@ -82,15 +82,15 @@ const Navbar = () => {
             transition={{ duration: 0.3 }}
             className="md:hidden glassmorphism border-t border-[#E9ECEF]/50"
           >
-            <div className="container py-4 flex flex-col gap-1">
+            <div className="container py-2 sm:py-4 px-2 sm:px-4 flex flex-col gap-1">
               {/* Liens principaux */}
-              <div className="grid grid-cols-2 gap-2 mb-4">
+              <div className="grid grid-cols-2 gap-1.5 sm:gap-2 mb-2 sm:mb-4">
                 {navLinks.slice(0, 6).map((link) => (
                   <Link
                     key={link.path}
                     to={link.path}
                     onClick={() => setOpen(false)}
-                    className={`px-3 py-3 rounded-lg text-sm font-medium transition-all duration-300 text-center ${
+                    className={`px-2 sm:px-3 py-2 sm:py-3 rounded-lg text-xs sm:text-sm font-medium transition-all duration-300 text-center ${
                       location.pathname === link.path
                         ? "bg-gradient-to-r from-[#24366E] to-[#24366E] text-white shadow-lg shadow-[#24366E]/25"
                         : "text-[#6C757D] hover:text-[#212529] hover:bg-[#F8F9FA]"
@@ -103,13 +103,13 @@ const Navbar = () => {
               </div>
               
               {/* Liens restants */}
-              <div className="grid grid-cols-2 gap-2 mb-4">
+              <div className="grid grid-cols-2 gap-1.5 sm:gap-2 mb-2 sm:mb-4">
                 {navLinks.slice(6, 8).map((link) => (
                   <Link
                     key={link.path}
                     to={link.path}
                     onClick={() => setOpen(false)}
-                    className={`px-4 py-3 rounded-lg text-sm font-medium transition-all duration-300 text-center ${
+                    className={`px-2 sm:px-4 py-2 sm:py-3 rounded-lg text-xs sm:text-sm font-medium transition-all duration-300 text-center ${
                       location.pathname === link.path
                         ? "bg-gradient-to-r from-[#24366E] to-[#24366E] text-white shadow-lg shadow-[#24366E]/25"
                         : "text-[#6C757D] hover:text-[#212529] hover:bg-[#F8F9FA]"
@@ -124,7 +124,7 @@ const Navbar = () => {
               <Link
                 to="/inscription"
                 onClick={() => setOpen(false)}
-                className="btn-premium inline-flex items-center justify-center gap-2 rounded-lg px-6 py-4 text-sm font-semibold"
+                className="btn-premium inline-flex items-center justify-center gap-2 rounded-lg px-4 sm:px-6 py-2.5 sm:py-4 text-xs sm:text-sm font-semibold"
                 style={{ fontFamily: 'Sora, sans-serif' }}
               >
                 S'inscrire maintenant

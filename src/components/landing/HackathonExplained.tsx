@@ -4,7 +4,7 @@ import { GlobeISoc } from "@/components/ui/GlobeISoc";
 
 const HackathonExplained = () => {
   return (
-    <section className="py-8 sm:py-20 bg-gradient-to-br from-[#F8F9FA] to-white relative overflow-hidden">
+    <section className="py-5 sm:py-20 bg-gradient-to-br from-[#F8F9FA] to-white relative overflow-hidden">
       {/* Globe decorations - hidden on mobile */}
       <motion.div 
         className="absolute top-10 right-10 hidden sm:block"
@@ -35,7 +35,7 @@ const HackathonExplained = () => {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="text-center mb-6 sm:mb-16"
+          className="text-center mb-4 sm:mb-16"
         >
           <div className="hidden sm:inline-flex items-center gap-2 px-4 py-2 bg-[#40B2A4]/10 rounded-full mb-4">
             <Lightbulb className="text-[#40B2A4]" size={20} />
@@ -61,7 +61,7 @@ const HackathonExplained = () => {
         </motion.div>
 
         {/* Definition Cards - ultra compact sur mobile */}
-        <div className="grid grid-cols-2 gap-2 sm:gap-4 md:grid-cols-2 lg:gap-8 mb-6 sm:mb-16">
+        <div className="grid grid-cols-2 gap-2 sm:gap-4 md:grid-cols-2 lg:gap-8 mb-4 sm:mb-16">
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
