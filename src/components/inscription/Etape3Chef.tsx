@@ -232,7 +232,7 @@ const Etape3Chef = ({ data, onChange, errors = {} }: Props) => {
                 const value = e.target.value.replace(/\D/g, '').slice(0, 9);
                 updateChef('telephone', value);
               }}
-              placeholder="77 000 00 00"
+              placeholder="012 345 678"
               maxLength={9}
               className="w-full px-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#40B2A4]/20 focus:border-[#40B2A4]/50 transition-all"
               style={{ fontFamily: 'DM Sans, sans-serif' }}

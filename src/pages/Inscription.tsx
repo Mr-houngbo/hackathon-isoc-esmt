@@ -20,8 +20,8 @@ const stepLabels = ["Participation", "Candidature", "Chef", "Membres", "Projet",
 // Fonctions de validation
 const validatePhone = (tel: string) => {
   const cleaned = tel.trim().replace(/\s/g, ''); // Enlever tous les espaces
-  // Formats sénégalais acceptés: 77, 76, 78, 70, 75 (+9 chiffres)
-  return /^(77|76|78|70|75)[0-9]{7}$/.test(cleaned);
+  // Accepte uniquement des chiffres (peu importe la longueur)
+  return /^[0-9]+$/.test(cleaned) && cleaned.length > 0;
 };
 const validateEmail = (email: string) => {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -65,7 +65,7 @@ const validateStep = (step: number, formData: InscriptionData) => {
       if (!formData.chef.niveau_etudes) 
         errors.niveau_etudes = '🎓 Veuillez sélectionner votre niveau d\'études';
       if (!validatePhone(formData.chef.telephone)) 
-        errors.telephone = '📱 Format invalide. Exemples: 771234567 ou 761234567 (9 chiffres)';
+        errors.telephone = '📱 Format invalide. Entrez 9 chiffres (ex: 012345678)';
       if (!validateEmail(formData.chef.email)) 
         errors.email = '📧 Email invalide. Format: nom.prenom@domaine.extension (ex: aminata.diallo@esmt.sn)';
       if (!formData.chef.etablissement.trim()) 
