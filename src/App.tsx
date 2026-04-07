@@ -20,11 +20,13 @@ import Privacy from "./pages/Privacy";
 import Cookies from "./pages/Cookies";
 import Thematiques from "./pages/Thematiques";
 import VerificationBadge from "./pages/public/VerificationBadge";
+import Feedback from "./pages/Feedback";
 
 // Admin pages
 import AdminLogin from "./pages/admin/AdminLogin";
 import Dashboard from "./pages/admin/Dashboard";
 import GestionInscriptions from "./pages/admin/GestionInscriptions";
+import AdminFeedbacks from "./pages/admin/AdminFeedbacks";
 import GestionMentors from "./pages/admin/GestionMentors";
 import GestionPartenaires from "./pages/admin/GestionPartenaires";
 import GestionGalerie from "./pages/admin/GestionGalerie";
@@ -67,11 +69,13 @@ const App = () => (
               <Route path="/thematiques" element={<Thematiques />} />
               <Route path="/cookies" element={<Cookies />} />
               <Route path="/verification/:badgeId" element={<VerificationBadge />} />
+              <Route path="/feedback" element={<Feedback />} />
 
               {/* Admin */}
               <Route path="/admin/login" element={<AdminLogin />} />
               <Route path="/admin/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
               <Route path="/admin/inscriptions" element={<ProtectedRoute><GestionInscriptions /></ProtectedRoute>} />
+              <Route path="/admin/feedbacks" element={<ProtectedRoute><AdminFeedbacks /></ProtectedRoute>} />
               <Route path="/admin/mentors" element={<ProtectedRoute><GestionMentors /></ProtectedRoute>} />
               <Route path="/admin/partenaires" element={<ProtectedRoute><GestionPartenaires /></ProtectedRoute>} />
               <Route path="/admin/galerie" element={<ProtectedRoute><GestionGalerie /></ProtectedRoute>} />

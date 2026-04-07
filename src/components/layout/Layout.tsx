@@ -1,6 +1,7 @@
 import { ReactNode } from "react";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
+import FloatingFeedbackButton from "@/components/feedback/FloatingFeedbackButton";
 
 const Layout = ({ children }: { children: ReactNode }) => (
   <div className="flex min-h-screen flex-col bg-[#FFFFFF]">
@@ -9,6 +10,7 @@ const Layout = ({ children }: { children: ReactNode }) => (
       {children}
     </main>
     <Footer />
+    <FloatingFeedbackButton />
   </div>
 );
 

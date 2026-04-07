@@ -1,11 +1,12 @@
 import { ReactNode } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "@/context/AuthContext";
-import { LayoutDashboard, Users, Users as UsersIcon, UserCheck, Handshake, Image, BadgeCheck, LogOut, BarChart3, Shield } from "lucide-react";
+import { LayoutDashboard, Users, Users as UsersIcon, UserCheck, Handshake, Image, BadgeCheck, LogOut, BarChart3, Shield, MessageSquare } from "lucide-react";
 
 const links = [
   { path: "/admin/dashboard", icon: LayoutDashboard, label: "Dashboard" },
   { path: "/admin/inscriptions", icon: Users, label: "Inscriptions" },
+  { path: "/admin/feedbacks", icon: MessageSquare, label: "Feedbacks" },
   { path: "/admin/mentors", icon: UserCheck, label: "Mentors" },
   { path: "/admin/partenaires", icon: Handshake, label: "Partenaires" },
   { path: "/admin/galerie", icon: Image, label: "Galerie" },
