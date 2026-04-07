@@ -144,7 +144,7 @@ const Footer = () => {
             </div>
             <div className="flex items-center gap-3">
               <Phone className="w-4 h-4 text-[#40B2A4] flex-shrink-0" />
-              <span className="text-sm text-slate-300">+221 33 000 00 00</span>
+              <span className="text-sm text-slate-300">+221 77 161 62 86</span>
             </div>
           </div>
         </motion.div>
