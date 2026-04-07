@@ -8,7 +8,18 @@ interface Props {
   errors?: Record<string, string>;
 }
 
-const DOMAINES = ['Vie étudiante', 'Administration', 'Pédagogie', 'Campus'];
+const DOMAINES = [
+  'Inclusion & Impact Social',
+  'Ville Intelligente & Environnement',
+  'Gouvernance & Services Publics',
+  'Éducation & Vie Académique',
+  'Plateformes & Expérience Numérique',
+  'Intelligence Artificielle & Data',
+  'Cybersécurité & Confiance Numérique',
+  'Finance Digitale',
+  'Santé & Bien-être',
+  'Services & Logistique Intelligente'
+];
 
 const Etape5Projet = ({ data, onChange, errors = {} }: Props) => {
   const wordCount = (text: string) => text.trim() === '' ? 0 : text.trim().split(/\s+/).length;

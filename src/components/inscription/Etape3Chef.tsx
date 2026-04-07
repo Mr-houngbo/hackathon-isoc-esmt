@@ -8,9 +8,28 @@ interface Props {
   errors?: Record<string, string>;
 }
 
-const COMPETENCES = ['Dev Web', 'Dev Mobile', 'Design UI-UX', 'Data', 'IA', 'Business', 'Communication', 'Autre'];
+const COMPETENCES = [
+  'Développement logiciel',
+  'Data & Intelligence Artificielle',
+  'Design & Expérience Utilisateur (UI/UX)',
+  'Systèmes & Infrastructures',
+  'Cybersécurité',
+  'Électronique & IoT',
+  'Business & Stratégie',
+  'Communication & Pitch',
+  'Autre'
+];
 const NIVEAUX_ETUDES = ['L1', 'L2', 'L3', 'M1', 'M2'];
-const FILIERES = ['INGC', 'PREPA', 'Informatique', 'Génie', 'Management', 'Communication', 'Autre'];
+const FILIERES = [
+  // Tech pure
+  'Informatique', 'Réseaux & Télécoms', 'Intelligence Artificielle', 'Cybersécurité', 'Développement Web/Mobile',
+  // Ingénierie & Hardware
+  'Électronique', 'IoT & Objets Connectés', 'Énergie & Systèmes', 'Génie Électrique',
+  // Business & Digital
+  'Management', 'Marketing Digital', 'Finance & Fintech', 'Communication Digitale', 'E-commerce',
+  // Secteurs appliqués
+  'Santé Digitale', 'Transport & Mobilité', 'Régulation & Compliance', 'AgriTech', 'EdTech'
+];
 
 const Etape3Chef = ({ data, onChange, errors = {} }: Props) => {
   const updateChef = (field: string, value: any) => {

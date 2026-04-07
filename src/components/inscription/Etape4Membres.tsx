@@ -11,7 +11,16 @@ interface Props {
 
 const NIVEAUX_ETUDES = ['L1', 'L2', 'L3', 'M1', 'M2'];
 const ROLES = ['Dev', 'Design', 'Business', 'Communication', 'Autre'];
-const FILIERES = ['INGC', 'PREPA', 'Informatique', 'Génie', 'Management', 'Communication', 'Autre'];
+const FILIERES = [
+  // Tech pure
+  'Informatique', 'Réseaux & Télécoms', 'Intelligence Artificielle', 'Cybersécurité', 'Développement Web/Mobile',
+  // Ingénierie & Hardware
+  'Électronique', 'IoT & Objets Connectés', 'Énergie & Systèmes', 'Génie Électrique',
+  // Business & Digital
+  'Management', 'Marketing Digital', 'Finance & Fintech', 'Communication Digitale', 'E-commerce',
+  // Secteurs appliqués
+  'Santé Digitale', 'Transport & Mobilité', 'Régulation & Compliance', 'AgriTech', 'EdTech'
+];
 
 const Etape4Membres = ({ data, onChange, errors = {} }: Props) => {
   const [expandedBlocks, setExpandedBlocks] = useState([0]); // Membre 2 ouvert par défaut

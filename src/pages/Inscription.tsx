@@ -116,8 +116,6 @@ const validateStep = (step: number, formData: InscriptionData) => {
           errors.nom_projet = '📝 Veuillez donner un nom à votre projet (ex: "EduTech Solution")';
         if (!formData.domaine_projet) 
           errors.domaine_projet = '🎯 Veuillez choisir le domaine de votre projet';
-        if (formData.domaine_projet === 'Autre' && !formData.domaine_projet_autre.trim())
-          errors.domaine_projet_autre = '💡 Veuillez préciser dans quel domaine s\'inscrit votre projet';
         if (!formData.problematique.trim()) 
           errors.problematique = '❓ Veuillez décrire le problème que votre projet résout';
         if (!formData.solution.trim()) 
@@ -201,7 +199,6 @@ const Inscription = () => {
           a_projet: data.a_projet,
           nom_projet: data.nom_projet || null,
           domaine_projet: data.domaine_projet || null,
-          domaine_projet_autre: data.domaine_projet_autre || null,
           problematique: data.problematique || null,
           solution: data.solution || null,
           technologies: data.technologies || null,
