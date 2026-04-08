@@ -107,13 +107,6 @@ const Footer = () => {
             >
               Galerie
             </Link>
-            <Link 
-              to="/contact" 
-              className="block text-sm text-slate-300 hover:text-[#40B2A4] transition-all duration-300 hover:translate-x-1"
-              style={{ fontFamily: 'DM Sans, sans-serif' }}
-            >
-              Contact
-            </Link>
           </nav>
         </motion.div>
 
