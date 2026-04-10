@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowRight, Calendar, MapPin, Users, Code2 } from "lucide-react";
+import { ArrowRight, Calendar, MapPin, Users, Code2, Lock, Sparkles, XCircle } from "lucide-react";
 import CountdownTimer from "./CountdownTimer";
 import { GlobeISoc, GlobeBackground } from "@/components/ui/GlobeISoc";
 
@@ -28,18 +28,91 @@ const HeroSection = () => (
       </motion.div>
     </div>
 
-    <div className="container relative z-10 py-6 sm:py-16 lg:py-32">
+    <div className="container relative z-10 py-3 sm:py-6 lg:py-10">
       <div className="mx-auto max-w-7xl">
         
+        {/* BANDE PREMIUM : INSCRIPTIONS TERMINÉES */}
+        <motion.div
+          initial={{ opacity: 0, y: -30, scale: 0.95 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ duration: 0.8, type: "spring", bounce: 0.4 }}
+          className="mb-6 sm:mb-10"
+        >
+          <div className="relative overflow-hidden rounded-2xl sm:rounded-3xl">
+            {/* Background avec gradient animé */}
+            <div className="absolute inset-0 bg-gradient-to-r from-[#24366E] via-[#1a264f] to-[#24366E] animate-gradient-x"></div>
+            
+            {/* Effet de glassmorphism overlay */}
+            <div className="absolute inset-0 bg-white/5 backdrop-blur-sm"></div>
+            
+            {/* Glow effect */}
+            <div className="absolute -top-20 -right-20 w-40 h-40 bg-[#40B2A4]/30 rounded-full blur-3xl"></div>
+            <div className="absolute -bottom-20 -left-20 w-40 h-40 bg-[#40B2A4]/20 rounded-full blur-3xl"></div>
+            
+            {/* Pattern subtil */}
+            <div className="absolute inset-0 opacity-10" style={{
+              backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`
+            }}></div>
+            
+            {/* Content */}
+            <div className="relative px-4 sm:px-8 py-4 sm:py-6">
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6">
+                {/* Icône */}
+                <motion.div
+                  animate={{ rotate: [0, 10, -10, 0], scale: [1, 1.1, 1] }}
+                  transition={{ duration: 2, repeat: Infinity, repeatDelay: 3 }}
+                  className="w-12 h-12 sm:w-16 sm:h-16 bg-white/10 backdrop-blur-sm rounded-2xl flex items-center justify-center border border-white/20"
+                >
+                  <Lock size={24} className="sm:w-8 sm:h-8 text-white" />
+                </motion.div>
+                
+                {/* Texte */}
+                <div className="text-center sm:text-left">
+                  <div className="flex items-center justify-center sm:justify-start gap-2 mb-1">
+                    <Sparkles size={16} className="text-[#40B2A4]" />
+                    <span className="text-[#40B2A4] text-xs sm:text-sm font-semibold tracking-wider uppercase">
+                      Phase terminée
+                    </span>
+                  </div>
+                  <h2 className="text-xl sm:text-3xl font-bold text-white" style={{ fontFamily: 'Sora, sans-serif' }}>
+                    Inscriptions <span className="text-[#40B2A4]">Terminées</span>
+                  </h2>
+                </div>
+                
+                {/* CTA Button */}
+                <Link
+                  to="/equipes-selectionnees"
+                  className="group flex items-center gap-2 bg-white text-[#24366E] px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl font-semibold text-sm sm:text-base shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300"
+                  style={{ fontFamily: 'Sora, sans-serif' }}
+                >
+                  <Users size={18} />
+                  <span>Voir les équipes sélectionnées</span>
+                  <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+                </Link>
+              </div>
+            </div>
+            
+            {/* Barre de progression animée en bas */}
+            <div className="absolute bottom-0 left-0 right-0 h-1 bg-white/20">
+              <motion.div
+                initial={{ x: "-100%" }}
+                animate={{ x: "100%" }}
+                transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+                className="h-full w-1/3 bg-gradient-to-r from-[#40B2A4] to-white"
+              ></motion.div>
+            </div>
+          </div>
+        </motion.div>
+
         {/* LAYOUT PRINCIPAL : Texte à gauche, Vidéo à droite */}
-        <div className="grid lg:grid-cols-2 gap-6 sm:gap-12 items-center min-h-[400px] sm:min-h-[600px]">
+        <div className="grid lg:grid-cols-2 gap-6 sm:gap-12 items-center min-h-[300px] sm:min-h-[500px]">
           
           {/* GAUCHE : CONTENU TEXTE */}
           <motion.div 
             className="order-2 lg:order-1 text-center lg:text-left"
             initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 1, delay: 0.2 }}
+            transition={{ duration: 1, delay: 0.4 }}
           >
             {/* Titre Principal */}
             <h1 
@@ -72,13 +145,13 @@ const HeroSection = () => (
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 justify-center lg:justify-start w-full lg:w-auto px-4 sm:px-0">
               <Link
-                to="/inscription"
+                to="/equipes-selectionnees"
                 className="group relative overflow-hidden rounded-lg sm:rounded-xl px-4 sm:px-8 py-2 sm:py-4 font-display font-bold text-xs sm:text-base shadow-lg hover:shadow-[#24366E]/30 text-center flex-1 sm:flex-initial bg-[#24366E] text-white"
                 style={{ fontFamily: 'Sora, sans-serif' }}
               >
                 <span className="relative z-10 flex items-center justify-center gap-1 sm:gap-2">
-                  <span className="sm:hidden">S'inscrire</span>
-                  <span className="hidden sm:inline">S'inscrire maintenant</span> 
+                  <span className="sm:hidden">Les équipes</span>
+                  <span className="hidden sm:inline">Voir les équipes</span> 
                   <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
                 </span>
                 <div className="absolute inset-0 bg-gradient-to-r from-[#40B2A4] to-[#40B2A4] opacity-0 group-hover:opacity-100 transition-opacity"></div>
@@ -173,6 +246,14 @@ const HeroSection = () => (
       @keyframes float {
         0%, 100% { transform: rotate(-4deg) translateY(0px); }
         50% { transform: rotate(-4deg) translateY(-10px); }
+      }
+      @keyframes gradient-x {
+        0%, 100% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+      }
+      .animate-gradient-x {
+        background-size: 200% 200%;
+        animation: gradient-x 8s ease infinite;
       }
       @media (max-width: 640px) {
         .animate-float-elegant {

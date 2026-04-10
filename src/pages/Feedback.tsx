@@ -21,10 +21,11 @@ const Feedback = () => {
   });
 
   const feedbackTypes = [
-    { value: "bug", label: "🐛 Signaler un bug", color: "#DC2626" },
-    { value: "improvement", label: "💡 Suggestion d'amélioration", color: "#40B2A4" },
-    { value: "feature", label: "✨ Demande de fonctionnalité", color: "#24366E" },
-    { value: "other", label: "📝 Autre", color: "#6C757D" },
+    { value: "hackathon", label: "🏆 Retour sur le hackathon", color: "#40B2A4", isHackathon: true },
+    { value: "bug", label: "🐛 Signaler un bug", color: "#DC2626", isHackathon: false },
+    { value: "improvement", label: "💡 Suggestion d'amélioration", color: "#40B2A4", isHackathon: false },
+    { value: "feature", label: "✨ Demande de fonctionnalité", color: "#24366E", isHackathon: false },
+    { value: "other", label: "📝 Autre", color: "#6C757D", isHackathon: false },
   ];
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -85,13 +86,13 @@ const Feedback = () => {
               className="font-display text-2xl md:text-3xl font-bold text-[#212529] mb-4"
               style={{ fontFamily: 'Sora, sans-serif' }}
             >
-              Merci pour votre feedback !
+              Merci pour votre retour !
             </h1>
             <p 
               className="text-[#6C757D] text-lg mb-8"
               style={{ fontFamily: 'DM Sans, sans-serif' }}
             >
-              Votre avis nous aide à améliorer la plateforme. Nous l'examinerons attentivement.
+              Votre avis est précieux et nous aide à nous améliorer. L'équipe organisatrice l'examinera attentivement.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <button
@@ -145,13 +146,13 @@ const Feedback = () => {
             className="font-display text-2xl md:text-3xl font-bold text-[#212529] mb-2"
             style={{ fontFamily: 'Sora, sans-serif' }}
           >
-            Votre feedback
+            Votre avis compte
           </h1>
           <p 
             className="text-[#6C757D]"
             style={{ fontFamily: 'DM Sans, sans-serif' }}
           >
-            Aidez-nous à améliorer la plateforme
+            Feedback sur la plateforme ou retour sur le hackathon 2026
           </p>
         </motion.div>
 
@@ -169,7 +170,7 @@ const Feedback = () => {
               className="block font-display text-sm font-semibold text-[#212529] mb-3"
               style={{ fontFamily: 'Sora, sans-serif' }}
             >
-              Type de feedback <span className="text-[#DC2626]">*</span>
+              Type de retour <span className="text-[#DC2626]">*</span>
             </label>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {feedbackTypes.map((type) => (
@@ -227,31 +228,33 @@ const Feedback = () => {
               className="block font-display text-sm font-semibold text-[#212529] mb-2"
               style={{ fontFamily: 'Sora, sans-serif' }}
             >
-              Votre message <span className="text-[#DC2626]">*</span>
+              {formData.type === 'hackathon' ? 'Votre expérience' : 'Votre message'} <span className="text-[#DC2626]">*</span>
             </label>
             <textarea
               value={formData.message}
               onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-              placeholder="Décrivez votre expérience, signalez un bug, ou suggérez une amélioration..."
+              placeholder={formData.type === 'hackathon' 
+                ? "Partagez votre expérience du hackathon : organisation, thématiques, mentors, ambiance, ce qui a bien fonctionné, suggestions d'amélioration..." 
+                : "Décrivez votre expérience, signalez un bug, ou suggérez une amélioration..."}
               rows={5}
               className="w-full px-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#40B2A4]/20 focus:border-[#40B2A4]/50 transition-all resize-none"
               style={{ fontFamily: 'DM Sans, sans-serif' }}
             />
           </div>
 
-          {/* Email (optional) */}
+          {/* Email / Identification */}
           <div>
             <label 
               className="block font-display text-sm font-semibold text-[#212529] mb-2"
               style={{ fontFamily: 'Sora, sans-serif' }}
             >
-              Email <span className="text-[#6C757D] font-normal">(optionnel)</span>
+              {formData.type === 'hackathon' ? 'Votre email ou nom d\'équipe' : 'Email'} <span className="text-[#6C757D] font-normal">(optionnel)</span>
             </label>
             <input
-              type="email"
+              type={formData.type === 'hackathon' ? 'text' : 'email'}
               value={formData.email}
               onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-              placeholder="votre.email@exemple.com"
+              placeholder={formData.type === 'hackathon' ? "ex: équipe 'Innovators' ou votre.email@exemple.com" : "votre.email@exemple.com"}
               className="w-full px-4 py-3 rounded-xl border border-[#E9ECEF] bg-white text-[#212529] placeholder-[#6C757D] focus:outline-none focus:ring-2 focus:ring-[#40B2A4]/20 focus:border-[#40B2A4]/50 transition-all"
               style={{ fontFamily: 'DM Sans, sans-serif' }}
             />
@@ -259,7 +262,9 @@ const Feedback = () => {
               className="text-xs text-[#6C757D] mt-1"
               style={{ fontFamily: 'DM Sans, sans-serif' }}
             >
-              Pour vous tenir informé de la résolution ou de la mise en place de votre suggestion
+              {formData.type === 'hackathon' 
+                ? "Pour identifier votre participation (optionnel mais recommandé)" 
+                : "Pour vous tenir informé de la résolution ou de la mise en place de votre suggestion"}
             </p>
           </div>
 

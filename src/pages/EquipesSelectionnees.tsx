@@ -74,14 +74,14 @@ const EquipesSelectionnees = () => {
                   className="font-display text-4xl sm:text-5xl font-bold text-[#212529]"
                   style={{ fontFamily: 'Sora, sans-serif', fontWeight: 800 }}
                 >
-                  Équipes
+                  Les Équipes
                 </h1>
               </div>
               <p 
                 className="text-xl text-[#6C757D] mb-8"
                 style={{ fontFamily: 'DM Sans, sans-serif' }}
               >
-                Sélectionnées — Les talents retenus pour le hackathon
+                Les talents du hackathon ISOC-ESMT 2026
               </p>
               <div className="w-24 h-1 bg-gradient-to-r from-[#40B2A4] to-[#24366E] mx-auto rounded-full"></div>
             </motion.div>
@@ -110,21 +110,25 @@ const EquipesSelectionnees = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.3 }}
             >
-              <div className="w-24 h-24 rounded-full bg-[#F8F9FA] border border-[#E9ECEF] flex items-center justify-center mx-auto mb-6">
-                <Users size={40} className="text-[#6C757D]" />
+              <div className="w-24 h-24 rounded-full bg-gradient-to-br from-[#40B2A4]/10 to-[#24366E]/10 border border-[#40B2A4]/20 flex items-center justify-center mx-auto mb-6">
+                <Trophy size={40} className="text-[#40B2A4]" />
               </div>
-              <h3 
-                className="font-display text-xl font-bold text-[#212529] mb-2"
-                style={{ fontFamily: 'Sora, sans-serif' }}
-              >
-                Sélection en cours
-              </h3>
               <p 
-                className="text-[#6C757D] max-w-md mx-auto"
+                className="text-[#6C757D] max-w-md mx-auto mb-6"
                 style={{ fontFamily: 'DM Sans, sans-serif' }}
               >
-                Les équipes sélectionnées seront publiées prochainement. Revenez consulter la liste !
+                Les inscriptions sont terminées. Le comité étudie actuellement les dossiers et annoncera les équipes retenues dans les prochains jours.
               </p>
+              <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                <a 
+                  href="/feedback"
+                  className="inline-flex items-center gap-2 bg-gradient-to-r from-[#24366E] to-[#24366E] text-white px-6 py-3 rounded-xl font-semibold hover:shadow-lg transition-all"
+                  style={{ fontFamily: 'Sora, sans-serif' }}
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                  Donner mon avis sur l'inscription
+                </a>
+              </div>
             </motion.div>
           ) : (
             <motion.div 

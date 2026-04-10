@@ -1,13 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import AdminLayout from "@/components/layout/AdminLayout";
-import { MessageSquare, Star, Bug, Lightbulb, Sparkles, FileText, Mail, Calendar, CheckCircle, Clock, Archive } from "lucide-react";
+import { MessageSquare, Star, Bug, Lightbulb, Sparkles, FileText, Mail, Calendar, CheckCircle, Clock, Archive, Trophy } from "lucide-react";
 import { motion } from "framer-motion";
 import { useState } from "react";
 
 interface Feedback {
   id: string;
-  type: 'bug' | 'improvement' | 'feature' | 'other';
+  type: 'hackathon' | 'bug' | 'improvement' | 'feature' | 'other';
   rating: number;
   message: string;
   email: string | null;
@@ -49,6 +49,7 @@ const AdminFeedbacks = () => {
 
   const getTypeIcon = (type: string) => {
     switch (type) {
+      case 'hackathon': return <Trophy size={16} className="text-[#40B2A4]" />;
       case 'bug': return <Bug size={16} className="text-[#DC2626]" />;
       case 'improvement': return <Lightbulb size={16} className="text-[#40B2A4]" />;
       case 'feature': return <Sparkles size={16} className="text-[#24366E]" />;
@@ -58,10 +59,12 @@ const AdminFeedbacks = () => {
 
   const getTypeLabel = (type: string) => {
     switch (type) {
+      case 'hackathon': return 'Hackathon';
       case 'bug': return 'Bug';
       case 'improvement': return 'Amélioration';
       case 'feature': return 'Fonctionnalité';
-      default: return 'Autre';
+      case 'other': return 'Autre';
+      default: return type;
     }
   };
 
@@ -231,6 +234,7 @@ const AdminFeedbacks = () => {
                   className="px-3 py-2 rounded-lg border border-[#E9ECEF] text-sm focus:outline-none focus:ring-2 focus:ring-[#40B2A4]/20"
                 >
                   <option value="all">Tous</option>
+                  <option value="hackathon">🏆 Hackathon</option>
                   <option value="bug">Bug</option>
                   <option value="improvement">Amélioration</option>
                   <option value="feature">Fonctionnalité</option>

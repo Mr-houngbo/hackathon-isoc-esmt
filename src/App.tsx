@@ -9,7 +9,7 @@ import ProtectedRoute from "@/components/auth/ProtectedRoute";
 
 // Public pages
 import Index from "./pages/Index";
-import Inscription from "./pages/Inscription";
+import InscriptionsFermees from "./pages/InscriptionsFermees";
 import EquipesSelectionnees from "./pages/EquipesSelectionnees";
 import Agenda from "./pages/Agenda";
 import Mentors from "./pages/Mentors";
@@ -58,7 +58,7 @@ const App = () => (
             <Routes>
               {/* Public */}
               <Route path="/" element={<Index />} />
-              <Route path="/inscription" element={<Inscription />} />
+              <Route path="/inscription" element={<InscriptionsFermees />} />
               <Route path="/equipes-selectionnees" element={<EquipesSelectionnees />} />
               <Route path="/agenda" element={<Agenda />} />
               <Route path="/mentors" element={<Mentors />} />

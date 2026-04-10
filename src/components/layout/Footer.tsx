@@ -87,18 +87,18 @@ const Footer = () => {
           </h4>
           <nav className="space-y-2">
             <Link 
-              to="/inscription" 
-              className="block text-sm text-slate-300 hover:text-[#40B2A4] transition-all duration-300 hover:translate-x-1"
-              style={{ fontFamily: 'DM Sans, sans-serif' }}
-            >
-              Inscription
-            </Link>
-            <Link 
               to="/equipes-selectionnees" 
               className="block text-sm text-slate-300 hover:text-[#40B2A4] transition-all duration-300 hover:translate-x-1"
               style={{ fontFamily: 'DM Sans, sans-serif' }}
             >
               Équipes Sélectionnées
+            </Link>
+            <Link 
+              to="/agenda" 
+              className="block text-sm text-slate-300 hover:text-[#40B2A4] transition-all duration-300 hover:translate-x-1"
+              style={{ fontFamily: 'DM Sans, sans-serif' }}
+            >
+              Agenda
             </Link>
             <Link 
               to="/galerie" 

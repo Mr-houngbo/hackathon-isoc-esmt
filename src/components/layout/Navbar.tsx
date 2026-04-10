@@ -6,7 +6,6 @@ import { motion, AnimatePresence } from "framer-motion";
 const navLinks = [
   { label: "Accueil", path: "/" },
   { label: "Thématiques", path: "/thematiques" },
-  { label: "Inscription", path: "/inscription" },
   { label: "Équipes", path: "/equipes-selectionnees" },
   { label: "Agenda", path: "/agenda" },
   { label: "Mentors", path: "/mentors" },
@@ -55,11 +54,11 @@ const Navbar = () => {
             </Link>
           ))}
           <Link
-            to="/inscription"
-            className="bg-[#40B2A4] hover:bg-[#40B2A4] text-white font-semibold ml-3 inline-flex items-center gap-2 rounded-lg px-5 py-2 text-sm transition-all duration-300 hover:shadow-lg hover:shadow-[#40B2A4]/25 hover:scale-105"
+            to="/equipes-selectionnees"
+            className="bg-gradient-to-r from-[#24366E] to-[#24366E] hover:from-[#1a264f] hover:to-[#1a264f] text-white font-semibold ml-3 inline-flex items-center gap-2 rounded-lg px-5 py-2 text-sm transition-all duration-300 hover:shadow-lg hover:shadow-[#24366E]/25 hover:scale-105"
             style={{ fontFamily: 'Sora, sans-serif' }}
           >
-            S'inscrire
+            Voir les équipes
           </Link>
         </div>
 
@@ -122,12 +121,12 @@ const Navbar = () => {
               </div>
               
               <Link
-                to="/inscription"
+                to="/equipes-selectionnees"
                 onClick={() => setOpen(false)}
                 className="btn-premium inline-flex items-center justify-center gap-2 rounded-lg px-4 sm:px-6 py-2.5 sm:py-4 text-xs sm:text-sm font-semibold"
                 style={{ fontFamily: 'Sora, sans-serif' }}
               >
-                S'inscrire maintenant
+                Voir les équipes sélectionnées
               </Link>
             </div>
           </motion.div>

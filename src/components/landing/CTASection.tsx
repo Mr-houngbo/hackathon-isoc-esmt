@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowRight, Rocket, Sparkles, Timer } from "lucide-react";
+import { ArrowRight, Rocket, Sparkles, Timer, Users, Calendar } from "lucide-react";
 import { GlobeISoc } from "@/components/ui/GlobeISoc";
 
 const CTASection = () => (
@@ -54,7 +54,7 @@ const CTASection = () => (
         </motion.div>
         
         <div className="relative z-10">
-          {/* Urgency badge */}
+          {/* Badge */}
           <motion.div
             initial={{ opacity: 0, y: -20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -62,9 +62,9 @@ const CTASection = () => (
             transition={{ delay: 0.2 }}
             className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm border border-white/30 px-4 py-2 rounded-full mb-8 mx-auto"
           >
-            <div className="w-2 h-2 bg-white rounded-full animate-pulse"></div>
+            <Users size={16} className="text-white" />
             <span className="text-sm font-semibold text-white" style={{ fontFamily: 'Sora, sans-serif' }}>
-              Places limitées
+              Les équipes sont sélectionnées
             </span>
           </motion.div>
           
@@ -77,24 +77,10 @@ const CTASection = () => (
             className="font-display text-4xl sm:text-6xl font-bold text-white mb-6"
             style={{ fontFamily: 'Sora, sans-serif', fontWeight: 800 }}
           >
-            Prêt à 
-            <span className="text-white"> relever le défi</span> ?
+            Les inscriptions sont closes 
           </motion.h2>
           
-          {/* Description */}
-          <motion.p 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.4 }}
-            className="text-white/90 text-xl max-w-2xl mx-auto mb-10 leading-relaxed"
-            style={{ fontFamily: 'DM Sans, sans-serif' }}
-          >
-            Rejoignez des innovateurs de tous horizons pour 48h de création intensive. 
-            Transformez vos idées en prototypes et gagnez jusqu'à 450 000 FCFA (en tout). 
-            Ouvert à tous les étudiants, avec priorité ESMT.
-          </motion.p>
-          
+        
           {/* Stats */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -126,7 +112,7 @@ const CTASection = () => (
             className="flex flex-col sm:flex-row items-center justify-center gap-6"
           >
             <Link
-              to="/inscription"
+              to="/equipes-selectionnees"
               className="btn-orange group relative inline-flex items-center gap-3 rounded-xl px-10 py-5 text-lg font-semibold text-white overflow-hidden shadow-xl hover:shadow-white/20"
               style={{ fontFamily: 'Sora, sans-serif' }}
             >
@@ -134,21 +120,22 @@ const CTASection = () => (
               <div className="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               
               <span className="relative z-10 flex items-center gap-3">
-                S'inscrire maintenant 
-                <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform duration-300" />
+                Voir les équipes
+                <Users size={20} className="group-hover:translate-x-1 transition-transform duration-300" />
               </span>
             </Link>
             
             <Link
-              to="/galerie"
+              to="/agenda"
               className="inline-flex items-center gap-3 rounded-xl border-2 border-white/30 px-8 py-5 text-lg font-medium text-white hover:border-white/60 hover:bg-white/10 transition-all duration-300"
               style={{ fontFamily: 'Sora, sans-serif' }}
             >
-              Voir l'édition précédente
+              <Calendar size={20} />
+              Consulter l'agenda
             </Link>
           </motion.div>
           
-          {/* Deadline warning */}
+          {/* Event dates */}
           <motion.p
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
@@ -157,8 +144,8 @@ const CTASection = () => (
             className="mt-8 text-sm text-white/80 flex items-center justify-center gap-2"
             style={{ fontFamily: 'DM Sans, sans-serif' }}
           >
-            <Timer size={14} className="text-white" />
-            Les inscriptions ferment le 10 Avril 2026 à 23h59
+            <Calendar size={14} className="text-white" />
+            Hackathon du 17 & 18 Avril 2025 à l'ESMT Dakar
           </motion.p>
         </div>
         
@@ -180,12 +167,12 @@ const CTASection = () => (
             48h de création intensive • 450K FCFA de prix
           </p>
           <Link
-            to="/inscription"
+            to="/equipes-selectionnees"
             className="inline-flex items-center gap-2 rounded-lg px-4 py-2 text-xs font-semibold text-white bg-white/20 border border-white/30"
             style={{ fontFamily: 'Sora, sans-serif' }}
           >
-            S'inscrire maintenant 
-            <ArrowRight size={14} />
+            Voir les équipes
+            <Users size={14} />
           </Link>
         </div>
       </div>
