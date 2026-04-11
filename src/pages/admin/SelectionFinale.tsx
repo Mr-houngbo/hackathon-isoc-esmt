@@ -32,11 +32,11 @@ interface NoteDetail {
     qualite_projet: number;
     motivation: number;
     clarte_problematique: number;
-    faisabilite: number;
     competences_techniques: number;
-    coherence_profil: number;
     competence_manageriale: number;
     appartenance_esmt: number;
+    presence_feminine: number;
+    pluridisciplinarite: number;
   };
   soumis: boolean;
   date_soumission: string;
@@ -530,7 +530,7 @@ const Attribution = () => {
                                         </div>
                                         <div className="text-right">
                                           <div className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
-                                            {note.score_total}/115
+                                            {note.score_total}/100
                                           </div>
                                           <div className="text-xs text-gray-500 mt-1">
                                             {new Date(note.created_at).toLocaleDateString('fr-FR', { 
@@ -553,27 +553,27 @@ const Attribution = () => {
                                         </div>
                                         <div className="bg-gradient-to-br from-purple-50 to-violet-50 p-3 rounded-lg border border-purple-200">
                                           <div className="text-xs text-purple-600 font-medium mb-1">🔍 Clarté problématique</div>
-                                          <div className="font-bold text-purple-800 text-lg">{note.clarte_problematique || 0}/20</div>
-                                        </div>
-                                        <div className="bg-gradient-to-br from-orange-50 to-amber-50 p-3 rounded-lg border border-orange-200">
-                                          <div className="text-xs text-orange-600 font-medium mb-1">⚙️ Faisabilité technique</div>
-                                          <div className="font-bold text-orange-800 text-lg">{note.faisabilite || 0}/15</div>
+                                          <div className="font-bold text-purple-800 text-lg">{note.clarte_problematique || 0}/15</div>
                                         </div>
                                         <div className="bg-gradient-to-br from-pink-50 to-rose-50 p-3 rounded-lg border border-pink-200">
                                           <div className="text-xs text-pink-600 font-medium mb-1">🛠️ Compétences techniques</div>
                                           <div className="font-bold text-pink-800 text-lg">{note.competences_techniques || 0}/10</div>
                                         </div>
-                                        <div className="bg-gradient-to-br from-teal-50 to-cyan-50 p-3 rounded-lg border border-teal-200">
-                                          <div className="text-xs text-teal-600 font-medium mb-1">🎨 Cohérence du profil</div>
-                                          <div className="font-bold text-teal-800 text-lg">{note.coherence_profil || 0}/10</div>
-                                        </div>
                                         <div className="bg-gradient-to-br from-amber-50 to-yellow-50 p-3 rounded-lg border border-amber-200">
-                                          <div className="text-xs text-amber-600 font-medium mb-1">💼 Compétence managériale</div>
+                                          <div className="text-xs text-amber-600 font-medium mb-1">� Compétence managériale</div>
                                           <div className="font-bold text-amber-800 text-lg">{note.competence_manageriale || 0}/10</div>
                                         </div>
                                         <div className="bg-gradient-to-br from-slate-50 to-gray-50 p-3 rounded-lg border border-slate-200">
-                                          <div className="text-xs text-slate-600 font-medium mb-1">🏢 Appartenance ESMT</div>
+                                          <div className="text-xs text-slate-600 font-medium mb-1">� Appartenance ESMT</div>
                                           <div className="font-bold text-slate-800 text-lg">{note.appartenance_esmt || 0}/5</div>
+                                        </div>
+                                        <div className="bg-gradient-to-br from-orange-50 to-red-50 p-3 rounded-lg border border-orange-200">
+                                          <div className="text-xs text-orange-600 font-medium mb-1">� Présence féminine</div>
+                                          <div className="font-bold text-orange-800 text-lg">{note.presence_feminine || 0}/5</div>
+                                        </div>
+                                        <div className="bg-gradient-to-br from-teal-50 to-cyan-50 p-3 rounded-lg border border-teal-200">
+                                          <div className="text-xs text-teal-600 font-medium mb-1">� Pluridisciplinarité</div>
+                                          <div className="font-bold text-teal-800 text-lg">{note.pluridisciplinarite || 0}/10</div>
                                         </div>
                                       </div>
                                     </div>
