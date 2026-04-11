@@ -8,7 +8,9 @@ import {
   LogOut, 
   Users,
   CheckCircle,
-  Clock
+  Clock,
+  Award,
+  TrendingUp
 } from "lucide-react";
 
 const ComiteLayout = ({ children }: { children: ReactNode }) => {
@@ -73,6 +75,30 @@ const ComiteLayout = ({ children }: { children: ReactNode }) => {
               >
                 <LayoutDashboard className="w-4 h-4" />
                 <span className="text-sm font-medium">Dashboard</span>
+              </Link>
+
+              <Link
+                to="/comite/mes-evaluations"
+                className={`flex items-center space-x-3 px-3 py-2 rounded-lg transition-all duration-200 ${
+                  isActiveLink("/comite/mes-evaluations")
+                    ? "bg-blue-600 text-white shadow-lg"
+                    : "text-blue-300/70 hover:bg-blue-800/50 hover:text-white"
+                }`}
+              >
+                <Award className="w-4 h-4" />
+                <span className="text-sm font-medium">Mes Évaluations</span>
+              </Link>
+
+              <Link
+                to="/comite/classement"
+                className={`flex items-center space-x-3 px-3 py-2 rounded-lg transition-all duration-200 ${
+                  isActiveLink("/comite/classement")
+                    ? "bg-blue-600 text-white shadow-lg"
+                    : "text-blue-300/70 hover:bg-blue-800/50 hover:text-white"
+                }`}
+              >
+                <TrendingUp className="w-4 h-4" />
+                <span className="text-sm font-medium">Classement</span>
               </Link>
             </nav>
 

@@ -41,6 +41,8 @@ import ComiteLogin from "./pages/comite/ComiteLogin";
 import ComiteDashboard from "./pages/comite/ComiteDashboard";
 import EvaluationDossier from "./pages/comite/EvaluationDossier";
 import ComiteEvaluations from "./pages/comite/ComiteEvaluations";
+import MesEvaluations from "./pages/comite/MesEvaluations";
+import ClassementComite from "./pages/comite/ClassementComite";
 import ComiteLayout from "./components/layout/ComiteLayout";
 
 import NotFound from "./pages/NotFound";
@@ -108,6 +110,22 @@ const App = () => (
                 element={
                   <ComiteLayout>
                     <EvaluationDossier />
+                  </ComiteLayout>
+                } 
+              />
+              <Route 
+                path="/comite/mes-evaluations" 
+                element={
+                  <ComiteLayout>
+                    <MesEvaluations />
+                  </ComiteLayout>
+                } 
+              />
+              <Route 
+                path="/comite/classement" 
+                element={
+                  <ComiteLayout>
+                    <ClassementComite />
                   </ComiteLayout>
                 } 
               />
