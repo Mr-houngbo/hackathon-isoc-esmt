@@ -24,29 +24,65 @@ import {
   Star,
   Briefcase,
   Building,
-  Layers
+  Layers,
+  Info,
+  Crown,
+  Mail,
+  Phone,
+  MapPin,
+  GraduationCap,
+  BookOpen,
+  CheckCircle2,
+  XCircle,
+  Heart,
+  Megaphone,
+  Sparkles,
+  Smartphone,
+  Instagram,
+  Linkedin,
+  Tag,
+  Crown as CrownIcon
 } from "lucide-react";
+
+interface Membre {
+  nom_prenom: string;
+  genre: string;
+  filiere: string;
+  niveau_etudes: string;
+  role_equipe: string;
+  telephone: string;
+  email: string;
+  etablissement: string;
+  competences: string[];
+  competence_autre: string;
+  disponible_2_jours: boolean;
+  accepte_conditions: boolean;
+  autorise_photos: boolean;
+  est_chef: boolean;
+}
 
 interface Equipe {
   id: string;
   nom_equipe: string;
   nom_projet: string;
   type_candidature: string;
+  nombre_membres: number;
+  a_projet: string;
   problematique: string;
   solution: string;
   motivation: string;
+  esperances: string;
   domaine_projet: string;
   technologies: string;
   niveau_avancement: string;
   niveau_technique: string;
+  contraintes_techniques: string;
+  competences_equipe: string[];
+  source_info: string;
+  handle_instagram: string;
+  handle_linkedin: string;
   created_at: string;
-  membres?: Array<{
-    nom_prenom: string;
-    filiere: string;
-    niveau_etudes: string;
-    role_equipe: string;
-    competences: string[];
-  }>;
+  membres?: Membre[];
 }
 
 interface NoteData {
@@ -158,17 +194,26 @@ const EvaluationDossier = () => {
           *,
           membres(
             nom_prenom,
+            genre,
             filiere,
             niveau_etudes,
             role_equipe,
-            competences
+            telephone,
+            email,
+            etablissement,
+            competences,
+            competence_autre,
+            disponible_2_jours,
+            accepte_conditions,
+            autorise_photos,
+            est_chef
           )
         `)
         .eq('id', equipeId)
         .single();
 
       if (error) throw error;
-      setEquipe(equipe);
+      setEquipe(equipe as Equipe);
     } catch (error) {
       console.error('Erreur lors du chargement de l\'équipe:', error);
       setError("Impossible de charger les informations du dossier");
@@ -401,61 +446,263 @@ const EvaluationDossier = () => {
       )}
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Informations du dossier */}
+        {/* Informations du dossier - COLONNE GAUCHE */}
         <div className="lg:col-span-1 space-y-6">
+          {/* Section 1: Infos Générales */}
           <Card className="bg-blue-900/50 border-blue-700/30 backdrop-blur-xl">
             <CardHeader>
               <CardTitle className="text-white flex items-center">
-                <FileText className="w-5 h-5 mr-2" />
-                Informations du dossier
+                <Info className="w-5 h-5 mr-2 text-blue-400" />
+                Informations générales
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              <div>
-                <Label className="text-blue-300 text-sm">Nom de l'équipe</Label>
-                <p className="text-white font-medium">{equipe.nom_equipe || "Non spécifié"}</p>
+              <div className="bg-blue-800/30 rounded-lg p-3">
+                <Label className="text-blue-300/70 text-xs uppercase tracking-wider">Nom de l'équipe</Label>
+                <p className="text-white font-medium mt-1">{equipe.nom_equipe || "Non spécifié"}</p>
               </div>
-              <div>
-                <Label className="text-blue-300 text-sm">Nom du projet</Label>
-                <p className="text-white font-medium">{equipe.nom_projet || "Non spécifié"}</p>
+              <div className="bg-blue-800/30 rounded-lg p-3">
+                <Label className="text-blue-300/70 text-xs uppercase tracking-wider">Type de candidature</Label>
+                <div className="flex items-center gap-2 mt-1">
+                  <Badge variant="outline" className="bg-blue-800/50 text-blue-200 border-blue-600/30 capitalize">
+                    {equipe.type_candidature}
+                  </Badge>
+                  <span className="text-white text-sm">
+                    ({equipe.nombre_membres || 1} membre{(equipe.nombre_membres || 1) > 1 ? 's' : ''})
+                  </span>
+                </div>
               </div>
-              <div>
-                <Label className="text-blue-300 text-sm">Type de candidature</Label>
-                <Badge variant="outline" className="bg-blue-800/50 text-blue-300 border-blue-600/30">
-                  {equipe.type_candidature}
-                </Badge>
+              <div className="bg-blue-800/30 rounded-lg p-3">
+                <Label className="text-blue-300/70 text-xs uppercase tracking-wider">A un projet ?</Label>
+                <p className="text-white font-medium mt-1 capitalize">{equipe.a_projet || "Non spécifié"}</p>
               </div>
-              <div>
-                <Label className="text-blue-300 text-sm">Domaine du projet</Label>
-                <p className="text-white">{equipe.domaine_projet || "Non spécifié"}</p>
-              </div>
-              <div>
-                <Label className="text-blue-300 text-sm">Date de soumission</Label>
-                <p className="text-white flex items-center">
-                  <Calendar className="w-3 h-3 mr-1" />
+              <div className="bg-blue-800/30 rounded-lg p-3">
+                <Label className="text-blue-300/70 text-xs uppercase tracking-wider">Date de soumission</Label>
+                <p className="text-white font-medium mt-1 flex items-center">
+                  <Calendar className="w-3 h-3 mr-1 text-blue-400" />
                   {new Date(equipe.created_at).toLocaleDateString('fr-FR')}
                 </p>
               </div>
+              {equipe.source_info && (
+                <div className="bg-blue-800/30 rounded-lg p-3">
+                  <Label className="text-blue-300/70 text-xs uppercase tracking-wider flex items-center gap-1">
+                    <Megaphone className="w-3 h-3" />
+                    Source d'information
+                  </Label>
+                  <p className="text-white font-medium mt-1">{equipe.source_info}</p>
+                </div>
+              )}
             </CardContent>
           </Card>
 
-          {/* Membres de l'équipe */}
+          {/* Section 2: Détails du Projet */}
+          {equipe.nom_projet && (
+            <Card className="bg-blue-900/50 border-blue-700/30 backdrop-blur-xl">
+              <CardHeader>
+                <CardTitle className="text-white flex items-center">
+                  <Lightbulb className="w-5 h-5 mr-2 text-yellow-400" />
+                  Détails du projet
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="bg-blue-800/30 rounded-lg p-3">
+                  <Label className="text-blue-300/70 text-xs uppercase tracking-wider">Nom du projet</Label>
+                  <p className="text-white font-medium mt-1">{equipe.nom_projet}</p>
+                </div>
+                <div className="bg-blue-800/30 rounded-lg p-3">
+                  <Label className="text-blue-300/70 text-xs uppercase tracking-wider flex items-center gap-1">
+                    <Target className="w-3 h-3" />
+                    Domaine
+                  </Label>
+                  <p className="text-white font-medium mt-1">{equipe.domaine_projet || "Non spécifié"}</p>
+                </div>
+                {equipe.niveau_avancement && (
+                  <div className="bg-blue-800/30 rounded-lg p-3">
+                    <Label className="text-blue-300/70 text-xs uppercase tracking-wider">Niveau d'avancement</Label>
+                    <p className="text-white font-medium mt-1 capitalize">{equipe.niveau_avancement}</p>
+                  </div>
+                )}
+                {equipe.niveau_technique && (
+                  <div className="bg-blue-800/30 rounded-lg p-3">
+                    <Label className="text-blue-300/70 text-xs uppercase tracking-wider">Niveau technique</Label>
+                    <p className="text-white font-medium mt-1 capitalize">{equipe.niveau_technique}</p>
+                  </div>
+                )}
+                {equipe.competences_equipe && equipe.competences_equipe.length > 0 && (
+                  <div className="bg-blue-800/30 rounded-lg p-3">
+                    <Label className="text-blue-300/70 text-xs uppercase tracking-wider flex items-center gap-1">
+                      <Award className="w-3 h-3" />
+                      Compétences de l'équipe
+                    </Label>
+                    <div className="flex flex-wrap gap-1 mt-2">
+                      {equipe.competences_equipe.map((comp, idx) => (
+                        <span key={idx} className="px-2 py-0.5 bg-blue-700/50 text-blue-200 rounded text-xs">
+                          {comp}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+          )}
+
+          {/* Section 3: Réseaux Sociaux */}
+          {(equipe.handle_instagram || equipe.handle_linkedin) && (
+            <Card className="bg-blue-900/50 border-blue-700/30 backdrop-blur-xl">
+              <CardHeader>
+                <CardTitle className="text-white flex items-center">
+                  <Smartphone className="w-5 h-5 mr-2 text-purple-400" />
+                  Réseaux sociaux
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-2">
+                {equipe.handle_instagram && (
+                  <a 
+                    href={`https://instagram.com/${equipe.handle_instagram.replace('@', '')}`}
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 px-3 py-2 bg-gradient-to-r from-purple-600/20 to-pink-600/20 rounded-lg text-pink-300 hover:from-purple-600/30 hover:to-pink-600/30 transition-all text-sm"
+                  >
+                    <Instagram className="w-4 h-4" />
+                    @{equipe.handle_instagram.replace('@', '')}
+                  </a>
+                )}
+                {equipe.handle_linkedin && (
+                  <a 
+                    href={equipe.handle_linkedin}
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 px-3 py-2 bg-blue-700/30 rounded-lg text-blue-300 hover:bg-blue-700/40 transition-all text-sm"
+                  >
+                    <Linkedin className="w-4 h-4" />
+                    LinkedIn
+                  </a>
+                )}
+              </CardContent>
+            </Card>
+          )}
+
+          {/* Section 4: Membres Détaillés */}
           {equipe.membres && equipe.membres.length > 0 && (
             <Card className="bg-blue-900/50 border-blue-700/30 backdrop-blur-xl">
               <CardHeader>
                 <CardTitle className="text-white flex items-center">
-                  <Users className="w-5 h-5 mr-2" />
-                  Membres de l'équipe
+                  <Users className="w-5 h-5 mr-2 text-green-400" />
+                  Membres ({equipe.membres.length})
                 </CardTitle>
               </CardHeader>
-              <CardContent className="space-y-3">
+              <CardContent className="space-y-4">
                 {equipe.membres.map((membre, index) => (
-                  <div key={index} className="bg-blue-800/30 rounded-lg p-3 border border-blue-700/30">
-                    <p className="text-white font-medium">{membre.nom_prenom}</p>
-                    <p className="text-blue-300/70 text-sm">{membre.filiere} - {membre.niveau_etudes}</p>
-                    {membre.role_equipe && (
-                      <p className="text-blue-300/50 text-xs mt-1">Rôle: {membre.role_equipe}</p>
+                  <div key={index} className="bg-blue-800/30 rounded-xl p-4 border border-blue-700/30">
+                    {/* Header */}
+                    <div className="flex items-start justify-between mb-3">
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-blue-700 flex items-center justify-center">
+                          <span className="text-white font-semibold text-sm">
+                            {membre.nom_prenom?.charAt(0).toUpperCase()}
+                          </span>
+                        </div>
+                        <div>
+                          <p className="text-white font-semibold flex items-center gap-2">
+                            {membre.nom_prenom}
+                            {membre.est_chef && (
+                              <Badge className="bg-amber-500/20 text-amber-300 border-amber-500/30 text-xs">
+                                <CrownIcon className="w-3 h-3 mr-1" />
+                                Chef
+                              </Badge>
+                            )}
+                          </p>
+                          <p className="text-blue-300/70 text-sm">{membre.role_equipe || 'Membre'}</p>
+                        </div>
+                      </div>
+                      {membre.genre && (
+                        <Badge variant="outline" className="bg-blue-800/30 text-blue-300 border-blue-600/30 text-xs capitalize">
+                          {membre.genre}
+                        </Badge>
+                      )}
+                    </div>
+
+                    {/* Contact */}
+                    <div className="space-y-1 mb-3">
+                      <p className="text-white text-sm flex items-center gap-2">
+                        <Mail className="w-3 h-3 text-blue-400" />
+                        {membre.email}
+                      </p>
+                      {membre.telephone && (
+                        <p className="text-white text-sm flex items-center gap-2">
+                          <Phone className="w-3 h-3 text-blue-400" />
+                          {membre.telephone}
+                        </p>
+                      )}
+                    </div>
+
+                    {/* Formation */}
+                    <div className="space-y-1 mb-3">
+                      <p className="text-blue-300/50 text-xs uppercase tracking-wider flex items-center gap-1">
+                        <GraduationCap className="w-3 h-3" />
+                        Formation
+                      </p>
+                      <p className="text-white text-sm flex items-center gap-2">
+                        <BookOpen className="w-3 h-3 text-blue-400" />
+                        {membre.filiere}
+                      </p>
+                      <p className="text-white text-sm flex items-center gap-2">
+                        <Award className="w-3 h-3 text-blue-400" />
+                        {membre.niveau_etudes}
+                      </p>
+                      {membre.etablissement && (
+                        <p className="text-white text-sm flex items-center gap-2">
+                          <MapPin className="w-3 h-3 text-blue-400" />
+                          {membre.etablissement}
+                        </p>
+                      )}
+                    </div>
+
+                    {/* Compétences */}
+                    {membre.competences && membre.competences.length > 0 && (
+                      <div className="mb-3">
+                        <p className="text-blue-300/50 text-xs uppercase tracking-wider mb-1 flex items-center gap-1">
+                          <Briefcase className="w-3 h-3" />
+                          Compétences
+                        </p>
+                        <div className="flex flex-wrap gap-1">
+                          {membre.competences.map((comp, idx) => (
+                            <span key={idx} className="px-2 py-0.5 bg-blue-700/30 text-blue-200 rounded text-xs">
+                              {comp}
+                            </span>
+                          ))}
+                        </div>
+                        {membre.competence_autre && (
+                          <p className="text-blue-300 text-xs italic mt-1">Autre: {membre.competence_autre}</p>
+                        )}
+                      </div>
                     )}
+
+                    {/* Engagements */}
+                    <div className="pt-3 border-t border-blue-700/30 flex flex-wrap gap-2">
+                      <div className="flex items-center gap-1 text-xs">
+                        {membre.disponible_2_jours ? (
+                          <><CheckCircle2 className="w-3 h-3 text-green-400" /><span className="text-green-300">Dispo 2j</span></>
+                        ) : (
+                          <><XCircle className="w-3 h-3 text-red-400" /><span className="text-red-300">Non dispo</span></>
+                        )}
+                      </div>
+                      <div className="flex items-center gap-1 text-xs">
+                        {membre.accepte_conditions ? (
+                          <><CheckCircle2 className="w-3 h-3 text-green-400" /><span className="text-green-300">Conditions OK</span></>
+                        ) : (
+                          <><XCircle className="w-3 h-3 text-red-400" /><span className="text-red-300">Conditions NOK</span></>
+                        )}
+                      </div>
+                      <div className="flex items-center gap-1 text-xs">
+                        {membre.autorise_photos ? (
+                          <><CheckCircle2 className="w-3 h-3 text-green-400" /><span className="text-green-300">Photos OK</span></>
+                        ) : (
+                          <><XCircle className="w-3 h-3 text-red-400" /><span className="text-red-300">Photos NOK</span></>
+                        )}
+                      </div>
+                    </div>
                   </div>
                 ))}
               </CardContent>
@@ -484,35 +731,81 @@ const EvaluationDossier = () => {
             </CardContent>
           </Card>
 
-          {/* Description du projet */}
+          {/* Description complète du projet */}
           <Card className="bg-blue-900/50 border-blue-700/30 backdrop-blur-xl">
             <CardHeader>
-              <CardTitle className="text-white">Description du projet</CardTitle>
+              <CardTitle className="text-white flex items-center gap-2">
+                <FileText className="w-5 h-5 text-blue-400" />
+                Description complète du projet
+              </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              <div>
-                <Label className="text-blue-300 text-sm">Problématique</Label>
-                <p className="text-white bg-blue-800/30 rounded-lg p-3 border border-blue-700/30">
-                  {equipe.problematique || "Non spécifiée"}
-                </p>
-              </div>
-              <div>
-                <Label className="text-blue-300 text-sm">Solution proposée</Label>
-                <p className="text-white bg-blue-800/30 rounded-lg p-3 border border-blue-700/30">
-                  {equipe.solution || "Non spécifiée"}
-                </p>
-              </div>
-              <div>
-                <Label className="text-blue-300 text-sm">Motivation</Label>
-                <p className="text-white bg-blue-800/30 rounded-lg p-3 border border-blue-700/30">
-                  {equipe.motivation || "Non spécifiée"}
-                </p>
-              </div>
+              {equipe.problematique && (
+                <div>
+                  <Label className="text-blue-300 text-sm flex items-center gap-1">
+                    <Target className="w-3 h-3" />
+                    Problématique
+                  </Label>
+                  <p className="text-white bg-blue-800/30 rounded-lg p-3 border border-blue-700/30 text-sm leading-relaxed">
+                    {equipe.problematique}
+                  </p>
+                </div>
+              )}
+              {equipe.solution && (
+                <div>
+                  <Label className="text-blue-300 text-sm flex items-center gap-1">
+                    <Sparkles className="w-3 h-3" />
+                    Solution proposée
+                  </Label>
+                  <p className="text-white bg-blue-800/30 rounded-lg p-3 border border-blue-700/30 text-sm leading-relaxed">
+                    {equipe.solution}
+                  </p>
+                </div>
+              )}
               {equipe.technologies && (
                 <div>
-                  <Label className="text-blue-300 text-sm">Technologies</Label>
-                  <p className="text-white bg-blue-800/30 rounded-lg p-3 border border-blue-700/30">
+                  <Label className="text-blue-300 text-sm flex items-center gap-1">
+                    <Layers className="w-3 h-3" />
+                    Technologies envisagées
+                  </Label>
+                  <p className="text-white bg-blue-800/30 rounded-lg p-3 border border-blue-700/30 text-sm">
                     {equipe.technologies}
+                  </p>
+                </div>
+              )}
+              {equipe.contraintes_techniques && (
+                <div>
+                  <Label className="text-blue-300 text-sm">Contraintes techniques</Label>
+                  <p className="text-white bg-blue-800/30 rounded-lg p-3 border border-blue-700/30 text-sm">
+                    {equipe.contraintes_techniques}
+                  </p>
+                </div>
+              )}
+            </CardContent>
+          </Card>
+
+          {/* Motivation & Attentes */}
+          <Card className="bg-blue-900/50 border-blue-700/30 backdrop-blur-xl">
+            <CardHeader>
+              <CardTitle className="text-white flex items-center gap-2">
+                <Heart className="w-5 h-5 text-rose-400" />
+                Motivation & Attentes
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              {equipe.motivation && (
+                <div>
+                  <Label className="text-blue-300 text-sm">Motivation</Label>
+                  <p className="text-white bg-blue-800/30 rounded-lg p-3 border border-blue-700/30 text-sm leading-relaxed">
+                    {equipe.motivation}
+                  </p>
+                </div>
+              )}
+              {equipe.esperances && (
+                <div>
+                  <Label className="text-blue-300 text-sm">Espérances</Label>
+                  <p className="text-white bg-blue-800/30 rounded-lg p-3 border border-blue-700/30 text-sm leading-relaxed">
+                    {equipe.esperances}
                   </p>
                 </div>
               )}
