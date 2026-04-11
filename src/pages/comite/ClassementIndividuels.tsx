@@ -19,9 +19,17 @@ import {
   Star,
   Building,
   Layers,
+  User,
   Edit3
 } from "lucide-react";
 import { motion } from "framer-motion";
+
+interface Membre {
+  nom_prenom: string;
+  filiere: string;
+  niveau_etudes: string;
+  role_equipe: string;
+}
 
 interface ClassementItem {
   id: string;
@@ -31,6 +39,7 @@ interface ClassementItem {
   nb_evaluateurs: number;
   score_moyen: number;
   score_final: number;
+  membres?: Membre[];
 }
 
 interface NoteDetail {
@@ -48,7 +57,7 @@ interface NoteDetail {
   created_at: string;
 }
 
-const ClassementComite = () => {
+const ClassementIndividuels = () => {
   const navigate = useNavigate();
   const [classement, setClassement] = useState<ClassementItem[]>([]);
   const [loading, setLoading] = useState(true);
@@ -62,14 +71,31 @@ const ClassementComite = () => {
 
   const fetchClassement = async () => {
     try {
-      const { data, error } = await (supabase as any)
+      // Récupérer le classement des individuels
+      const { data: classementData, error: classementError } = await (supabase as any)
         .from("vue_classement_selection")
         .select("*")
-        .eq("type_candidature", "equipe")
+        .eq("type_candidature", "individuel")
         .order("score_final", { ascending: false });
 
-      if (error) throw error;
-      setClassement((data as ClassementItem[]) || []);
+      if (classementError) throw classementError;
+
+      // Pour chaque individuel, récupérer ses membres
+      const classementAvecMembres = await Promise.all(
+        (classementData || []).map(async (item: any) => {
+          const { data: membresData } = await supabase
+            .from("membres")
+            .select("nom_prenom, filiere, niveau_etudes, role_equipe")
+            .eq("equipe_id", item.id);
+
+          return {
+            ...item,
+            membres: membresData || []
+          };
+        })
+      );
+
+      setClassement(classementAvecMembres);
     } catch (error) {
       console.error("Erreur lors du chargement du classement:", error);
     } finally {
@@ -160,11 +186,11 @@ const ClassementComite = () => {
           </Button>
           <div>
             <h1 className="text-2xl font-bold text-white flex items-center gap-2">
-              <Trophy className="w-6 h-6 text-yellow-400" />
-              Classement des Équipes
+              <Trophy className="w-6 h-6 text-purple-400" />
+              Classement des Individuels
             </h1>
             <p className="text-blue-300/70">
-              Vue du classement final des équipes uniquement
+              Vue du classement final des candidats individuels uniquement
             </p>
           </div>
         </div>
@@ -217,7 +243,7 @@ const ClassementComite = () => {
                   Rang
                 </th>
                 <th className="text-left py-4 px-4 font-semibold text-white">
-                  Équipe / Candidat
+                  Candidat
                 </th>
                 <th className="text-left py-4 px-4 font-semibold text-white">
                   Type
@@ -238,7 +264,7 @@ const ClassementComite = () => {
                   Statut
                 </th>
                 <th className="text-center py-4 px-4 font-semibold text-white">
-                  Ré-évaluer
+                  Réévaluer
                 </th>
               </tr>
             </thead>
@@ -268,18 +294,30 @@ const ClassementComite = () => {
                       </span>
                     </td>
                     <td className="py-4 px-4">
-                      <p className="font-medium text-white">{item.nom_equipe}</p>
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-full bg-gradient-to-br from-purple-500 to-purple-700 flex items-center justify-center">
+                          <User className="w-5 h-5 text-white" />
+                        </div>
+                        <div>
+                          <p className="font-medium text-white">
+                            {item.membres && item.membres.length > 0 
+                              ? item.membres[0].nom_prenom 
+                              : item.nom_equipe}
+                          </p>
+                          {item.membres && item.membres[0] && (
+                            <p className="text-xs text-blue-300/70">
+                              {item.membres[0].filiere} • {item.membres[0].niveau_etudes}
+                            </p>
+                          )}
+                        </div>
+                      </div>
                     </td>
                     <td className="py-4 px-4">
                       <Badge 
                         variant="outline" 
-                        className={`capitalize ${
-                          item.type_candidature === 'equipe' 
-                            ? "bg-blue-500/20 text-blue-300 border-blue-500/30" 
-                            : "bg-purple-500/20 text-purple-300 border-purple-500/30"
-                        }`}
+                        className="bg-purple-500/20 text-purple-300 border-purple-500/30 capitalize"
                       >
-                        {item.type_candidature === 'equipe' ? 'Équipe' : 'Individuel'}
+                        Individuel
                       </Badge>
                     </td>
                     <td className="py-4 px-4 text-center">
@@ -320,12 +358,12 @@ const ClassementComite = () => {
                           </Button>
                         </DialogTrigger>
                         <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto bg-gradient-to-br from-blue-900 to-blue-950 border-blue-700/30">
-                          <DialogHeader className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white p-6 -m-6 mb-6 rounded-t-xl">
+                          <DialogHeader className="bg-gradient-to-r from-purple-600 to-indigo-600 text-white p-6 -m-6 mb-6 rounded-t-xl">
                             <DialogTitle className="text-xl font-bold text-white flex items-center gap-2">
                               <TrendingUp className="w-5 h-5" />
                               📊 Détails des notes - {item.nom_equipe}
                             </DialogTitle>
-                            <DialogDescription className="text-blue-100">
+                            <DialogDescription className="text-purple-100">
                               Notes détaillées attribuées par les membres du comité
                             </DialogDescription>
                           </DialogHeader>
@@ -333,7 +371,7 @@ const ClassementComite = () => {
                           <div className="mt-6 space-y-4">
                             {loadingNotes ? (
                               <div className="text-center py-12">
-                                <div className="inline-block w-8 h-8 border-3 border-blue-400 border-t-transparent animate-spin rounded-full"></div>
+                                <div className="inline-block w-8 h-8 border-3 border-purple-400 border-t-transparent animate-spin rounded-full"></div>
                                 <p className="mt-4 text-blue-300">Chargement des notes...</p>
                               </div>
                             ) : notesDetails.length > 0 ? (
@@ -344,7 +382,7 @@ const ClassementComite = () => {
                                 >
                                   <div className="flex items-center justify-between mb-4">
                                     <div className="flex items-center space-x-3">
-                                      <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-full flex items-center justify-center text-white font-bold">
+                                      <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-indigo-600 rounded-full flex items-center justify-center text-white font-bold">
                                         {note.comite_nom.charAt(0).toUpperCase()}
                                       </div>
                                       <div>
@@ -390,10 +428,10 @@ const ClassementComite = () => {
                               ))
                             ) : (
                               <div className="text-center py-12">
-                                <AlertCircle className="w-16 h-16 text-blue-400/50 mx-auto mb-4" />
+                                <AlertCircle className="w-16 h-16 text-purple-400/50 mx-auto mb-4" />
                                 <p className="text-blue-300 text-lg font-medium">Aucune note trouvée</p>
                                 <p className="text-blue-300/50 text-sm mt-2">
-                                  Les membres du comité n'ont pas encore évalué cette équipe
+                                  Les membres du comité n'ont pas encore évalué ce candidat
                                 </p>
                               </div>
                             )}
@@ -431,10 +469,10 @@ const ClassementComite = () => {
       {classement.length === 0 && (
         <Card className="bg-blue-900/50 border-blue-700/30 backdrop-blur-xl">
           <CardContent className="p-8 text-center">
-            <TrendingUp className="w-12 h-12 text-blue-400/50 mx-auto mb-4" />
-            <p className="text-white font-medium mb-2">Aucun classement disponible</p>
+            <User className="w-12 h-12 text-purple-400/50 mx-auto mb-4" />
+            <p className="text-white font-medium mb-2">Aucun individuel dans le classement</p>
             <p className="text-blue-300/70 text-sm">
-              Le classement sera disponible une fois que les évaluations auront commencé
+              Le classement des individuels sera disponible une fois que les évaluations auront commencé
             </p>
           </CardContent>
         </Card>
@@ -443,4 +481,4 @@ const ClassementComite = () => {
   );
 };
 
-export default ClassementComite;
+export default ClassementIndividuels;

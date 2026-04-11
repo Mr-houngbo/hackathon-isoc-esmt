@@ -10,7 +10,9 @@ import {
   CheckCircle,
   Clock,
   Award,
-  TrendingUp
+  TrendingUp,
+  Trophy,
+  User
 } from "lucide-react";
 
 const ComiteLayout = ({ children }: { children: ReactNode }) => {
@@ -89,17 +91,33 @@ const ComiteLayout = ({ children }: { children: ReactNode }) => {
                 <span className="text-sm font-medium">Mes Évaluations</span>
               </Link>
 
-              <Link
-                to="/comite/classement"
-                className={`flex items-center space-x-3 px-3 py-2 rounded-lg transition-all duration-200 ${
-                  isActiveLink("/comite/classement")
-                    ? "bg-blue-600 text-white shadow-lg"
-                    : "text-blue-300/70 hover:bg-blue-800/50 hover:text-white"
-                }`}
-              >
-                <TrendingUp className="w-4 h-4" />
-                <span className="text-sm font-medium">Classement</span>
-              </Link>
+              <div className="pt-2 border-t border-blue-700/30">
+                <p className="text-xs text-blue-300/50 uppercase tracking-wider mb-2 px-3">Classements</p>
+                
+                <Link
+                  to="/comite/classement"
+                  className={`flex items-center space-x-3 px-3 py-2 rounded-lg transition-all duration-200 ${
+                    isActiveLink("/comite/classement")
+                      ? "bg-blue-600 text-white shadow-lg"
+                      : "text-blue-300/70 hover:bg-blue-800/50 hover:text-white"
+                  }`}
+                >
+                  <Trophy className="w-4 h-4" />
+                  <span className="text-sm font-medium">Équipes</span>
+                </Link>
+
+                <Link
+                  to="/comite/classement-individuels"
+                  className={`flex items-center space-x-3 px-3 py-2 rounded-lg transition-all duration-200 ${
+                    isActiveLink("/comite/classement-individuels")
+                      ? "bg-blue-600 text-white shadow-lg"
+                      : "text-blue-300/70 hover:bg-blue-800/50 hover:text-white"
+                  }`}
+                >
+                  <User className="w-4 h-4" />
+                  <span className="text-sm font-medium">Individuels</span>
+                </Link>
+              </div>
             </nav>
 
             {/* Logout */}
