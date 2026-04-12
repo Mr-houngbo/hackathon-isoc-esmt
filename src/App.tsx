@@ -44,6 +44,7 @@ import ComiteEvaluations from "./pages/comite/ComiteEvaluations";
 import MesEvaluations from "./pages/comite/MesEvaluations";
 import ClassementComite from "./pages/comite/ClassementComite";
 import ClassementIndividuels from "./pages/comite/ClassementIndividuels";
+import ClassementParProjet from "./pages/comite/ClassementParProjet";
 import ComiteLayout from "./components/layout/ComiteLayout";
 
 import NotFound from "./pages/NotFound";
@@ -135,6 +136,14 @@ const App = () => (
                 element={
                   <ComiteLayout>
                     <ClassementIndividuels />
+                  </ComiteLayout>
+                } 
+              />
+              <Route 
+                path="/comite/classement-projets" 
+                element={
+                  <ComiteLayout>
+                    <ClassementParProjet />
                   </ComiteLayout>
                 } 
               />

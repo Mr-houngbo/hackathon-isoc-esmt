@@ -12,7 +12,8 @@ import {
   Award,
   TrendingUp,
   Trophy,
-  User
+  User,
+  Lightbulb
 } from "lucide-react";
 
 const ComiteLayout = ({ children }: { children: ReactNode }) => {
@@ -116,6 +117,18 @@ const ComiteLayout = ({ children }: { children: ReactNode }) => {
                 >
                   <User className="w-4 h-4" />
                   <span className="text-sm font-medium">Individuels</span>
+                </Link>
+
+                <Link
+                  to="/comite/classement-projets"
+                  className={`flex items-center space-x-3 px-3 py-2 rounded-lg transition-all duration-200 ${
+                    isActiveLink("/comite/classement-projets")
+                      ? "bg-blue-600 text-white shadow-lg"
+                      : "text-blue-300/70 hover:bg-blue-800/50 hover:text-white"
+                  }`}
+                >
+                  <Lightbulb className="w-4 h-4" />
+                  <span className="text-sm font-medium">Par Projet</span>
                 </Link>
               </div>
             </nav>
