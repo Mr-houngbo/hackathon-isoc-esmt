@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import { useNavigate } from "react-router-dom";
 import { 
   Trophy, 
   Users, 
@@ -79,6 +80,7 @@ interface MembreDetail {
 
 const GestionSelection = () => {
   const queryClient = useQueryClient();
+  const navigate = useNavigate();
   const [selectedEquipes, setSelectedEquipes] = useState<Set<string>>(new Set());
   const [selectedAttente, setSelectedAttente] = useState<Set<string>>(new Set());
   const [searchTerm, setSearchTerm] = useState("");
@@ -530,6 +532,15 @@ const GestionSelection = () => {
           </Button>
 
           <Button
+            onClick={() => navigate('/admin/preview-selection')}
+            variant="outline"
+            className="border-[#40B2A4] text-[#40B2A4] hover:bg-[#40B2A4]/10"
+          >
+            <Eye className="w-4 h-4 mr-2" />
+            Voir l'aperçu
+          </Button>
+
+          <Button
             onClick={generatePDF}
             variant="outline"
             className="border-[#D25238] text-[#D25238] hover:bg-[#D25238]/10"
@@ -573,112 +584,215 @@ const GestionSelection = () => {
           </div>
         </div>
 
-        {/* Tableau de classement */}
-        <Card className="border-[#E9ECEF]">
-          <CardHeader className="pb-3">
-            <CardTitle className="text-lg text-[#24366E]">Classement général</CardTitle>
-            <CardDescription>
-              Cliquez sur une ligne pour sélectionner/désélectionner
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="overflow-x-auto">
-              <table className="w-full">
-                <thead>
-                  <tr className="border-b border-[#E9ECEF]">
-                    <th className="text-left py-3 px-2 text-sm font-medium text-[#6C757D]">Rang</th>
-                    <th className="text-left py-3 px-2 text-sm font-medium text-[#6C757D]">Équipe/Candidat</th>
-                    <th className="text-center py-3 px-2 text-sm font-medium text-[#6C757D]">Type</th>
-                    <th className="text-center py-3 px-2 text-sm font-medium text-[#6C757D]">Score</th>
-                    <th className="text-center py-3 px-2 text-sm font-medium text-[#6C757D]">Éval.</th>
-                    <th className="text-center py-3 px-2 text-sm font-medium text-[#6C757D]">Statut</th>
-                    <th className="text-center py-3 px-2 text-sm font-medium text-[#6C757D]">Sélection</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {filteredClassement?.map((item) => {
-                    const statusInfo = getStatusInfo(item);
-                    const isSelected = selectedEquipes.has(item.id) || selectedAttente.has(item.id);
-                    
-                    return (
-                      <tr 
-                        key={item.id} 
-                        className={`border-b border-[#E9ECEF] hover:bg-[#F8F9FA] transition-colors cursor-pointer ${
-                          isSelected ? 'bg-green-50/50' : ''
-                        }`}
-                        onClick={() => toggleSelection(item.id, item.position || 0)}
-                      >
-                        <td className="py-3 px-2">
-                          <div className="flex items-center gap-2">
-                            <span className={`font-bold ${
-                              item.position && item.position <= 3 ? "text-[#40B2A4]" : "text-[#24366E]"
-                            }`}>
-                              {item.position}
-                            </span>
-                            {item.position && item.position <= 3 && (
-                              <Medal className={`w-4 h-4 ${
-                                item.position === 1 ? "text-yellow-400" :
-                                item.position === 2 ? "text-gray-400" :
-                                "text-orange-400"
-                              }`} />
-                            )}
-                          </div>
-                        </td>
-                        <td className="py-3 px-2">
-                          <p className="font-medium text-[#212529]">{item.nom_equipe}</p>
-                        </td>
-                        <td className="py-3 px-2 text-center">
-                          <Badge variant="outline" className={`${
-                            item.type_candidature === 'equipe' 
-                              ? "bg-blue-500/20 text-blue-600 border-blue-500/30" 
-                              : "bg-purple-500/20 text-purple-600 border-purple-500/30"
-                          }`}>
-                            {item.type_candidature === 'equipe' ? (
-                              <><Users2 className="w-3 h-3 mr-1" /> Équipe</>
-                            ) : (
-                              <><User className="w-3 h-3 mr-1" /> Individuel</>
-                            )}
-                          </Badge>
-                        </td>
-                        <td className="py-3 px-2 text-center">
-                          <span className="font-bold text-[#24366E]">{item.score_moyen}/100</span>
-                        </td>
-                        <td className="py-3 px-2 text-center">
-                          <Badge variant="outline" className="bg-gray-100 text-gray-600">
-                            {item.nb_evaluateurs}
-                          </Badge>
-                        </td>
-                        <td className="py-3 px-2 text-center">
-                          <Badge variant="outline" className={statusInfo.color}>
-                            <statusInfo.icon className="w-3 h-3 mr-1" />
-                            {statusInfo.label}
-                          </Badge>
-                        </td>
-                        <td className="py-3 px-2 text-center">
-                          <button 
-                            className="w-6 h-6 rounded border-2 flex items-center justify-center transition-colors"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              toggleSelection(item.id, item.position || 0);
-                            }}
-                          >
-                            {selectedEquipes.has(item.id) ? (
-                              <CheckSquare className="w-5 h-5 text-green-500" />
-                            ) : selectedAttente.has(item.id) ? (
-                              <CheckSquare className="w-5 h-5 text-yellow-500" />
-                            ) : (
-                              <Square className="w-5 h-5 text-gray-300" />
-                            )}
-                          </button>
-                        </td>
+        {/* Tableau de classement avec onglets Équipes/Individuels */}
+        <Tabs defaultValue="equipes" className="w-full">
+          <TabsList className="grid w-full grid-cols-2 max-w-md mb-4">
+            <TabsTrigger value="equipes" className="gap-2">
+              <Users2 className="w-4 h-4" />
+              Équipes ({classement?.filter(i => i.type_candidature === 'equipe').length || 0})
+            </TabsTrigger>
+            <TabsTrigger value="individuels" className="gap-2">
+              <User className="w-4 h-4" />
+              Individuels ({classement?.filter(i => i.type_candidature === 'individuel').length || 0})
+            </TabsTrigger>
+          </TabsList>
+
+          {/* ONGLET ÉQUIPES */}
+          <TabsContent value="equipes">
+            <Card className="border-[#40B2A4]/30">
+              <CardHeader className="pb-3">
+                <CardTitle className="text-lg text-[#24366E] flex items-center gap-2">
+                  <Users2 className="w-5 h-5 text-[#40B2A4]" />
+                  Classement des Équipes
+                </CardTitle>
+                <CardDescription>
+                  Cliquez sur une ligne pour sélectionner/désélectionner une équipe
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="overflow-x-auto">
+                  <table className="w-full">
+                    <thead>
+                      <tr className="border-b border-[#E9ECEF]">
+                        <th className="text-left py-3 px-2 text-sm font-medium text-[#6C757D]">Rang</th>
+                        <th className="text-left py-3 px-2 text-sm font-medium text-[#6C757D]">Nom de l'équipe</th>
+                        <th className="text-center py-3 px-2 text-sm font-medium text-[#6C757D]">Score</th>
+                        <th className="text-center py-3 px-2 text-sm font-medium text-[#6C757D]">Éval.</th>
+                        <th className="text-center py-3 px-2 text-sm font-medium text-[#6C757D]">Statut</th>
+                        <th className="text-center py-3 px-2 text-sm font-medium text-[#6C757D]">Sélection</th>
                       </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
-            </div>
-          </CardContent>
-        </Card>
+                    </thead>
+                    <tbody>
+                      {classement?.filter(i => i.type_candidature === 'equipe').map((item) => {
+                        const statusInfo = getStatusInfo(item);
+                        const isSelected = selectedEquipes.has(item.id) || selectedAttente.has(item.id);
+                        
+                        return (
+                          <tr 
+                            key={item.id} 
+                            className={`border-b border-[#E9ECEF] hover:bg-[#F8F9FA] transition-colors cursor-pointer ${
+                              isSelected ? 'bg-green-50/50' : ''
+                            }`}
+                            onClick={() => toggleSelection(item.id, item.position || 0)}
+                          >
+                            <td className="py-3 px-2">
+                              <div className="flex items-center gap-2">
+                                <span className={`font-bold ${
+                                  item.position && item.position <= 3 ? "text-[#40B2A4]" : "text-[#24366E]"
+                                }`}>
+                                  {item.position}
+                                </span>
+                                {item.position && item.position <= 3 && (
+                                  <Medal className={`w-4 h-4 ${
+                                    item.position === 1 ? "text-yellow-400" :
+                                    item.position === 2 ? "text-gray-400" :
+                                    "text-orange-400"
+                                  }`} />
+                                )}
+                              </div>
+                            </td>
+                            <td className="py-3 px-2">
+                              <p className="font-medium text-[#212529]">{item.nom_equipe}</p>
+                            </td>
+                            <td className="py-3 px-2 text-center">
+                              <span className="font-bold text-[#24366E]">{item.score_moyen}/100</span>
+                            </td>
+                            <td className="py-3 px-2 text-center">
+                              <Badge variant="outline" className="bg-gray-100 text-gray-600">
+                                {item.nb_evaluateurs}
+                              </Badge>
+                            </td>
+                            <td className="py-3 px-2 text-center">
+                              <Badge variant="outline" className={statusInfo.color}>
+                                <statusInfo.icon className="w-3 h-3 mr-1" />
+                                {statusInfo.label}
+                              </Badge>
+                            </td>
+                            <td className="py-3 px-2 text-center">
+                              <button 
+                                className="w-6 h-6 rounded border-2 flex items-center justify-center transition-colors"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  toggleSelection(item.id, item.position || 0);
+                                }}
+                              >
+                                {selectedEquipes.has(item.id) ? (
+                                  <CheckSquare className="w-5 h-5 text-green-500" />
+                                ) : selectedAttente.has(item.id) ? (
+                                  <CheckSquare className="w-5 h-5 text-yellow-500" />
+                                ) : (
+                                  <Square className="w-5 h-5 text-gray-300" />
+                                )}
+                              </button>
+                            </td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          {/* ONGLET INDIVIDUELS */}
+          <TabsContent value="individuels">
+            <Card className="border-purple-200">
+              <CardHeader className="pb-3">
+                <CardTitle className="text-lg text-purple-700 flex items-center gap-2">
+                  <User className="w-5 h-5 text-purple-500" />
+                  Classement des Individus
+                </CardTitle>
+                <CardDescription>
+                  Cliquez sur une ligne pour sélectionner/désélectionner un candidat individuel
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="overflow-x-auto">
+                  <table className="w-full">
+                    <thead>
+                      <tr className="border-b border-[#E9ECEF]">
+                        <th className="text-left py-3 px-2 text-sm font-medium text-[#6C757D]">Rang</th>
+                        <th className="text-left py-3 px-2 text-sm font-medium text-[#6C757D]">Nom du candidat</th>
+                        <th className="text-center py-3 px-2 text-sm font-medium text-[#6C757D]">Score</th>
+                        <th className="text-center py-3 px-2 text-sm font-medium text-[#6C757D]">Éval.</th>
+                        <th className="text-center py-3 px-2 text-sm font-medium text-[#6C757D]">Statut</th>
+                        <th className="text-center py-3 px-2 text-sm font-medium text-[#6C757D]">Sélection</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {classement?.filter(i => i.type_candidature === 'individuel').map((item) => {
+                        const statusInfo = getStatusInfo(item);
+                        const isSelected = selectedEquipes.has(item.id) || selectedAttente.has(item.id);
+                        
+                        return (
+                          <tr 
+                            key={item.id} 
+                            className={`border-b border-[#E9ECEF] hover:bg-[#F8F9FA] transition-colors cursor-pointer ${
+                              isSelected ? 'bg-green-50/50' : ''
+                            }`}
+                            onClick={() => toggleSelection(item.id, item.position || 0)}
+                          >
+                            <td className="py-3 px-2">
+                              <div className="flex items-center gap-2">
+                                <span className={`font-bold ${
+                                  item.position && item.position <= 3 ? "text-purple-500" : "text-[#24366E]"
+                                }`}>
+                                  {item.position}
+                                </span>
+                                {item.position && item.position <= 3 && (
+                                  <Medal className={`w-4 h-4 ${
+                                    item.position === 1 ? "text-yellow-400" :
+                                    item.position === 2 ? "text-gray-400" :
+                                    "text-orange-400"
+                                  }`} />
+                                )}
+                              </div>
+                            </td>
+                            <td className="py-3 px-2">
+                              <p className="font-medium text-[#212529]">{item.nom_equipe}</p>
+                            </td>
+                            <td className="py-3 px-2 text-center">
+                              <span className="font-bold text-[#24366E]">{item.score_moyen}/100</span>
+                            </td>
+                            <td className="py-3 px-2 text-center">
+                              <Badge variant="outline" className="bg-gray-100 text-gray-600">
+                                {item.nb_evaluateurs}
+                              </Badge>
+                            </td>
+                            <td className="py-3 px-2 text-center">
+                              <Badge variant="outline" className={statusInfo.color}>
+                                <statusInfo.icon className="w-3 h-3 mr-1" />
+                                {statusInfo.label}
+                              </Badge>
+                            </td>
+                            <td className="py-3 px-2 text-center">
+                              <button 
+                                className="w-6 h-6 rounded border-2 flex items-center justify-center transition-colors"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  toggleSelection(item.id, item.position || 0);
+                                }}
+                              >
+                                {selectedEquipes.has(item.id) ? (
+                                  <CheckSquare className="w-5 h-5 text-green-500" />
+                                ) : selectedAttente.has(item.id) ? (
+                                  <CheckSquare className="w-5 h-5 text-yellow-500" />
+                                ) : (
+                                  <Square className="w-5 h-5 text-gray-300" />
+                                )}
+                              </button>
+                            </td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+        </Tabs>
 
         {/* Résumé visuel */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

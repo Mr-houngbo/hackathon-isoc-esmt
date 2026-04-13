@@ -34,6 +34,7 @@ import GestionBadges from "./pages/admin/GestionBadges";
 import GestionComite from "./pages/admin/GestionComite";
 import Attribution from "./pages/admin/SelectionFinale";
 import GestionSelection from "./pages/admin/GestionSelection";
+import PreviewSelection from "./pages/admin/PreviewSelection";
 import Statistiques from "./pages/admin/Statistiques";
 
 
@@ -88,6 +89,7 @@ const App = () => (
               <Route path="/admin/comite" element={<ProtectedRoute><GestionComite /></ProtectedRoute>} />
               <Route path="/admin/attribution" element={<ProtectedRoute><Attribution /></ProtectedRoute>} />
               <Route path="/admin/selection" element={<ProtectedRoute><GestionSelection /></ProtectedRoute>} />
+              <Route path="/admin/preview-selection" element={<ProtectedRoute><PreviewSelection /></ProtectedRoute>} />
               <Route path="/admin/statistiques" element={<ProtectedRoute><Statistiques /></ProtectedRoute>} />
 
 
