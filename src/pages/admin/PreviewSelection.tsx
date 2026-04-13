@@ -72,7 +72,7 @@ const PreviewSelection = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
-  // Récupérer le classement complet
+  // Récupérer le classement complet avec les membres
   const { data: classement, isLoading } = useQuery({
     queryKey: ["classement-preview"],
     queryFn: async () => {
@@ -83,9 +83,32 @@ const PreviewSelection = () => {
       
       if (error) throw error;
       
+      // Récupérer les membres pour chaque équipe
+      const equipeIds = (data || []).map((item: any) => item.id);
+      
+      let membresMap: Record<string, string> = {};
+      
+      if (equipeIds.length > 0) {
+        const { data: membresData } = await supabase
+          .from("membres")
+          .select("equipe_id, nom_prenom")
+          .in("equipe_id", equipeIds);
+        
+        // Créer un map equipe_id -> nom du premier membre
+        membresData?.forEach((m: any) => {
+          if (!membresMap[m.equipe_id]) {
+            membresMap[m.equipe_id] = m.nom_prenom;
+          }
+        });
+      }
+      
       return (data as ClassementItem[]).map((item, index) => ({
         ...item,
-        position: index + 1
+        position: index + 1,
+        // Pour les individuels, utiliser le nom du membre si nom_equipe est vide
+        nom_equipe: item.type_candidature === 'individuel' && membresMap[item.id] 
+          ? membresMap[item.id] 
+          : (item.nom_equipe || "Sans nom")
       }));
     },
   });

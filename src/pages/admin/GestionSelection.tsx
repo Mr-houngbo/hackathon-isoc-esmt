@@ -48,6 +48,7 @@ interface ClassementItem {
   score_final: number;
   selectionne_manuel?: boolean;
   position?: number;
+  membres?: { nom_prenom: string; id: string }[];
 }
 
 interface EquipeDetail {
@@ -88,7 +89,7 @@ const GestionSelection = () => {
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
   const [showPdfPreview, setShowPdfPreview] = useState(false);
 
-  // Récupérer le classement
+  // Récupérer le classement avec les membres
   const { data: classement, isLoading, refetch } = useQuery({
     queryKey: ["classement-gestion-selection"],
     queryFn: async () => {
@@ -99,10 +100,33 @@ const GestionSelection = () => {
       
       if (error) throw error;
       
-      // Ajouter la position
+      // Récupérer les membres pour chaque équipe
+      const equipeIds = (data || []).map((item: any) => item.id);
+      
+      let membresMap: Record<string, string> = {};
+      
+      if (equipeIds.length > 0) {
+        const { data: membresData } = await supabase
+          .from("membres")
+          .select("equipe_id, nom_prenom")
+          .in("equipe_id", equipeIds);
+        
+        // Créer un map equipe_id -> nom du premier membre
+        membresData?.forEach((m: any) => {
+          if (!membresMap[m.equipe_id]) {
+            membresMap[m.equipe_id] = m.nom_prenom;
+          }
+        });
+      }
+      
+      // Ajouter la position et utiliser le nom du membre pour les individuels
       return (data as ClassementItem[]).map((item, index) => ({
         ...item,
-        position: index + 1
+        position: index + 1,
+        // Pour les individuels, utiliser le nom du membre si nom_equipe est vide
+        nom_equipe: item.type_candidature === 'individuel' && membresMap[item.id] 
+          ? membresMap[item.id] 
+          : (item.nom_equipe || "Sans nom")
       }));
     },
   });
