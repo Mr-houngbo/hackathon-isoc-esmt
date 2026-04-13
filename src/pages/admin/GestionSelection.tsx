@@ -10,6 +10,7 @@ import {
   AlertCircle, 
   RefreshCw, 
   Eye,
+  EyeOff,
   Download,
   Globe,
   Star,
@@ -230,9 +231,31 @@ const GestionSelection = () => {
     onSuccess: () => {
       toast.success("Liste publiée avec succès sur la page publique !");
       queryClient.invalidateQueries({ queryKey: ["equipes-selectionnees"] });
+      queryClient.invalidateQueries({ queryKey: ["equipes-selectionnees-actuelles"] });
     },
     onError: (error: any) => {
       toast.error(`Erreur lors de la publication: ${error.message}`);
+    },
+  });
+
+  // Mutation pour dépublier les équipes
+  const depublierMutation = useMutation({
+    mutationFn: async () => {
+      // Dépublier toutes les équipes sélectionnées ou en attente
+      const { error } = await (supabase as any)
+        .from("equipes")
+        .update({ publiee: false })
+        .in("statut", ["selectionne", "en_attente"]);
+      
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      toast.success("Liste retirée du site public avec succès !");
+      queryClient.invalidateQueries({ queryKey: ["equipes-selectionnees"] });
+      queryClient.invalidateQueries({ queryKey: ["equipes-selectionnees-actuelles"] });
+    },
+    onError: (error: any) => {
+      toast.error(`Erreur lors de la dépublication: ${error.message}`);
     },
   });
 
@@ -694,7 +717,17 @@ const GestionSelection = () => {
             disabled={selectedEquipes.size === 0 || publierMutation.isPending}
           >
             <Globe className="w-4 h-4 mr-2" />
-            {publierMutation.isPending ? "Publication..." : "Publier sur le site"}
+            {publierMutation.isPending ? "Publication..." : "Publier"}
+          </Button>
+
+          <Button
+            onClick={() => depublierMutation.mutate()}
+            variant="outline"
+            className="border-orange-500 text-orange-600 hover:bg-orange-50"
+            disabled={depublierMutation.isPending}
+          >
+            <EyeOff className="w-4 h-4 mr-2" />
+            {depublierMutation.isPending ? "Dépublication..." : "Dépublier"}
           </Button>
         </div>
 
