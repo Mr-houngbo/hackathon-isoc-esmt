@@ -117,7 +117,7 @@ const PreviewSelection = () => {
   const { data: equipesDetails, isLoading: isLoadingDetails } = useQuery({
     queryKey: ["equipes-selectionnees-details"],
     queryFn: async () => {
-      const { data, error } = await supabase
+      const { data, error } = await (supabase as any)
         .from("equipes")
         .select(`
           *,
@@ -126,14 +126,14 @@ const PreviewSelection = () => {
         .in("statut", ["selectionne", "en_attente"]);
       
       if (error) throw error;
-      return (data || []) as EquipeDetail[];
+      return ((data || []) as unknown) as EquipeDetail[];
     },
   });
 
   // Publier les équipes
   const publierMutation = useMutation({
     mutationFn: async () => {
-      const { error } = await supabase
+      const { error } = await (supabase as any)
         .from("equipes")
         .update({ publiee: true })
         .in("statut", ["selectionne", "en_attente"]);

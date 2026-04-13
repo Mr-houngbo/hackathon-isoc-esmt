@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
@@ -131,11 +131,50 @@ const GestionSelection = () => {
     },
   });
 
+  // Calculer le nombre total de participants sélectionnés (après déclaration de classement)
+  const totalParticipantsSelectionnes = useMemo(() => {
+    let total = 0;
+    
+    // Compter les sélectionnés
+    selectedEquipes.forEach(id => {
+      const item = classement?.find(c => c.id === id);
+      if (item) {
+        total += item.type_candidature === 'equipe' ? 4 : 1;
+      }
+    });
+    
+    // Compter les en attente
+    selectedAttente.forEach(id => {
+      const item = classement?.find(c => c.id === id);
+      if (item) {
+        total += item.type_candidature === 'equipe' ? 4 : 1;
+      }
+    });
+    
+    return total;
+  }, [classement, selectedEquipes, selectedAttente]);
+
+  // Calculer le détail par type pour les sélectionnés
+  const statsSelectionnes = useMemo(() => {
+    let equipes = 0;
+    let individus = 0;
+    
+    selectedEquipes.forEach(id => {
+      const item = classement?.find(c => c.id === id);
+      if (item) {
+        if (item.type_candidature === 'equipe') equipes++;
+        else individus++;
+      }
+    });
+    
+    return { equipes, individus, total: equipes + individus };
+  }, [classement, selectedEquipes]);
+
   // Récupérer les équipes déjà sélectionnées
   const { data: equipesSelectionnees } = useQuery({
     queryKey: ["equipes-selectionnees-actuelles"],
     queryFn: async () => {
-      const { data, error } = await supabase
+      const { data, error } = await (supabase as any)
         .from("equipes")
         .select("id, statut")
         .in("statut", ["selectionne", "en_attente"]);
@@ -164,7 +203,7 @@ const GestionSelection = () => {
   // Mutation pour mettre à jour le statut
   const updateStatutMutation = useMutation({
     mutationFn: async ({ equipeId, statut }: { equipeId: string; statut: string }) => {
-      const { error } = await supabase
+      const { error } = await (supabase as any)
         .from("equipes")
         .update({ statut })
         .eq("id", equipeId);
@@ -181,7 +220,7 @@ const GestionSelection = () => {
   const publierMutation = useMutation({
     mutationFn: async () => {
       // Publier toutes les équipes sélectionnées
-      const { error } = await supabase
+      const { error } = await (supabase as any)
         .from("equipes")
         .update({ publiee: true })
         .in("statut", ["selectionne", "en_attente"]);
@@ -199,7 +238,7 @@ const GestionSelection = () => {
 
   // Récupérer les détails d'une équipe pour le PDF
   const fetchEquipeDetail = async (equipeId: string): Promise<EquipeDetail | null> => {
-    const { data, error } = await supabase
+    const { data, error } = await (supabase as any)
       .from("equipes")
       .select(`
         *,
@@ -209,7 +248,7 @@ const GestionSelection = () => {
       .single();
     
     if (error || !data) return null;
-    return data as EquipeDetail;
+    return (data as unknown) as EquipeDetail;
   };
 
   // Filtrer le classement
@@ -219,7 +258,65 @@ const GestionSelection = () => {
     return matchesSearch && matchesType;
   });
 
-  // Toggle sélection
+  // Sélectionner explicitement
+  const selectItem = (equipeId: string) => {
+    const newSelection = new Set(selectedEquipes);
+    const newAttente = new Set(selectedAttente);
+    
+    // Retirer de l'attente si présent
+    if (newAttente.has(equipeId)) {
+      newAttente.delete(equipeId);
+    }
+    
+    if (newSelection.has(equipeId)) {
+      // Déjà sélectionné -> retirer
+      newSelection.delete(equipeId);
+      updateStatutMutation.mutate({ equipeId, statut: 'non_selectionne' });
+    } else {
+      // Sélectionner
+      if (newSelection.size < 40) {
+        newSelection.add(equipeId);
+        updateStatutMutation.mutate({ equipeId, statut: 'selectionne' });
+      } else {
+        toast.error("Limite atteinte : 40 sélectionnés maximum");
+        return;
+      }
+    }
+    
+    setSelectedEquipes(newSelection);
+    setSelectedAttente(newAttente);
+  };
+
+  // Mettre en liste d'attente
+  const addToWaitingList = (equipeId: string) => {
+    const newSelection = new Set(selectedEquipes);
+    const newAttente = new Set(selectedAttente);
+    
+    // Retirer de la sélection si présent
+    if (newSelection.has(equipeId)) {
+      newSelection.delete(equipeId);
+    }
+    
+    if (newAttente.has(equipeId)) {
+      // Déjà en attente -> retirer
+      newAttente.delete(equipeId);
+      updateStatutMutation.mutate({ equipeId, statut: 'non_selectionne' });
+    } else {
+      // Mettre en attente
+      if (newAttente.size < 10) {
+        newAttente.add(equipeId);
+        updateStatutMutation.mutate({ equipeId, statut: 'en_attente' });
+      } else {
+        toast.error("Limite atteinte : 10 en attente maximum");
+        return;
+      }
+    }
+    
+    setSelectedEquipes(newSelection);
+    setSelectedAttente(newAttente);
+  };
+
+  // Toggle sélection (ancienne méthode, conservée pour compatibilité clic ligne)
   const toggleSelection = (equipeId: string, currentPosition: number) => {
     const newSelection = new Set(selectedEquipes);
     const newAttente = new Set(selectedAttente);
@@ -485,7 +582,7 @@ const GestionSelection = () => {
         </div>
 
         {/* Stats */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
           <Card className="border-[#E9ECEF]">
             <CardContent className="p-4">
               <div className="flex items-center gap-3">
@@ -514,11 +611,28 @@ const GestionSelection = () => {
             </CardContent>
           </Card>
 
+          <Card className="border-green-200 bg-green-50/30">
+            <CardContent className="p-4">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-lg bg-green-600/20 flex items-center justify-center">
+                  <Users className="w-5 h-5 text-green-600" />
+                </div>
+                <div>
+                  <p className="text-2xl font-bold text-green-700">{totalParticipantsSelectionnes}</p>
+                  <p className="text-sm text-green-600">Participants</p>
+                  <p className="text-xs text-green-500">
+                    {statsSelectionnes.equipes}×4 + {statsSelectionnes.individus}×1
+                  </p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
           <Card className="border-[#E9ECEF]">
             <CardContent className="p-4">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-lg bg-blue-500/20 flex items-center justify-center">
-                  <Users className="w-5 h-5 text-blue-500" />
+                  <Trophy className="w-5 h-5 text-blue-500" />
                 </div>
                 <div>
                   <p className="text-2xl font-bold text-[#24366E]">{classement?.length || 0}</p>
@@ -630,7 +744,7 @@ const GestionSelection = () => {
                   Classement des Équipes
                 </CardTitle>
                 <CardDescription>
-                  Cliquez sur une ligne pour sélectionner/désélectionner une équipe
+                  Utilisez les boutons pour sélectionner ou mettre en liste d'attente
                 </CardDescription>
               </CardHeader>
               <CardContent>
@@ -643,7 +757,7 @@ const GestionSelection = () => {
                         <th className="text-center py-3 px-2 text-sm font-medium text-[#6C757D]">Score</th>
                         <th className="text-center py-3 px-2 text-sm font-medium text-[#6C757D]">Éval.</th>
                         <th className="text-center py-3 px-2 text-sm font-medium text-[#6C757D]">Statut</th>
-                        <th className="text-center py-3 px-2 text-sm font-medium text-[#6C757D]">Sélection</th>
+                        <th className="text-center py-3 px-2 text-sm font-medium text-[#6C757D]">Actions</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -693,21 +807,36 @@ const GestionSelection = () => {
                               </Badge>
                             </td>
                             <td className="py-3 px-2 text-center">
-                              <button 
-                                className="w-6 h-6 rounded border-2 flex items-center justify-center transition-colors"
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  toggleSelection(item.id, item.position || 0);
-                                }}
-                              >
-                                {selectedEquipes.has(item.id) ? (
-                                  <CheckSquare className="w-5 h-5 text-green-500" />
-                                ) : selectedAttente.has(item.id) ? (
-                                  <CheckSquare className="w-5 h-5 text-yellow-500" />
-                                ) : (
-                                  <Square className="w-5 h-5 text-gray-300" />
-                                )}
-                              </button>
+                              <div className="flex items-center justify-center gap-1">
+                                <Button
+                                  size="sm"
+                                  variant={selectedEquipes.has(item.id) ? "default" : "outline"}
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    selectItem(item.id);
+                                  }}
+                                  className={selectedEquipes.has(item.id) 
+                                    ? "bg-green-600 hover:bg-green-700 text-white h-7 px-2 text-xs" 
+                                    : "border-green-600 text-green-600 hover:bg-green-50 h-7 px-2 text-xs"
+                                  }
+                                >
+                                  {selectedEquipes.has(item.id) ? "✓ Sélectionné" : "Sélectionner"}
+                                </Button>
+                                <Button
+                                  size="sm"
+                                  variant={selectedAttente.has(item.id) ? "default" : "outline"}
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    addToWaitingList(item.id);
+                                  }}
+                                  className={selectedAttente.has(item.id) 
+                                    ? "bg-yellow-500 hover:bg-yellow-600 text-white h-7 px-2 text-xs" 
+                                    : "border-yellow-500 text-yellow-600 hover:bg-yellow-50 h-7 px-2 text-xs"
+                                  }
+                                >
+                                  {selectedAttente.has(item.id) ? "⏳ Attente" : "Attente"}
+                                </Button>
+                              </div>
                             </td>
                           </tr>
                         );
@@ -728,7 +857,7 @@ const GestionSelection = () => {
                   Classement des Individus
                 </CardTitle>
                 <CardDescription>
-                  Cliquez sur une ligne pour sélectionner/désélectionner un candidat individuel
+                  Utilisez les boutons pour sélectionner ou mettre en liste d'attente
                 </CardDescription>
               </CardHeader>
               <CardContent>
@@ -741,7 +870,7 @@ const GestionSelection = () => {
                         <th className="text-center py-3 px-2 text-sm font-medium text-[#6C757D]">Score</th>
                         <th className="text-center py-3 px-2 text-sm font-medium text-[#6C757D]">Éval.</th>
                         <th className="text-center py-3 px-2 text-sm font-medium text-[#6C757D]">Statut</th>
-                        <th className="text-center py-3 px-2 text-sm font-medium text-[#6C757D]">Sélection</th>
+                        <th className="text-center py-3 px-2 text-sm font-medium text-[#6C757D]">Actions</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -791,21 +920,36 @@ const GestionSelection = () => {
                               </Badge>
                             </td>
                             <td className="py-3 px-2 text-center">
-                              <button 
-                                className="w-6 h-6 rounded border-2 flex items-center justify-center transition-colors"
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  toggleSelection(item.id, item.position || 0);
-                                }}
-                              >
-                                {selectedEquipes.has(item.id) ? (
-                                  <CheckSquare className="w-5 h-5 text-green-500" />
-                                ) : selectedAttente.has(item.id) ? (
-                                  <CheckSquare className="w-5 h-5 text-yellow-500" />
-                                ) : (
-                                  <Square className="w-5 h-5 text-gray-300" />
-                                )}
-                              </button>
+                              <div className="flex items-center justify-center gap-1">
+                                <Button
+                                  size="sm"
+                                  variant={selectedEquipes.has(item.id) ? "default" : "outline"}
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    selectItem(item.id);
+                                  }}
+                                  className={selectedEquipes.has(item.id) 
+                                    ? "bg-green-600 hover:bg-green-700 text-white h-7 px-2 text-xs" 
+                                    : "border-green-600 text-green-600 hover:bg-green-50 h-7 px-2 text-xs"
+                                  }
+                                >
+                                  {selectedEquipes.has(item.id) ? "✓ Sélectionné" : "Sélectionner"}
+                                </Button>
+                                <Button
+                                  size="sm"
+                                  variant={selectedAttente.has(item.id) ? "default" : "outline"}
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    addToWaitingList(item.id);
+                                  }}
+                                  className={selectedAttente.has(item.id) 
+                                    ? "bg-yellow-500 hover:bg-yellow-600 text-white h-7 px-2 text-xs" 
+                                    : "border-yellow-500 text-yellow-600 hover:bg-yellow-50 h-7 px-2 text-xs"
+                                  }
+                                >
+                                  {selectedAttente.has(item.id) ? "⏳ Attente" : "Attente"}
+                                </Button>
+                              </div>
                             </td>
                           </tr>
                         );
