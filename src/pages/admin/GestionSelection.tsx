@@ -451,7 +451,7 @@ const GestionSelection = () => {
         doc.setTextColor(100, 100, 100);
         doc.setFontSize(9);
         doc.setFont("helvetica", "normal");
-        doc.text(`Type: ${item.type_candidature === 'equipe' ? 'Équipe' : 'Individuel'} | Score: ${item.score_moyen}/100 | Évaluateurs: ${item.nb_evaluateurs}`, 20, currentY + 5);
+        doc.text(`Type: ${item.type_candidature === 'equipe' ? 'Équipe' : 'Individuel'} | Évaluateurs: ${item.nb_evaluateurs}`, 20, currentY + 5);
         
         if (details?.membres && details.membres.length > 0) {
           doc.setFontSize(8);
@@ -500,7 +500,7 @@ const GestionSelection = () => {
         doc.setTextColor(100, 100, 100);
         doc.setFontSize(9);
         doc.setFont("helvetica", "normal");
-        doc.text(`Type: ${item.type_candidature === 'equipe' ? 'Équipe' : 'Individuel'} | Score: ${item.score_moyen}/100`, 20, currentY + 5);
+        doc.text(`Type: ${item.type_candidature === 'equipe' ? 'Équipe' : 'Individuel'}`, 20, currentY + 5);
         
         if (details?.membres && details.membres.length > 0) {
           doc.setFontSize(8);

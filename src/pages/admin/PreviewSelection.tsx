@@ -228,11 +228,6 @@ const PreviewSelection = () => {
           doc.setTextColor(36, 54, 110);
           doc.text(item.nom_equipe || "Sans nom", 35, currentY);
           
-          // Score
-          doc.setTextColor(100, 100, 100);
-          doc.setFontSize(9);
-          doc.text(`Score: ${item.score_moyen}/100`, 160, currentY);
-
           // Membres
           currentY += 6;
           doc.setFontSize(8);
@@ -300,10 +295,6 @@ const PreviewSelection = () => {
           doc.setTextColor(36, 54, 110);
           doc.text(membre?.nom_prenom || item.nom_equipe, 35, currentY);
 
-          doc.setTextColor(100, 100, 100);
-          doc.setFontSize(9);
-          doc.text(`${item.score_moyen}/100`, 160, currentY);
-
           currentY += 6;
           doc.setFontSize(8);
           doc.setFont("helvetica", "normal");
@@ -355,10 +346,6 @@ const PreviewSelection = () => {
           doc.setFont("helvetica", "bold");
           doc.text(`#${item.position} ${item.nom_equipe}`, 20, currentY);
 
-          doc.setTextColor(100, 100, 100);
-          doc.setFontSize(9);
-          doc.text(`${item.score_moyen}/100`, 160, currentY);
-
           currentY += 6;
           doc.setFontSize(8);
           doc.setFont("helvetica", "normal");
@@ -402,10 +389,6 @@ const PreviewSelection = () => {
           doc.setFontSize(10);
           doc.setFont("helvetica", "bold");
           doc.text(`#${item.position} ${membre?.nom_prenom || item.nom_equipe}`, 20, currentY);
-
-          doc.setTextColor(100, 100, 100);
-          doc.setFontSize(9);
-          doc.text(`${item.score_moyen}/100`, 160, currentY);
 
           currentY += 12;
         }

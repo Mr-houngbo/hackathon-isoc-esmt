@@ -361,17 +361,6 @@ const EquipesSelectionnees = () => {
                           </div>
                         )}
 
-                        {/* Score Badge */}
-                        {eq.score_moyen && (
-                          <div className={`absolute top-4 ${isWaiting ? 'right-4' : 'left-4'} px-3 py-1 rounded-full text-xs font-bold shadow-md z-20 ${
-                            isWaiting 
-                              ? 'bg-yellow-100 text-yellow-700' 
-                              : 'bg-gradient-to-r from-[#40B2A4] to-[#24366E] text-white'
-                          }`}>
-                            {eq.score_moyen}/100
-                          </div>
-                        )}
-
                         {/* Header */}
                         <div className="p-6 pt-12">
                           <div className="flex items-start gap-4 mb-4">

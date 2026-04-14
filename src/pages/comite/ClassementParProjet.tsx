@@ -414,7 +414,6 @@ const ClassementParProjet = () => {
                                 <th className="text-left py-2 px-3 text-sm font-medium text-blue-300/70">Domaine</th>
                               </>
                             )}
-                            <th className="text-center py-2 px-3 text-sm font-medium text-blue-300/70">Score</th>
                             <th className="text-center py-2 px-3 text-sm font-medium text-blue-300/70">Action</th>
                           </tr>
                         </thead>
@@ -457,15 +456,6 @@ const ClassementParProjet = () => {
                                   </td>
                                 </>
                               )}
-                              <td className="py-3 px-3 text-center">
-                                <span className={`font-bold ${
-                                  candidat.score_moyen >= 70 ? 'text-green-400' :
-                                  candidat.score_moyen >= 50 ? 'text-yellow-400' :
-                                  'text-white'
-                                }`}>
-                                  {candidat.score_moyen > 0 ? `${candidat.score_moyen}/100` : '-'}
-                                </span>
-                              </td>
                               <td className="py-3 px-3 text-center">
                                 <Button
                                   size="sm"

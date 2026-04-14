@@ -252,12 +252,6 @@ const ClassementIndividuels = () => {
                   Évaluateurs
                 </th>
                 <th className="text-center py-4 px-4 font-semibold text-white">
-                  Score moyen
-                </th>
-                <th className="text-center py-4 px-4 font-semibold text-white">
-                  Score final
-                </th>
-                <th className="text-center py-4 px-4 font-semibold text-white">
                   Notes
                 </th>
                 <th className="text-center py-4 px-4 font-semibold text-white">
@@ -334,12 +328,6 @@ const ClassementIndividuels = () => {
                           <AlertCircle className="w-3 h-3 ml-1 inline" />
                         )}
                       </Badge>
-                    </td>
-                    <td className="py-4 px-4 text-center">
-                      <span className="text-white font-medium">{item.score_moyen}/100</span>
-                    </td>
-                    <td className="py-4 px-4 text-center">
-                      <span className="text-xl font-bold text-white">{item.score_final}</span>
                     </td>
                     <td className="py-4 px-4 text-center">
                       <Dialog>
