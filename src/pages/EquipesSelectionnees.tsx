@@ -50,9 +50,8 @@ interface Equipe {
   domaine_projet?: string;
   problematique?: string;
   position?: number;
-  score_moyen?: number;
   membres?: Membre[];
-  competences_equipe?: string[];
+  a_projet?: 'oui' | 'non' | 'en_reflexion';
 }
 
 
@@ -62,15 +61,38 @@ const EquipesSelectionnees = () => {
   const { data: equipes, isLoading, error } = useQuery({
     queryKey: ["equipes-selectionnees"],
     queryFn: async () => {
-      const { data, error } = await (supabase as any)
+      // Récupérer uniquement les champs publics (sans les scores)
+      const { data: equipesData, error: equipesError } = await (supabase as any)
         .from("equipes")
-        .select("*, membres(*)")
+        .select("id, nom_equipe, type_candidature, statut, publiee, nom_projet, domaine_projet, problematique, position, a_projet")
         .in("statut", ["selectionne", "en_attente"])
         .eq("publiee", true)
-        .order("score_moyen", { ascending: false });
+        .order("position", { ascending: true, nullsFirst: false });
       
-      if (error) throw error;
-      return (data || []) as Equipe[];
+      if (equipesError) throw equipesError;
+      
+      // Récupérer les membres pour chaque équipe
+      const equipeIds = equipesData?.map((e: any) => e.id) || [];
+      
+      let membresData: any[] = [];
+      if (equipeIds.length > 0) {
+        const { data: membres, error: membresError } = await (supabase as any)
+          .from("membres")
+          .select("*")
+          .in("equipe_id", equipeIds);
+        
+        if (!membresError && membres) {
+          membresData = membres;
+        }
+      }
+      
+      // Combiner les données
+      const equipesWithMembres = (equipesData || []).map((equipe: any) => ({
+        ...equipe,
+        membres: membresData.filter((m: any) => m.equipe_id === equipe.id)
+      }));
+      
+      return equipesWithMembres as Equipe[];
     },
   });
 
@@ -413,21 +435,6 @@ const EquipesSelectionnees = () => {
                             </div>
                           </div>
 
-                          {/* Skills */}
-                          {eq.competences_equipe && eq.competences_equipe.length > 0 && (
-                            <div className="flex flex-wrap gap-1.5 mb-4">
-                              {eq.competences_equipe.slice(0, 3).map((skill, i) => (
-                                <span key={i} className="px-2 py-1 rounded-md bg-slate-100 text-slate-600 text-xs font-medium">
-                                  {skill}
-                                </span>
-                              ))}
-                              {eq.competences_equipe.length > 3 && (
-                                <span className="px-2 py-1 rounded-md bg-slate-100 text-slate-600 text-xs font-medium">
-                                  +{eq.competences_equipe.length - 3}
-                                </span>
-                              )}
-                            </div>
-                          )}
                         </div>
                         
                         {/* Members Section */}
