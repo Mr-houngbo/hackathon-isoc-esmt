@@ -25,6 +25,12 @@ const GestionBadges = () => {
     organisation: ''
   });
 
+  // Staff badges générés pour le rendu PDF
+  const [staffBadgesForRender, setStaffBadgesForRender] = useState<Array<{ id: string; staff_info: typeof staffForm }>>([]);
+
+  // Badges participants nouvellement créés pour le rendu PDF
+  const [participantBadgesForRender, setParticipantBadgesForRender] = useState<Array<{ id: string; membre_id: string; equipe_id: string }>>([]);
+
   // Références pour les badges cachés
   const badgeRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
 
@@ -98,11 +104,12 @@ const GestionBadges = () => {
       const badgesGeneres = [];
 
       for (const membre of membresToProcess) {
-        // Vérifier si le badge existe déjà
+        // Créer un nouveau badge (pas de vérification d'existant pour permettre la génération multiple)
         const badgeExistant = membre.badges?.[0];
         if (badgeExistant) {
-          badgesGeneres.push(badgeExistant);
-          continue;
+          // Optionnel : supprimer l'ancien badge de la base pour ne pas avoir de doublons
+          // Mais on génère quand même un nouveau
+          await supabase.from("badges").delete().eq('id', badgeExistant.id);
         }
 
         // Créer le badge
@@ -126,22 +133,30 @@ const GestionBadges = () => {
         badgesGeneres.push(badge);
       }
 
+      // Stocker les badges pour le rendu PDF
+      setParticipantBadgesForRender(prev => [...prev, ...badgesGeneres.map(b => ({ 
+        id: b.id, 
+        membre_id: b.membre_id, 
+        equipe_id: b.equipe_id 
+      }))]);
+
       // Générer tous les PDFs après un délai pour le rendu
       setTimeout(() => {
-        membresToProcess.forEach(membre => {
-          if (!membre.badges?.[0]) {
-            genererBadgePDF(membre, equipe, badgesGeneres.find(b => b.membre_id === membre.id)?.id || '');
+        badgesGeneres.forEach(badge => {
+          const membre = membresToProcess.find(m => m.id === badge.membre_id);
+          if (membre) {
+            genererBadgePDF(membre, equipe, badge.id);
           }
         });
-      }, 500);
+      }, 800);
 
       return badgesGeneres;
     },
     onSuccess: (data, variables) => {
       const equipe = equipesSelectionnees?.find(e => e.id === variables.equipeId);
       toast.success(`${data.length} badge(s) créé(s) pour ${equipe?.nom_equipe}`);
-      queryClient.invalidateQueries(["equipes-selectionnees"]);
-      queryClient.invalidateQueries(["all-badges"]);
+      queryClient.invalidateQueries({ queryKey: ["equipes-selectionnees"] });
+      queryClient.invalidateQueries({ queryKey: ["all-badges"] });
     },
     onError: (error) => {
       toast.error(`Erreur lors de la génération: ${error.message}`);
@@ -170,17 +185,20 @@ const GestionBadges = () => {
 
       if (error) throw error;
 
-      // Générer le PDF
+      // Ajouter le badge staff au state pour le rendu
+      setStaffBadgesForRender(prev => [...prev, { id: badgeId, staff_info: staffData }]);
+
+      // Générer le PDF après un délai pour permettre le rendu
       setTimeout(() => {
         genererStaffBadgePDF(staffData, badgeId);
-      }, 100);
+      }, 500);
 
       return badge;
     },
     onSuccess: () => {
       toast.success("Badge staff généré avec succès");
       setStaffForm({ nom_prenom: '', role: '', organisation: '' });
-      queryClient.invalidateQueries(["all-badges"]);
+      queryClient.invalidateQueries({ queryKey: ["all-badges"] });
     },
     onError: (error) => {
       toast.error(`Erreur: ${error.message}`);
@@ -240,14 +258,49 @@ const GestionBadges = () => {
           }
 
           console.log(`Génération PDF pour ${membre.nom_prenom}...`);
+          
+          // Attendre le rendu complet
+          await new Promise(resolve => setTimeout(resolve, 500));
+          element.getBoundingClientRect();
+          
           const canvas = await html2canvas(element, {
-            backgroundColor: '#0A0A0A',
+            backgroundColor: '#0B1F3A',
             scale: 2,
             useCORS: true,
             allowTaint: true,
-            logging: false,
+            logging: true,
             width: 400,
             height: 250,
+            x: 0,
+            y: 0,
+            scrollX: 0,
+            scrollY: -window.scrollY,
+            windowWidth: 400,
+            windowHeight: 250,
+            onclone: (clonedDoc, clonedElement) => {
+              if (clonedElement) {
+                (clonedElement as HTMLElement).style.cssText = `
+                  position: absolute !important;
+                  left: 0 !important;
+                  top: 0 !important;
+                  opacity: 1 !important;
+                  display: block !important;
+                  visibility: visible !important;
+                  width: 400px !important;
+                  height: 250px !important;
+                  overflow: hidden !important;
+                  background-color: #0B1F3A !important;
+                `;
+              }
+              const allChildren = clonedElement?.querySelectorAll('*');
+              allChildren?.forEach((child) => {
+                const el = child as HTMLElement;
+                if (el.style) {
+                  el.style.opacity = '1';
+                  el.style.visibility = 'visible';
+                }
+              });
+            }
           });
 
           const pdf = new jsPDF({
@@ -256,8 +309,8 @@ const GestionBadges = () => {
             format: [105, 66]
           });
           
-          const imgData = canvas.toDataURL('image/jpeg', 0.95);
-          pdf.addImage(imgData, 'JPEG', 0, 0, 105, 66);
+          const imgData = canvas.toDataURL('image/png', 1.0);
+          pdf.addImage(imgData, 'PNG', 0, 0, 105, 66);
           const pdfBase64 = pdf.output('datauristring').split(',')[1];
           
           console.log(`PDF généré pour ${membre.email}, envoi EmailJS...`);
@@ -328,8 +381,8 @@ const GestionBadges = () => {
     onSuccess: (emails, variables) => {
       const equipe = equipesSelectionnees?.find(e => e.id === variables.equipeId);
       toast.success(`${emails.length} email(s) envoyé(s) avec succès à l'équipe ${equipe?.nom_equipe}`);
-      queryClient.invalidateQueries(["equipes-selectionnees"]);
-      queryClient.invalidateQueries(["all-badges"]);
+      queryClient.invalidateQueries({ queryKey: ["equipes-selectionnees"] });
+      queryClient.invalidateQueries({ queryKey: ["all-badges"] });
     },
     onError: (error) => {
       console.error('Erreur mutation envoi badges:', error);
@@ -339,29 +392,76 @@ const GestionBadges = () => {
 
   // Fonction pour générer le PDF d'un badge participant
   const genererBadgePDF = async (membre: any, equipe: any, badgeId: string) => {
-    const element = badgeRefs.current[`badge-${membre.id}`];
-    if (!element) return;
+    const element = badgeRefs.current[`badge-${badgeId}`];
+    if (!element) {
+      console.error(`Élément badge non trouvé pour badge ID: ${badgeId}`);
+      toast.error(`Badge non trouvé pour ${membre.nom_prenom}`);
+      return;
+    }
+
+    // Attendre que le DOM soit complètement rendu avec plusieurs frames
+    await new Promise(resolve => setTimeout(resolve, 800));
+    
+    // Forcer le reflow/recalcul du layout
+    element.getBoundingClientRect();
 
     try {
+      console.log(`Capture badge pour ${membre.nom_prenom}...`);
+      
       const canvas = await html2canvas(element, {
-        backgroundColor: '#0A0A0A',
+        backgroundColor: '#0B1F3A',
         scale: 2,
         useCORS: true,
         allowTaint: true,
-        logging: false,
+        logging: true,
         width: 400,
         height: 250,
+        x: 0,
+        y: 0,
+        scrollX: 0,
+        scrollY: -window.scrollY,
+        windowWidth: 400,
+        windowHeight: 250,
+        onclone: (clonedDoc, clonedElement) => {
+          console.log('Clone créé, application des styles...');
+          // Forcer tous les styles visibles sur le clone
+          if (clonedElement) {
+            (clonedElement as HTMLElement).style.cssText = `
+              position: absolute !important;
+              left: 0 !important;
+              top: 0 !important;
+              opacity: 1 !important;
+              display: block !important;
+              visibility: visible !important;
+              width: 400px !important;
+              height: 250px !important;
+              overflow: hidden !important;
+              background-color: #0B1F3A !important;
+            `;
+          }
+          // S'assurer que tous les enfants sont visibles
+          const allChildren = clonedElement?.querySelectorAll('*');
+          allChildren?.forEach((child) => {
+            const el = child as HTMLElement;
+            if (el.style) {
+              el.style.opacity = '1';
+              el.style.visibility = 'visible';
+              el.style.display = el.tagName === 'DIV' || el.tagName === 'P' || el.tagName === 'SPAN' ? 'block' : el.style.display;
+            }
+          });
+        }
       });
+
+      console.log('Canvas créé, dimensions:', canvas.width, 'x', canvas.height);
 
       const pdf = new jsPDF({
         orientation: 'landscape',
         unit: 'mm',
-        format: [105, 66] // 400px × 250px à 96 DPI ≈ 105mm × 66mm
+        format: [105, 66]
       });
       
-      // Convertir le canvas en image de manière plus robuste
-      const imgData = canvas.toDataURL('image/jpeg', 0.95); // JPEG plus stable que PNG
-      pdf.addImage(imgData, 'JPEG', 0, 0, 105, 66);
+      const imgData = canvas.toDataURL('image/png', 1.0);
+      pdf.addImage(imgData, 'PNG', 0, 0, 105, 66);
       pdf.save(`badge-${membre.nom_prenom.replace(/\s+/g, '-')}.pdf`);
       
       toast.success(`Badge généré pour ${membre.nom_prenom}`);
@@ -374,27 +474,73 @@ const GestionBadges = () => {
   // Fonction pour générer le PDF d'un badge staff
   const genererStaffBadgePDF = async (staffData: typeof staffForm, badgeId: string) => {
     const element = badgeRefs.current[`badge-staff-${badgeId}`];
-    if (!element) return;
+    if (!element) {
+      console.error(`Élément badge staff non trouvé pour ${badgeId}`);
+      toast.error(`Badge staff non trouvé`);
+      return;
+    }
+
+    // Attendre que le DOM soit complètement rendu
+    await new Promise(resolve => setTimeout(resolve, 800));
+    
+    // Forcer le reflow/recalcul du layout
+    element.getBoundingClientRect();
 
     try {
+      console.log(`Capture badge staff pour ${staffData.nom_prenom}...`);
+      
       const canvas = await html2canvas(element, {
-        backgroundColor: '#0A0A0A',
+        backgroundColor: '#0B1F3A',
         scale: 2,
         useCORS: true,
         allowTaint: true,
-        logging: false,
+        logging: true,
         width: 400,
         height: 250,
+        x: 0,
+        y: 0,
+        scrollX: 0,
+        scrollY: -window.scrollY,
+        windowWidth: 400,
+        windowHeight: 250,
+        onclone: (clonedDoc, clonedElement) => {
+          console.log('Clone staff créé, application des styles...');
+          if (clonedElement) {
+            (clonedElement as HTMLElement).style.cssText = `
+              position: absolute !important;
+              left: 0 !important;
+              top: 0 !important;
+              opacity: 1 !important;
+              display: block !important;
+              visibility: visible !important;
+              width: 400px !important;
+              height: 250px !important;
+              overflow: hidden !important;
+              background-color: #0B1F3A !important;
+            `;
+          }
+          const allChildren = clonedElement?.querySelectorAll('*');
+          allChildren?.forEach((child) => {
+            const el = child as HTMLElement;
+            if (el.style) {
+              el.style.opacity = '1';
+              el.style.visibility = 'visible';
+              el.style.display = el.tagName === 'DIV' || el.tagName === 'P' || el.tagName === 'SPAN' ? 'block' : el.style.display;
+            }
+          });
+        }
       });
+
+      console.log('Canvas staff créé, dimensions:', canvas.width, 'x', canvas.height);
 
       const pdf = new jsPDF({
         orientation: 'landscape',
         unit: 'mm',
-        format: [105, 66] // 400px × 250px à 96 DPI ≈ 105mm × 66mm
+        format: [105, 66]
       });
       
-      const imgData = canvas.toDataURL('image/jpeg', 0.95); // JPEG plus stable que PNG
-      pdf.addImage(imgData, 'JPEG', 0, 0, 105, 66);
+      const imgData = canvas.toDataURL('image/png', 1.0);
+      pdf.addImage(imgData, 'PNG', 0, 0, 105, 66);
       pdf.save(`badge-${staffData.nom_prenom.replace(/\s+/g, '-')}.pdf`);
       
       toast.success(`Badge staff généré pour ${staffData.nom_prenom}`);
@@ -407,11 +553,19 @@ const GestionBadges = () => {
   // Fonction pour télécharger un badge existant
   const telechargerBadge = async (badge: any) => {
     if (badge.type === 'staff') {
-      await genererStaffBadgePDF(badge.staff_info, badge.id);
+      // Ajouter au state pour rendu
+      setStaffBadgesForRender(prev => [...prev, { id: badge.id, staff_info: (badge as any).staff_info }]);
+      setTimeout(() => {
+        genererStaffBadgePDF((badge as any).staff_info, badge.id);
+      }, 500);
     } else {
       const membre = badge.membre;
       const equipe = badge.equipe;
-      await genererBadgePDF(membre, equipe, badge.id);
+      // Ajouter au state pour rendu
+      setParticipantBadgesForRender(prev => [...prev, { id: badge.id, membre_id: badge.membre_id, equipe_id: badge.equipe_id }]);
+      setTimeout(() => {
+        genererBadgePDF(membre, equipe, badge.id);
+      }, 500);
     }
   };
 
@@ -431,8 +585,8 @@ const GestionBadges = () => {
   const filteredBadges = allBadges?.filter((badge) => {
     const matchesSearch = 
       badge.membre?.nom_prenom?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      badge.staff_info?.nom_prenom?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      badge.equipe?.nom_equipe?.toLowerCase().includes(searchTerm.toLowerCase());
+      (badge as any).staff_info?.nom_prenom?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      (badge.equipe as any)?.nom_equipe?.toLowerCase().includes(searchTerm.toLowerCase());
     
     const matchesType = filterType === 'tous' || 
       (filterType === 'participants' && badge.type === 'participant') ||
@@ -842,13 +996,13 @@ const GestionBadges = () => {
                     {filteredBadges?.map((badge) => (
                       <tr key={badge.id} className="hover:bg-gray-50">
                         <td className="px-4 py-4 text-sm text-gray-900">
-                          {badge.membre?.nom_prenom || badge.staff_info?.nom_prenom}
+                          {badge.membre?.nom_prenom || (badge as any).staff_info?.nom_prenom}
                         </td>
                         <td className="px-4 py-4 text-sm text-gray-600">
-                          {badge.staff_info?.role || (badge.membre?.est_chef ? 'Chef de projet' : badge.membre?.role_equipe)}
+                          {(badge as any).staff_info?.role || (badge.membre?.est_chef ? 'Chef de projet' : badge.membre?.role_equipe)}
                         </td>
                         <td className="px-4 py-4 text-sm text-gray-600">
-                          {badge.equipe?.nom_equipe || '—'}
+                          {(badge.equipe as any)?.nom_equipe || '—'}
                         </td>
                         <td className="px-4 py-4 text-sm">
                           <span className={`px-2 py-1 rounded-full text-xs font-medium ${
@@ -896,27 +1050,30 @@ const GestionBadges = () => {
           </motion.div>
         )}
 
-        {/* Badges cachés pour la génération PDF */}
-        <div className="hidden">
-          {/* Badges participants */}
-          {equipesSelectionnees?.map((equipe) =>
-            equipe.membres.map((membre) => (
+        {/* Badges pour la génération PDF - positionnés hors écran mais rendus */}
+        <div style={{ position: 'absolute', left: '-9999px', top: '-9999px', opacity: 0, pointerEvents: 'none' }}>
+          {/* Badges participants - Utiliser participantBadgesForRender pour avoir les bons IDs */}
+          {participantBadgesForRender.map((badgeInfo) => {
+            const equipe = equipesSelectionnees?.find(e => e.id === badgeInfo.equipe_id);
+            const membre = equipe?.membres.find(m => m.id === badgeInfo.membre_id);
+            if (!membre || !equipe) return null;
+            return (
               <div
-                key={`badge-${membre.id}`}
-                ref={(el) => (badgeRefs.current[`badge-${membre.id}`] = el)}
+                key={`badge-${badgeInfo.id}`}
+                id={`badge-${badgeInfo.id}`}
+                ref={(el) => (badgeRefs.current[`badge-${badgeInfo.id}`] = el)}
                 style={{
                   width: '400px',
                   height: '250px',
-                  background: '#0A0A0A',
-                  border: '2px solid #40B2A4',
+                  backgroundColor: '#0B1F3A',
                   borderRadius: '16px',
-                  padding: '24px',
                   position: 'relative',
-                  fontFamily: 'Sora, sans-serif',
-                  overflow: 'hidden'
+                  fontFamily: 'Arial, Helvetica, sans-serif',
+                  overflow: 'hidden',
+                  boxShadow: '0 4px 20px rgba(0,0,0,0.3)'
                 }}
               >
-                {/* Accent vert en haut */}
+                {/* Ligne décorative en haut */}
                 <div
                   style={{
                     position: 'absolute',
@@ -924,84 +1081,300 @@ const GestionBadges = () => {
                     left: 0,
                     right: 0,
                     height: '4px',
-                    backgroundColor: '#40B2A4'
+                    backgroundColor: '#FACC15'
                   }}
                 />
 
-                {/* Logo + titre événement */}
-                <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '16px' }}>
-                  <div
-                    style={{
-                      width: '36px',
-                      height: '36px',
-                      background: '#40B2A4',
-                      borderRadius: '8px',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      color: 'white',
-                      fontWeight: 800,
-                      fontSize: '12px'
-                    }}
-                  >
-                    HK
-                  </div>
-                  <div>
-                    <p style={{ color: '#F9FAFB', fontSize: '12px', fontWeight: 700 }}>
-                      Hackathon ISOC-ESMT
-                    </p>
-                    <p style={{ color: '#6C757D', fontSize: '10px' }}>
-                      2ème Édition · 17 & 18 Avril 2026
-                    </p>
-                  </div>
-                </div>
-
-                {/* Infos participant */}
-                <div style={{ flex: 1 }}>
-                  <p style={{ color: '#F9FAFB', fontSize: '20px', fontWeight: 800, marginBottom: '4px' }}>
-                    {membre.nom_prenom}
-                  </p>
-                  <p style={{ color: '#40B2A4', fontSize: '13px', fontWeight: 600, marginBottom: '2px' }}>
-                    {membre.est_chef ? 'Chef de projet' : membre.role_equipe}
-                  </p>
-                  <p style={{ color: '#6C757D', fontSize: '12px' }}>
-                    {equipe.nom_equipe || 'Candidature individuelle'}
-                  </p>
-                </div>
-
-                {/* QR Code */}
-                <div style={{ position: 'absolute', bottom: '20px', right: '20px' }}>
-                  <QRCodeSVG
-                    value={`${window.location.origin}/verification/${membre.badges?.[0]?.id}`}
-                    size={70}
-                    bgColor="#0A0A0A"
-                    fgColor="#40B2A4"
-                  />
-                </div>
-
-                {/* Role pill */}
+                {/* Titre PARTICIPANT - Haut gauche */}
                 <div
                   style={{
                     position: 'absolute',
-                    bottom: '24px',
+                    top: '24px',
                     left: '24px',
-                    backgroundColor: '#40B2A4',
-                    border: '1px solid #40B2A4',
-                    color: '#40B2A4FFF',
-                    fontSize: '10px',
-                    fontWeight: 600,
-                    padding: '4px 12px',
-                    borderRadius: '20px',
-                    letterSpacing: '1px'
+                    right: '140px',
                   }}
                 >
-                  PARTICIPANT
+                  <p
+                    style={{
+                      color: '#FACC15',
+                      fontSize: '38px',
+                      fontWeight: 900,
+                      margin: 0,
+                      lineHeight: 1,
+                      letterSpacing: '1px'
+                    }}
+                  >
+                    PARTICIPANT
+                  </p>
+                </div>
+
+                {/* Nom du participant - Sous le titre */}
+                <div
+                  style={{
+                    position: 'absolute',
+                    top: '72px',
+                    left: '24px',
+                    right: '140px',
+                  }}
+                >
+                  <p
+                    style={{
+                      color: '#FFFFFF',
+                      fontSize: '22px',
+                      fontWeight: 700,
+                      margin: 0,
+                      lineHeight: 1.2,
+                      wordBreak: 'break-word'
+                    }}
+                  >
+                    {membre.nom_prenom}
+                  </p>
+                  <p
+                    style={{
+                      color: '#A0AEC0',
+                      fontSize: '12px',
+                      fontWeight: 500,
+                      margin: '4px 0 0 0'
+                    }}
+                  >
+                    {equipe.type_candidature === 'individuel' ? 'Individuel' : equipe.nom_equipe}
+                  </p>
+                </div>
+
+                {/* Infos événement - Plus bas */}
+                <div
+                  style={{
+                    position: 'absolute',
+                    top: '155px',
+                    left: '24px',
+                    right: '140px',
+                  }}
+                >
+                  <p
+                    style={{
+                      color: '#FFFFFF',
+                      fontSize: '14px',
+                      fontWeight: 600,
+                      margin: 0
+                    }}
+                  >
+                    ISOC Innovation
+                  </p>
+                  <p
+                    style={{
+                      color: '#A0AEC0',
+                      fontSize: '12px',
+                      fontWeight: 400,
+                      margin: '4px 0 0 0'
+                    }}
+                  >
+                    Le 17 et 18 Avril 2026
+                  </p>
+                </div>
+
+                {/* Logo Club ISOC ESMT - Bas gauche */}
+                <div
+                  style={{
+                    position: 'absolute',
+                    bottom: '20px',
+                    left: '24px'
+                  }}
+                >
+                  <p
+                    style={{
+                      color: '#FFFFFF',
+                      fontSize: '11px',
+                      fontWeight: 600,
+                      margin: 0
+                    }}
+                  >
+                    Club ISOC ESMT
+                  </p>
+                </div>
+
+                {/* QR Code - Bas droite avec le bon ID */}
+                <div
+                  style={{
+                    position: 'absolute',
+                    bottom: '20px',
+                    right: '24px',
+                    backgroundColor: '#FFFFFF',
+                    padding: '8px',
+                    borderRadius: '8px'
+                  }}
+                >
+                  <QRCodeSVG
+                    value={`${window.location.origin}/verification/${badgeInfo.id}`}
+                    size={65}
+                    bgColor="#FFFFFF"
+                    fgColor="#0B1F3A"
+                    level="M"
+                  />
                 </div>
               </div>
-            ))
-          )}
+            );
+          })}
 
-          {/* Badges staff (seront ajoutés dynamiquement) */}
+          {/* Badges staff */}
+          {staffBadgesForRender.map((badge) => {
+            const colors = ROLE_COLORS[(badge.staff_info as any).role as keyof typeof ROLE_COLORS] || ROLE_COLORS['Staff'];
+            return (
+              <div
+                key={`badge-staff-${badge.id}`}
+                id={`badge-staff-${badge.id}`}
+                ref={(el) => (badgeRefs.current[`badge-staff-${badge.id}`] = el)}
+                style={{
+                  width: '400px',
+                  height: '250px',
+                  backgroundColor: '#0B1F3A',
+                  borderRadius: '16px',
+                  position: 'relative',
+                  fontFamily: 'Arial, Helvetica, sans-serif',
+                  overflow: 'hidden',
+                  boxShadow: '0 4px 20px rgba(0,0,0,0.3)'
+                }}
+              >
+                {/* Ligne décorative en haut avec couleur rôle */}
+                <div
+                  style={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    height: '4px',
+                    backgroundColor: colors.accent
+                  }}
+                />
+
+                {/* Titre rôle - Haut gauche */}
+                <div
+                  style={{
+                    position: 'absolute',
+                    top: '24px',
+                    left: '24px',
+                    right: '140px',
+                  }}
+                >
+                  <p
+                    style={{
+                      color: colors.accent,
+                      fontSize: '34px',
+                      fontWeight: 900,
+                      margin: 0,
+                      lineHeight: 1,
+                      letterSpacing: '1px'
+                    }}
+                  >
+                    {colors.pill}
+                  </p>
+                </div>
+
+                {/* Nom staff - Sous le titre */}
+                <div
+                  style={{
+                    position: 'absolute',
+                    top: '72px',
+                    left: '24px',
+                    right: '140px',
+                  }}
+                >
+                  <p
+                    style={{
+                      color: '#FFFFFF',
+                      fontSize: '22px',
+                      fontWeight: 700,
+                      margin: 0,
+                      lineHeight: 1.2,
+                      wordBreak: 'break-word'
+                    }}
+                  >
+                    {(badge.staff_info as any).nom_prenom}
+                  </p>
+                  <p
+                    style={{
+                      color: '#A0AEC0',
+                      fontSize: '12px',
+                      fontWeight: 500,
+                      margin: '4px 0 0 0'
+                    }}
+                  >
+                    {(badge.staff_info as any).organisation || 'Hackathon ISOC-ESMT'}
+                  </p>
+                </div>
+
+                {/* Infos événement - Plus bas */}
+                <div
+                  style={{
+                    position: 'absolute',
+                    top: '155px',
+                    left: '24px',
+                    right: '140px',
+                  }}
+                >
+                  <p
+                    style={{
+                      color: '#FFFFFF',
+                      fontSize: '14px',
+                      fontWeight: 600,
+                      margin: 0
+                    }}
+                  >
+                    ISOC Innovation
+                  </p>
+                  <p
+                    style={{
+                      color: '#A0AEC0',
+                      fontSize: '12px',
+                      fontWeight: 400,
+                      margin: '4px 0 0 0'
+                    }}
+                  >
+                    Le 17 et 18 Avril 2026
+                  </p>
+                </div>
+
+                {/* Logo Club ISOC ESMT - Bas gauche */}
+                <div
+                  style={{
+                    position: 'absolute',
+                    bottom: '20px',
+                    left: '24px'
+                  }}
+                >
+                  <p
+                    style={{
+                      color: '#FFFFFF',
+                      fontSize: '11px',
+                      fontWeight: 600,
+                      margin: 0
+                    }}
+                  >
+                    Club ISOC ESMT
+                  </p>
+                </div>
+
+                {/* QR Code - Bas droite */}
+                <div
+                  style={{
+                    position: 'absolute',
+                    bottom: '20px',
+                    right: '24px',
+                    backgroundColor: '#FFFFFF',
+                    padding: '8px',
+                    borderRadius: '8px'
+                  }}
+                >
+                  <QRCodeSVG
+                    value={`${window.location.origin}/verification/${badge.id}`}
+                    size={65}
+                    bgColor="#FFFFFF"
+                    fgColor="#0B1F3A"
+                    level="M"
+                  />
+                </div>
+              </div>
+            );
+          })}
         </div>
       </div>
     </AdminLayout>

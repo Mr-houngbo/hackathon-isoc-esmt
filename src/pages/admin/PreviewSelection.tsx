@@ -91,7 +91,7 @@ const PreviewSelection = () => {
       if (equipeIds.length > 0) {
         const { data: membresData } = await supabase
           .from("membres")
-          .select("equipe_id, nom_prenom")
+          .select("equipe_id, nom_prenom, email, telephone")
           .in("equipe_id", equipeIds);
         
         // Créer un map equipe_id -> nom du premier membre
@@ -175,7 +175,7 @@ const PreviewSelection = () => {
     doc.setTextColor(255, 255, 255);
     doc.setFontSize(28);
     doc.setFont("helvetica", "bold");
-    doc.text("HACKATHON ISOC-ESMT 2025", 105, 25, { align: "center" });
+    doc.text("HACKATHON ISOC-ESMT 2026", 105, 25, { align: "center" });
     
     doc.setFontSize(16);
     doc.setFont("helvetica", "normal");
@@ -395,6 +395,178 @@ const PreviewSelection = () => {
       }
     }
 
+    // Page récapitulative des contacts
+    doc.addPage();
+    doc.setFillColor(36, 54, 110);
+    doc.rect(0, 0, 210, 35, 'F');
+    
+    doc.setTextColor(255, 255, 255);
+    doc.setFontSize(22);
+    doc.setFont("helvetica", "bold");
+    doc.text("RÉCAPITULATIF DES CONTACTS", 105, 15, { align: "center" });
+    
+    doc.setFontSize(11);
+    doc.setFont("helvetica", "normal");
+    doc.text("Emails et téléphones des participants", 105, 25, { align: "center" });
+    
+    let contactY = 40;
+    let contactIndex = 1;
+    const allEquipes = equipesDetails || [];
+    
+    // ========== SECTION SÉLECTIONNÉS ==========
+    const selectionnesEquipes = allEquipes.filter(e => e.statut === 'selectionne');
+    
+    if (selectionnesEquipes.length > 0) {
+      // Bandeau section
+      doc.setFillColor(64, 178, 164); // Vert
+      doc.rect(10, contactY, 190, 12, 'F');
+      doc.setTextColor(255, 255, 255);
+      doc.setFontSize(13);
+      doc.setFont("helvetica", "bold");
+      doc.text(`✓ SÉLECTIONNÉS (${selectionnesEquipes.length})`, 105, contactY + 8, { align: "center" });
+      contactY += 18;
+      
+      // En-têtes du tableau
+      doc.setFillColor(240, 248, 255);
+      doc.rect(10, contactY - 5, 190, 8, 'F');
+      doc.setTextColor(36, 54, 110);
+      doc.setFontSize(9);
+      doc.setFont("helvetica", "bold");
+      doc.text("#", 14, contactY);
+      doc.text("Type", 25, contactY);
+      doc.text("Équipe / Nom", 50, contactY);
+      doc.text("Email", 115, contactY);
+      doc.text("Téléphone", 170, contactY);
+      contactY += 8;
+      
+      for (const equipe of selectionnesEquipes) {
+        const membres = equipe.membres || [];
+        const isEquipe = equipe.type_candidature === 'equipe';
+        
+        // En-tête d'équipe si c'est une équipe
+        if (isEquipe && membres.length > 0) {
+          doc.setFillColor(245, 250, 250);
+          doc.rect(10, contactY - 4, 190, 7, 'F');
+          doc.setTextColor(64, 178, 164);
+          doc.setFontSize(9);
+          doc.setFont("helvetica", "bold");
+          doc.text(`ÉQUIPE: ${equipe.nom_equipe || 'Sans nom'}`, 15, contactY);
+          contactY += 8;
+        }
+        
+        for (const membre of membres) {
+          if (contactY > 270) {
+            doc.addPage();
+            contactY = 15;
+          }
+          
+          // Alternance de couleurs
+          if (contactIndex % 2 === 0) {
+            doc.setFillColor(250, 250, 250);
+            doc.rect(10, contactY - 4, 190, 7, 'F');
+          }
+          
+          doc.setTextColor(100, 100, 100);
+          doc.setFontSize(8);
+          doc.text(`${contactIndex}`, 14, contactY);
+          
+          doc.setTextColor(64, 178, 164);
+          doc.text(isEquipe ? "👥" : "👤", 25, contactY);
+          
+          doc.setTextColor(36, 54, 110);
+          doc.setFont("helvetica", "bold");
+          doc.text(membre.nom_prenom, 50, contactY);
+          
+          doc.setFont("helvetica", "normal");
+          doc.setTextColor(0, 0, 0);
+          doc.text(membre.email || "-", 115, contactY);
+          doc.text(membre.telephone || "-", 170, contactY);
+          
+          contactY += 8;
+          contactIndex++;
+        }
+        contactY += 2;
+      }
+    }
+    
+    // ========== SECTION LISTE D'ATTENTE ==========
+    const attenteEquipes = allEquipes.filter(e => e.statut === 'en_attente');
+    
+    if (attenteEquipes.length > 0) {
+      contactY += 5;
+      
+      // Bandeau section
+      doc.setFillColor(255, 193, 7); // Jaune/Orange
+      doc.rect(10, contactY, 190, 12, 'F');
+      doc.setTextColor(0, 0, 0);
+      doc.setFontSize(13);
+      doc.setFont("helvetica", "bold");
+      doc.text(`⏳ LISTE D'ATTENTE (${attenteEquipes.length})`, 105, contactY + 8, { align: "center" });
+      contactY += 18;
+      
+      // En-têtes du tableau
+      doc.setFillColor(255, 248, 225);
+      doc.rect(10, contactY - 5, 190, 8, 'F');
+      doc.setTextColor(36, 54, 110);
+      doc.setFontSize(9);
+      doc.setFont("helvetica", "bold");
+      doc.text("#", 14, contactY);
+      doc.text("Type", 25, contactY);
+      doc.text("Équipe / Nom", 50, contactY);
+      doc.text("Email", 115, contactY);
+      doc.text("Téléphone", 170, contactY);
+      contactY += 8;
+      
+      for (const equipe of attenteEquipes) {
+        const membres = equipe.membres || [];
+        const isEquipe = equipe.type_candidature === 'equipe';
+        
+        // En-tête d'équipe si c'est une équipe
+        if (isEquipe && membres.length > 0) {
+          doc.setFillColor(255, 250, 240);
+          doc.rect(10, contactY - 4, 190, 7, 'F');
+          doc.setTextColor(255, 152, 0);
+          doc.setFontSize(9);
+          doc.setFont("helvetica", "bold");
+          doc.text(`ÉQUIPE: ${equipe.nom_equipe || 'Sans nom'}`, 15, contactY);
+          contactY += 8;
+        }
+        
+        for (const membre of membres) {
+          if (contactY > 270) {
+            doc.addPage();
+            contactY = 15;
+          }
+          
+          // Alternance de couleurs
+          if (contactIndex % 2 === 0) {
+            doc.setFillColor(250, 250, 250);
+            doc.rect(10, contactY - 4, 190, 7, 'F');
+          }
+          
+          doc.setTextColor(100, 100, 100);
+          doc.setFontSize(8);
+          doc.text(`${contactIndex}`, 14, contactY);
+          
+          doc.setTextColor(255, 152, 0);
+          doc.text(isEquipe ? "👥" : "👤", 25, contactY);
+          
+          doc.setTextColor(36, 54, 110);
+          doc.setFont("helvetica", "bold");
+          doc.text(membre.nom_prenom, 50, contactY);
+          
+          doc.setFont("helvetica", "normal");
+          doc.setTextColor(0, 0, 0);
+          doc.text(membre.email || "-", 115, contactY);
+          doc.text(membre.telephone || "-", 170, contactY);
+          
+          contactY += 8;
+          contactIndex++;
+        }
+        contactY += 2;
+      }
+    }
+
     // Pied de page
     const pageCount = doc.getNumberOfPages();
     for (let i = 1; i <= pageCount; i++) {
@@ -404,7 +576,7 @@ const PreviewSelection = () => {
       doc.setTextColor(255, 255, 255);
       doc.setFontSize(9);
       doc.setFont("helvetica", "normal");
-      doc.text("Hackathon ISOC-ESMT 2025 - Innover, Créer, Entreprendre", 105, 290, { align: "center" });
+      doc.text("Hackathon ISOC-ESMT 2026 - Innover, Créer, Entreprendre", 105, 290, { align: "center" });
       doc.text(`Page ${i}/${pageCount}`, 190, 290, { align: "right" });
     }
 
