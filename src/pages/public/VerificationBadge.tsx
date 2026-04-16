@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
@@ -13,13 +13,19 @@ import {
   AlertCircle,
   RefreshCw,
   ArrowLeft,
+  Download,
 } from "lucide-react";
 import { motion } from "framer-motion";
+import jsPDF from "jspdf";
+import html2canvas from "html2canvas";
+import QRCode from "qrcode";
 
 const VerificationBadge = () => {
   const { badgeId } = useParams<{ badgeId: string }>();
   const navigate = useNavigate();
   const [currentTime, setCurrentTime] = useState(new Date());
+  const [isDownloading, setIsDownloading] = useState(false);
+  const badgeRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -83,6 +89,52 @@ const VerificationBadge = () => {
       hour: "2-digit",
       minute: "2-digit",
     });
+  };
+
+  // Fonction pour télécharger le badge PDF
+  const downloadBadgePDF = async () => {
+    if (!badge || !badgeRef.current) return;
+    
+    setIsDownloading(true);
+    try {
+      const element = badgeRef.current;
+      
+      // Attendre le rendu
+      await new Promise(resolve => setTimeout(resolve, 500));
+      element.getBoundingClientRect();
+      
+      const canvas = await html2canvas(element, {
+        backgroundColor: '#0B1F3A',
+        scale: 2,
+        useCORS: true,
+        allowTaint: true,
+        width: 400,
+        height: 250,
+        x: 0,
+        y: 0,
+        scrollX: 0,
+        scrollY: -window.scrollY,
+        windowWidth: 400,
+        windowHeight: 250,
+      });
+
+      const pdf = new jsPDF({
+        orientation: 'landscape',
+        unit: 'mm',
+        format: [105, 66]
+      });
+      
+      const imgData = canvas.toDataURL('image/png', 1.0);
+      pdf.addImage(imgData, 'PNG', 0, 0, 105, 66);
+      
+      const nomFichier = badge.membre?.nom_prenom || (badge as any).staff_info?.nom_prenom || 'badge';
+      pdf.save(`badge-${nomFichier.replace(/\s+/g, '-')}.pdf`);
+    } catch (error) {
+      console.error("Erreur téléchargement PDF:", error);
+      alert("Erreur lors du téléchargement du PDF");
+    } finally {
+      setIsDownloading(false);
+    }
   };
 
   if (isLoading) {
@@ -394,17 +446,218 @@ const VerificationBadge = () => {
                 </button>
 
                 <button
-                  onClick={() => window.print()}
-                  className="flex-1 px-6 py-3 border border-gray-300 text-gray-700 rounded-xl hover:bg-gray-50 transition-colors"
+                  onClick={downloadBadgePDF}
+                  disabled={isDownloading}
+                  className="flex-1 px-6 py-3 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  Imprimer cette page
+                  <Download className={`w-4 h-4 inline mr-2 ${isDownloading ? 'animate-bounce' : ''}`} />
+                  {isDownloading ? 'Téléchargement...' : 'Télécharger mon badge PDF'}
                 </button>
               </div>
             </div>
           </div>
         </motion.div>
       </div>
+
+      {/* Badge caché pour génération PDF */}
+      {badge && (
+        <div style={{ position: 'absolute', left: '-9999px', top: '-9999px', opacity: 0, pointerEvents: 'none' }}>
+          <BadgePourPDF badge={badge} badgeRef={badgeRef} />
+        </div>
+      )}
     </Layout>
+  );
+};
+
+// Composant Badge pour génération PDF
+const BadgePourPDF = ({ badge, badgeRef }: { badge: any; badgeRef: React.RefObject<HTMLDivElement> }) => {
+  const isStaff = badge.type === 'staff';
+  const colors = isStaff
+    ? { bg: '#1E3A8A', accent: '#3B82F6', text: '#FFFFFF' }
+    : { bg: '#0B1F3A', accent: '#40B2A4', text: '#FFFFFF' };
+
+  return (
+    <div
+      ref={badgeRef}
+      id={`badge-${badge.id}`}
+      style={{
+        width: '400px',
+        height: '250px',
+        background: `linear-gradient(135deg, ${colors.bg} 0%, ${colors.bg}dd 100%)`,
+        borderRadius: '12px',
+        position: 'relative',
+        overflow: 'hidden',
+        fontFamily: 'Arial, sans-serif',
+        boxSizing: 'border-box',
+        padding: '20px',
+        display: 'flex',
+        flexDirection: 'column',
+      }}
+    >
+      {/* Header avec logo et titre */}
+      <div style={{ display: 'flex', alignItems: 'center', marginBottom: '15px' }}>
+        <div
+          style={{
+            width: '40px',
+            height: '40px',
+            background: colors.accent,
+            borderRadius: '8px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            marginRight: '12px',
+            fontSize: '20px',
+            fontWeight: 'bold',
+            color: colors.text,
+          }}
+        >
+          IS
+        </div>
+        <div style={{ flex: 1 }}>
+          <p
+            style={{
+              color: colors.accent,
+              fontSize: '11px',
+              fontWeight: 'bold',
+              textTransform: 'uppercase',
+              letterSpacing: '1px',
+              margin: '0 0 2px 0',
+            }}
+          >
+            HACKATHON ISOC-ESMT
+          </p>
+          <p
+            style={{
+              color: colors.text,
+              fontSize: '10px',
+              margin: 0,
+            }}
+          >
+            17 & 18 Avril 2026 • ESMT Dakar
+          </p>
+        </div>
+        <div
+          style={{
+            background: colors.accent,
+            color: colors.bg,
+            padding: '4px 10px',
+            borderRadius: '12px',
+            fontSize: '9px',
+            fontWeight: 'bold',
+            textTransform: 'uppercase',
+          }}
+        >
+          {isStaff ? 'STAFF' : 'PARTICIPANT'}
+        </div>
+      </div>
+
+      {/* Contenu principal */}
+      <div style={{ display: 'flex', flex: 1, gap: '15px' }}>
+        {/* Photo/Avatar placeholder */}
+        <div
+          style={{
+            width: '80px',
+            height: '100px',
+            background: 'rgba(255,255,255,0.1)',
+            borderRadius: '8px',
+            border: '2px solid rgba(255,255,255,0.2)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            flexShrink: 0,
+          }}
+        >
+          <span style={{ fontSize: '40px' }}>👤</span>
+        </div>
+
+        {/* Informations */}
+        <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+          <h2
+            style={{
+              color: colors.text,
+              fontSize: '18px',
+              fontWeight: 'bold',
+              margin: '0 0 4px 0',
+              lineHeight: '1.2',
+            }}
+          >
+            {badge.membre?.nom_prenom || (badge as any).staff_info?.nom_prenom || 'Nom'}
+          </h2>
+          <p
+            style={{
+              color: colors.accent,
+              fontSize: '12px',
+              fontWeight: '600',
+              margin: '0 0 8px 0',
+              textTransform: 'uppercase',
+            }}
+          >
+            {(badge as any).staff_info?.role ||
+              (badge.membre?.est_chef ? 'Chef de projet' : badge.membre?.role_equipe) ||
+              'Rôle'}
+          </p>
+          <p
+            style={{
+              color: 'rgba(255,255,255,0.8)',
+              fontSize: '10px',
+              margin: 0,
+            }}
+          >
+            {badge.equipe?.nom_equipe || (badge as any).staff_info?.organisation || 'Hackathon ISOC-ESMT'}
+          </p>
+        </div>
+
+        {/* QR Code */}
+        <div
+          style={{
+            width: '90px',
+            height: '90px',
+            background: 'white',
+            borderRadius: '8px',
+            padding: '5px',
+            flexShrink: 0,
+          }}
+        >
+          <img
+            src={badge.qr_code_url}
+            alt="QR Code"
+            style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+            crossOrigin="anonymous"
+          />
+        </div>
+      </div>
+
+      {/* Footer */}
+      <div
+        style={{
+          marginTop: 'auto',
+          paddingTop: '10px',
+          borderTop: '1px solid rgba(255,255,255,0.1)',
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+        }}
+      >
+        <p
+          style={{
+            color: 'rgba(255,255,255,0.6)',
+            fontSize: '8px',
+            margin: 0,
+          }}
+        >
+          ID: {badge.id.slice(0, 8)}... • 2ème Édition
+        </p>
+        <p
+          style={{
+            color: 'rgba(255,255,255,0.6)',
+            fontSize: '8px',
+            margin: 0,
+          }}
+        >
+          www.hackathon-isoc-esmt.com
+        </p>
+      </div>
+    </div>
   );
 };
 
