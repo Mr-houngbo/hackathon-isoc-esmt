@@ -21,6 +21,7 @@ const GestionBadges = () => {
   // Formulaire staff
   const [staffForm, setStaffForm] = useState({
     nom_prenom: '',
+    email: '',
     role: '',
     organisation: ''
   });
@@ -197,7 +198,7 @@ const GestionBadges = () => {
     },
     onSuccess: () => {
       toast.success("Badge staff généré avec succès");
-      setStaffForm({ nom_prenom: '', role: '', organisation: '' });
+      setStaffForm({ nom_prenom: '', email: '', role: '', organisation: '' });
       queryClient.invalidateQueries({ queryKey: ["all-badges"] });
     },
     onError: (error) => {
@@ -241,26 +242,27 @@ const GestionBadges = () => {
 
         try {
           console.log(`Début envoi email pour ${membre.nom_prenom} (${membre.email})...`);
-          console.log('Structure membre:', {
-            id: membre.id,
-            nom_prenom: membre.nom_prenom,
-            email: membre.email,
-            email_type: typeof membre.email,
-            est_chef: membre.est_chef,
-            role_equipe: membre.role_equipe
-          });
           
-          // Générer le PDF en base64
-          const element = badgeRefs.current[`badge-${membre.id}`];
+          // Ajouter le badge au state pour le rendu (utilise le vrai badge.id)
+          setParticipantBadgesForRender(prev => {
+            // Vérifier si déjà présent
+            if (prev.some(b => b.id === badge.id)) return prev;
+            return [...prev, { id: badge.id, membre_id: membre.id, equipe_id: equipe.id }];
+          });
+
+          // Attendre que le DOM soit rendu
+          await new Promise(resolve => setTimeout(resolve, 800));
+          
+          // Générer le PDF avec le bon ID de badge
+          const element = badgeRefs.current[`badge-${badge.id}`];
           if (!element) {
-            console.error(`Élément badge non trouvé pour ${membre.id}`);
+            console.error(`Élément badge non trouvé pour badge ID: ${badge.id}`);
             continue;
           }
 
           console.log(`Génération PDF pour ${membre.nom_prenom}...`);
           
-          // Attendre le rendu complet
-          await new Promise(resolve => setTimeout(resolve, 500));
+          // Forcer le reflow
           element.getBoundingClientRect();
           
           const canvas = await html2canvas(element, {
@@ -303,37 +305,59 @@ const GestionBadges = () => {
             }
           });
 
+          // Réduire la taille du canvas pour un PDF plus petit
+          const scaleFactor = 0.5; // Réduire à 50%
+          const smallCanvas = document.createElement('canvas');
+          smallCanvas.width = canvas.width * scaleFactor;
+          smallCanvas.height = canvas.height * scaleFactor;
+          const ctx = smallCanvas.getContext('2d');
+          ctx?.drawImage(canvas, 0, 0, smallCanvas.width, smallCanvas.height);
+
           const pdf = new jsPDF({
             orientation: 'landscape',
             unit: 'mm',
-            format: [105, 66]
+            format: [105, 66],
+            compress: true
           });
           
-          const imgData = canvas.toDataURL('image/png', 1.0);
-          pdf.addImage(imgData, 'PNG', 0, 0, 105, 66);
+          // Utiliser JPEG avec compression pour réduire la taille
+          const imgData = smallCanvas.toDataURL('image/jpeg', 0.7);
+          pdf.addImage(imgData, 'JPEG', 0, 0, 105, 66);
+          
+          // Sauvegarder le PDF localement (pas d'upload)
           const pdfBase64 = pdf.output('datauristring').split(',')[1];
           
-          console.log(`PDF généré pour ${membre.email}, envoi EmailJS...`);
+          // Vérifier la taille (limite EmailJS ~50KB)
+          const sizeKB = Math.round(pdfBase64.length * 0.75 / 1024);
+          console.log(`PDF généré: ${sizeKB}KB pour ${membre.email}`);
 
-          // Préparer les données pour EmailJS
-          const templateParams = {
+          // Lien de vérification
+          const verificationUrl = `${window.location.origin}/verification/${badge.id}`;
+
+          // Préparer les données pour EmailJS (sans pièce jointe si trop gros)
+          const templateParams: any = {
             to_email: membre.email,
             to_name: membre.nom_prenom,
-            equipe: equipe.nom_equipe,
+            nom_equipe: equipe.nom_equipe,
             role: membre.est_chef ? 'Chef de projet' : membre.role_equipe,
-            message: `Félicitations ! Votre badge pour le Hackathon ISOC-ESMT 2026 est prêt. Vous trouverez votre badge personnel en pièce jointe. Présentez ce badge à l'entrée pour accéder à l'événement.`,
-            badge_pdf: pdfBase64,
-            recipient_email: membre.email, // Alternative variable name
-            user_email: membre.email, // Another alternative
+            date_event: '3 & 4 Avril 2026',
+            lieu_event: 'ESMT Dakar, Sénégal',
+            edition: '2ème Édition',
+            badge_url: verificationUrl,
+            verification_url: verificationUrl,
+            recipient_email: membre.email,
+            user_email: membre.email,
           };
 
+          // Ajouter le PDF seulement s'il fait moins de 40KB (marge de sécurité)
+          if (sizeKB < 40) {
+            templateParams.badge_pdf = pdfBase64;
+            console.log('PDF attaché à l\'email (taille OK)');
+          } else {
+            console.log('PDF trop gros, envoi avec lien uniquement');
+          }
+
           console.log('TemplateParams EmailJS:', templateParams);
-          console.log('Configuration EmailJS:', {
-            SERVICE_ID: EMAILJS_CONFIG.SERVICE_ID,
-            TEMPLATE_ID: EMAILJS_CONFIG.TEMPLATE_ID,
-            has_email: !!membre.email,
-            email_value: membre.email
-          });
 
           // Envoyer l'email avec EmailJS
           const response = await emailjs.send(
@@ -386,6 +410,144 @@ const GestionBadges = () => {
     },
     onError: (error) => {
       console.error('Erreur mutation envoi badges:', error);
+      toast.error(`Erreur lors de l'envoi: ${error.message}`);
+    }
+  });
+
+  // Mutation pour envoyer un badge staff par email
+  const envoyerStaffBadgeMutation = useMutation({
+    mutationFn: async (badge: any) => {
+      const staffInfo = (badge as any).staff_info;
+      if (!staffInfo?.email) {
+        throw new Error(`Email manquant pour ${staffInfo?.nom_prenom || 'le membre staff'}`);
+      }
+
+      try {
+        console.log(`Début envoi email staff pour ${staffInfo.nom_prenom} (${staffInfo.email})...`);
+
+        // Ajouter le badge au state pour le rendu
+        setStaffBadgesForRender(prev => [...prev, { id: badge.id, staff_info: staffInfo }]);
+
+        // Attendre le rendu du DOM
+        await new Promise(resolve => setTimeout(resolve, 800));
+
+        const element = badgeRefs.current[`badge-staff-${badge.id}`];
+        if (!element) {
+          throw new Error(`Élément badge staff non trouvé pour ${badge.id}`);
+        }
+
+        // Forcer le reflow
+        element.getBoundingClientRect();
+
+        // Générer le PDF
+        const canvas = await html2canvas(element, {
+          backgroundColor: '#0B1F3A',
+          scale: 2,
+          useCORS: true,
+          allowTaint: true,
+          logging: true,
+          width: 400,
+          height: 250,
+          x: 0,
+          y: 0,
+          scrollX: 0,
+          scrollY: -window.scrollY,
+          windowWidth: 400,
+          windowHeight: 250,
+          onclone: (clonedDoc, clonedElement) => {
+            if (clonedElement) {
+              (clonedElement as HTMLElement).style.cssText = `
+                position: absolute !important;
+                left: 0 !important;
+                top: 0 !important;
+                opacity: 1 !important;
+                display: block !important;
+                visibility: visible !important;
+                width: 400px !important;
+                height: 250px !important;
+                overflow: hidden !important;
+                background-color: #0B1F3A !important;
+              `;
+            }
+          }
+        });
+
+        const pdf = new jsPDF({
+          orientation: 'landscape',
+          unit: 'mm',
+          format: [105, 66]
+        });
+
+        const imgData = canvas.toDataURL('image/png', 1.0);
+        pdf.addImage(imgData, 'PNG', 0, 0, 105, 66);
+
+        // Convertir en Blob pour upload
+        const pdfArrayBuffer = pdf.output('arraybuffer');
+        const pdfBlob = new Blob([pdfArrayBuffer], { type: 'application/pdf' });
+
+        // Uploader sur Supabase Storage
+        const fileName = `badge-staff-${badge.id}.pdf`;
+        const { data: uploadData, error: uploadError } = await supabase.storage
+          .from('badges')
+          .upload(fileName, pdfBlob, {
+            contentType: 'application/pdf',
+            upsert: true
+          });
+
+        if (uploadError) {
+          throw new Error(`Upload failed: ${uploadError.message}`);
+        }
+
+        // Générer l'URL publique
+        const { data: { publicUrl } } = supabase.storage
+          .from('badges')
+          .getPublicUrl(fileName);
+
+        // Envoyer l'email via EmailJS
+        const templateParams = {
+          to_email: staffInfo.email,
+          to_name: staffInfo.nom_prenom,
+          nom_equipe: staffInfo.organisation || 'Hackathon ISOC-ESMT',
+          role: staffInfo.role,
+          date_event: '3 & 4 Avril 2026',
+          lieu_event: 'ESMT Dakar, Sénégal',
+          edition: '2ème Édition',
+          badge_url: publicUrl,
+          recipient_email: staffInfo.email,
+          user_email: staffInfo.email,
+        };
+
+        const response = await emailjs.send(
+          EMAILJS_CONFIG.SERVICE_ID,
+          EMAILJS_CONFIG.TEMPLATE_ID,
+          templateParams
+        );
+
+        if (response.status === 200) {
+          // Marquer comme envoyé
+          await supabase
+            .from("badges")
+            .update({ 
+              envoye: true, 
+              date_envoi: new Date().toISOString() 
+            })
+            .eq('id', badge.id);
+
+          return staffInfo.email;
+        } else {
+          throw new Error(`EmailJS status: ${response.status}`);
+        }
+
+      } catch (error) {
+        console.error(`Erreur envoi email staff:`, error);
+        throw error;
+      }
+    },
+    onSuccess: (email) => {
+      toast.success(`Badge envoyé à ${email}`);
+      queryClient.invalidateQueries({ queryKey: ["all-badges"] });
+    },
+    onError: (error) => {
       toast.error(`Erreur lors de l'envoi: ${error.message}`);
     }
   });
@@ -552,7 +714,7 @@ const GestionBadges = () => {
 
   // Fonction pour télécharger un badge existant
   const telechargerBadge = async (badge: any) => {
-    if (badge.type === 'staff') {
+    if ((badge as any).type === 'staff') {
       // Ajouter au state pour rendu
       setStaffBadgesForRender(prev => [...prev, { id: badge.id, staff_info: (badge as any).staff_info }]);
       setTimeout(() => {
@@ -589,8 +751,8 @@ const GestionBadges = () => {
       (badge.equipe as any)?.nom_equipe?.toLowerCase().includes(searchTerm.toLowerCase());
     
     const matchesType = filterType === 'tous' || 
-      (filterType === 'participants' && badge.type === 'participant') ||
-      (filterType === 'staff' && badge.type === 'staff');
+      (filterType === 'participants' && (badge as any).type === 'participant') ||
+      (filterType === 'staff' && (badge as any).type === 'staff');
     
     const matchesStatus = filterStatus === 'tous' ||
       (filterStatus === 'envoyes' && badge.envoye) ||
@@ -860,7 +1022,7 @@ const GestionBadges = () => {
             </div>
 
             <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
                     Nom & Prénom *
@@ -871,6 +1033,18 @@ const GestionBadges = () => {
                     onChange={(e) => setStaffForm({ ...staffForm, nom_prenom: e.target.value })}
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#40B2A4] focus:border-transparent"
                     placeholder="Jean Dupont"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Email *
+                  </label>
+                  <input
+                    type="email"
+                    value={staffForm.email}
+                    onChange={(e) => setStaffForm({ ...staffForm, email: e.target.value })}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#40B2A4] focus:border-transparent"
+                    placeholder="jean.dupont@example.com"
                   />
                 </div>
                 <div>
@@ -903,7 +1077,7 @@ const GestionBadges = () => {
               </div>
               <button
                 onClick={() => genererStaffBadgeMutation.mutate(staffForm)}
-                disabled={!staffForm.nom_prenom || !staffForm.role || genererStaffBadgeMutation.isPending}
+                disabled={!staffForm.nom_prenom || !staffForm.email || !staffForm.role || genererStaffBadgeMutation.isPending}
                 className="mt-4 px-4 py-2 bg-[#40B2A4] text-white rounded-lg hover:bg-[#40B2A4]/90 transition-colors disabled:opacity-50"
               >
                 <RefreshCw className={`w-4 h-4 inline mr-2 ${genererStaffBadgeMutation.isPending ? 'animate-spin' : ''}`} />
@@ -1006,11 +1180,11 @@ const GestionBadges = () => {
                         </td>
                         <td className="px-4 py-4 text-sm">
                           <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-                            badge.type === 'staff' 
+                            (badge as any).type === 'staff'
                               ? 'bg-purple-100 text-purple-800'
                               : 'bg-blue-100 text-blue-800'
                           }`}>
-                            {badge.type === 'staff' ? 'Staff' : 'Participant'}
+                            {(badge as any).type === 'staff' ? 'Staff' : 'Participant'}
                           </span>
                         </td>
                         <td className="px-4 py-4 text-sm text-gray-600">
@@ -1032,6 +1206,22 @@ const GestionBadges = () => {
                             >
                               <Download className="w-4 h-4" />
                             </button>
+                            {(badge as any).type === 'staff' && !badge.envoye && (
+                              <button
+                                onClick={() => {
+                                  if (envoyerStaffBadgeMutation.isPending) {
+                                    toast.error('Envoi déjà en cours...');
+                                    return;
+                                  }
+                                  envoyerStaffBadgeMutation.mutate(badge);
+                                }}
+                                disabled={envoyerStaffBadgeMutation.isPending}
+                                className="p-1 text-gray-600 hover:text-[#40B2A4] transition-colors disabled:opacity-50"
+                                title="Envoyer par email"
+                              >
+                                <Send className={`w-4 h-4 ${envoyerStaffBadgeMutation.isPending ? 'animate-pulse' : ''}`} />
+                              </button>
+                            )}
                             <button
                               onClick={() => window.open(`/verification/${badge.id}`, '_blank')}
                               className="p-1 text-gray-600 hover:text-[#40B2A4] transition-colors"
