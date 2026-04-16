@@ -340,7 +340,7 @@ const GestionBadges = () => {
             to_name: membre.nom_prenom,
             nom_equipe: equipe.nom_equipe,
             role: membre.est_chef ? 'Chef de projet' : membre.role_equipe,
-            date_event: '3 & 4 Avril 2026',
+            date_event: '17 & 18 Avril 2026',
             lieu_event: 'ESMT Dakar, Sénégal',
             edition: '2ème Édition',
             badge_url: verificationUrl,
