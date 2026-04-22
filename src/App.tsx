@@ -21,6 +21,7 @@ import Cookies from "./pages/Cookies";
 import Thematiques from "./pages/Thematiques";
 import VerificationBadge from "./pages/public/VerificationBadge";
 import Feedback from "./pages/Feedback";
+import Laureats from "./pages/Laureats";
 
 // Admin pages
 import AdminLogin from "./pages/admin/AdminLogin";
@@ -36,6 +37,7 @@ import Attribution from "./pages/admin/SelectionFinale";
 import GestionSelection from "./pages/admin/GestionSelection";
 import PreviewSelection from "./pages/admin/PreviewSelection";
 import Statistiques from "./pages/admin/Statistiques";
+import GestionLaureats from "./pages/admin/GestionLaureats";
 
 
 // Comité pages
@@ -76,6 +78,7 @@ const App = () => (
               <Route path="/cookies" element={<Cookies />} />
               <Route path="/verification/:badgeId" element={<VerificationBadge />} />
               <Route path="/feedback" element={<Feedback />} />
+              <Route path="/laureats" element={<Laureats />} />
 
               {/* Admin */}
               <Route path="/admin/login" element={<AdminLogin />} />
@@ -91,7 +94,7 @@ const App = () => (
               <Route path="/admin/selection" element={<ProtectedRoute><GestionSelection /></ProtectedRoute>} />
               <Route path="/admin/preview-selection" element={<ProtectedRoute><PreviewSelection /></ProtectedRoute>} />
               <Route path="/admin/statistiques" element={<ProtectedRoute><Statistiques /></ProtectedRoute>} />
-
+              <Route path="/admin/laureats" element={<ProtectedRoute><GestionLaureats /></ProtectedRoute>} />
 
               {/* Comité */}
               <Route path="/comite/login" element={<ComiteLogin />} />

@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "@/context/AuthContext";
-import { LayoutDashboard, Users, Users as UsersIcon, UserCheck, Handshake, Image, BadgeCheck, LogOut, BarChart3, Shield, MessageSquare, Trophy } from "lucide-react";
+import { LayoutDashboard, Users, Users as UsersIcon, UserCheck, Handshake, Image, BadgeCheck, LogOut, BarChart3, Shield, MessageSquare, Trophy, Medal } from "lucide-react";
 
 const links = [
   { path: "/admin/dashboard", icon: LayoutDashboard, label: "Dashboard" },
@@ -15,6 +15,7 @@ const links = [
   { path: "/admin/attribution", icon: Shield, label: "Attribution", sensitive: true },
   { path: "/admin/selection", icon: Trophy, label: "Sélection Finale", sensitive: true },
   { path: "/admin/statistiques", icon: BarChart3, label: "Statistiques" },
+  { path: "/admin/laureats", icon: Medal, label: "Lauréats" },
 ];
 
 const AdminLayout = ({ children }: { children: ReactNode }) => {

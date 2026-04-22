@@ -7,6 +7,7 @@ const navLinks = [
   { label: "Accueil", path: "/" },
   { label: "Thématiques", path: "/thematiques" },
   { label: "Équipes", path: "/equipes-selectionnees" },
+  { label: "Lauréats", path: "/laureats" },
   { label: "Agenda", path: "/agenda" },
   { label: "Mentors", path: "/mentors" },
   { label: "Partenaires", path: "/partenaires" },
