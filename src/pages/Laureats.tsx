@@ -271,43 +271,50 @@ const Laureats = () => {
               <div className="w-32 h-1 bg-gradient-to-r from-[#40B2A4] via-[#FEEB09] to-[#40B2A4] mx-auto rounded-full"></div>
             </motion.div>
 
-            {/* Podium Cards */}
-            <div className="grid lg:grid-cols-3 gap-8 items-end max-w-6xl mx-auto">
-              {/* 2nd Place */}
-              {secondPlace && (
-                <motion.div
-                  initial={{ opacity: 0, y: 50 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 1, duration: 0.6 }}
-                  className="order-2 lg:order-1"
-                >
-                  <LaureatCard laureat={secondPlace} rankConfig={getRankConfig(2)} />
-                </motion.div>
-              )}
-
-              {/* 1st Place - Center & Taller */}
+            {/* Podium Cards - Layout: 1st on top, 2nd/3rd below */}
+            <div className="flex flex-col items-center gap-8 max-w-6xl mx-auto">
+              {/* 1st Place - Top Center */}
               {firstPlace && (
                 <motion.div
                   initial={{ opacity: 0, y: 50, scale: 0.9 }}
                   animate={{ opacity: 1, y: 0, scale: 1 }}
-                  transition={{ delay: 1.2, duration: 0.6 }}
-                  className="order-1 lg:order-2 lg:-mt-12"
+                  transition={{ delay: 1, duration: 0.6 }}
+                  className="w-full md:w-3/4 lg:w-2/3 xl:w-1/2"
                 >
                   <LaureatCard laureat={firstPlace} rankConfig={getRankConfig(1)} featured />
                 </motion.div>
               )}
 
-              {/* 3rd Place */}
-              {thirdPlace && (
-                <motion.div
-                  initial={{ opacity: 0, y: 50 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 1.4, duration: 0.6 }}
-                  className="order-3"
-                >
-                  <LaureatCard laureat={thirdPlace} rankConfig={getRankConfig(3)} />
-                </motion.div>
-              )}
+              {/* 2nd and 3rd Places - Bottom Row */}
+              <div className="grid md:grid-cols-2 gap-8 w-full">
+                {/* 2nd Place - Bottom Left */}
+                {secondPlace && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 50 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 1.2, duration: 0.6 }}
+                    className="flex justify-center md:justify-end"
+                  >
+                    <div className="w-full md:w-full lg:w-11/12 xl:max-w-xl">
+                      <LaureatCard laureat={secondPlace} rankConfig={getRankConfig(2)} />
+                    </div>
+                  </motion.div>
+                )}
+
+                {/* 3rd Place - Bottom Right */}
+                {thirdPlace && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 50 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 1.4, duration: 0.6 }}
+                    className="flex justify-center md:justify-start"
+                  >
+                    <div className="w-full md:w-full lg:w-11/12 xl:max-w-xl">
+                      <LaureatCard laureat={thirdPlace} rankConfig={getRankConfig(3)} />
+                    </div>
+                  </motion.div>
+                )}
+              </div>
             </div>
           </div>
         )}
@@ -420,13 +427,13 @@ const LaureatCard = ({ laureat, rankConfig, featured = false, compact = false }:
       <div className={`absolute -inset-1 bg-gradient-to-r ${rankConfig.color} rounded-3xl blur-xl opacity-0 group-hover:opacity-50 transition-opacity duration-500`}></div>
       
       {/* Card */}
-      <div className={`relative bg-white/5 backdrop-blur-xl border ${rankConfig.borderColor} rounded-3xl overflow-hidden ${featured ? 'p-8' : compact ? 'p-6' : 'p-6'}`}>
+      <div className={`relative bg-white/5 backdrop-blur-xl border ${rankConfig.borderColor} rounded-3xl overflow-hidden ${featured ? 'pt-12 pb-8 px-8' : compact ? 'pt-10 pb-6 px-6' : 'pt-10 pb-6 px-6'}`}>
         
         {/* Rank Badge */}
-        <div className={`absolute -top-4 ${featured ? 'left-1/2 -translate-x-1/2' : 'left-6'} z-20`}>
-          <div className={`flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r ${rankConfig.color} shadow-lg ${rankConfig.shadowColor}`}>
-            <RankIcon size={featured ? 24 : 18} className="text-white" />
-            <span className={`font-bold text-white ${featured ? 'text-lg' : 'text-sm'}`}>
+        <div className={`absolute -top-3 ${featured ? 'left-1/2 -translate-x-1/2' : 'left-6'} z-20`}>
+          <div className={`flex items-center gap-2 px-5 py-2.5 rounded-full bg-gradient-to-r ${rankConfig.color} shadow-lg ${rankConfig.shadowColor} whitespace-nowrap`}>
+            <RankIcon size={featured ? 28 : 22} className="text-white" />
+            <span className={`font-bold text-white ${featured ? 'text-lg' : 'text-base'}`}>
               {rankConfig.emoji} {rankConfig.label}
             </span>
           </div>
