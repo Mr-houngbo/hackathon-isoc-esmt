@@ -42,6 +42,53 @@ interface Laureat {
   };
 }
 
+const getRankConfig = (rank: number) => {
+  switch(rank) {
+    case 1: return {
+      color: 'from-yellow-400 via-yellow-500 to-amber-600',
+      bgGlow: 'bg-yellow-500/20',
+      borderColor: 'border-yellow-400/50',
+      shadowColor: 'shadow-yellow-500/30',
+      icon: Crown,
+      label: '1ère Place',
+      emoji: '🥇',
+      size: 'lg'
+    };
+    case 2: return {
+      color: 'from-slate-300 via-slate-400 to-slate-500',
+      bgGlow: 'bg-slate-400/20',
+      borderColor: 'border-slate-300/50',
+      shadowColor: 'shadow-slate-400/30',
+      icon: Medal,
+      label: '2ème Place',
+      emoji: '🥈',
+      size: 'md'
+    };
+    case 3: return {
+      color: 'from-amber-600 via-amber-700 to-amber-800',
+      bgGlow: 'bg-amber-600/20',
+      borderColor: 'border-amber-600/50',
+      shadowColor: 'shadow-amber-600/30',
+      icon: Award,
+      label: '3ème Place',
+      emoji: '🥉',
+      size: 'md'
+    };
+    default: return {
+      color: 'from-[#40B2A4] via-[#24366E] to-[#40B2A4]',
+      bgGlow: 'bg-[#40B2A4]/20',
+      borderColor: 'border-[#40B2A4]/50',
+      shadowColor: 'shadow-[#40B2A4]/30',
+      icon: Star,
+      label: `${rank}ème Place`,
+      emoji: '🏅',
+      size: 'sm'
+    };
+  }
+};
+
+type RankConfig = ReturnType<typeof getRankConfig>;
+
 const Laureats = () => {
   const [selectedYear, setSelectedYear] = useState<number>(2026);
   const [hoveredLaureat, setHoveredLaureat] = useState<string | null>(null);
@@ -50,13 +97,13 @@ const Laureats = () => {
     queryKey: ["laureats", selectedYear],
     queryFn: async () => {
       const { data, error } = await supabase
-        .from("laureats")
+        .from("laureats" as any)
         .select("*")
         .eq("annee", selectedYear)
         .order("rank", { ascending: true });
-      
+
       if (error) throw error;
-      return data as Laureat[];
+      return ((data || []) as unknown) as Laureat[];
     },
   });
 
@@ -74,52 +121,7 @@ const Laureats = () => {
       opacity: 1,
       y: 0,
       scale: 1,
-      transition: { type: "spring", stiffness: 100, damping: 20 }
-    }
-  };
-
-  const getRankConfig = (rank: number) => {
-    switch(rank) {
-      case 1: return { 
-        color: 'from-yellow-400 via-yellow-500 to-amber-600', 
-        bgGlow: 'bg-yellow-500/20',
-        borderColor: 'border-yellow-400/50',
-        shadowColor: 'shadow-yellow-500/30',
-        icon: Crown, 
-        label: '1ère Place',
-        emoji: '🥇',
-        size: 'lg'
-      };
-      case 2: return { 
-        color: 'from-slate-300 via-slate-400 to-slate-500', 
-        bgGlow: 'bg-slate-400/20',
-        borderColor: 'border-slate-300/50',
-        shadowColor: 'shadow-slate-400/30',
-        icon: Medal, 
-        label: '2ème Place',
-        emoji: '🥈',
-        size: 'md'
-      };
-      case 3: return { 
-        color: 'from-orange-400 via-orange-500 to-amber-600', 
-        bgGlow: 'bg-orange-500/20',
-        borderColor: 'border-orange-400/50',
-        shadowColor: 'shadow-orange-500/30',
-        icon: Award, 
-        label: '3ème Place',
-        emoji: '🥉',
-        size: 'md'
-      };
-      default: return { 
-        color: 'from-[#40B2A4] via-[#3AA99F] to-[#2E968C]', 
-        bgGlow: 'bg-[#40B2A4]/20',
-        borderColor: 'border-[#40B2A4]/50',
-        shadowColor: 'shadow-[#40B2A4]/30',
-        icon: Star, 
-        label: 'Lauréat',
-        emoji: '⭐',
-        size: 'sm'
-      };
+      transition: { type: "spring" as const, stiffness: 100, damping: 20 }
     }
   };
 
@@ -144,7 +146,7 @@ const Laureats = () => {
     return (
       <Layout>
         <div className="min-h-screen bg-gradient-to-br from-[#24366E] via-[#1A264A] to-[#0F1535] flex items-center justify-center">
-          <div classText="text-center">
+          <div className="text-center">
             <p className="text-red-400 text-lg font-bold mb-4">Erreur de chargement</p>
             <p className="text-white/70">{error.message}</p>
           </div>
@@ -408,7 +410,7 @@ const Laureats = () => {
 // Laureat Card Component
 interface LaureatCardProps {
   laureat: Laureat;
-  rankConfig: ReturnType<typeof getRankConfig>;
+  rankConfig: RankConfig;
   featured?: boolean;
   compact?: boolean;
 }
