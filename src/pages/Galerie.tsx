@@ -25,7 +25,7 @@ const ANNEES = [
 
 const Galerie = () => {
   const [searchTerm, setSearchTerm] = useState('');
-  const [selectedAnnee, setSelectedAnnee] = useState(2025);
+  const [selectedAnnee, setSelectedAnnee] = useState(2026);
   const [selectedTypeCategorie, setSelectedTypeCategorie] = useState('all');
   const [selectedItem, setSelectedItem] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
