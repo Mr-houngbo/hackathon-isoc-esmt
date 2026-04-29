@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowRight, Calendar, MapPin, Users, Code2, Lock, Sparkles, XCircle } from "lucide-react";
+import { ArrowRight, Calendar, MapPin, Users, Code2, Lock, Sparkles, XCircle, Trophy, BarChart3 } from "lucide-react";
 import CountdownTimer from "./CountdownTimer";
 import { GlobeISoc, GlobeBackground } from "@/components/ui/GlobeISoc";
 
@@ -31,7 +31,7 @@ const HeroSection = () => (
     <div className="container relative z-10 py-3 sm:py-6 lg:py-10">
       <div className="mx-auto max-w-7xl">
         
-        {/* BANDE PREMIUM : INSCRIPTIONS TERMINÉES */}
+        {/* BANDE PREMIUM : ÉDITION 2026 TERMINÉE */}
         <motion.div
           initial={{ opacity: 0, y: -30, scale: 0.95 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -40,14 +40,14 @@ const HeroSection = () => (
         >
           <div className="relative overflow-hidden rounded-2xl sm:rounded-3xl">
             {/* Background avec gradient animé */}
-            <div className="absolute inset-0 bg-gradient-to-r from-[#24366E] via-[#1a264f] to-[#24366E] animate-gradient-x"></div>
+            <div className="absolute inset-0 bg-gradient-to-r from-[#FFC107] via-[#24366E] to-[#40B2A4] animate-gradient-x"></div>
             
             {/* Effet de glassmorphism overlay */}
             <div className="absolute inset-0 bg-white/5 backdrop-blur-sm"></div>
             
             {/* Glow effect */}
-            <div className="absolute -top-20 -right-20 w-40 h-40 bg-[#40B2A4]/30 rounded-full blur-3xl"></div>
-            <div className="absolute -bottom-20 -left-20 w-40 h-40 bg-[#40B2A4]/20 rounded-full blur-3xl"></div>
+            <div className="absolute -top-20 -right-20 w-40 h-40 bg-[#FFC107]/30 rounded-full blur-3xl"></div>
+            <div className="absolute -bottom-20 -left-20 w-40 h-40 bg-[#40B2A4]/30 rounded-full blur-3xl"></div>
             
             {/* Pattern subtil */}
             <div className="absolute inset-0 opacity-10" style={{
@@ -63,30 +63,30 @@ const HeroSection = () => (
                   transition={{ duration: 2, repeat: Infinity, repeatDelay: 3 }}
                   className="w-12 h-12 sm:w-16 sm:h-16 bg-white/10 backdrop-blur-sm rounded-2xl flex items-center justify-center border border-white/20"
                 >
-                  <Lock size={24} className="sm:w-8 sm:h-8 text-white" />
+                  <Trophy size={24} className="sm:w-8 sm:h-8 text-white" />
                 </motion.div>
                 
                 {/* Texte */}
                 <div className="text-center sm:text-left">
                   <div className="flex items-center justify-center sm:justify-start gap-2 mb-1">
-                    <Sparkles size={16} className="text-[#40B2A4]" />
-                    <span className="text-[#40B2A4] text-xs sm:text-sm font-semibold tracking-wider uppercase">
-                      Phase terminée
+                    <Sparkles size={16} className="text-[#FFC107]" />
+                    <span className="text-[#FFC107] text-xs sm:text-sm font-semibold tracking-wider uppercase">
+                      Hackathon Terminé
                     </span>
                   </div>
                   <h2 className="text-xl sm:text-3xl font-bold text-white" style={{ fontFamily: 'Sora, sans-serif' }}>
-                    Inscriptions <span className="text-[#40B2A4]">Terminées</span>
+                    Édition 2026 <span className="text-[#FFC107]">Terminée</span>
                   </h2>
                 </div>
                 
                 {/* CTA Button */}
                 <Link
-                  to="/equipes-selectionnees"
+                  to="/statistiques"
                   className="group flex items-center gap-2 bg-white text-[#24366E] px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl font-semibold text-sm sm:text-base shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300"
                   style={{ fontFamily: 'Sora, sans-serif' }}
                 >
-                  <Users size={18} />
-                  <span>Voir les équipes sélectionnées</span>
+                  <BarChart3 size={18} />
+                  <span>Voir le bilan</span>
                   <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
                 </Link>
               </div>
@@ -98,7 +98,7 @@ const HeroSection = () => (
                 initial={{ x: "-100%" }}
                 animate={{ x: "100%" }}
                 transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
-                className="h-full w-1/3 bg-gradient-to-r from-[#40B2A4] to-white"
+                className="h-full w-1/3 bg-gradient-to-r from-[#FFC107] via-white to-[#40B2A4]"
               ></motion.div>
             </div>
           </div>
@@ -145,28 +145,28 @@ const HeroSection = () => (
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 justify-center lg:justify-start w-full lg:w-auto px-4 sm:px-0">
               <Link
-                to="/equipes-selectionnees"
-                className="group relative overflow-hidden rounded-lg sm:rounded-xl px-4 sm:px-8 py-2 sm:py-4 font-display font-bold text-xs sm:text-base shadow-lg hover:shadow-[#24366E]/30 text-center flex-1 sm:flex-initial bg-[#24366E] text-white"
+                to="/laureats"
+                className="group relative overflow-hidden rounded-lg sm:rounded-xl px-4 sm:px-8 py-2 sm:py-4 font-display font-bold text-xs sm:text-base shadow-lg hover:shadow-[#24366E]/30 text-center flex-1 sm:flex-initial bg-gradient-to-r from-[#FFC107] to-[#FFA500] text-[#24366E]"
                 style={{ fontFamily: 'Sora, sans-serif' }}
               >
                 <span className="relative z-10 flex items-center justify-center gap-1 sm:gap-2">
-                  <span className="sm:hidden">Les équipes</span>
-                  <span className="hidden sm:inline">Voir les équipes</span> 
+                  <Trophy size={18} />
+                  <span className="sm:hidden">Les lauréats</span>
+                  <span className="hidden sm:inline">Voir les lauréats</span> 
                   <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
                 </span>
-                <div className="absolute inset-0 bg-gradient-to-r from-[#40B2A4] to-[#40B2A4] opacity-0 group-hover:opacity-100 transition-opacity"></div>
               </Link>
               
-              <a
-                href="#programme"
+              <Link
+                to="/statistiques"
                 className="group relative overflow-hidden rounded-lg sm:rounded-xl border-2 border-[#24366E] bg-white px-4 sm:px-8 py-2 sm:py-4 font-display font-bold text-xs sm:text-base text-[#24366E] shadow-lg hover:shadow-[#24366E]/20 transition-all duration-300 hover:scale-105 text-center flex-1 sm:flex-initial hidden sm:inline-flex"
                 style={{ fontFamily: 'Sora, sans-serif' }}
               >
                 <span className="flex items-center justify-center gap-2">
-                  <Code2 size={20} />
-                  Voir le programme
+                  <BarChart3 size={20} />
+                  Voir le bilan
                 </span>
-              </a>
+              </Link>
             </div>
           </motion.div>
 

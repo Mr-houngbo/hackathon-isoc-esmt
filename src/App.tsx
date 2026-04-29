@@ -22,6 +22,7 @@ import Thematiques from "./pages/Thematiques";
 import VerificationBadge from "./pages/public/VerificationBadge";
 import Feedback from "./pages/Feedback";
 import Laureats from "./pages/Laureats";
+import StatistiquesPublique from "./pages/StatistiquesPublique";
 
 // Admin pages
 import AdminLogin from "./pages/admin/AdminLogin";
@@ -78,6 +79,7 @@ const App = () => (
               <Route path="/cookies" element={<Cookies />} />
               <Route path="/verification/:badgeId" element={<VerificationBadge />} />
               <Route path="/feedback" element={<Feedback />} />
+              <Route path="/statistiques" element={<StatistiquesPublique />} />
               <Route path="/laureats" element={<Laureats />} />
 
               {/* Admin */}

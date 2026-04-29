@@ -1,14 +1,13 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, Code2, Trophy, Users } from "lucide-react";
+import { Menu, X, Code2, Trophy, Users, BarChart3 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const navLinks = [
   { label: "Accueil", path: "/" },
   { label: "Thématiques", path: "/thematiques" },
-  { label: "Équipes", path: "/equipes-selectionnees" },
   { label: "Lauréats", path: "/laureats" },
-  { label: "Agenda", path: "/agenda" },
+  { label: "Statistiques", path: "/statistiques" },
   { label: "Mentors", path: "/mentors" },
   { label: "Partenaires", path: "/partenaires" },
   { label: "Galerie", path: "/galerie" },
@@ -55,11 +54,12 @@ const Navbar = () => {
             </Link>
           ))}
           <Link
-            to="/equipes-selectionnees"
+            to="/statistiques"
             className="bg-gradient-to-r from-[#24366E] to-[#24366E] hover:from-[#1a264f] hover:to-[#1a264f] text-white font-semibold ml-3 inline-flex items-center gap-2 rounded-lg px-5 py-2 text-sm transition-all duration-300 hover:shadow-lg hover:shadow-[#24366E]/25 hover:scale-105"
             style={{ fontFamily: 'Sora, sans-serif' }}
           >
-            Voir les équipes
+            <BarChart3 size={18} />
+            Voir les stats
           </Link>
         </div>
 
@@ -122,12 +122,13 @@ const Navbar = () => {
               </div>
               
               <Link
-                to="/equipes-selectionnees"
+                to="/statistiques"
                 onClick={() => setOpen(false)}
                 className="btn-premium inline-flex items-center justify-center gap-2 rounded-lg px-4 sm:px-6 py-2.5 sm:py-4 text-xs sm:text-sm font-semibold"
                 style={{ fontFamily: 'Sora, sans-serif' }}
               >
-                Voir les équipes sélectionnées
+                <BarChart3 size={18} />
+                Voir le bilan 2026
               </Link>
             </div>
           </motion.div>

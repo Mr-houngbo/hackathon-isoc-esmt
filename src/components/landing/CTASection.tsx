@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowRight, Rocket, Sparkles, Timer, Users, Calendar } from "lucide-react";
+import { ArrowRight, Rocket, Sparkles, Timer, Users, Calendar, Trophy, BarChart3 } from "lucide-react";
 import { GlobeISoc } from "@/components/ui/GlobeISoc";
 
 const CTASection = () => (
@@ -60,11 +60,11 @@ const CTASection = () => (
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
-            className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm border border-white/30 px-4 py-2 rounded-full mb-8 mx-auto"
+            className="inline-flex items-center gap-2 bg-[#FFC107]/20 backdrop-blur-sm border border-[#FFC107]/30 px-4 py-2 rounded-full mb-8 mx-auto"
           >
-            <Users size={16} className="text-white" />
-            <span className="text-sm font-semibold text-white" style={{ fontFamily: 'Sora, sans-serif' }}>
-              Les équipes sont sélectionnées
+            <Trophy size={16} className="text-[#FFC107]" />
+            <span className="text-sm font-semibold text-[#FFC107]" style={{ fontFamily: 'Sora, sans-serif' }}>
+              Édition 2026 terminée
             </span>
           </motion.div>
           
@@ -77,7 +77,7 @@ const CTASection = () => (
             className="font-display text-4xl sm:text-6xl font-bold text-white mb-6"
             style={{ fontFamily: 'Sora, sans-serif', fontWeight: 800 }}
           >
-            Les inscriptions sont closes 
+            Merci à tous les participants ! 
           </motion.h2>
           
         
@@ -112,26 +112,24 @@ const CTASection = () => (
             className="flex flex-col sm:flex-row items-center justify-center gap-6"
           >
             <Link
-              to="/equipes-selectionnees"
-              className="btn-orange group relative inline-flex items-center gap-3 rounded-xl px-10 py-5 text-lg font-semibold text-white overflow-hidden shadow-xl hover:shadow-white/20"
+              to="/laureats"
+              className="group relative inline-flex items-center gap-3 rounded-xl px-10 py-5 text-lg font-semibold text-[#24366E] bg-[#FFC107] overflow-hidden shadow-xl hover:shadow-[#FFC107]/30 hover:scale-105 transition-all duration-300"
               style={{ fontFamily: 'Sora, sans-serif' }}
             >
-              {/* Button glow effect */}
-              <div className="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-              
               <span className="relative z-10 flex items-center gap-3">
-                Voir les équipes
-                <Users size={20} className="group-hover:translate-x-1 transition-transform duration-300" />
+                <Trophy size={20} />
+                Voir les lauréats
+                <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform duration-300" />
               </span>
             </Link>
             
             <Link
-              to="/agenda"
+              to="/statistiques"
               className="inline-flex items-center gap-3 rounded-xl border-2 border-white/30 px-8 py-5 text-lg font-medium text-white hover:border-white/60 hover:bg-white/10 transition-all duration-300"
               style={{ fontFamily: 'Sora, sans-serif' }}
             >
-              <Calendar size={20} />
-              Consulter l'agenda
+              <BarChart3 size={20} />
+              Voir le bilan
             </Link>
           </motion.div>
           
@@ -144,8 +142,8 @@ const CTASection = () => (
             className="mt-8 text-sm text-white/80 flex items-center justify-center gap-2"
             style={{ fontFamily: 'DM Sans, sans-serif' }}
           >
-            <Calendar size={14} className="text-white" />
-            Hackathon du 17 & 18 Avril 2025 à l'ESMT Dakar
+            <Calendar size={14} className="text-[#FFC107]" />
+            Hackathon 2026 terminé • Rendez-vous en 2027 !
           </motion.p>
         </div>
         
@@ -157,22 +155,22 @@ const CTASection = () => (
   </section>
 
     {/* Mobile version - ultra simplifiée */}
-    <section className="py-4 bg-gradient-to-br from-[#40B2A4] to-[#24366E] relative overflow-hidden lg:hidden">
+    <section className="py-4 bg-gradient-to-br from-[#FFC107] to-[#24366E] relative overflow-hidden lg:hidden">
       <div className="container relative z-10 px-3">
         <div className="text-center">
           <p 
             className="text-white/90 text-xs mb-3"
             style={{ fontFamily: 'DM Sans, sans-serif' }}
           >
-            48h de création intensive • 450K FCFA de prix
+            Édition 2026 terminée • 19 lauréats primés
           </p>
           <Link
-            to="/equipes-selectionnees"
-            className="inline-flex items-center gap-2 rounded-lg px-4 py-2 text-xs font-semibold text-white bg-white/20 border border-white/30"
+            to="/laureats"
+            className="inline-flex items-center gap-2 rounded-lg px-4 py-2 text-xs font-semibold text-[#24366E] bg-white border border-white/30"
             style={{ fontFamily: 'Sora, sans-serif' }}
           >
-            Voir les équipes
-            <Users size={14} />
+            <Trophy size={14} />
+            Voir les lauréats
           </Link>
         </div>
       </div>
